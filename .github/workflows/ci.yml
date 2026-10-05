@@ -4,6 +4,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -31,3 +34,20 @@ jobs:
         with:
           name: nurday-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
+      - name: Rename APK
+        if: github.event_name == 'push'
+        run: cp build/app/outputs/flutter-apk/app-debug.apk nurday-debug.apk
+      # A public pre-release so testers (and the Notion sync) can download the
+      # latest debug APK without signing in to GitHub.
+      - name: Publish latest debug APK
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: debug-latest
+          name: Nurday debug build (latest)
+          prerelease: true
+          make_latest: false
+          body: |
+            Debug APK from branch ${{ github.ref_name }}, commit ${{ github.sha }}.
+            Not signed for release. Install on an Android phone with "Install unknown apps" allowed.
+          files: nurday-debug.apk
