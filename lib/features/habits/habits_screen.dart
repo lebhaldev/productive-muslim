@@ -181,6 +181,21 @@ class _HabitCard extends ConsumerWidget {
       cancelText: habit.reminderTime == null ? 'Cancel' : 'Remove',
     );
     if (picked != null) {
+      final allowed = await ref
+          .read(reminderSchedulerProvider)
+          .requestPermission();
+      if (!allowed) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                'Notifications are off for Nurday. Allow them in Android settings to get reminders.',
+              ),
+            ),
+          );
+        }
+        return;
+      }
       await db.setReminder(habit.id, hhmm(picked));
     } else if (habit.reminderTime != null) {
       await db.setReminder(habit.id, null);

@@ -29,6 +29,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   Future<void> _put(String key, String value) =>
       ref.read(databaseProvider).putSetting(key, value);
 
+  String? _reminderNote;
+
+  Future<void> _setDailyReminder(bool on) async {
+    if (on && !await ref.read(reminderSchedulerProvider).requestPermission()) {
+      setState(
+        () => _reminderNote = 'Notifications are off for Nurday. Allow them in Android settings to get reminders.',
+      );
+      await _put('dailyReminderOn', 'false');
+      return;
+    }
+    setState(() => _reminderNote = null);
+    await _put('dailyReminderOn', '$on');
+  }
+
   Future<void> _saveCity() async {
     await _put('city', _city.text.trim());
     await _put('lat', '');
@@ -163,9 +177,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   child: Text('Daily reminder', style: TextStyle(fontSize: 15)),
                 ),
                 Switch(
+                  key: const Key('daily-reminder-switch'),
                   value: s.dailyReminderOn,
                   activeTrackColor: AppColors.sage600,
-                  onChanged: (v) => _put('dailyReminderOn', '$v'),
+                  onChanged: _setDailyReminder,
                 ),
                 const SizedBox(width: 8),
                 OutlinedButton(
@@ -182,6 +197,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
               ],
             ),
+            if (_reminderNote != null)
+              Text(_reminderNote!, style: meta(color: AppColors.accent700)),
             Text('Per-habit reminders are set on each habit.', style: meta()),
           ],
         ),

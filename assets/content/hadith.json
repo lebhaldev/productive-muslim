@@ -1,7 +1,7 @@
 {
  "source": "https://github.com/fawazahmed0/hadith-api (editions eng-bukhari, eng-muslim, branch 1). Text copied verbatim and verified against the source files; not edited. Selection and verification: review/data in the project files.",
  "license": "Unlicense (public domain) for the dataset; English translations by Muhammad Muhsin Khan (Bukhari) and Abdul Hamid Siddiqui (Muslim).",
- "notes": "No grades: the source has none, so the app shows no grading. Sahih Muslim numbers are Abdul-Baqi numbers and have no link because sunnah.com URLs were not verified.",
+ "notes": "No grades: the source has none, so the app shows no grading. Sahih Muslim numbers are Abdul-Baqi numbers and have no link because sunnah.com URLs were not verified. Variant markers in Abdul-Baqi numbers are shown as letters (2586.01 -> 2586a), as sunnah.com does.",
  "hadiths": [
   {
    "id": "bukhari:6465",
@@ -728,7 +728,7 @@
    "collection": "Sahih Muslim",
    "book": 52,
    "bookName": "Characteristics of the Day of Judgment, Paradise, and Hell",
-   "number": "2816.05",
+   "number": "2816e",
    "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:There is none whose deeds alone can'secure salvation for him. They said: Allah's Messenger, not even you? Thereupon he said: Not even I, but that, the Mercy of Allah should take hold of me",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -748,7 +748,7 @@
    "collection": "Sahih Muslim",
    "book": 50,
    "bookName": "The Book of Repentance",
-   "number": "2753.01",
+   "number": "2753a",
    "text": "Salman Farisi reported Allah's Messenger (ﷺ) as saying:Verily, there are one hundred (parts of) mercy for Allah, and it is one part of this mercy by virtue of which there is mutual love between the people and ninety-nine reserved for the Day of Resurrection",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -758,7 +758,7 @@
    "collection": "Sahih Muslim",
    "book": 5,
    "bookName": "The Book of Mosques and Places of Prayer",
-   "number": "684.04",
+   "number": "684d",
    "text": "Qatada reported it on the authority of Anas b. Malik that the Messenger of Allah (ﷺ) said:When any one of you omits the prayer due to sleep or he forgets it, he should observe it when he remembers it, for Allah has said:\" Observe prayer for remembrance of Me",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -768,7 +768,7 @@
    "collection": "Sahih Muslim",
    "book": 43,
    "bookName": "The Book of Virtues",
-   "number": "2318.01",
+   "number": "2318a",
    "text": "Abu Huraira reported that al-Aqra' b. Habis saw Allah's Apostle (ﷺ) kissing Hasan. He said:I have ten children, but I have never kissed any one of them, whereupon Allah's Messenger (ﷺ) said: He who does not show mercy (towards his children), no mercy would be shown to him",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -788,7 +788,7 @@
    "collection": "Sahih Muslim",
    "book": 4,
    "bookName": "The Book of Prayers ",
-   "number": "470.02",
+   "number": "470b",
    "text": "Anas b. Malik reported the Messenger of Allah (ﷺ) having said:When I begin the prayer I Intend to make it long, but I hear a boy cry. ing; I then shorten it because of his mother's feelings",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -798,7 +798,7 @@
    "collection": "Sahih Muslim",
    "book": 5,
    "bookName": "The Book of Mosques and Places of Prayer",
-   "number": "649.10",
+   "number": "649j",
    "text": "Abu Huraira reported the Messenger of Allah (ﷺ) as saying:Everyone among you is constantly in prayer so long as the prayer detains him (for this noble objective) and nothing prevents him to return to his family but the prayer",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -818,7 +818,7 @@
    "collection": "Sahih Muslim",
    "book": 50,
    "bookName": "The Book of Repentance",
-   "number": "2751.02",
+   "number": "2751b",
    "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Allah, the Exalted and Glorious, said: My mercy excels My wrath",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -828,7 +828,7 @@
    "collection": "Sahih Muslim",
    "book": 1,
    "bookName": "The Book of Faith",
-   "number": "35.01",
+   "number": "35a",
    "text": "It is narrated on the authority of Abu Huraira that the Prophet (ﷺ) said:Iman has over seventy branches, and modesty is a branch of Iman",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -838,7 +838,7 @@
    "collection": "Sahih Muslim",
    "book": 5,
    "bookName": "The Book of Mosques and Places of Prayer",
-   "number": "650.02",
+   "number": "650b",
    "text": "Ibn 'Umar reported Allah's Apostle (ﷺ) as saying:The prayer of a person in congregation is twenty-seven times in excess to the prayer said alone",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -848,7 +848,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "2564.03",
+   "number": "2564c",
    "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Verily Allah does not look to your faces and your wealth but He looks to your heart and to your deeds",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -858,7 +858,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "2625.02",
+   "number": "2625b",
    "text": "Abu Dharr reported Allah's Messenger (ﷺ) as saying:Abu Dharr, when you prepare the broth, add water to that and give that (as a present) to your neighbour",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -898,7 +898,7 @@
    "collection": "Sahih Muslim",
    "book": 22,
    "bookName": "The Book of Musaqah",
-   "number": "1553.01",
+   "number": "1553a",
    "text": "Anas reported Allah's Messenger (ﷺ) as saying Never does a Muslim plant trees or cultivate land and birds or a man or a beast eat out of them but that is a charity on his behalf",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -908,7 +908,7 @@
    "collection": "Sahih Muslim",
    "book": 48,
    "bookName": "The Book Pertaining to the Remembrance of Allah, Supplication, Repentance and Seeking Forgiveness ",
-   "number": "2735.01",
+   "number": "2735a",
    "text": "Abu Huraira reported that Allah's Messenger (ﷺ) said:The supplication of every one of you is granted if he does not grow impatient and says: I supplicated but it was not granted",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -928,7 +928,7 @@
    "collection": "Sahih Muslim",
    "book": 2,
    "bookName": "The Book of Purification",
-   "number": "233.02",
+   "number": "233b",
    "text": "Abu Huraira reported that the Messenger of Allah (ﷺ) said:The five (daily) prayers and one Friday prayer to (the next) Friday prayer are expiations (for the sins committed in the intervals) between them",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -948,7 +948,7 @@
    "collection": "Sahih Muslim",
    "book": 48,
    "bookName": "The Book Pertaining to the Remembrance of Allah, Supplication, Repentance and Seeking Forgiveness ",
-   "number": "2702.01",
+   "number": "2702a",
    "text": "Al-Agharr al-Muzani, who was one amongst the Companions (of the Holy Prophet) reported that Allah's Messenger (ﷺ) said:There is (at times) some sort of shade upon my heart, and I seek forgiveness from Allah a hundred times a day",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -958,7 +958,7 @@
    "collection": "Sahih Muslim",
    "book": 13,
    "bookName": "The Book of Fasting ",
-   "number": "1163.01",
+   "number": "1163a",
    "text": "Abu Haraira (Allah be pleased with him) reported Allah's Messenger (ﷺ) as saying:The most excellent fast after Ramadan is God's month. al-Muharram, and the most excellent prayer after what is prescribed is prayer during the night",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -968,7 +968,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "2609.02",
+   "number": "2609b",
    "text": "Abu Huraira reported:I heard Allah's Messenger (ﷺ) as saying: One is not strong because of one's wrestling skillfully. They said: Allah's Messenger, then who is strong? He said: He who controls his anger when he is in a fit of rage",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -978,7 +978,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "2551.02",
+   "number": "2551b",
    "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Let him be humbled, let him be humbled. It was said: Allah's Messenger, who is he? He said. He who finds his parents in old age, either one or both of them, and does not enter Paradise",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -988,7 +988,7 @@
    "collection": "Sahih Muslim",
    "book": 1,
    "bookName": "The Book of Faith",
-   "number": "45.02",
+   "number": "45b",
    "text": "It is narrated on the authority of Anas that the Prophet (may peace blessings be upon him) observed:By Him in whose Hand is my life, no, bondsman (truly) believes till he likes for his neighbour, or he (the Holy Prophet) said: for his brother, whatever he likes for himself",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -998,7 +998,7 @@
    "collection": "Sahih Muslim",
    "book": 2,
    "bookName": "The Book of Purification",
-   "number": "233.03",
+   "number": "233c",
    "text": "Abu Huraira reported:Verily the Messenger of Allah (ﷺ) said: The five (daily) prayers and from one Friday prayer to the (next) Friday prayer, and from Ramadhan to Ramadhan are expiations for the (sins) committed in between (their intervals) provided one shuns the major sins",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1008,7 +1008,7 @@
    "collection": "Sahih Muslim",
    "book": 50,
    "bookName": "The Book of Repentance",
-   "number": "2748.02",
+   "number": "2748b",
    "text": "Abu Ayyub Ansari reported that Allah's Messenger (ﷺ) said:If you were not to commit sins, Allah would have swept you out of existence and would have replaced you by another people who have committed sin, and then asked forgiveness from Allah, and He would have granted them pardon",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1018,7 +1018,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "2640.01",
+   "number": "2640a",
    "text": "Abdullah reported that a person came to Allah's Messenger (ﷺ) and said to Allah's Messenger (ﷺ):What is your opinion about the person who loves the people but his (acts or deeds are not identical to theirs)? Thereupon Allah's Messenger (ﷺ) said: A person would be along with one whom he loves",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1038,7 +1038,7 @@
    "collection": "Sahih Muslim",
    "book": 7,
    "bookName": "The Book of Prayer - Friday",
-   "number": "852.01",
+   "number": "852a",
    "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:There is a time on Friday at which no Muslim servant would pray and would ask Allah for a thing (that is good) but He would give it to him. Qutaiba pointed with the help of his hand that it (the time) is short",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1088,7 +1088,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "2592.03",
+   "number": "2592c",
    "text": "Jarir b. 'Abdullah reported Allah's Apostle (ﷺ) as saying:He who is deprived of tenderly feelings is in fact deprived of good and he who is deprived of tenderly feelings is in fact deprived of good",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1098,7 +1098,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "1914.03",
+   "number": "1914c",
    "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:A person while walking along the path saw the branches of a tree lying there. He said: By Allah, I shall remove these from this so that these may not do harm to the Muslims, and he was admitted to Paradise",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1108,7 +1108,7 @@
    "collection": "Sahih Muslim",
    "book": 48,
    "bookName": "The Book Pertaining to the Remembrance of Allah, Supplication, Repentance and Seeking Forgiveness ",
-   "number": "2702.02",
+   "number": "2702b",
    "text": "Al-Agharr al-Muzani who was from amongst the Companions of Allah's Apostle (ﷺ) reported that Ibn 'Umar stated to him that Allah's Messenger (may peace 'be upon him) said:O people, seek repentance from Allah. Verily, I seek repentance from Him a hundred times a day",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1138,7 +1138,7 @@
    "collection": "Sahih Muslim",
    "book": 12,
    "bookName": "The Book of Zakat",
-   "number": "1002.01",
+   "number": "1002a",
    "text": "Abu Mas'ud reported Allah's Messenger (way peace be upon him) as saying:When a Muslim spends on his family seeking reward for it from Allah, it counts for him as sadaqa",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1148,7 +1148,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "2552.02",
+   "number": "2552b",
    "text": "Abdullah b. Umar reported Allah's Apostle (ﷺ) as saying:The finest act of goodness is that a person should treat kindly the loved ones of his father",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1158,7 +1158,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "2558.02",
+   "number": "2558b",
    "text": "Anas b. Malik reported Allah's Messenger (ﷺ) as saying:Neither nurse mutual hatred, nor jealousy, nor enmity, and become as fellow brothers and servants of Allah. It is not lawful for a Muslim that he should keep his relations estranged with his brother beyond three days",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1178,7 +1178,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "2568.03",
+   "number": "2568c",
    "text": "Thauban reported Allah's Apostle (ﷺ) as saying:Verily, when a Muslim visits his brother in Islam he is supposed to remain in the fruit garden of Paradise until he returns",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"
@@ -1198,7 +1198,7 @@
    "collection": "Sahih Muslim",
    "book": 45,
    "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
-   "number": "2586.01",
+   "number": "2586a",
    "text": "Nu'man b. Bashir reported Allah's Messenger (ﷺ) as saying:The similitude of believers in regard to mutual love, affection, fellow-feeling is that of one body; when any limb of it aches, the whole body aches, because of sleeplessness and fever",
    "sourceUrl": null,
    "translator": "Abdul Hamid Siddiqui"

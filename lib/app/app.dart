@@ -18,10 +18,23 @@ class NurdayApp extends ConsumerStatefulWidget {
 class _NurdayAppState extends ConsumerState<NurdayApp> {
   final GoRouter _router = buildRouter();
   List<Reminder>? _scheduled;
+  late final AppLifecycleListener _lifecycle;
 
   @override
   void initState() {
     super.initState();
+    // On resume, reschedule in case the time zone changed while away.
+    _lifecycle = AppLifecycleListener(
+      onResume: () {
+        final plan = ref.read(reminderPlanProvider);
+        if (plan != null) {
+          ref
+              .read(reminderSchedulerProvider)
+              .sync(plan)
+              .catchError((Object _) {});
+        }
+      },
+    );
     // Keep scheduled notifications in step with settings and habits.
     ref.listenManual<List<Reminder>?>(reminderPlanProvider, (_, plan) {
       if (plan == null || listEquals(plan, _scheduled)) return;
@@ -32,6 +45,7 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
 
   @override
   void dispose() {
+    _lifecycle.dispose();
     _router.dispose();
     super.dispose();
   }

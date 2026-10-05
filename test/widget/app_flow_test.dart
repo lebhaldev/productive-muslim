@@ -209,4 +209,42 @@ void main() {
       await closeApp(tester, db);
     },
   );
+
+  testWidgets(
+    'daily reminder starts off and turning it on asks permission; denial flips it back',
+    (tester) async {
+      final db = memoryDb();
+      final denied = FakeScheduler(granted: false);
+      tester.view.physicalSize = const Size(1080, 2340);
+      tester.view.devicePixelRatio = 2.625;
+      addTearDown(tester.view.reset);
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: testOverrides(db, now, scheduler: denied),
+          child: const NurdayApp(),
+        ),
+      );
+      await settle(tester);
+      // First launch: nothing scheduled, so no permission prompt.
+      expect(denied.synced.single, isEmpty);
+
+      await tapTab(tester, 'More');
+      await tester.tap(find.text('Settings'));
+      await settle(tester);
+      await scrollTo(tester, find.text('Daily reminder'));
+      await tester.tap(find.byType(Switch).last);
+      await settle(tester);
+      expect(
+        find.textContaining('Notifications are off for Nurday'),
+        findsOneWidget,
+      );
+      expect(
+        tester
+            .widget<Switch>(find.byKey(const Key('daily-reminder-switch')))
+            .value,
+        isFalse,
+      );
+      await closeApp(tester, db);
+    },
+  );
 }

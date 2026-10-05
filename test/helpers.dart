@@ -52,8 +52,10 @@ List<Override> testOverrides(
   AppDatabase db,
   DateTime now, {
   bool online = true,
+  ReminderScheduler? scheduler,
 }) => [
   databaseProvider.overrideWithValue(db),
+  reminderSchedulerProvider.overrideWithValue(scheduler ?? FakeScheduler()),
   clockProvider.overrideWithValue(FixedClock(now)),
   httpClientProvider.overrideWithValue(fakeHttp(online: online)),
   assetLoaderProvider.overrideWithValue(fixtureAssets),
@@ -69,7 +71,11 @@ extension on String {
 }
 
 class FakeScheduler implements ReminderScheduler {
+  FakeScheduler({this.granted = true});
+  final bool granted;
   final synced = <List<Reminder>>[];
+  @override
+  Future<bool> requestPermission() async => granted;
   @override
   Future<void> sync(List<Reminder> plan) async => synced.add(plan);
 }

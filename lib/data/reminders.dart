@@ -58,7 +58,10 @@ List<Reminder> planReminders({
 ];
 
 abstract class ReminderScheduler {
-  /// Replaces every scheduled reminder with [plan].
+  /// Asks for the notification permission. Call only from a user action.
+  Future<bool> requestPermission();
+
+  /// Replaces every scheduled reminder with [plan]. Never prompts.
   Future<void> sync(List<Reminder> plan);
 }
 
@@ -68,14 +71,15 @@ class LocalReminderScheduler implements ReminderScheduler {
   bool _ready = false;
 
   Future<void> _init() async {
-    if (_ready) return;
-    tzdata.initializeTimeZones();
+    // Re-read the zone every time so travel or a zone change is picked up.
     try {
       final zone = await FlutterTimezone.getLocalTimezone();
+      if (!_ready) tzdata.initializeTimeZones();
       tz.setLocalLocation(tz.getLocation(zone.identifier));
     } catch (_) {
-      // Fall back to UTC offsets from the device clock.
+      // Keep the previous zone.
     }
+    if (_ready) return;
     await _plugin.initialize(
       settings: const InitializationSettings(
         android: AndroidInitializationSettings('@mipmap/ic_launcher'),
@@ -85,15 +89,19 @@ class LocalReminderScheduler implements ReminderScheduler {
   }
 
   @override
-  Future<void> sync(List<Reminder> plan) async {
+  Future<bool> requestPermission() async {
     await _init();
     final android = _plugin
         .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin
         >();
+    return await android?.requestNotificationsPermission() ?? true;
+  }
+
+  @override
+  Future<void> sync(List<Reminder> plan) async {
+    await _init();
     await _plugin.cancelAllPendingNotifications();
-    if (plan.isEmpty) return;
-    await android?.requestNotificationsPermission();
     for (final r in plan) {
       final parts = r.time.split(':').map(int.parse).toList();
       final now = tz.TZDateTime.now(tz.local);
@@ -105,7 +113,17 @@ class LocalReminderScheduler implements ReminderScheduler {
         parts[0],
         parts[1],
       );
-      if (!at.isAfter(now)) at = at.add(const Duration(days: 1));
+      if (!at.isAfter(now)) {
+        // Build tomorrow's wall-clock time, so DST changes don't shift it.
+        at = tz.TZDateTime(
+          tz.local,
+          now.year,
+          now.month,
+          now.day + 1,
+          parts[0],
+          parts[1],
+        );
+      }
       await _plugin.zonedSchedule(
         id: r.id,
         scheduledDate: at,

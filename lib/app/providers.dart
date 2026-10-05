@@ -92,7 +92,8 @@ class AppSettings {
   double? get lat => double.tryParse(raw['lat'] ?? '');
   double? get lon => double.tryParse(raw['lon'] ?? '');
   String get dailyReminder => raw['dailyReminder'] ?? '07:30';
-  bool get dailyReminderOn => raw['dailyReminderOn'] != 'false';
+  // Off until the user turns it on, so first launch shows no prompt.
+  bool get dailyReminderOn => raw['dailyReminderOn'] == 'true';
 }
 
 final settingsProvider = StreamProvider<AppSettings>(
