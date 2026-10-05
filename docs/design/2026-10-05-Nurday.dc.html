@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-800498f4-8f6f-44c8-bafe-f42969198aba/styles.css">
+<script src="_ds/organic-800498f4-8f6f-44c8-bafe-f42969198aba/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri+Quran&display=swap">
+<style>body{margin:0;background:var(--color-neutral-300)}a{color:var(--color-accent-700)}a:hover{color:var(--color-accent-800)}button{font:inherit}</style>
+</helmet>
+<div style="min-height:100vh;display:flex;gap:40px;align-items:flex-start;justify-content:center;flex-wrap:wrap;padding:32px 20px;box-sizing:border-box">
+<div style="max-width:300px;padding-top:24px;display:flex;flex-direction:column;gap:12px">
+<h1 style="font-size:40px;margin:0">Nurday</h1>
+<p style="margin:0;color:var(--color-neutral-800)">Interactive Android prototype. Tap habits, mood, cards and tabs. Everything you log lives in this session only, like the real app keeps it on-device.</p>
+<p style="margin:0;font-size:13px;color:var(--color-neutral-700)">Ayah and hadith text are shown as placeholders: the real build loads them from Quran.com / AlQuran Cloud and a cited hadith dataset. No scripture is written here.</p>
+</div>
+<div style="width:412px;height:868px;border-radius:44px;background:var(--color-neutral-900);padding:10px;box-shadow:var(--shadow-lg);flex:none">
+<div style="width:100%;height:100%;border-radius:36px;overflow:hidden;background:var(--color-bg);display:flex;flex-direction:column;position:relative">
+<div style="height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:600;color:var(--color-text)"><span>7:12</span><span style="width:10px;height:10px;border-radius:50%;background:var(--color-neutral-900)"></span><span>●●● 82%</span></div>
+<div style="flex:1;overflow-y:auto;padding:8px 20px 24px">
+
+<sc-if value="{{ isToday }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:18px">
+<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+<div>
+<div style="font-size:13px;color:var(--color-neutral-700)">{{ dateLong }}</div>
+<h2 style="font-size:28px;margin:2px 0 0">Good morning</h2>
+</div>
+<div style="display:flex;flex-direction:column;align-items:flex-end;padding:10px 14px;border-radius:var(--radius-lg);background:var(--color-accent-2-200);color:var(--color-accent-2-900)">
+<div style="font-family:var(--font-heading);font-size:24px;line-height:1">{{ wx.now }}</div>
+<div style="font-size:11px">H {{ wx.hi }} · L {{ wx.lo }}</div>
+<div style="font-size:11px">{{ wx.label }}</div>
+</div>
+</div>
+
+<sc-if value="{{ faith }}" hint-placeholder-val="{{ true }}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{ content }}" as="c" hint-placeholder-count="2">
+<div class="card" style="gap:8px;cursor:pointer" onClick="{{ c.toggle }}">
+<div style="display:flex;justify-content:space-between;align-items:center"><span class="card-kicker" style="color:var(--color-accent-700)">{{ c.kicker }}</span><span style="font-size:12px;color:var(--color-neutral-700)">{{ c.chev }}</span></div>
+<sc-if value="{{ c.arabic }}" hint-placeholder-val="{{ false }}">
+<div dir="rtl" style="text-align:right;font-family:'Amiri Quran',serif;font-size:22px;line-height:1.9;color:var(--color-neutral-800);padding:6px 12px;border-radius:var(--radius-md);background:var(--color-neutral-100)">{{ c.arabic }}</div>
+</sc-if>
+<div style="font-size:15px;line-height:1.5;color:var(--color-text);text-wrap:pretty">{{ c.text }}</div>
+<div class="card-meta" style="color:var(--color-neutral-700)">{{ c.source }}</div>
+<sc-if value="{{ c.isOpen }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:6px;padding-top:6px">
+<span class="tag tag-accent-2" style="align-self:flex-start">{{ c.noteLabel }}</span>
+<div style="font-size:13px;color:var(--color-neutral-800)">{{ c.note }}</div>
+<div style="font-size:11px;color:var(--color-neutral-700)">{{ c.ref }}</div>
+</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><h3 style="font-size:19px;margin:0">Habits</h3><span style="font-size:12px;color:var(--color-neutral-700)">{{ doneCount }}</span></div>
+<sc-for list="{{ habitRows }}" as="h" hint-placeholder-count="4">
+<button onClick="{{ h.toggle }}" aria-label="{{ h.aria }}" style="display:flex;align-items:center;gap:12px;min-height:52px;padding:8px 14px;border:none;border-radius:999px;background:var(--color-surface);color:var(--color-text);cursor:pointer;text-align:left">
+<sc-if value="{{ h.done }}" hint-placeholder-val="{{ false }}"><span style="width:28px;height:28px;border-radius:50%;background:var(--color-accent-2-600);color:var(--color-bg);display:flex;align-items:center;justify-content:center;font-size:15px;flex:none">✓</span></sc-if>
+<sc-if value="{{ h.notDone }}" hint-placeholder-val="{{ true }}"><span style="width:24px;height:24px;border-radius:50%;border:2px solid var(--color-neutral-600);flex:none;margin:0 2px"></span></sc-if>
+<span style="flex:1;font-size:15px">{{ h.name }}</span>
+<span style="font-size:12px;color:var(--color-accent-700)">{{ h.streakLabel }}</span>
+</button>
+</sc-for>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<h3 style="font-size:19px;margin:0">How do you feel?</h3>
+<div style="display:flex;gap:6px">
+<sc-for list="{{ moodRows }}" as="m" hint-placeholder-count="5">
+<button onClick="{{ m.pick }}" aria-label="{{ m.label }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0;border:none;background:transparent;cursor:pointer;color:var(--color-text)">
+<span style="width:{{ m.size }}px;height:{{ m.size }}px;border-radius:50%;background:{{ m.color }};outline:{{ m.ring }};outline-offset:3px"></span>
+<span style="font-size:12px;font-weight:{{ m.weight }}">{{ m.label }}</span>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;justify-content:space-between;align-items:center"><h3 style="font-size:19px;margin:0">Today’s activity</h3><button class="btn btn-ghost" onClick="{{ goActivities }}">+ Log</button></div>
+<sc-if value="{{ hasActsToday }}" hint-placeholder-val="{{ true }}">
+<sc-for list="{{ actsToday }}" as="a" hint-placeholder-count="2">
+<div style="display:flex;gap:12px;align-items:baseline;padding:4px 2px"><span style="font-size:12px;color:var(--color-neutral-700);width:44px;flex:none">{{ a.time }}</span><span style="flex:1;font-size:15px">{{ a.title }}</span><span style="font-size:12px;color:var(--color-neutral-700)">{{ a.dur }}</span></div>
+</sc-for>
+</sc-if>
+<sc-if value="{{ noActsToday }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:var(--color-neutral-700)">Nothing logged yet.</div></sc-if>
+</div>
+
+<button onClick="{{ goJournal }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:18px 20px;border:none;border-radius:var(--radius-lg);background:var(--color-accent-200);color:var(--color-accent-900);cursor:pointer;text-align:left">
+<span style="font-family:var(--font-heading);font-size:19px">{{ journalCta }}</span>
+<span style="font-size:13px">{{ journalSub }}</span>
+</button>
+<div style="font-size:11px;color:var(--color-neutral-700)">{{ cacheNote }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isHabits }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:14px">
+<h2 style="font-size:28px;margin:0">Habits</h2>
+<div style="display:flex;gap:8px"><input class="input" placeholder="New habit" value="{{ draftHabit }}" onChange="{{ onDraftHabit }}" style="flex:1;min-height:44px"><button class="btn btn-primary" onClick="{{ addHabit }}" style="min-height:44px">Add</button></div>
+<sc-for list="{{ habitCards }}" as="h" hint-placeholder-count="3">
+<div class="card" style="gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><span class="card-title">{{ h.name }}</span><span class="tag tag-accent">{{ h.streakText }}</span></div>
+<div style="display:flex;gap:6px">
+<sc-for list="{{ h.week }}" as="d" hint-placeholder-count="7">
+<button onClick="{{ d.toggle }}" aria-label="{{ d.aria }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;border:none;background:transparent;cursor:pointer;padding:0;color:var(--color-text)"><span style="font-size:10px;color:var(--color-neutral-700)">{{ d.dow }}</span><span style="width:30px;height:30px;border-radius:50%;background:{{ d.bg }};border:2px solid var(--color-accent-2-600);box-sizing:border-box"></span></button>
+</sc-for>
+</div>
+<div style="display:flex;gap:4px;flex-wrap:wrap;font-size:12px;color:var(--color-neutral-700);align-items:center">
+<span style="flex:1">{{ h.reminder }}</span>
+<button class="btn btn-ghost" onClick="{{ h.up }}" aria-label="Move up">↑</button>
+<button class="btn btn-ghost" onClick="{{ h.archive }}">Archive</button>
+<button class="btn btn-ghost" onClick="{{ h.del }}">Delete</button>
+</div>
+</div>
+</sc-for>
+<sc-if value="{{ hasArchived }}" hint-placeholder-val="{{ false }}">
+<div style="font-size:13px;color:var(--color-neutral-700)">Archived</div>
+<sc-for list="{{ archivedRows }}" as="h" hint-placeholder-count="1">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 4px 4px 14px;border-radius:999px;border:1px solid var(--color-divider)"><span style="font-size:14px;color:var(--color-neutral-800)">{{ h.name }}</span><button class="btn btn-ghost" onClick="{{ h.restore }}">Restore</button></div>
+</sc-for>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isJournal }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:12px;height:100%">
+<div style="display:flex;align-items:center;gap:8px"><button class="btn btn-icon btn-secondary" onClick="{{ prevDay }}" aria-label="Previous day">‹</button><div style="flex:1"><div style="font-size:13px;color:var(--color-neutral-700)">Journal</div><h2 style="font-size:22px;margin:0">{{ selLong }}</h2></div><button class="btn btn-icon btn-secondary" onClick="{{ nextDay }}" aria-label="Next day">›</button></div>
+<input class="input" placeholder="Title (optional)" value="{{ jTitle }}" onChange="{{ onJTitle }}" style="min-height:44px;font-family:var(--font-heading);font-size:16px">
+<textarea placeholder="{{ jPlaceholder }}" value="{{ jBody }}" onChange="{{ onJBody }}" style="flex:1;min-height:360px;resize:none;padding:16px 18px;border:1px solid var(--color-divider);border-radius:var(--radius-lg);background:var(--color-neutral-100);font:inherit;font-size:16px;line-height:1.6;color:var(--color-text);outline-color:var(--color-accent)"></textarea>
+<div style="font-size:12px;color:var(--color-neutral-700)">{{ jStatus }}</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isCalendar }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:8px"><h2 style="font-size:28px;margin:0;flex:1">{{ monthLabel }}</h2><button class="btn btn-icon btn-secondary" onClick="{{ prevMonth }}" aria-label="Previous month">‹</button><button class="btn btn-icon btn-secondary" onClick="{{ nextMonth }}" aria-label="Next month">›</button></div>
+<div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center">
+<sc-for list="{{ dowHead }}" as="d" hint-placeholder-count="7"><span style="font-size:11px;color:var(--color-neutral-700)">{{ d }}</span></sc-for>
+<sc-for list="{{ calCells }}" as="c" hint-placeholder-count="35">
+<button onClick="{{ c.pick }}" aria-label="{{ c.aria }}" disabled="{{ c.blank }}" style="height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:{{ c.border }};border-radius:16px;background:{{ c.bg }};color:var(--color-text);cursor:pointer;padding:0;opacity:{{ c.op }}">
+<span style="font-size:13px;font-weight:{{ c.weight }}">{{ c.n }}</span>
+<span style="display:flex;gap:3px;height:8px;align-items:center"><span style="width:8px;height:8px;border-radius:50%;background:{{ c.mood }}"></span><span style="width:4px;height:4px;border-radius:50%;background:{{ c.jdot }}"></span></span>
+</button>
+</sc-for>
+</div>
+<div style="display:flex;gap:14px;font-size:11px;color:var(--color-neutral-700)"><span>● mood</span><span>• journal</span></div>
+<div class="card" style="gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span class="card-title">{{ selLong }}</span><span class="tag tag-accent-2">{{ dayMood }}</span></div>
+<div style="font-size:12px;color:var(--color-neutral-700)">Journal</div>
+<div style="font-size:14px;color:var(--color-text)">{{ dayJournal }}</div>
+<button class="btn btn-secondary" onClick="{{ openDayJournal }}" style="align-self:flex-start;min-height:40px">Open journal</button>
+<div style="font-size:12px;color:var(--color-neutral-700)">Habits completed</div>
+<div style="display:flex;flex-wrap:wrap;gap:6px"><sc-for list="{{ dayHabits }}" as="h" hint-placeholder-count="2"><span class="tag tag-accent-2">{{ h }}</span></sc-for></div>
+<div style="font-size:12px;color:var(--color-neutral-700)">Activities</div>
+<sc-for list="{{ dayActs }}" as="a" hint-placeholder-count="1"><div style="font-size:14px">{{ a }}</div></sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isMore }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:10px">
+<h2 style="font-size:28px;margin:0 0 6px">More</h2>
+<sc-for list="{{ moreRows }}" as="r" hint-placeholder-count="3">
+<button onClick="{{ r.go }}" style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:16px 20px;border:none;border-radius:var(--radius-lg);background:var(--color-surface);color:var(--color-text);cursor:pointer;text-align:left"><span style="font-family:var(--font-heading);font-size:18px">{{ r.label }}</span><span style="font-size:13px;color:var(--color-neutral-700)">{{ r.sub }}</span></button>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isActivities }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:14px">
+<h2 style="font-size:28px;margin:0">Activities</h2>
+<div class="card" style="gap:8px">
+<input class="input" placeholder="What did you do?" value="{{ aTitle }}" onChange="{{ onATitle }}" style="min-height:44px">
+<input class="input" placeholder="Note (optional)" value="{{ aNote }}" onChange="{{ onANote }}" style="min-height:44px">
+<div style="display:flex;gap:8px"><input class="input" type="time" value="{{ aTime }}" onChange="{{ onATime }}" aria-label="Start time" style="flex:1;min-height:44px"><input class="input" type="number" min="1" value="{{ aDur }}" onChange="{{ onADur }}" aria-label="Duration minutes" style="width:96px;min-height:44px"><span style="align-self:center;font-size:13px">min</span></div>
+<button class="btn btn-primary" onClick="{{ saveAct }}" disabled="{{ aInvalid }}" style="min-height:44px">{{ aSaveLabel }}</button>
+</div>
+<sc-for list="{{ actGroups }}" as="g" hint-placeholder-count="2">
+<div style="display:flex;flex-direction:column;gap:6px">
+<div style="font-size:13px;font-weight:600;color:var(--color-neutral-800)">{{ g.label }}</div>
+<sc-for list="{{ g.items }}" as="a" hint-placeholder-count="1">
+<div style="display:flex;align-items:center;gap:10px;padding:10px 6px 10px 16px;border-radius:999px;background:var(--color-surface)">
+<span style="font-size:12px;color:var(--color-neutral-700);width:40px">{{ a.time }}</span>
+<span style="flex:1;font-size:14px">{{ a.title }}</span><span style="font-size:12px;color:var(--color-neutral-700)">{{ a.durText }}</span>
+<button class="btn btn-ghost" onClick="{{ a.edit }}">Edit</button><button class="btn btn-ghost" onClick="{{ a.del }}" aria-label="Delete">✕</button>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isReflect }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:16px">
+<h2 style="font-size:28px;margin:0">Reflect</h2>
+<div class="card" style="gap:10px">
+<span class="card-kicker" style="color:var(--color-accent-700)">Mood · last 30 days</span>
+<div style="display:flex;align-items:flex-end;gap:3px;height:90px">
+<sc-for list="{{ moodBars }}" as="b" hint-placeholder-count="30"><span title="{{ b.t }}" style="flex:1;height:{{ b.h }}%;min-height:4px;border-radius:999px;background:{{ b.c }}"></span></sc-for>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--color-neutral-700)"><span>30 days ago</span><span>Today</span></div>
+</div>
+<div style="display:flex;gap:10px">
+<div class="card" style="flex:1;gap:2px"><span style="font-family:var(--font-heading);font-size:32px">{{ jStreak }}</span><span style="font-size:13px">day journal streak</span></div>
+<div class="card" style="flex:1;gap:2px"><span style="font-family:var(--font-heading);font-size:32px">{{ jCount }}</span><span style="font-size:13px">entries this month</span></div>
+</div>
+<div class="card" style="gap:8px">
+<span class="card-kicker" style="color:var(--color-accent-700)">Habit check-offs · 30 days</span>
+<sc-for list="{{ habitCounts }}" as="h" hint-placeholder-count="3">
+<div style="display:flex;flex-direction:column;gap:4px"><div style="display:flex;justify-content:space-between;font-size:14px"><span>{{ h.name }}</span><span>{{ h.n }}</span></div><div style="height:8px;border-radius:999px;background:var(--color-neutral-200)"><div style="height:100%;width:{{ h.pct }}%;border-radius:999px;background:var(--color-accent-2-600)"></div></div></div>
+</sc-for>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ isSettings }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;gap:14px">
+<h2 style="font-size:28px;margin:0">Settings</h2>
+<div class="card" style="gap:10px">
+<span class="card-title">Weather</span>
+<div class="field"><label>City override</label><input class="input" value="{{ city }}" onChange="{{ onCity }}" style="min-height:44px"></div>
+<div style="font-size:12px;color:var(--color-neutral-700)">Location is used only for weather (Open-Meteo).</div>
+<div class="seg" style="align-self:flex-start"><sc-for list="{{ unitOpts }}" as="u" hint-placeholder-count="2"><button class="seg-opt" onClick="{{ u.pick }}" style="border:none;min-height:40px;background:{{ u.bg }};color:var(--color-text)">{{ u.label }}</button></sc-for></div>
+</div>
+<div class="card" style="gap:10px">
+<span class="card-title">Content</span>
+<button onClick="{{ toggleFaith }}" role="switch" aria-checked="{{ faith }}" style="display:flex;align-items:center;justify-content:space-between;min-height:48px;border:none;background:transparent;padding:0;color:var(--color-text);cursor:pointer;font-size:15px">Show faith cards<span style="width:48px;height:28px;border-radius:999px;background:{{ swBg }};display:flex;align-items:center;padding:3px;box-sizing:border-box;justify-content:{{ swJust }}"><span style="width:22px;height:22px;border-radius:50%;background:var(--color-neutral-100)"></span></span></button>
+<div class="field"><label>Translation</label><select class="input" style="min-height:44px"><option>Saheeh International</option><option>Dr. Mustafa Khattab, The Clear Quran</option></select></div>
+</div>
+<div class="card" style="gap:8px">
+<span class="card-title">Reminders</span>
+<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:15px">Daily reminder</span><input class="input" type="time" value="07:30" style="width:120px;min-height:44px"></div>
+<div style="font-size:12px;color:var(--color-neutral-700)">Per-habit reminders are set on each habit.</div>
+</div>
+<div class="card" style="gap:6px;background:var(--color-accent-2-200);color:var(--color-accent-2-900)">
+<span class="card-title">Your data stays on this phone</span>
+<div style="font-size:13px">Journal, mood, habits and activities are never uploaded. No account needed.</div>
+</div>
+<div class="card" style="gap:6px">
+<span class="card-title">Sources &amp; licenses</span>
+<div style="font-size:13px;line-height:1.6">Quran: AlQuran Cloud / Quran.com API · Hadith: cited dataset (see README) · Weather: Open-Meteo (CC BY 4.0) · Quotes: bundled list with authors</div>
+</div>
+</div>
+</sc-if>
+</div>
+<nav style="flex:none;display:flex;justify-content:space-around;padding:8px 6px 14px;background:var(--color-surface)">
+<sc-for list="{{ tabs }}" as="t" hint-placeholder-count="5">
+<button onClick="{{ t.go }}" aria-label="{{ t.label }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;min-width:64px;min-height:48px;border:none;background:transparent;cursor:pointer;color:var(--color-text)">
+<span style="padding:4px 18px;border-radius:999px;background:{{ t.pill }};font-size:16px;line-height:20px">{{ t.glyph }}</span>
+<span style="font-size:12px;font-weight:{{ t.weight }}">{{ t.label }}</span>
+</button>
+</sc-for>
+</nav>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const MOODS=[['rough','var(--color-accent-700)'],['low','var(--color-accent-400)'],['okay','var(--color-neutral-400)'],['good','var(--color-accent-2-400)'],['bright','var(--color-accent-2-600)']];
+const pad=n=>String(n).padStart(2,'0');
+const key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const TODAY=new Date();const TK=key(TODAY);
+const daysAgo=n=>{const d=new Date(TODAY);d.setDate(d.getDate()-n);return key(d)};
+// Fixtures: religious text intentionally NOT included — loaded from APIs in the real build.
+const CONTENT=[
+ {id:'ayah',kicker:'Ayah of the day',arabic:'[ Arabic Uthmani text · from api.alquran.cloud ]',text:'[ English translation loaded from cache ]',source:'Surah Ash-Sharh 94:5–6 · Saheeh International',noteLabel:'App summary — not tafsir',note:'[ Short plain-language note from the content fixture ]',ref:'Edition: quran-uthmani + en.sahih · fetched 06:58'},
+ {id:'hadith',kicker:'Hadith of the day',arabic:'',text:'[ Hadith text loaded from cited dataset ]',source:'Sahih al-Bukhari · Book 2 · No. 13',noteLabel:'App summary',note:'[ Plain-language note from the fixture, kept separate from the hadith ]',ref:'Grading per source · sunnah.com reference'},
+ {id:'quote',kicker:'Quote of the day',arabic:'',text:'“Well done is better than well said.”',source:'Benjamin Franklin',noteLabel:'Encouragement, not scripture',note:'From the bundled quote list (quotes.json).',ref:''}
+];
+class Component extends DCLogic {
+  state={tab:'today',open:null,faith:true,mood:{[daysAgo(1)]:3,[daysAgo(2)]:4,[daysAgo(4)]:2,[daysAgo(5)]:3,[daysAgo(8)]:1},
+    habits:[{id:1,name:'Read Quran 10 min'},{id:2,name:'Morning walk'},{id:3,name:'No phone after 10pm'},{id:4,name:'Drink 8 glasses'}],
+    done:{['1|'+daysAgo(1)]:1,['1|'+daysAgo(2)]:1,['1|'+daysAgo(3)]:1,['2|'+daysAgo(1)]:1,['4|'+daysAgo(1)]:1,['4|'+daysAgo(2)]:1},
+    acts:[{id:1,date:TK,time:'06:30',title:'Fajr walk by the river',dur:25,note:''},{id:2,date:daysAgo(1),time:'18:10',title:'Cooked dinner for family',dur:60,note:''}],
+    journal:{[daysAgo(1)]:{title:'A slow Sunday',body:'Spent the afternoon at my parents’. Quiet and good.'},[daysAgo(4)]:{title:'',body:'Tired, but finished the report.'}},
+    unit:'C',sel:TK,monthOff:0};
+  streak(id){let n=0;const d=new Date(TODAY);if(!this.state.done[id+'|'+key(d)])d.setDate(d.getDate()-1);while(this.state.done[id+'|'+key(d)]){n++;d.setDate(d.getDate()-1)}return n}
+  toggleDone(id,dk){this.setState(s=>{const k=id+'|'+dk,d={...s.done};if(d[k])delete d[k];else d[k]=1;return{done:d}})}
+  go(tab,extra){this.setState({tab,...(extra||{})})}
+  renderVals(){
+    const s=this.state;
+    const f=v=>s.unit==='C'?Math.round(v)+'°':Math.round(v*9/5+32)+'°';
+    const habitsActive=s.habits.filter(h=>!h.archived);
+    const habitRows=habitsActive.map(h=>{const done=!!s.done[h.id+'|'+TK],st=this.streak(h.id);return{...h,done,notDone:!done,streakLabel:st?st+' day'+(st>1?'s':''):'',aria:(done?'Undo ':'Mark done ')+h.name,toggle:()=>this.toggleDone(h.id,TK)}});
+    const tabDefs=[['today','Today','☀'],['habits','Habits','✓'],['calendar','Calendar','▦'],['journal','Journal','✎'],['more','More','⋯']];
+    const actsToday=s.acts.filter(a=>a.date===TK).sort((a,b)=>a.time<b.time?-1:1).map(a=>({...a,dur:a.dur+' min'}));
+    const j=s.journal[TK];
+    const setH=fn=>this.setState(st=>({habits:fn(st.habits)}));
+    const DOW=['S','M','T','W','T','F','S'];
+    const habitCards=habitsActive.map((h,i)=>{const st=this.streak(h.id);return{name:h.name,streakText:st?st+'-day streak':'Start today',reminder:h.reminder?'Reminder '+h.reminder:'No reminder',
+      week:[6,5,4,3,2,1,0].map(n=>{const d=new Date(TODAY);d.setDate(d.getDate()-n);const k=key(d),on=!!s.done[h.id+'|'+k];return{dow:n===0?'Today':DOW[d.getDay()],bg:on?'var(--color-accent-2-600)':'transparent',aria:h.name+' '+k+(on?' done':' not done'),toggle:()=>this.toggleDone(h.id,k)}}),
+      up:()=>setH(a=>{const x=a.slice(),j=x.findIndex(y=>y.id===h.id);if(j>0)[x[j-1],x[j]]=[x[j],x[j-1]];return x}),
+      archive:()=>setH(a=>a.map(y=>y.id===h.id?{...y,archived:true}:y)),
+      del:()=>setH(a=>a.filter(y=>y.id!==h.id))}});
+    const archived=s.habits.filter(h=>h.archived);
+    const sd=new Date(s.sel+'T12:00');const shift=n=>{const d=new Date(sd);d.setDate(d.getDate()+n);return key(d)};
+    const je=s.journal[s.sel]||{title:'',body:''};
+    const setJ=patch=>this.setState(st=>({journal:{...st.journal,[st.sel]:{...(st.journal[st.sel]||{title:'',body:''}),...patch}},savedAt:new Date().toTimeString().slice(0,5)}));
+    const mb=new Date(TODAY.getFullYear(),TODAY.getMonth()+s.monthOff,1);
+    const lead=(mb.getDay()+6)%7,dim=new Date(mb.getFullYear(),mb.getMonth()+1,0).getDate();
+    const calCells=[];for(let i=0;i<lead;i++)calCells.push({n:'',blank:true,bg:'transparent',border:'none',mood:'transparent',jdot:'transparent',op:1,weight:400,aria:'',pick:()=>{}});
+    for(let d=1;d<=dim;d++){const k=key(new Date(mb.getFullYear(),mb.getMonth(),d)),m=s.mood[k],fut=k>TK,jj=s.journal[k]&&s.journal[k].body.trim();
+      calCells.push({n:d,blank:fut,op:fut?0.4:1,bg:k===s.sel?'var(--color-accent-2-200)':'transparent',border:k===TK?'2px solid var(--color-accent-2-600)':'none',weight:k===TK?700:400,mood:m!=null?MOODS[m][1]:'transparent',jdot:jj?'var(--color-text)':'transparent',aria:k+(m!=null?', mood '+MOODS[m][0]:'')+(jj?', has journal':''),pick:()=>this.setState({sel:k})})}
+    const dm=s.mood[s.sel];const dj=s.journal[s.sel];
+    const dayHabits=s.habits.filter(h=>s.done[h.id+'|'+s.sel]).map(h=>h.name);
+    const dayActs=s.acts.filter(a=>a.date===s.sel).map(a=>a.time+'  '+a.title+' · '+a.dur+' min');
+    const a=s.aDraft||{title:'',note:'',time:new Date().toTimeString().slice(0,5),dur:30};
+    const setA=p=>this.setState(st=>({aDraft:{...(st.aDraft||a),...p}}));
+    const groups={};s.acts.slice().sort((x,y)=>(y.date+y.time)<(x.date+x.time)?-1:1).forEach(x=>{(groups[x.date]=groups[x.date]||[]).push(x)});
+    const dayLabel=k=>k===TK?'Today':k===daysAgo(1)?'Yesterday':new Date(k+'T12:00').toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'});
+    const moodBars=[];for(let n=29;n>=0;n--){const k=daysAgo(n),m=s.mood[k];moodBars.push({h:m!=null?(m+1)*20:6,c:m!=null?MOODS[m][1]:'var(--color-neutral-300)',t:k+(m!=null?' '+MOODS[m][0]:'')})}
+    let js=0;{const d=new Date(TODAY);if(!(s.journal[key(d)]||{}).body)d.setDate(d.getDate()-1);while(((s.journal[key(d)]||{}).body||'').trim()){js++;d.setDate(d.getDate()-1)}}
+    const hc=habitsActive.map(h=>{let n=0;for(let i=0;i<30;i++)if(s.done[h.id+'|'+daysAgo(i)])n++;return{name:h.name,n,pct:Math.round(n/30*100)}});
+    return {
+      isActivities:s.tab==='activities',aTitle:a.title,aNote:a.note,aTime:a.time,aDur:a.dur,
+      onATitle:e=>setA({title:e.target.value}),onANote:e=>setA({note:e.target.value}),onATime:e=>setA({time:e.target.value}),onADur:e=>setA({dur:e.target.value}),
+      aInvalid:!a.title.trim(),aSaveLabel:a.id?'Save changes':'Log activity',
+      saveAct:()=>{if(!a.title.trim())return;const item={...a,dur:+a.dur||1,date:a.date||TK,id:a.id||Date.now()};this.setState(st=>({acts:a.id?st.acts.map(x=>x.id===a.id?item:x):[...st.acts,item],aDraft:null}))},
+      actGroups:Object.keys(groups).map(k=>({label:dayLabel(k),items:groups[k].map(x=>({...x,durText:x.dur+' min',edit:()=>this.setState({aDraft:{...x}}),del:()=>this.setState(st=>({acts:st.acts.filter(y=>y.id!==x.id)}))}))})),
+      isReflect:s.tab==='reflect',moodBars,jStreak:js,jCount:Object.keys(s.journal).filter(k=>k.slice(0,7)===TK.slice(0,7)&&s.journal[k].body.trim()).length,habitCounts:hc,
+      isSettings:s.tab==='settings',city:s.city??'London',onCity:e=>this.setState({city:e.target.value}),
+      unitOpts:[['C','Celsius'],['F','Fahrenheit']].map(([u,label])=>({label,bg:s.unit===u?'var(--color-accent-2-300)':'transparent',pick:()=>this.setState({unit:u})})),
+      toggleFaith:()=>this.setState({faith:!s.faith}),swBg:s.faith?'var(--color-accent-2-600)':'var(--color-neutral-500)',swJust:s.faith?'flex-end':'flex-start',
+      isCalendar:s.tab==='calendar',monthLabel:mb.toLocaleDateString('en-GB',{month:'long',year:'numeric'}),
+      prevMonth:()=>this.setState(st=>({monthOff:st.monthOff-1})),nextMonth:()=>{if(s.monthOff<0)this.setState(st=>({monthOff:st.monthOff+1}))},
+      dowHead:['M','T','W','T','F','S','S'],calCells,
+      dayMood:dm!=null?MOODS[dm][0]:'No mood',dayJournal:dj&&dj.body.trim()?(dj.title?dj.title+' — ':'')+dj.body:'No entry for this day.',
+      openDayJournal:()=>this.go('journal'),dayHabits:dayHabits.length?dayHabits:['None'],dayActs:dayActs.length?dayActs:['None logged'],
+      isMore:s.tab==='more',moreRows:[['activities','Activities','Log what you did, grouped by day'],['reflect','Reflect','Your last 30 days'],['settings','Settings','Weather, reminders, faith cards, privacy']].map(([id,label,sub])=>({label,sub,go:()=>this.go(id)})),
+      isHabits:s.tab==='habits',draftHabit:s.draftHabit||'',onDraftHabit:e=>this.setState({draftHabit:e.target.value}),
+      addHabit:()=>{const n=(s.draftHabit||'').trim();if(n)this.setState(st=>({habits:[...st.habits,{id:Date.now(),name:n}],draftHabit:''}))},
+      habitCards,hasArchived:archived.length>0,archivedRows:archived.map(h=>({name:h.name,restore:()=>setH(a=>a.map(y=>y.id===h.id?{...y,archived:false}:y))})),
+      isJournal:s.tab==='journal',selLong:sd.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'long'}),
+      prevDay:()=>this.setState({sel:shift(-1)}),nextDay:()=>{if(s.sel<TK)this.setState({sel:shift(1)})},
+      jTitle:je.title,jBody:je.body,onJTitle:e=>setJ({title:e.target.value}),onJBody:e=>setJ({body:e.target.value}),
+      jPlaceholder:'What happened today? What are you grateful for?',
+      jStatus:je.body.trim()?('Saved on this phone'+(s.savedAt?' · '+s.savedAt:'')):'Write something to save this day’s entry.',
+      isToday:s.tab==='today',faith:s.faith,
+      dateLong:TODAY.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'}),
+      wx:{now:f(14),hi:f(18),lo:f(9),label:'Light cloud · '+(s.city??'London')},
+      content:CONTENT.map(c=>({...c,isOpen:s.open===c.id,chev:s.open===c.id?'Less':'More',toggle:()=>this.setState({open:s.open===c.id?null:c.id})})),
+      habitRows,doneCount:habitRows.filter(h=>h.done).length+' of '+habitRows.length,
+      moodRows:MOODS.map(([label,color],i)=>{const on=s.mood[TK]===i;return{label,color,size:on?40:32,ring:on?'2px solid var(--color-text)':'none',weight:on?700:400,pick:()=>this.setState(st=>({mood:{...st.mood,[TK]:i}}))}}),
+      actsToday,hasActsToday:actsToday.length>0,noActsToday:!actsToday.length,
+      journalCta:j?'Continue today’s journal':'Write today’s journal',journalSub:j?(j.title||j.body.slice(0,40)+'…'):'A few lines is enough.',
+      goJournal:()=>this.go('journal',{sel:TK}),goActivities:()=>this.go('activities'),
+      cacheNote:'Content and weather updated 06:58 · works offline',
+      tabs:tabDefs.map(([id,label,glyph])=>{const on=s.tab===id||(id==='more'&&['activities','reflect','settings'].includes(s.tab));return{label,glyph,pill:on?'var(--color-accent-2-300)':'transparent',weight:on?700:400,go:()=>this.go(id,id==='journal'?{sel:TK}:{})}})
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+# 01 — Functional specification
+
+Status: v0.2, synced to design export `design/2026-10-05-Nurday.dc.html`. Tags: **[D]** = defined by the design, **[B]** = brief only (not in design), **[OQ-n]** = open question in [05-design-sync.md](05-design-sync.md).
+
+## 1. Product
+
+- **Promise:** open the app in the morning, see the day (weather, ayah, hadith, quote), check habits, log what you did and how you felt, write a journal tied to that date. Any past day can be reopened.
+- **Primary user:** a Muslim who wants faith content and a simple daily log in one place.
+- **Secondary user:** wants habits, journal, mood and weather and hides the faith cards.
+- **Platform:** Android first, Google Play. English UI, Arabic for ayah text.
+- **Out of scope v1:** prayer times, qibla, adhan, full Quran reader, hadith search, social, cloud sync, accounts, payments, iOS, AI-written religious commentary.
+
+## 2. Navigation [D]
+
+Bottom bar, 5 tabs, each an icon in a pill plus a text label underneath. Active tab: sage pill and bold label.
+
+| Tab | Icon | Screen |
+|---|---|---|
+| Today | ☀ sun | Today |
+| Habits | ✓ check | Habits |
+| Calendar | ▦ grid | Calendar |
+| Journal | ✎ pencil | Journal (opens on today) |
+| More | ⋯ | More list → Activities, Reflect, Settings (More stays highlighted on those) |
+
+## 3. Today [D]
+
+Order top to bottom:
+
+1. **Header** — long date (`Monday 5 October`) above `Good morning`. Weather chip on the right (sage background): current temp large, `H 18° · L 9°`, `<condition> · <city>`. Greeting by time of day [OQ-16].
+2. **Faith cards** (hidden when "Show faith cards" is off): Ayah of the day, Hadith of the day.
+3. **Quote of the day** card (always shown; in the design it sits in the same list as the faith cards, so it is hidden with them [OQ-17]).
+4. **Habits** — heading + `N of M`. Pill rows: empty ring or filled sage check, name, streak `3 days` / `1 day` / nothing at 0.
+5. **How do you feel?** — 5 mood dots with labels. Selected dot grows (32→40) with a dark ring and bold label.
+6. **Today's activity** — `+ Log` opens Activities. Rows `06:30  Title  25 min`, sorted by time. Empty: `Nothing logged yet.`
+7. **Journal shortcut** (peach) — `Write today's journal` / `A few lines is enough.`; once an entry exists: `Continue today's journal` / title or first 40 chars of body + `…`. Opens Journal on today.
+8. **Cache note** — `Content and weather updated HH:mm · works offline`.
+
+### Content cards [D]
+- Header: kicker (`Ayah of the day`, `Hadith of the day`, `Quote of the day`) in terracotta, `More` / `Less` toggle on the right. Tapping anywhere on the card toggles. Only one card open at a time.
+- Ayah: Arabic block (Amiri Quran, RTL, light tinted box), English translation, source `Surah <name> <s>:<v> · <translator>`.
+- Hadith: text, source `<collection> · Book <n> · No. <n>`.
+- Quote: text in quotes, author.
+- Expanded: a tag (`App summary — not tafsir` for ayah, `App summary` for hadith, `Encouragement, not scripture` for quote), the note, and a reference line (ayah: `Edition: quran-uthmani + en.sahih · fetched 06:58`; hadith: `Grading per source · sunnah.com reference`).
+
+## 4. Habits [D]
+- `New habit` input + `Add` button.
+- One card per active habit: name, tag `3-day streak` or `Start today`; a 7-day row (6 days ago → `Today`, weekday initials) of rings, filled sage when done, each tappable to toggle that day; footer `Reminder HH:mm` or `No reminder`, buttons `↑` (move up), `Archive`, `Delete`.
+- `Archived` section lists archived habits with `Restore`.
+- Setting a reminder time per habit: not shown in the design [OQ-15].
+- Delete has no confirmation in the prototype; the app asks for confirmation since it deletes history [OQ-18, default: confirm dialog].
+
+## 5. Calendar [D]
+- Title `October 2026`, `‹` `›` buttons. Cannot go past the current month.
+- Weekday header Monday-first `M T W T F S S`.
+- Cells (48 tall, rounded): day number; a mood dot (mood colour) and a small dark journal dot. Today: sage border, bold. Selected: light sage fill. Future days: faded and disabled.
+- Legend `● mood  • journal`.
+- Day detail card: date, mood tag (or `No mood`), Journal (`Title — body` or `No entry for this day.`), `Open journal` button, Habits completed (tags or `None`), Activities (`06:30  Title · 25 min` or `None logged`).
+- `Open journal` opens the Journal on the selected day.
+
+## 6. Journal [D]
+- Header: `‹` prev day, `Journal` / `Mon 5 October`, `›` next day (not past today).
+- `Title (optional)` field in heading font; body textarea with placeholder `What happened today? What are you grateful for?`.
+- Autosaves on every change. Status line: `Saved on this phone · HH:mm`, or `Write something to save this day's entry.` when body is empty.
+- An entry counts only when body is non-empty.
+
+## 7. More [D]
+List of large rows: `Activities — Log what you did, grouped by day`, `Reflect — Your last 30 days`, `Settings — Weather, reminders, faith cards, privacy`.
+
+### Activities [D]
+- Form card: `What did you do?`, `Note (optional)`, start time (defaults to now), duration in `min` (default 30, min 1), button `Log activity` (disabled while title empty) / `Save changes` when editing.
+- List grouped by day, newest first: `Today`, `Yesterday`, then `Monday 28 Sep`. Rows: time, title, `25 min`, `Edit`, `✕` delete.
+- New activities are logged for today; editing keeps the original date [OQ-19].
+
+### Reflect [D]
+- Card `Mood · last 30 days`: 30 bars, height by mood value, colour by mood, grey stub for no mood; `30 days ago` … `Today`.
+- Two stat cards: `N day journal streak`, `N entries this month`.
+- Card `Habit check-offs · 30 days`: per active habit, name, count, progress bar (count/30).
+
+### Settings [D]
+- **Weather:** City override (text), note `Location is used only for weather (Open-Meteo).`, segmented `Celsius | Fahrenheit`. "Use my location" button not in design [OQ-20, default: add a small button].
+- **Content:** switch `Show faith cards`; Translation select `Saheeh International` / `Dr. Mustafa Khattab, The Clear Quran`.
+- **Reminders:** `Daily reminder` time (default 07:30); note `Per-habit reminders are set on each habit.`
+- **Privacy card** (sage): `Your data stays on this phone` / `Journal, mood, habits and activities are never uploaded. No account needed.`
+- **Sources & licenses** card.
+
+## 8. Functional rules
+- FR-1 **Local day key** `YYYY-MM-DD` in device time zone for every record.
+- FR-2 **Stable daily content**: seeded by the day key, changes at local midnight.
+- FR-3 **One journal per day**; saved only when body is non-empty.
+- FR-4 **One mood per day**: rough, low, okay, good, bright (stored 0–4); tapping another replaces it.
+- FR-5 **Streak**: consecutive done days ending today, or ending yesterday if today is not done yet.
+- FR-6 **Counter**: done today / active habits.
+- FR-7 **Journal streak**: same rule as FR-5 over days with a non-empty journal.
+- FR-8 **Offline**: after one fetch, cached content and weather are shown with the update time.
+- FR-9 **Hide faith cards** hides the content cards on Today.
+- FR-10 **Privacy**: personal data never leaves the device; no account.
+- FR-11 Calendar and Journal never navigate into the future.
+
+## 9. Content rules (non-negotiable)
+- CR-1 Never invent an ayah, translation, tafsir, hadith, grading or chain. The design shows placeholders only, by intent.
+- CR-2 Ayah: Uthmani Arabic + selected translation from AlQuran Cloud (`quran-uthmani` + `en.sahih` or `en.khattab` [OQ-11]).
+- CR-3 Hadith: bundled cited dataset, shows collection · book · number and a sunnah.com reference.
+- CR-4 Notes are labelled `App summary` and never shown as tafsir. If no reviewed note exists for an item, the expanded card shows only the reference, no note.
+- CR-5 Quotes: attributed, or `Unknown`; labelled `Encouragement, not scripture`.
+- CR-6 If a source fails with nothing cached, the card says which source failed. Never fill the gap.
