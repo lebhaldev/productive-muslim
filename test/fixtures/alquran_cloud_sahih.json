@@ -1,0 +1,20 @@
+{
+  "code": 200,
+  "status": "OK",
+  "data": [
+    {
+      "number": 6116,
+      "text": "[ fixture arabic text ]",
+      "edition": {"identifier": "quran-uthmani", "language": "ar", "name": "القرآن الكريم برسم العثماني", "englishName": "Uthmani", "format": "text", "type": "quran"},
+      "surah": {"number": 94, "name": "سورة الشرح", "englishName": "Ash-Sharh", "englishNameTranslation": "The Consolation", "numberOfAyahs": 8, "revelationType": "Meccan"},
+      "numberInSurah": 5
+    },
+    {
+      "number": 6116,
+      "text": "[ fixture translation text ]",
+      "edition": {"identifier": "en.sahih", "language": "en", "name": "Saheeh International", "englishName": "Saheeh International", "format": "text", "type": "translation"},
+      "surah": {"number": 94, "name": "سورة الشرح", "englishName": "Ash-Sharh", "englishNameTranslation": "The Consolation", "numberOfAyahs": 8, "revelationType": "Meccan"},
+      "numberInSurah": 5
+    }
+  ]
+}

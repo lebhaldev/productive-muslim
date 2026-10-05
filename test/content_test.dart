@@ -1,0 +1,89 @@
+import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:nurday/data/content/daily_content_service.dart';
+import 'package:nurday/data/content/quran_client.dart';
+import 'package:nurday/data/db/database.dart';
+import 'package:nurday/data/weather/weather.dart';
+
+import 'helpers.dart';
+
+void main() {
+  late AppDatabase db;
+  final now = DateTime(2026, 10, 5, 7);
+  setUp(() => db = memoryDb());
+  tearDown(() => db.close());
+
+  DailyContentService service({bool online = true}) => DailyContentService(
+    db: db,
+    quran: QuranClient(fakeHttp(online: online)),
+    loadAsset: fixtureAssets,
+    now: () => now,
+  );
+
+  test('ayah comes from the API response with source metadata', () async {
+    final c = await service().load('2026-10-05', Translation.sahih);
+    final a = c.ayah.value!;
+    expect(a.arabic, '[ fixture arabic text ]');
+    expect(a.translation, '[ fixture translation text ]');
+    expect(a.source, 'Surah Ash-Sharh 94:5 · Saheeh International');
+    expect(a.sourceUrl, 'https://quran.com/94/5');
+  });
+
+  test('The Clear Quran strips footnote markup', () async {
+    final a = (await service().load(
+      '2026-10-05',
+      Translation.khattab,
+    )).ayah.value!;
+    expect(a.translation, '[ fixture clear translation ]');
+    expect(a.translator, contains('Khattab'));
+  });
+
+  test('hadith and quote carry their citations', () async {
+    final c = await service().load('2026-10-05', Translation.sahih);
+    expect(c.hadith.value!.source, 'Sahih al-Bukhari · Book 2 · No. 13');
+    expect(c.quote.value!.attribution, 'Fixture Author');
+  });
+
+  test('offline: shows the cached ayah, then names the failed source when nothing is cached', () async {
+    await service().load('2026-10-04', Translation.sahih);
+    final offline = await service(online: false)
+        .load('2026-10-05', Translation.sahih);
+    expect(offline.ayah.value, isNotNull);
+    expect(offline.ayah.stale, isTrue);
+
+    final empty = memoryDb();
+    addTearDown(empty.close);
+    final none = await DailyContentService(
+      db: empty,
+      quran: QuranClient(fakeHttp(online: false)),
+      loadAsset: fixtureAssets,
+      now: () => now,
+    ).load('2026-10-05', Translation.sahih);
+    expect(none.ayah.value, isNull);
+    expect(none.ayah.error, contains('AlQuran Cloud'));
+    // Bundled hadith still works offline.
+    expect(none.hadith.value, isNotNull);
+  });
+
+  test('weather parses Open-Meteo and falls back to cache offline', () async {
+    final fresh = await WeatherService(
+      fakeHttp(),
+      db,
+      () => now,
+    ).load(city: 'London');
+    expect(fresh.weather!.place, 'London');
+    expect(fresh.weather!.condition, 'Light cloud');
+    expect(formatTemp(fresh.weather!.nowC, fahrenheit: false), '14°');
+    expect(formatTemp(fresh.weather!.hiC, fahrenheit: true), '65°');
+
+    final cached = await WeatherService(
+      fakeHttp(online: false),
+      db,
+      () => now,
+    ).load(city: 'London');
+    expect(cached.weather!.place, 'London');
+    expect(cached.fetchedAt, now);
+    expect(jsonDecode((await db.cachedWeather())!.payload)['code'], 2);
+  });
+}

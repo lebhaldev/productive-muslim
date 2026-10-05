@@ -1,0 +1,17 @@
+{
+  "note": "General encouragement, not scripture. Each quote lists where it was published; proverbs have no author.",
+  "quotes": [
+    {"text": "Well done is better than well said.", "author": "Benjamin Franklin", "source": "Poor Richard's Almanack, 1737"},
+    {"text": "Lost time is never found again.", "author": "Benjamin Franklin", "source": "Poor Richard's Almanack, 1748"},
+    {"text": "Little strokes fell great oaks.", "author": "Benjamin Franklin", "source": "Poor Richard's Almanack, 1750"},
+    {"text": "Dost thou love life? Then do not squander time, for that's the stuff life is made of.", "author": "Benjamin Franklin", "source": "Poor Richard's Almanack, 1746"},
+    {"text": "The best way out is always through.", "author": "Robert Frost", "source": "A Servant to Servants, 1914"},
+    {"text": "We are what we repeatedly do. Excellence, then, is not an act, but a habit.", "author": "Will Durant", "source": "The Story of Philosophy, 1926 (summarising Aristotle)"},
+    {"text": "A journey of a thousand miles begins with a single step.", "author": "Laozi", "source": "Tao Te Ching, ch. 64 (common English rendering)"},
+    {"text": "Knowing is not enough; we must apply. Willing is not enough; we must do.", "author": "Johann Wolfgang von Goethe", "source": "Wilhelm Meister's Journeyman Years (English translation)"},
+    {"text": "Well begun is half done.", "author": null, "source": "Proverb"},
+    {"text": "Little by little, one travels far.", "author": null, "source": "Proverb"},
+    {"text": "Slow and steady wins the race.", "author": null, "source": "Proverb, after Aesop's The Tortoise and the Hare"},
+    {"text": "Rest is not idleness.", "author": "John Lubbock", "source": "The Use of Life, 1894"}
+  ]
+}
