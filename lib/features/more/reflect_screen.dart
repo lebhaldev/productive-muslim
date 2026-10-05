@@ -34,6 +34,7 @@ class ReflectScreen extends ConsumerWidget {
           children: [
             const Kicker('Mood · last 30 days'),
             Semantics(
+              container: true,
               label:
                   'Mood logged on ${last30.where(moods.containsKey).length} of the last 30 days',
               excludeSemantics: true,

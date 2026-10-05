@@ -9,6 +9,7 @@ import 'package:http/testing.dart';
 import 'package:nurday/app/providers.dart';
 import 'package:nurday/core/clock.dart';
 import 'package:nurday/data/db/database.dart';
+import 'package:nurday/data/reminders.dart';
 
 String fixture(String name) => File('test/fixtures/$name').readAsStringSync();
 
@@ -65,4 +66,10 @@ List<Override> testOverrides(
 
 extension on String {
   List<int> toUtf8() => utf8.encode(this);
+}
+
+class FakeScheduler implements ReminderScheduler {
+  final synced = <List<Reminder>>[];
+  @override
+  Future<void> sync(List<Reminder> plan) async => synced.add(plan);
 }

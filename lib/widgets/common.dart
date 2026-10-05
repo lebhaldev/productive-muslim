@@ -32,7 +32,11 @@ class ScreenTitle extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Semantics(header: true, child: Text(text, style: heading(28))),
+          child: Semantics(
+            container: true,
+            header: true,
+            child: Text(text, style: heading(28)),
+          ),
         ),
         ?trailing,
       ],

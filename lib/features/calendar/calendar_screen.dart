@@ -181,6 +181,7 @@ class _DayCell extends ConsumerWidget {
       if (hasJournal) 'has journal',
     ].join(', ');
     return Semantics(
+      container: true,
       button: !future,
       selected: day == selected,
       label: label,
@@ -200,34 +201,41 @@ class _DayCell extends ConsumerWidget {
             onTap: future
                 ? null
                 : () => ref.read(selectedDayProvider.notifier).set(day),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '$number',
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: isToday ? FontWeight.w700 : FontWeight.w400,
+            // Day numbers shrink to fit the cell at very large text sizes.
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '$number',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: isToday ? FontWeight.w700 : FontWeight.w400,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 2),
-                SizedBox(
-                  height: 8,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _dot(
-                        8,
-                        mood == null
-                            ? Colors.transparent
-                            : AppColors.moods[mood!],
-                      ),
-                      const SizedBox(width: 3),
-                      _dot(4, hasJournal ? AppColors.text : Colors.transparent),
-                    ],
+                  const SizedBox(height: 2),
+                  SizedBox(
+                    height: 8,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _dot(
+                          8,
+                          mood == null
+                              ? Colors.transparent
+                              : AppColors.moods[mood!],
+                        ),
+                        const SizedBox(width: 3),
+                        _dot(
+                          4,
+                          hasJournal ? AppColors.text : Colors.transparent,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

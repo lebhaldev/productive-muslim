@@ -9,6 +9,7 @@ Built with Flutter from the Claude Design prototype in [`docs/design/`](docs/des
 - **Habits**: add, archive, restore, reorder, delete; last 7 days tappable; optional reminder time.
 - **Calendar**: month grid with mood and journal marks; tap a day to see its journal, mood, habits and activities.
 - **Journal**: one entry per day, autosaved.
+- **Reminders**: a daily reminder and optional per-habit reminders, as local notifications.
 - **More**: Activities (log, edit, delete, grouped by day), Reflect (30-day mood, journal streak, habit counts), Settings.
 
 ## Run it

@@ -17,6 +17,9 @@ Nurday contacts only these services:
 
 Hadith and quotes are bundled inside the app and need no network.
 
+## Notifications
+Reminders are scheduled on the phone with Android's local notifications. Nothing is sent to a server.
+
 ## No tracking
 Nurday contains no analytics, advertising or crash-reporting SDKs.
 

@@ -9,6 +9,7 @@ import '../data/content/content_models.dart';
 import '../data/content/daily_content_service.dart';
 import '../data/content/quran_client.dart';
 import '../data/db/database.dart';
+import '../data/reminders.dart';
 import '../data/weather/weather.dart';
 
 final clockProvider = Provider<Clock>((ref) => const Clock());
@@ -91,6 +92,7 @@ class AppSettings {
   double? get lat => double.tryParse(raw['lat'] ?? '');
   double? get lon => double.tryParse(raw['lon'] ?? '');
   String get dailyReminder => raw['dailyReminder'] ?? '07:30';
+  bool get dailyReminderOn => raw['dailyReminderOn'] != 'false';
 }
 
 final settingsProvider = StreamProvider<AppSettings>(
@@ -158,3 +160,21 @@ final editingActivityProvider = NotifierProvider<EditingActivity, Activity?>(
 /// Today's day key for widgets.
 String watchToday(WidgetRef ref) =>
     ref.watch(todayProvider).value ?? dayKey(ref.read(clockProvider).now());
+
+final reminderSchedulerProvider = Provider<ReminderScheduler>(
+  (ref) => LocalReminderScheduler(),
+);
+
+/// Reminders implied by the current settings and habits.
+final reminderPlanProvider = Provider<List<Reminder>?>((ref) {
+  final settings = ref.watch(settingsProvider).value;
+  final habits = ref.watch(habitsProvider).value;
+  if (settings == null || habits == null) return null;
+  return planReminders(
+    dailyTime: settings.dailyReminderOn ? settings.dailyReminder : null,
+    habits: [
+      for (final h in habits)
+        (id: h.id, name: h.name, time: h.reminderTime, archived: h.archived),
+    ],
+  );
+});

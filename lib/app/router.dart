@@ -98,32 +98,42 @@ class AppShell extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: SafeArea(bottom: false, child: shell),
-      bottomNavigationBar: Container(
-        color: AppColors.surface,
-        padding: EdgeInsets.fromLTRB(
-          6,
-          8,
-          6,
-          8 + MediaQuery.paddingOf(context).bottom,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            for (var i = 0; i < _tabs.length; i++)
-              _NavButton(
-                tab: _tabs[i],
-                selected: shell.currentIndex == i,
-                onTap: () {
-                  // Journal tab always opens on today, as in the design.
-                  if (i == 3) {
-                    ref
-                        .read(selectedDayProvider.notifier)
-                        .set(dayKey(ref.read(clockProvider).now()));
-                  }
-                  shell.goBranch(i, initialLocation: i == shell.currentIndex);
-                },
-              ),
-          ],
+      // Nav labels scale up to 1.4x; larger sizes would push five tabs off
+      // screen, and each tab still has its spoken label.
+      bottomNavigationBar: MediaQuery.withClampedTextScaling(
+        maxScaleFactor: 1.4,
+        child: Container(
+          color: AppColors.surface,
+          padding: EdgeInsets.fromLTRB(
+            6,
+            8,
+            6,
+            8 + MediaQuery.paddingOf(context).bottom,
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              for (var i = 0; i < _tabs.length; i++)
+                Expanded(
+                  child: _NavButton(
+                    tab: _tabs[i],
+                    selected: shell.currentIndex == i,
+                    onTap: () {
+                      // Journal tab always opens on today, as in the design.
+                      if (i == 3) {
+                        ref
+                            .read(selectedDayProvider.notifier)
+                            .set(dayKey(ref.read(clockProvider).now()));
+                      }
+                      shell.goBranch(
+                        i,
+                        initialLocation: i == shell.currentIndex,
+                      );
+                    },
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -143,6 +153,7 @@ class _NavButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
+      container: true,
       button: true,
       selected: selected,
       label: tab.label,
@@ -152,7 +163,7 @@ class _NavButton extends StatelessWidget {
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadii.lg),
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minWidth: 64, minHeight: 48),
+          constraints: const BoxConstraints(minHeight: 48),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -171,6 +182,9 @@ class _NavButton extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 tab.label,
+                maxLines: 1,
+                overflow: TextOverflow.fade,
+                softWrap: false,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: selected ? FontWeight.w700 : FontWeight.w400,

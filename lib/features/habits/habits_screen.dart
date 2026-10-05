@@ -227,6 +227,7 @@ class _DayRing extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final date = parseDayKey(day);
     return Semantics(
+      container: true,
       button: true,
       checked: done,
       label:

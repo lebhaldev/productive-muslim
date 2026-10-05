@@ -107,6 +107,7 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
                   children: [
                     Text('Journal', style: meta(size: 13)),
                     Semantics(
+                      container: true,
                       header: true,
                       child: Text(
                         DateFormat('EEE d MMMM').format(parseDayKey(sel)),

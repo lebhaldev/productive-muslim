@@ -162,14 +162,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 const Expanded(
                   child: Text('Daily reminder', style: TextStyle(fontSize: 15)),
                 ),
+                Switch(
+                  value: s.dailyReminderOn,
+                  activeTrackColor: AppColors.sage600,
+                  onChanged: (v) => _put('dailyReminderOn', '$v'),
+                ),
+                const SizedBox(width: 8),
                 OutlinedButton(
-                  onPressed: () async {
-                    final t = await showTimePicker(
-                      context: context,
-                      initialTime: parseHhmm(s.dailyReminder),
-                    );
-                    if (t != null) await _put('dailyReminder', hhmm(t));
-                  },
+                  onPressed: !s.dailyReminderOn
+                      ? null
+                      : () async {
+                          final t = await showTimePicker(
+                            context: context,
+                            initialTime: parseHhmm(s.dailyReminder),
+                          );
+                          if (t != null) await _put('dailyReminder', hhmm(t));
+                        },
                   child: Text(s.dailyReminder),
                 ),
               ],

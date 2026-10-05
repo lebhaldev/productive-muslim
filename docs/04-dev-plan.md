@@ -25,7 +25,7 @@ Each phase ends with `flutter analyze` clean, tests green, and a short entry in 
 - Hide-faith-cards setting; weather via location or typed city.
 - TR-1/TR-2 tests (no hardcoded scripture).
 
-## Phase 4 — Reminders and polish
+## Phase 4 — Reminders and polish (done except dark theme)
 - Daily and per-habit reminders, Reflect screen, accessibility pass, app icon, splash, dark theme (once designed).
 
 ## Phase 5 — Play-ready, stop before submit

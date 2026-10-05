@@ -70,6 +70,7 @@ class _Header extends ConsumerWidget {
               ),
               const SizedBox(height: 2),
               Semantics(
+                container: true,
                 header: true,
                 child: Text(greetingFor(hour), style: heading(28)),
               ),
@@ -77,7 +78,7 @@ class _Header extends ConsumerWidget {
           ),
         ),
         const SizedBox(width: 12),
-        const _WeatherChip(),
+        const Flexible(child: _WeatherChip()),
       ],
     );
   }
@@ -108,10 +109,12 @@ class _WeatherChip extends ConsumerWidget {
                     Text(
                       wx?.error ?? 'Loading weather',
                       style: const TextStyle(fontSize: 11, color: color),
+                      textAlign: TextAlign.right,
                     ),
                   ],
                 )
               : Semantics(
+                  container: true,
                   label:
                       'Weather ${w.place}: ${formatTemp(w.nowC, fahrenheit: s.fahrenheit)}, '
                       '${w.condition}',
@@ -126,10 +129,12 @@ class _WeatherChip extends ConsumerWidget {
                         'H ${formatTemp(w.hiC, fahrenheit: s.fahrenheit)} · '
                         'L ${formatTemp(w.loC, fahrenheit: s.fahrenheit)}',
                         style: const TextStyle(fontSize: 11, color: color),
+                        textAlign: TextAlign.right,
                       ),
                       Text(
                         '${w.condition} · ${w.place}',
                         style: const TextStyle(fontSize: 11, color: color),
+                        textAlign: TextAlign.right,
                       ),
                     ],
                   ),
@@ -150,7 +155,11 @@ class _SectionHeader extends StatelessWidget {
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Expanded(
-        child: Semantics(header: true, child: Text(title, style: heading(19))),
+        child: Semantics(
+          container: true,
+          header: true,
+          child: Text(title, style: heading(19)),
+        ),
       ),
       ?trailing,
     ],
@@ -215,6 +224,7 @@ class _HabitRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
+      container: true,
       button: true,
       checked: done,
       label: '${done ? 'Undo' : 'Mark done'} $name',
@@ -321,6 +331,7 @@ class MoodDot extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = selected ? 40.0 : 32.0;
     return Semantics(
+      container: true,
       button: true,
       selected: selected,
       label: 'Mood ${moodLabel(value)}',
