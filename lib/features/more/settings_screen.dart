@@ -142,7 +142,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               isExpanded: true,
               decoration: const InputDecoration(labelText: 'Translation'),
               items: [
-                for (final t in Translation.values)
+                for (final t in Translation.values.where((t) => t.offered))
                   DropdownMenuItem(
                     value: t,
                     child: Text(t.label, overflow: TextOverflow.ellipsis),

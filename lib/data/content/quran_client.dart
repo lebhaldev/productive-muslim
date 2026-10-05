@@ -7,13 +7,17 @@ import 'content_models.dart';
 /// Translations offered in Settings (OQ-11).
 enum Translation {
   sahih('Saheeh International'),
-  khattab('Dr. Mustafa Khattab, The Clear Quran');
+  khattab('Dr. Mustafa Khattab, The Clear Quran', offered: false);
 
-  const Translation(this.label);
+  const Translation(this.label, {this.offered = true});
   final String label;
 
+  /// Shown in Settings. The Clear Quran is hidden until its licence and the
+  /// Quran.com endpoint are confirmed (review S1, R4).
+  final bool offered;
+
   static Translation parse(String? id) => Translation.values.firstWhere(
-    (t) => t.name == id,
+    (t) => t.name == id && t.offered,
     orElse: () => Translation.sahih,
   );
 }

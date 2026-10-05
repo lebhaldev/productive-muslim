@@ -70,6 +70,17 @@ void main() {
         findsOneWidget,
       );
       expect(find.text('Sahih al-Bukhari · Book 2 · No. 13'), findsOneWidget);
+      // Expanded: reference only, no made-up grading or summary (CR-1, CR-4).
+      await tester.tap(find.text('[ fixture hadith text ]'));
+      await settle(tester);
+      expect(
+        find.text(
+          'Belief · English: Fixture Translator · https://sunnah.com/bukhari:13',
+        ),
+        findsOneWidget,
+      );
+      expect(find.textContaining('Grading'), findsNothing);
+      expect(find.textContaining('App summary'), findsNothing);
       expect(find.text('Fixture Author'), findsOneWidget);
       await closeApp(tester, db);
     },
@@ -177,4 +188,25 @@ void main() {
     expect(find.text('Habits'), findsWidgets);
     await closeApp(tester, db);
   });
+
+  testWidgets(
+    'offline with an older cached ayah says it is the last saved one',
+    (tester) async {
+      final db = memoryDb();
+      await tester.runAsync(
+        () => db.putContent(
+          '2026-10-03',
+          'ayah:sahih',
+          '{"ref":"94:5","surahName":"Ash-Sharh","arabic":"[ fixture arabic text ]",'
+              '"translation":"[ fixture translation text ]","translator":"Saheeh International",'
+              '"edition":"quran-uthmani + en.sahih","sourceUrl":"https://quran.com/94/5"}',
+          DateTime(2026, 10, 3, 6, 58),
+        ),
+      );
+      await pumpApp(tester, db: db, online: false);
+      expect(find.text('[ fixture translation text ]'), findsOneWidget);
+      expect(find.text('Last saved ayah · 3 Oct'), findsOneWidget);
+      await closeApp(tester, db);
+    },
+  );
 }

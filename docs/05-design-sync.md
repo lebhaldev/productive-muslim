@@ -20,6 +20,7 @@ The design is made in Claude Design (`Nurday.dc.html`) by a separate agent that 
 | Date | Design input | What changed in specs |
 |---|---|---|
 | 2026-10-05 | Screenshot of Today (hadith → journal) + design agent notes | Initial specs. Palette switched to sage/terracotta, no gold. Placeholders for scripture confirmed as intended. |
+| 2026-10-05 | Reviewer thread findings (review/01, review/02) | No grading line (source has none); no "App summary" until a person reviews notes; offline ayah labelled "Last saved ayah"; The Clear Quran hidden until licence and endpoint confirmed (spec rule wins over design, DS-2); 120 hadith incl. Sahih Muslim without links. |
 | 2026-10-05 | Full export `design/2026-10-05-Nurday.dc.html` (all tabs) | 01 rewritten to v0.2 with every screen; 03 tokens mapped to Organic DS names; OQ-1–8, 13, 14 closed. |
 
 ## Conflicts between brief and design (resolved)

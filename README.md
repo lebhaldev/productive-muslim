@@ -32,14 +32,13 @@ Nurday never generates religious text. Everything shown comes from these sources
 | Content | Source | Licence |
 |---|---|---|
 | Ayah, Arabic Uthmani + Saheeh International | [AlQuran Cloud API](https://alquran.cloud/api) (`quran-uthmani`, `en.sahih`) | Per AlQuran Cloud terms |
-| Ayah, The Clear Quran (optional) | [Quran.com API v4](https://api-docs.quran.com/) translation 131 | Per Quran.com terms |
-| Daily ayah pool | `assets/content/ayah_refs.json`, references only | — |
-| Hadith | 24 hadith from Sahih al-Bukhari, English text copied verbatim from [fawazahmed0/hadith-api](https://github.com/fawazahmed0/hadith-api) edition `eng-bukhari`, with links to sunnah.com | Unlicense (public domain), see `assets/content/HADITH-LICENSE.txt` |
-| Quotes | `assets/content/quotes.json`, each with author and publication | Public domain / short quotation |
+| Daily ayah pool | `assets/content/ayah_refs.json`, 120 references only, validated against verse counts | — |
+| Hadith | 120 hadith (70 Sahih al-Bukhari, 50 Sahih Muslim), English text copied verbatim from [fawazahmed0/hadith-api](https://github.com/fawazahmed0/hadith-api) and verified byte for byte. Translators: Muhammad Muhsin Khan (Bukhari), Abdul Hamid Siddiqui (Muslim). Bukhari items link to sunnah.com; Muslim items show the Abdul-Baqi number without a link. No grading is shown because the source has none. | Dataset: Unlicense (see `assets/content/HADITH-LICENSE.txt`). The translations themselves may be under their translators' copyright: confirm before a Play release. |
+| Quotes | `assets/content/quotes.json`, 34 quotes, each with author and work (proverbs show Unknown) | Public domain / short quotation |
 | Weather | [Open-Meteo](https://open-meteo.com) | CC BY 4.0 |
 | Fonts | Amiri Quran, Fraunces | SIL Open Font License |
 
-Explanations ("App summary") are not shipped yet: the expanded card says no summary has been reviewed, rather than inventing one.
+No explanations ship in v1. An expanded card shows only its reference; explanations will be added only after a person has reviewed them. The Clear Quran translation is coded but hidden until its licence and endpoint are confirmed.
 
 ## Offline behaviour
 - Journal, mood, habits and activities live in a local SQLite database (Drift) and work with no network.

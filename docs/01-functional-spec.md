@@ -99,7 +99,7 @@ List of large rows: `Activities — Log what you did, grouped by day`, `Reflect 
 ## 9. Content rules (non-negotiable)
 - CR-1 Never invent an ayah, translation, tafsir, hadith, grading or chain. The design shows placeholders only, by intent.
 - CR-2 Ayah: Uthmani Arabic + selected translation from AlQuran Cloud (`quran-uthmani` + `en.sahih` or `en.khattab` [OQ-11]).
-- CR-3 Hadith: bundled cited dataset, shows collection · book · number and a sunnah.com reference.
-- CR-4 Notes are labelled `App summary` and never shown as tafsir. If no reviewed note exists for an item, the expanded card shows only the reference, no note.
+- CR-3 Hadith: bundled cited dataset (120 items, Bukhari + Muslim), shows collection · book · number, the translator and, for Bukhari only, a sunnah.com link. No grading line: the source has none.
+- CR-4 v1 ships no explanations. The expanded card shows only the reference. A note may be added later only when a person has reviewed it, labelled `App summary`, never as tafsir.
 - CR-5 Quotes: attributed, or `Unknown`; labelled `Encouragement, not scripture`.
 - CR-6 If a source fails with nothing cached, the card says which source failed. Never fill the gap.

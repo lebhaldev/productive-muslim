@@ -11,7 +11,7 @@ abstract final class AppColors {
   static const neutral400 = Color(0xFFC0B6A5);
   static const neutral500 = Color(0xFF9E9483);
   static const neutral600 = Color(0xFF7D7465);
-  static const neutral700 = Color(0xFF6B6255);
+  static const neutral700 = Color(0xFF665D50); // 4.5:1+ on surface
   static const neutral800 = Color(0xFF4A433A);
   static const text = Color(0xFF201E1D);
   static const divider = Color(0xFFD9CCB6);

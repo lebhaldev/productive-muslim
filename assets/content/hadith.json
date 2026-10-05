@@ -1,0 +1,1207 @@
+{
+ "source": "https://github.com/fawazahmed0/hadith-api (editions eng-bukhari, eng-muslim, branch 1). Text copied verbatim and verified against the source files; not edited. Selection and verification: review/data in the project files.",
+ "license": "Unlicense (public domain) for the dataset; English translations by Muhammad Muhsin Khan (Bukhari) and Abdul Hamid Siddiqui (Muslim).",
+ "notes": "No grades: the source has none, so the app shows no grading. Sahih Muslim numbers are Abdul-Baqi numbers and have no link because sunnah.com URLs were not verified.",
+ "hadiths": [
+  {
+   "id": "bukhari:6465",
+   "collection": "Sahih al-Bukhari",
+   "book": 81,
+   "bookName": "To make the Heart Tender (Ar-Riqaq)",
+   "number": "6465",
+   "text": "Narrated `Aisha:The Prophet (ﷺ) was asked, \"What deeds are loved most by Allah?\" He said, \"The most regular constant deeds even though they may be few.\" He added, 'Don't take upon yourselves, except the deeds which are within your ability",
+   "sourceUrl": "https://sunnah.com/bukhari:6465",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6035",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6035",
+   "text": "Narrated Masruq:We were sitting with `Abdullah bin `Amr who was narrating to us (Hadith): He said, \"Allah's Messenger (ﷺ) was neither a Fahish nor a Mutafahhish, and he used to say, 'The best among you are the best in character (having good manners)",
+   "sourceUrl": "https://sunnah.com/bukhari:6035",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6467",
+   "collection": "Sahih al-Bukhari",
+   "book": 81,
+   "bookName": "To make the Heart Tender (Ar-Riqaq)",
+   "number": "6467",
+   "text": "Narrated `Aisha:The Prophet (ﷺ) said, \"Do good deeds properly, sincerely and moderately, and receive good news because one's good deeds will not make him enter Paradise.\" They asked, \"Even you, O Allah's Messenger (ﷺ)?\" He said, \"Even I, unless and until Allah bestows His pardon and Mercy on me",
+   "sourceUrl": "https://sunnah.com/bukhari:6467",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:2444",
+   "collection": "Sahih al-Bukhari",
+   "book": 46,
+   "bookName": "Oppressions",
+   "number": "2444",
+   "text": "Narrated Anas:Allah's Messenger (ﷺ) said, \"Help your brother, whether he is an oppressor or he is an oppressed one. People asked, \"O Allah's Messenger (ﷺ)! It is all right to help him if he is oppressed, but how should we help him if he is an oppressor?\" The Prophet (ﷺ) said, \"By preventing him from oppressing others",
+   "sourceUrl": "https://sunnah.com/bukhari:2444",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:7376",
+   "collection": "Sahih al-Bukhari",
+   "book": 97,
+   "bookName": "Oneness, Uniqueness of Allah (Tawheed)",
+   "number": "7376",
+   "text": "Narrated Jarir bin `Abdullah:Allah's Messenger (ﷺ) said, \"Allah will not be merciful to those who are not merciful to mankind",
+   "sourceUrl": "https://sunnah.com/bukhari:7376",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:5028",
+   "collection": "Sahih al-Bukhari",
+   "book": 66,
+   "bookName": "Virtues of the Qur'an",
+   "number": "5028",
+   "text": "Narrated `Uthman bin `Affan:The Prophet (ﷺ) said, \"The most superior among you (Muslims) are those who learn the Qur'an and teach it",
+   "sourceUrl": "https://sunnah.com/bukhari:5028",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:7422",
+   "collection": "Sahih al-Bukhari",
+   "book": 97,
+   "bookName": "Oneness, Uniqueness of Allah (Tawheed)",
+   "number": "7422",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"When Allah had finished His creation, He wrote over his Throne: 'My Mercy preceded My Anger",
+   "sourceUrl": "https://sunnah.com/bukhari:7422",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6664",
+   "collection": "Sahih al-Bukhari",
+   "book": 83,
+   "bookName": "Oaths and Vows",
+   "number": "6664",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"Allah forgives my followers those (evil deeds) their souls may whisper or suggest to them as long as they do not act (on it) or speak",
+   "sourceUrl": "https://sunnah.com/bukhari:6664",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:2072",
+   "collection": "Sahih al-Bukhari",
+   "book": 34,
+   "bookName": "Sales and Trade",
+   "number": "2072",
+   "text": "Narrated Al-Miqdam:The Prophet (ﷺ) said, \"Nobody has ever eaten a better meal than that which one has earned by working with one's own hands. The Prophet of Allah, David (ﷺ) used to eat from the earnings of his manual labor",
+   "sourceUrl": "https://sunnah.com/bukhari:2072",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:3480",
+   "collection": "Sahih al-Bukhari",
+   "book": 60,
+   "bookName": "Prophets",
+   "number": "3480",
+   "text": "Narrated Abu Huraira:Allah's Messenger (ﷺ) said, \"A man used to give loans to the people and used to say to his servant, 'If the debtor is poor, forgive him, so that Allah may forgive us.' So when he met Allah (after his death), Allah forgave him",
+   "sourceUrl": "https://sunnah.com/bukhari:3480",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:42",
+   "collection": "Sahih al-Bukhari",
+   "book": 2,
+   "bookName": "Belief",
+   "number": "42",
+   "text": "Narrated Abu Huraira: Allah's Messenger (ﷺ) said, \"If any one of you improves (follows strictly) his Islamic religion then his good deeds will be rewarded ten times to seven hundred times for each good deed and a bad deed will be recorded as it is",
+   "sourceUrl": "https://sunnah.com/bukhari:42",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:7235",
+   "collection": "Sahih al-Bukhari",
+   "book": 94,
+   "bookName": "Wishes",
+   "number": "7235",
+   "text": "Narrated Sa`d bin Ubaid:(the Maula of `Abdur-Rahman bin Azhar) Allah's Messenger (ﷺ) said, \"None of you should long for death, for if he is a good man, he may increase his good deeds, and if he is an evil-doer, he may stop the evil deeds and repent",
+   "sourceUrl": "https://sunnah.com/bukhari:7235",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6339",
+   "collection": "Sahih al-Bukhari",
+   "book": 80,
+   "bookName": "Invocations",
+   "number": "6339",
+   "text": "Narrated Abu Huraira:Allah's Messenger (ﷺ) said, \"None of you should say: 'O Allah, forgive me if You wish; O Allah, be merciful to me if You wish,' but he should always appeal to Allah with determination, for nobody can force Allah to do something against His Will",
+   "sourceUrl": "https://sunnah.com/bukhari:6339",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:1409",
+   "collection": "Sahih al-Bukhari",
+   "book": 24,
+   "bookName": "Obligatory Charity Tax (Zakat)",
+   "number": "1409",
+   "text": "Narrated Ibn Mas`ud:I heard the Prophet (ﷺ) saying, \"There is no envy except in two: a person whom Allah has given wealth and he spends it in the right way, and a person whom Allah has given wisdom (i.e. religious knowledge) and he gives his decisions accordingly and teaches it to the others",
+   "sourceUrl": "https://sunnah.com/bukhari:1409",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:1302",
+   "collection": "Sahih al-Bukhari",
+   "book": 23,
+   "bookName": "Funerals (Al-Janaa'iz)",
+   "number": "1302",
+   "text": "Narrated Anas:The Prophet (ﷺ) said, \"The real patience is at the first stroke of a calamity",
+   "sourceUrl": "https://sunnah.com/bukhari:1302",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:4006",
+   "collection": "Sahih al-Bukhari",
+   "book": 64,
+   "bookName": "Military Expeditions led by the Prophet (pbuh) (Al-Maghaazi)",
+   "number": "4006",
+   "text": "Narrated Abu Masud Al-Badri:The Prophet (ﷺ) said, \"A man's spending on his family is a deed of charity",
+   "sourceUrl": "https://sunnah.com/bukhari:4006",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6013",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6013",
+   "text": "Narrated Jarir bin `Abdullah:The Prophet (ﷺ) said, \"He who is not merciful to others, will not be treated mercifully",
+   "sourceUrl": "https://sunnah.com/bukhari:6013",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:1426",
+   "collection": "Sahih al-Bukhari",
+   "book": 24,
+   "bookName": "Obligatory Charity Tax (Zakat)",
+   "number": "1426",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"The best charity is that which is practiced by a wealthy person. And start giving first to your dependents",
+   "sourceUrl": "https://sunnah.com/bukhari:1426",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:646",
+   "collection": "Sahih al-Bukhari",
+   "book": 10,
+   "bookName": "Call to Prayers (Adhaan)",
+   "number": "646",
+   "text": "Narrated Abu Sa`id Al-Khudri:The Prophet (ﷺ) said, \"The prayer in congregation is twenty five times superior to the prayer offered by a person alone",
+   "sourceUrl": "https://sunnah.com/bukhari:646",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:2076",
+   "collection": "Sahih al-Bukhari",
+   "book": 34,
+   "bookName": "Sales and Trade",
+   "number": "2076",
+   "text": "Narrated Jabir bin `Abdullah:Allah's Messenger (ﷺ) said, \"May Allah's mercy be on him who is lenient in his buying, selling, and in demanding back his money",
+   "sourceUrl": "https://sunnah.com/bukhari:2076",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6307",
+   "collection": "Sahih al-Bukhari",
+   "book": 80,
+   "bookName": "Invocations",
+   "number": "6307",
+   "text": "Narrated Abu Huraira:I heard Allah's Messenger (ﷺ) saying.\" By Allah! I ask for forgiveness from Allah and turn to Him in repentance more than seventy times a day",
+   "sourceUrl": "https://sunnah.com/bukhari:6307",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6114",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6114",
+   "text": "Narrated Abu Huraira:Allah's Messenger (ﷺ) said, \"The strong is not the one who overcomes the people by his strength, but the strong is the one who controls himself while in anger",
+   "sourceUrl": "https://sunnah.com/bukhari:6114",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6012",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6012",
+   "text": "Narrated Anas bin Malik:The Prophet (ﷺ) said, \"If any Muslim plants any plant and a human being or an animal eats of it, he will be rewarded as if he had given that much in charity",
+   "sourceUrl": "https://sunnah.com/bukhari:6012",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6125",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6125",
+   "text": "Narrated Anas bin Malik:The Prophet (ﷺ) said, \"Make things easy for the people, and do not make it difficult for them, and make them calm (with glad tidings) and do not repulse (them)",
+   "sourceUrl": "https://sunnah.com/bukhari:6125",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6170",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6170",
+   "text": "Narrated Abu Musa:It was said to the Prophet; , \"A man may love some people but he cannot catch up with their good deeds?\" The Prophet (ﷺ) said, \"Everyone will be with those whom he loves",
+   "sourceUrl": "https://sunnah.com/bukhari:6170",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:2566",
+   "collection": "Sahih al-Bukhari",
+   "book": 51,
+   "bookName": "Gifts",
+   "number": "2566",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"O Muslim women! None of you should look down upon the gift sent by her female neighbor even if it were the trotters of the sheep (fleshless part of legs)",
+   "sourceUrl": "https://sunnah.com/bukhari:2566",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:5998",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "5998",
+   "text": "Narrated `Aisha:A bedouin came to the Prophet (ﷺ) and said, \"You (people) kiss the boys! We don't kiss them.\" The Prophet said, \"I cannot put mercy in your heart after Allah has taken it away from it",
+   "sourceUrl": "https://sunnah.com/bukhari:5998",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:55",
+   "collection": "Sahih al-Bukhari",
+   "book": 2,
+   "bookName": "Belief",
+   "number": "55",
+   "text": "Narrated Abu Mas'ud: The Prophet (ﷺ) said, \"If a man spends on his family (with the intention of having a reward from Allah) sincerely for Allah's sake then it is a (kind of) alms-giving in reward for him",
+   "sourceUrl": "https://sunnah.com/bukhari:55",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:2374",
+   "collection": "Sahih al-Bukhari",
+   "book": 42,
+   "bookName": "Distribution of Water",
+   "number": "2374",
+   "text": "Narrated Abu Huraira:Allah's Messenger (ﷺ) said, \"No doubt, you had better gather a bundle of wood and carry it on your back (and earn your living thereby) rather than ask somebody who may give you or not",
+   "sourceUrl": "https://sunnah.com/bukhari:2374",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:2591",
+   "collection": "Sahih al-Bukhari",
+   "book": 51,
+   "bookName": "Gifts",
+   "number": "2591",
+   "text": "Narrated Asma:Allah's Messenger (ﷺ) said, \"Give (in charity) and do not give reluctantly lest Allah should give you in a limited amount; and do not withhold your money lest Allah should withhold it from you",
+   "sourceUrl": "https://sunnah.com/bukhari:2591",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6439",
+   "collection": "Sahih al-Bukhari",
+   "book": 81,
+   "bookName": "To make the Heart Tender (Ar-Riqaq)",
+   "number": "6439",
+   "text": "Narrated Anas bin Malik:Allah's Messenger (ﷺ) said, \"If Adam's son had a valley full of gold, he would like to have two valleys, for nothing fills his mouth except dust. And Allah forgives him who repents to Him",
+   "sourceUrl": "https://sunnah.com/bukhari:6439",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:2387",
+   "collection": "Sahih al-Bukhari",
+   "book": 43,
+   "bookName": "Loans, Payment of Loans, Freezing of Property, Bankruptcy",
+   "number": "2387",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"Whoever takes the money of the people with the intention of repaying it, Allah will repay it on his behalf, and whoever takes it in order to spoil it, then Allah will spoil him",
+   "sourceUrl": "https://sunnah.com/bukhari:2387",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6057",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6057",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"Whoever does not give up false statements (i.e. telling lies), and evil deeds, and speaking bad words to others, Allah is not in need of his (fasting) leaving his food and drink",
+   "sourceUrl": "https://sunnah.com/bukhari:6057",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6028",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6028",
+   "text": "Narrated Abu Musa: Whenever a beggar or a person in need came to the Prophet, the Prophet would say \"Help and recommend him and you will receive the reward for it, and Allah will bring about what he will through His Prophet's tongue",
+   "sourceUrl": "https://sunnah.com/bukhari:6028",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:37",
+   "collection": "Sahih al-Bukhari",
+   "book": 2,
+   "bookName": "Belief",
+   "number": "37",
+   "text": "Narrated Abu Huraira: Allah's Messenger (ﷺ) said: \"Whoever establishes prayers during the nights of Ramadan faithfully out of sincere faith and hoping to attain Allah's rewards (not for showing off), all his past sins will be forgiven",
+   "sourceUrl": "https://sunnah.com/bukhari:37",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:703",
+   "collection": "Sahih al-Bukhari",
+   "book": 10,
+   "bookName": "Call to Prayers (Adhaan)",
+   "number": "703",
+   "text": "Narrated Abu Huraira:Allah's Messenger (ﷺ) said, \"If anyone of you leads the people in the prayer, he should shorten it for amongst them are the weak, the sick and the old; and if anyone among you prays alone then he may prolong (the prayer) as much as he wishes",
+   "sourceUrl": "https://sunnah.com/bukhari:703",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:212",
+   "collection": "Sahih al-Bukhari",
+   "book": 4,
+   "bookName": "Ablutions (Wudu')",
+   "number": "212",
+   "text": "Narrated `Aisha:Allah's Messenger (ﷺ) said, \"If anyone of you feels drowsy while praying he should go to bed (sleep) till his slumber is over because in praying while drowsy one does not know whether one is asking for forgiveness or for a bad thing for oneself",
+   "sourceUrl": "https://sunnah.com/bukhari:212",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:5927",
+   "collection": "Sahih al-Bukhari",
+   "book": 77,
+   "bookName": "Dress",
+   "number": "5927",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"(Allah said), 'Every good deed of Adam's son is for him except fasting; it is for Me. and I shall reward (the fasting person) for it.' Verily, the smell of the mouth of a fasting person is better to Allah than the smell of musk",
+   "sourceUrl": "https://sunnah.com/bukhari:5927",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:4937",
+   "collection": "Sahih al-Bukhari",
+   "book": 65,
+   "bookName": "Prophetic Commentary on the Qur'an (Tafseer of the Prophet (pbuh))",
+   "number": "4937",
+   "text": "Narrated Aisha:The Prophet (ﷺ) said, \"Such a person as recites the Qur'an and masters it by heart, will be with the noble righteous scribes (in Heaven). And such a person exerts himself to learn the Qur'an by heart, and recites it with great difficulty, will have a double reward",
+   "sourceUrl": "https://sunnah.com/bukhari:4937",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6136",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6136",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"Whoever believes in Allah and the Last Day, should not hurt his neighbor and whoever believes in Allah and the Last Day, should serve his guest generously and whoever believes in Allah and the Last Day, should speak what is good or keep silent",
+   "sourceUrl": "https://sunnah.com/bukhari:6136",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:9",
+   "collection": "Sahih al-Bukhari",
+   "book": 2,
+   "bookName": "Belief",
+   "number": "9",
+   "text": "Narrated Abu Huraira: The Prophet (ﷺ) said, \"Faith (Belief) consists of more than sixty branches (i.e. parts). And Haya (This term \"Haya\" covers a large number of concepts which are to be taken together; amongst them are self respect, modesty, bashfulness, and scruple, etc.) is a part of faith",
+   "sourceUrl": "https://sunnah.com/bukhari:9",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6011",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6011",
+   "text": "Narrated An-Nu`man bin Bashir:Allah's Messenger (ﷺ) said, \"You see the believers as regards their being merciful among themselves and showing love among themselves and being kind, resembling one body, so that, if any part of the body is not well then the whole body shares the sleeplessness (insomnia) and fever with it",
+   "sourceUrl": "https://sunnah.com/bukhari:6011",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6016",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6016",
+   "text": "Narrated Abu Shuraih:The Prophet (ﷺ) said, \"By Allah, he does not believe! By Allah, he does not believe! By Allah, he does not believe!\" It was said, \"Who is that, O Allah's Messenger (ﷺ)?\" He said, \"That person whose neighbor does not feel safe from his evil",
+   "sourceUrl": "https://sunnah.com/bukhari:6016",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:868",
+   "collection": "Sahih al-Bukhari",
+   "book": 10,
+   "bookName": "Call to Prayers (Adhaan)",
+   "number": "868",
+   "text": "Narrated `Abdullah bin Abi Qatada Al-Ansari:My father said, \"Allah's Messenger (ﷺ) said, \"Whenever I stand for prayer, I want to prolong it but on hearing the cries of a child, I would shorten it as I dislike to put its mother in trouble",
+   "sourceUrl": "https://sunnah.com/bukhari:868",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6273",
+   "collection": "Sahih al-Bukhari",
+   "book": 79,
+   "bookName": "Asking Permission",
+   "number": "6273",
+   "text": "Narrated Abu Bakra:Allah's Messenger (ﷺ) said, \"Shall I inform you of the biggest of the great sins?\" They said, \"Yes, O Allah's Apostle!\" He said, \"To join partners in worship with Allah, and to be undutiful to one's parents",
+   "sourceUrl": "https://sunnah.com/bukhari:6273",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:794",
+   "collection": "Sahih al-Bukhari",
+   "book": 10,
+   "bookName": "Call to Prayers (Adhaan)",
+   "number": "794",
+   "text": "Narrated `Aisha:The Prophet (ﷺ) used to say in his bowing and prostrations, \"Subhanaka l-lahumma Rabbana wa bihamdika; Allahumma ghfir li.' (Exalted [from unbecoming attributes] Are you O Allah our Lord, and by Your praise [do I exalt You]. O Allah! Forgive me",
+   "sourceUrl": "https://sunnah.com/bukhari:794",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:7378",
+   "collection": "Sahih al-Bukhari",
+   "book": 97,
+   "bookName": "Oneness, Uniqueness of Allah (Tawheed)",
+   "number": "7378",
+   "text": "Narrated Abu Musa Al-Ash`ari:The Prophet (ﷺ) said, \"None is more patient than Allah against the harmful and annoying words He hears (from the people): They ascribe children to Him, yet He bestows upon them health and provision",
+   "sourceUrl": "https://sunnah.com/bukhari:7378",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:2446",
+   "collection": "Sahih al-Bukhari",
+   "book": 46,
+   "bookName": "Oppressions",
+   "number": "2446",
+   "text": "Narrated Abu Musa:The Prophet (ﷺ) said, \"A believer to another believer is like a building whose different parts enforce each other.\" The Prophet (ﷺ) then clasped his hands with the fingers interlaced (while saying that)",
+   "sourceUrl": "https://sunnah.com/bukhari:2446",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6118",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6118",
+   "text": "Narrated `Abdullah bin `Umar:The Prophet (ﷺ) passed by a man who was admonishing his brother regarding Haya' (pious shyness from committing religeous indiscretions) and was saying, \"You are very shy, and I am afraid that might harm you.\" On that, Allah's Messenger (ﷺ) said, \"Leave him, for Haya' is (a part) of Faith",
+   "sourceUrl": "https://sunnah.com/bukhari:6118",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:13",
+   "collection": "Sahih al-Bukhari",
+   "book": 2,
+   "bookName": "Belief",
+   "number": "13",
+   "text": "Narrated Anas: The Prophet (ﷺ) said, \"None of you will have faith till he wishes for his (Muslim) brother what he likes for himself",
+   "sourceUrl": "https://sunnah.com/bukhari:13",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:2692",
+   "collection": "Sahih al-Bukhari",
+   "book": 53,
+   "bookName": "Peacemaking",
+   "number": "2692",
+   "text": "Narrated Um Kulthum bint `Uqba:That she heard Allah's Messenger (ﷺ) saying, \"He who makes peace between the people by inventing good information or saying good things, is not a liar",
+   "sourceUrl": "https://sunnah.com/bukhari:2692",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:5986",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "5986",
+   "text": "Narrated Anas bin Malik:Allah's Apostle said, \"Whoever loves that he be granted more wealth and that his lease of life be prolonged then he should keep good relations with his Kith and kin",
+   "sourceUrl": "https://sunnah.com/bukhari:5986",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:10",
+   "collection": "Sahih al-Bukhari",
+   "book": 2,
+   "bookName": "Belief",
+   "number": "10",
+   "text": "Narrated 'Abdullah bin 'Amr: The Prophet (ﷺ) said, \"A Muslim is the one who avoids harming Muslims with his tongue and hands. And a Muhajir (emigrant) is the one who gives up (abandons) all what Allah has forbidden",
+   "sourceUrl": "https://sunnah.com/bukhari:10",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6951",
+   "collection": "Sahih al-Bukhari",
+   "book": 89,
+   "bookName": "(Statements made under) Coercion",
+   "number": "6951",
+   "text": "Narrated `Abdullah bin `Umar:Allah's Messenger (ﷺ) said, \"A Muslim is a brother of another Muslim. So he should neither oppress him nor hand him over to an oppressor. And whoever fulfilled the needs of his brother, Allah will fulfill his needs",
+   "sourceUrl": "https://sunnah.com/bukhari:6951",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:5991",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "5991",
+   "text": "Narrated `Abdullah bin `Amr:The Prophet (ﷺ) said, \"Al-Wasil is not the one who recompenses the good done to him by his relatives, but Al-Wasil is the one who keeps good relations with those relatives who had severed the bond of kinship with him",
+   "sourceUrl": "https://sunnah.com/bukhari:5991",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6406",
+   "collection": "Sahih al-Bukhari",
+   "book": 80,
+   "bookName": "Invocations",
+   "number": "6406",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"There are two expressions which are very easy for the tongue to say, but they are very heavy in the balance and are very dear to The Beneficent (Allah), and they are, 'Subhan Allah Al- `Azim and 'Subhan Allah wa bihamdihi",
+   "sourceUrl": "https://sunnah.com/bukhari:6406",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6065",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6065",
+   "text": "Narrated Anas bin Malik:Allah's Messenger (ﷺ) said, \"Do not hate one another, and do not be jealous of one another, and do not desert each other, and O, Allah's worshipers! Be brothers. Lo! It is not permissible for any Muslim to desert (not talk to) his brother (Muslim) for more than three days",
+   "sourceUrl": "https://sunnah.com/bukhari:6065",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:723",
+   "collection": "Sahih al-Bukhari",
+   "book": 10,
+   "bookName": "Call to Prayers (Adhaan)",
+   "number": "723",
+   "text": "Narrated Anas bin Malik:The Prophet (ﷺ) said, \"Straighten your rows as the straightening of rows is essential for a perfect and correct prayer",
+   "sourceUrl": "https://sunnah.com/bukhari:723",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:887",
+   "collection": "Sahih al-Bukhari",
+   "book": 11,
+   "bookName": "Friday Prayer",
+   "number": "887",
+   "text": "Narrated Abu Huraira:Allah's Messenger (ﷺ) said, \"If I had not found it hard for my followers or the people, I would have ordered them to clean their teeth with Siwak for every prayer",
+   "sourceUrl": "https://sunnah.com/bukhari:887",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:908",
+   "collection": "Sahih al-Bukhari",
+   "book": 11,
+   "bookName": "Friday Prayer",
+   "number": "908",
+   "text": "Narrated Abu Huraira:heard Allah's Messenger (ﷺ) saying, \"If the prayer is started do not run for it but just walk for it calmly and pray whatever you get, and complete whatever is missed",
+   "sourceUrl": "https://sunnah.com/bukhari:908",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:935",
+   "collection": "Sahih al-Bukhari",
+   "book": 11,
+   "bookName": "Friday Prayer",
+   "number": "935",
+   "text": "Narrated Abu Huraira:Allah's Messenger (ﷺ) talked about Friday and said, \"There is an hour (opportune time) on Friday and if a Muslim gets it while praying and asks something from Allah, then Allah will definitely meet his demand.\" And he (the Prophet) pointed out the shortness of that time with his hands",
+   "sourceUrl": "https://sunnah.com/bukhari:935",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:1804",
+   "collection": "Sahih al-Bukhari",
+   "book": 26,
+   "bookName": "`Umrah (Minor pilgrimage)",
+   "number": "1804",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"Traveling is a kind of torture as it prevents one from eating, drinking and sleeping properly. So, when one's needs are fulfilled, one should return quickly to one's family",
+   "sourceUrl": "https://sunnah.com/bukhari:1804",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:1152",
+   "collection": "Sahih al-Bukhari",
+   "book": 19,
+   "bookName": "Prayer at Night (Tahajjud)",
+   "number": "1152",
+   "text": "Narrated `Abdullah bin `Amr bin Al-`As:Allah's Messenger (ﷺ) said to me, \"O `Abdullah! Do not be like so and so who used to pray at night and then stopped the night prayer",
+   "sourceUrl": "https://sunnah.com/bukhari:1152",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:5353",
+   "collection": "Sahih al-Bukhari",
+   "book": 69,
+   "bookName": "Supporting the Family",
+   "number": "5353",
+   "text": "Narrated Abu Huraira:The Prophet (ﷺ) said, \"The one who looks after a widow or a poor person is like a Mujahid (warrior) who fights for Allah's Cause, or like him who performs prayers all the night and fasts all the day",
+   "sourceUrl": "https://sunnah.com/bukhari:5353",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:5643",
+   "collection": "Sahih al-Bukhari",
+   "book": 75,
+   "bookName": "Patients",
+   "number": "5643",
+   "text": "Narrated Ka`b:The Prophet (ﷺ) said, \"The example of a believer is that of a fresh tender plant, which the wind bends lt sometimes and some other time it makes it straight. And the example of a hypocrite is that of a pine tree which keeps straight till once it is uprooted suddenly",
+   "sourceUrl": "https://sunnah.com/bukhari:5643",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6014",
+   "collection": "Sahih al-Bukhari",
+   "book": 78,
+   "bookName": "Good Manners and Form (Al-Adab)",
+   "number": "6014",
+   "text": "Narrated `Aisha:The Prophet (ﷺ) said \"Gabriel continued to recommend me about treating the neighbors Kindly and politely so much so that I thought he would order me to make them as my heirs",
+   "sourceUrl": "https://sunnah.com/bukhari:6014",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6237",
+   "collection": "Sahih al-Bukhari",
+   "book": 79,
+   "bookName": "Asking Permission",
+   "number": "6237",
+   "text": "Narrated Abu Aiyub:The Prophet (ﷺ) said, \"It is not lawful for a Muslim to desert (not to speak to) his brother Muslim for more than three days while meeting, one turns his face to one side and the other turns his face to the other side. Lo! The better of the two is the one who starts greeting the other",
+   "sourceUrl": "https://sunnah.com/bukhari:6237",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:213",
+   "collection": "Sahih al-Bukhari",
+   "book": 4,
+   "bookName": "Ablutions (Wudu')",
+   "number": "213",
+   "text": "Narrated Anas:The Prophet (ﷺ) said, \"If anyone of you feels drowsy while praying, he should sleep till he understands what he is saying (reciting)",
+   "sourceUrl": "https://sunnah.com/bukhari:213",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:909",
+   "collection": "Sahih al-Bukhari",
+   "book": 11,
+   "bookName": "Friday Prayer",
+   "number": "909",
+   "text": "Narrated `Abdullah bin Abi Qatada on the authority of his father:The Prophet (ﷺ) said, \"Do not stand up (for prayer) unless you see me, and observe calmness and solemnity",
+   "sourceUrl": "https://sunnah.com/bukhari:909",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "bukhari:6464",
+   "collection": "Sahih al-Bukhari",
+   "book": 81,
+   "bookName": "To make the Heart Tender (Ar-Riqaq)",
+   "number": "6464",
+   "text": "Narrated `Aisha:Allah's Messenger (ﷺ) said, \"Do good deeds properly, sincerely and moderately and know that your deeds will not make you enter Paradise, and that the most beloved deed to Allah is the most regular and constant even if it were little",
+   "sourceUrl": "https://sunnah.com/bukhari:6464",
+   "translator": "Muhammad Muhsin Khan"
+  },
+  {
+   "id": "muslim:1896",
+   "collection": "Sahih Muslim",
+   "book": 6,
+   "bookName": "The Book of Prayer - Travellers",
+   "number": "816",
+   "text": "Abdullah b. Mas'ud reported Allah's Messenger (ﷺ) as saying:There should be no envy but only in case of two persons: one having been endowed with wealth and power to spend it in the cause of Truth, and (the other) who has been endowed with wisdom and he decides cases with the help of it and teaches it (to others)",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6592",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2588",
+   "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Charity does not decrease wealth, no one forgives another except that Allah increases his honor, and no one humbles himself for the sake of Allah except that Allah raises his status",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:7115",
+   "collection": "Sahih Muslim",
+   "book": 52,
+   "bookName": "Characteristics of the Day of Judgment, Paradise, and Hell",
+   "number": "2816.05",
+   "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:There is none whose deeds alone can'secure salvation for him. They said: Allah's Messenger, not even you? Thereupon he said: Not even I, but that, the Mercy of Allah should take hold of me",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:4223",
+   "collection": "Sahih Muslim",
+   "book": 25,
+   "bookName": "The Book of Wills",
+   "number": "1631",
+   "text": "Abu Huraira (Allah be pleased with him) reported Allah's Messenger (ﷺ) as saying:When a man dies, his acts come to an end, but three, recurring charity, or knowledge (by which people) benefit, or a pious son, who prays for him (for the deceased)",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6975",
+   "collection": "Sahih Muslim",
+   "book": 50,
+   "bookName": "The Book of Repentance",
+   "number": "2753.01",
+   "text": "Salman Farisi reported Allah's Messenger (ﷺ) as saying:Verily, there are one hundred (parts of) mercy for Allah, and it is one part of this mercy by virtue of which there is mutual love between the people and ninety-nine reserved for the Day of Resurrection",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:1569",
+   "collection": "Sahih Muslim",
+   "book": 5,
+   "bookName": "The Book of Mosques and Places of Prayer",
+   "number": "684.04",
+   "text": "Qatada reported it on the authority of Anas b. Malik that the Messenger of Allah (ﷺ) said:When any one of you omits the prayer due to sleep or he forgets it, he should observe it when he remembers it, for Allah has said:\" Observe prayer for remembrance of Me",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6028",
+   "collection": "Sahih Muslim",
+   "book": 43,
+   "bookName": "The Book of Virtues",
+   "number": "2318.01",
+   "text": "Abu Huraira reported that al-Aqra' b. Habis saw Allah's Apostle (ﷺ) kissing Hasan. He said:I have ten children, but I have never kissed any one of them, whereupon Allah's Messenger (ﷺ) said: He who does not show mercy (towards his children), no mercy would be shown to him",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:7424",
+   "collection": "Sahih Muslim",
+   "book": 55,
+   "bookName": "The Book of Zuhd and Softening of Hearts ",
+   "number": "2960",
+   "text": "Anas b. Malik reported Allah's Messenger (ﷺ) as saying:Three things follow the bier of a dead man. Two of them come back and one is left with him: the members of his family, wealth and his good deeds. The members of his family and wealth come back and the deeds alone are left with him",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:1056",
+   "collection": "Sahih Muslim",
+   "book": 4,
+   "bookName": "The Book of Prayers ",
+   "number": "470.02",
+   "text": "Anas b. Malik reported the Messenger of Allah (ﷺ) having said:When I begin the prayer I Intend to make it long, but I hear a boy cry. ing; I then shorten it because of his mother's feelings",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:1510",
+   "collection": "Sahih Muslim",
+   "book": 5,
+   "bookName": "The Book of Mosques and Places of Prayer",
+   "number": "649.10",
+   "text": "Abu Huraira reported the Messenger of Allah (ﷺ) as saying:Everyone among you is constantly in prayer so long as the prayer detains him (for this noble objective) and nothing prevents him to return to his family but the prayer",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:7468",
+   "collection": "Sahih Muslim",
+   "book": 55,
+   "bookName": "The Book of Zuhd and Softening of Hearts ",
+   "number": "2982",
+   "text": "Abu Huraira reported that Allah's Messenger (ﷺ) said:One who makes efforts (for earning to be spent) on a widow and the destitute is like a striver in the cause of Allah, and I think he also said: He is like one who constantly stands for prayer and observes fast without breaking it",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6970",
+   "collection": "Sahih Muslim",
+   "book": 50,
+   "bookName": "The Book of Repentance",
+   "number": "2751.02",
+   "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Allah, the Exalted and Glorious, said: My mercy excels My wrath",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:152",
+   "collection": "Sahih Muslim",
+   "book": 1,
+   "bookName": "The Book of Faith",
+   "number": "35.01",
+   "text": "It is narrated on the authority of Abu Huraira that the Prophet (ﷺ) said:Iman has over seventy branches, and modesty is a branch of Iman",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:1478",
+   "collection": "Sahih Muslim",
+   "book": 5,
+   "bookName": "The Book of Mosques and Places of Prayer",
+   "number": "650.02",
+   "text": "Ibn 'Umar reported Allah's Apostle (ﷺ) as saying:The prayer of a person in congregation is twenty-seven times in excess to the prayer said alone",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6543",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2564.03",
+   "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Verily Allah does not look to your faces and your wealth but He looks to your heart and to your deeds",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6688",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2625.02",
+   "text": "Abu Dharr reported Allah's Messenger (ﷺ) as saying:Abu Dharr, when you prepare the broth, add water to that and give that (as a present) to your neighbour",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:1083",
+   "collection": "Sahih Muslim",
+   "book": 4,
+   "bookName": "The Book of Prayers ",
+   "number": "482",
+   "text": "Abu Huraira reported:The Messenger of Allah (ﷺ) said: The nearest a servant comes to his Lord is when he is prostrating himself, so make supplication (in this state)",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:1084",
+   "collection": "Sahih Muslim",
+   "book": 4,
+   "bookName": "The Book of Prayers ",
+   "number": "483",
+   "text": "Abu Huraira reported:The Messenger of Allah (ﷺ) used to say while prostrating himself: O Lord, forgive me all my sins, small and great, first and last, open and secret",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:1823",
+   "collection": "Sahih Muslim",
+   "book": 6,
+   "bookName": "The Book of Prayer - Travellers",
+   "number": "779",
+   "text": "Abu Musa reported Allah's Apostle (ﷺ) as saying:The house in which remembrance of Allah is made and the house in which Allah is not remembered are like the living and the dead",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:3973",
+   "collection": "Sahih Muslim",
+   "book": 22,
+   "bookName": "The Book of Musaqah",
+   "number": "1553.01",
+   "text": "Anas reported Allah's Messenger (ﷺ) as saying Never does a Muslim plant trees or cultivate land and birds or a man or a beast eat out of them but that is a charity on his behalf",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6934",
+   "collection": "Sahih Muslim",
+   "book": 48,
+   "bookName": "The Book Pertaining to the Remembrance of Allah, Supplication, Repentance and Seeking Forgiveness ",
+   "number": "2735.01",
+   "text": "Abu Huraira reported that Allah's Messenger (ﷺ) said:The supplication of every one of you is granted if he does not grow impatient and says: I supplicated but it was not granted",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6861",
+   "collection": "Sahih Muslim",
+   "book": 48,
+   "bookName": "The Book Pertaining to the Remembrance of Allah, Supplication, Repentance and Seeking Forgiveness ",
+   "number": "2703",
+   "text": "Abu Huraira reported Allah's Messenger (ﷺ) as say- ing:He who seeks repentance (from the Lord) before the rising of the sun from the west (before the Day of Resurrection), Allah turns to him with Mercy",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:551",
+   "collection": "Sahih Muslim",
+   "book": 2,
+   "bookName": "The Book of Purification",
+   "number": "233.02",
+   "text": "Abu Huraira reported that the Messenger of Allah (ﷺ) said:The five (daily) prayers and one Friday prayer to (the next) Friday prayer are expiations (for the sins committed in the intervals) between them",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6811",
+   "collection": "Sahih Muslim",
+   "book": 48,
+   "bookName": "The Book Pertaining to the Remembrance of Allah, Supplication, Repentance and Seeking Forgiveness ",
+   "number": "2678",
+   "text": "Anas reported Allah's Messenger (ﷺ) as saying:When one of you makes supplication, he should supplicate with a will and should not say: O Allah, confer upon me if Thou likest, for there is none to coerce Allah",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6858",
+   "collection": "Sahih Muslim",
+   "book": 48,
+   "bookName": "The Book Pertaining to the Remembrance of Allah, Supplication, Repentance and Seeking Forgiveness ",
+   "number": "2702.01",
+   "text": "Al-Agharr al-Muzani, who was one amongst the Companions (of the Holy Prophet) reported that Allah's Messenger (ﷺ) said:There is (at times) some sort of shade upon my heart, and I seek forgiveness from Allah a hundred times a day",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:2755",
+   "collection": "Sahih Muslim",
+   "book": 13,
+   "bookName": "The Book of Fasting ",
+   "number": "1163.01",
+   "text": "Abu Haraira (Allah be pleased with him) reported Allah's Messenger (ﷺ) as saying:The most excellent fast after Ramadan is God's month. al-Muharram, and the most excellent prayer after what is prescribed is prayer during the night",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6644",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2609.02",
+   "text": "Abu Huraira reported:I heard Allah's Messenger (ﷺ) as saying: One is not strong because of one's wrestling skillfully. They said: Allah's Messenger, then who is strong? He said: He who controls his anger when he is in a fit of rage",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6511",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2551.02",
+   "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Let him be humbled, let him be humbled. It was said: Allah's Messenger, who is he? He said. He who finds his parents in old age, either one or both of them, and does not enter Paradise",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:171",
+   "collection": "Sahih Muslim",
+   "book": 1,
+   "bookName": "The Book of Faith",
+   "number": "45.02",
+   "text": "It is narrated on the authority of Anas that the Prophet (may peace blessings be upon him) observed:By Him in whose Hand is my life, no, bondsman (truly) believes till he likes for his neighbour, or he (the Holy Prophet) said: for his brother, whatever he likes for himself",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:552",
+   "collection": "Sahih Muslim",
+   "book": 2,
+   "bookName": "The Book of Purification",
+   "number": "233.03",
+   "text": "Abu Huraira reported:Verily the Messenger of Allah (ﷺ) said: The five (daily) prayers and from one Friday prayer to the (next) Friday prayer, and from Ramadhan to Ramadhan are expiations for the (sins) committed in between (their intervals) provided one shuns the major sins",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6964",
+   "collection": "Sahih Muslim",
+   "book": 50,
+   "bookName": "The Book of Repentance",
+   "number": "2748.02",
+   "text": "Abu Ayyub Ansari reported that Allah's Messenger (ﷺ) said:If you were not to commit sins, Allah would have swept you out of existence and would have replaced you by another people who have committed sin, and then asked forgiveness from Allah, and He would have granted them pardon",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6718",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2640.01",
+   "text": "Abdullah reported that a person came to Allah's Messenger (ﷺ) and said to Allah's Messenger (ﷺ):What is your opinion about the person who loves the people but his (acts or deeds are not identical to theirs)? Thereupon Allah's Messenger (ﷺ) said: A person would be along with one whom he loves",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:977",
+   "collection": "Sahih Muslim",
+   "book": 4,
+   "bookName": "The Book of Prayers ",
+   "number": "435",
+   "text": "Hammam b. Munabbih reported:This is what was transmitted to us by Abu Huraira from the Messenger of Allah (ﷺ) and, while making a mention of a few ahadith, said: (The Messengerof Allah directed us thus): Establish rows in prayer, for the making of a row (straight) is one of the merits of prayer",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:1969",
+   "collection": "Sahih Muslim",
+   "book": 7,
+   "bookName": "The Book of Prayer - Friday",
+   "number": "852.01",
+   "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:There is a time on Friday at which no Muslim servant would pray and would ask Allah for a thing (that is good) but He would give it to him. Qutaiba pointed with the help of his hand that it (the time) is short",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:1844",
+   "collection": "Sahih Muslim",
+   "book": 6,
+   "bookName": "The Book of Prayer - Travellers",
+   "number": "791",
+   "text": "Abu Musa al-Ash'ari reported Allah's Apostle (ﷺ) as saying:Keep refreshing your knowledge of the Qur'an, for I swear by Him in Whose Hand is the life of Mahammad that it is more liable to escape than camels which are hobbled",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6585",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2585",
+   "text": "Abu Musa reported Allah's Messenger (ﷺ) as saying:A believer is like a brick for another believer, the one supporting the other",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:2420",
+   "collection": "Sahih Muslim",
+   "book": 12,
+   "bookName": "The Book of Zakat",
+   "number": "1051",
+   "text": "Abu Huraira reported that the Messenger of Allah (ﷺ) had said:Richness does not lie in the abundance of (worldly) goods but richness is the richness of the soul (heart, self)",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6690",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2626",
+   "text": "Abu Dharr reported:Allah's Apostle (ﷺ) said to me: Don't consider anything insignificant out of good things even if it is that you meet your brother with a cheerful countenance",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6600",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2592.03",
+   "text": "Jarir b. 'Abdullah reported Allah's Apostle (ﷺ) as saying:He who is deprived of tenderly feelings is in fact deprived of good and he who is deprived of tenderly feelings is in fact deprived of good",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6670",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "1914.03",
+   "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:A person while walking along the path saw the branches of a tree lying there. He said: By Allah, I shall remove these from this so that these may not do harm to the Muslims, and he was admitted to Paradise",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6859",
+   "collection": "Sahih Muslim",
+   "book": 48,
+   "bookName": "The Book Pertaining to the Remembrance of Allah, Supplication, Repentance and Seeking Forgiveness ",
+   "number": "2702.02",
+   "text": "Al-Agharr al-Muzani who was from amongst the Companions of Allah's Apostle (ﷺ) reported that Ibn 'Umar stated to him that Allah's Messenger (may peace 'be upon him) said:O people, seek repentance from Allah. Verily, I seek repentance from Him a hundred times a day",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:975",
+   "collection": "Sahih Muslim",
+   "book": 4,
+   "bookName": "The Book of Prayers ",
+   "number": "433",
+   "text": "Anas b. Malik reported:The Messenger of Allah (ﷺ) said: Straighten your rows. for the straightening of a row is a part of the perfection of prayer",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:1523",
+   "collection": "Sahih Muslim",
+   "book": 5,
+   "bookName": "The Book of Mosques and Places of Prayer",
+   "number": "668",
+   "text": "Jabir b. 'Abdullah reported that the Messenger of Allah (ﷺ) said:The similitude of five prayers is like an overflowing river passing by the gate of one of you in which he washes five times daily Hasan said: No filthiness can remain on him",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:2322",
+   "collection": "Sahih Muslim",
+   "book": 12,
+   "bookName": "The Book of Zakat",
+   "number": "1002.01",
+   "text": "Abu Mas'ud reported Allah's Messenger (way peace be upon him) as saying:When a Muslim spends on his family seeking reward for it from Allah, it counts for him as sadaqa",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6514",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2552.02",
+   "text": "Abdullah b. Umar reported Allah's Apostle (ﷺ) as saying:The finest act of goodness is that a person should treat kindly the loved ones of his father",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6526",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2558.02",
+   "text": "Anas b. Malik reported Allah's Messenger (ﷺ) as saying:Neither nurse mutual hatred, nor jealousy, nor enmity, and become as fellow brothers and servants of Allah. It is not lawful for a Muslim that he should keep his relations estranged with his brother beyond three days",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6548",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2566",
+   "text": "Abu Huraira reported Allah's Messenger (ﷺ) as saying:Verily. Allah would say on the Day of Resurrection: Where are those who have mutual love for My Glory's sake? Today I shall shelter them in My shadow when there is no other shadow but the shadow of Mine",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6553",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2568.03",
+   "text": "Thauban reported Allah's Apostle (ﷺ) as saying:Verily, when a Muslim visits his brother in Islam he is supposed to remain in the fruit garden of Paradise until he returns",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6568",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2573",
+   "text": "Abu Sa'id and abu Huraira reported that they heard Allah's Messenger (ﷺ) as saying:Never a believer is stricken with discomfort, hardship or illness, grief or even with mental worry that his sins are not expiated for him",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  },
+  {
+   "id": "muslim:6586",
+   "collection": "Sahih Muslim",
+   "book": 45,
+   "bookName": "The Book of Virtue, Enjoining Good Manners, and Joining of the Ties of Kinship",
+   "number": "2586.01",
+   "text": "Nu'man b. Bashir reported Allah's Messenger (ﷺ) as saying:The similitude of believers in regard to mutual love, affection, fellow-feeling is that of one body; when any limb of it aches, the whole body aches, because of sleeplessness and fever",
+   "sourceUrl": null,
+   "translator": "Abdul Hamid Siddiqui"
+  }
+ ]
+}

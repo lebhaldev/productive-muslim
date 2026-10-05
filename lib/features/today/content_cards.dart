@@ -43,6 +43,9 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
   Widget _ayahCard(ContentSlot<Ayah> slot) {
     final a = slot.value;
     if (a == null) return _failed('Ayah of the day', slot.error!);
+    final fetched = slot.fetchedAt == null
+        ? ''
+        : DateFormat('d MMM HH:mm').format(slot.fetchedAt!);
     return _ContentCard(
       kicker: 'Ayah of the day',
       open: open == 'ayah',
@@ -50,11 +53,12 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       arabic: a.arabic,
       text: a.translation,
       source: a.source,
-      noteLabel: 'App summary — not tafsir',
-      reference:
-          'Edition: ${a.edition} · fetched '
-          '${slot.fetchedAt == null ? '' : DateFormat('d MMM HH:mm').format(slot.fetchedAt!)}'
-          '${slot.stale ? ' · offline, showing last saved ayah' : ''}',
+      // Offline with an earlier day's ayah: say so instead of passing it off
+      // as today's (review R3).
+      notice: slot.stale && slot.fetchedAt != null
+          ? 'Last saved ayah · ${DateFormat('d MMM').format(slot.fetchedAt!)}'
+          : null,
+      reference: 'Edition: ${a.edition} · fetched $fetched · ${a.sourceUrl}',
     );
   }
 
@@ -67,8 +71,11 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       onTap: () => _toggle('hadith'),
       text: h.text,
       source: h.source,
-      noteLabel: 'App summary',
-      reference: '${h.bookName} · Grading: ${h.grade} · ${h.sourceUrl}',
+      reference: [
+        h.bookName,
+        'English: ${h.translator}',
+        ?h.sourceUrl,
+      ].join(' · '),
     );
   }
 
@@ -81,7 +88,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       onTap: () => _toggle('quote'),
       text: '“${q.text}”',
       source: q.attribution,
-      noteLabel: 'Encouragement, not scripture',
+      tag: 'Encouragement, not scripture',
       reference: q.source,
     );
   }
@@ -101,9 +108,10 @@ class _ContentCard extends StatelessWidget {
     required this.onTap,
     required this.text,
     required this.source,
-    required this.noteLabel,
     required this.reference,
     this.arabic,
+    this.tag,
+    this.notice,
   });
 
   final String kicker;
@@ -112,8 +120,9 @@ class _ContentCard extends StatelessWidget {
   final String? arabic;
   final String text;
   final String source;
-  final String noteLabel;
   final String reference;
+  final String? tag;
+  final String? notice;
 
   @override
   Widget build(BuildContext context) {
@@ -147,19 +156,16 @@ class _ContentCard extends StatelessWidget {
           style: const TextStyle(fontSize: 15, height: 1.5),
         ),
         Text(source, style: meta()),
+        if (notice != null)
+          Text(notice!, style: meta(color: AppColors.accent700)),
+        // Expanded: the reference only. No explanations ship until a person
+        // has reviewed them (CR-4); none are ever generated in-app.
         if (open) ...[
-          // No reviewed explanations ship yet, so only the label and the
-          // reference are shown (CR-4). Notes are never generated in-app.
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Tag(noteLabel, sage: true),
-          ),
-          Text(
-            noteLabel.startsWith('App summary')
-                ? 'No summary has been reviewed for this item yet.'
-                : 'From the bundled quote list.',
-            style: const TextStyle(fontSize: 13, color: AppColors.neutral800),
-          ),
+          if (tag != null)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Tag(tag!, sage: true),
+            ),
           Text(reference, style: meta(size: 11)),
         ],
       ],

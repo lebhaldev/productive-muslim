@@ -20,7 +20,7 @@ void main() {
 
   test('no bundled hadith text copied into lib/', () {
     final data = jsonDecode(
-      File('assets/content/hadith_bukhari.json').readAsStringSync(),
+      File('assets/content/hadith.json').readAsStringSync(),
     );
     final snippets = [
       for (final h in data['hadiths'] as List)
@@ -59,13 +59,24 @@ void main() {
 
   test('every bundled hadith has a citation', () {
     final data = jsonDecode(
-      File('assets/content/hadith_bukhari.json').readAsStringSync(),
+      File('assets/content/hadith.json').readAsStringSync(),
     );
     for (final h in data['hadiths'] as List) {
       expect(h['collection'], isNotEmpty);
       expect(h['book'], isA<int>());
-      expect(h['number'], isA<int>());
-      expect(h['sourceUrl'], startsWith('https://sunnah.com/'));
+      expect(h['number'], isA<String>());
+      expect(h['translator'], isNotEmpty);
+      expect(
+        h.containsKey('grade'),
+        isFalse,
+        reason: 'the source has no grades',
+      );
+      if (h['collection'] == 'Sahih Muslim') {
+        // Dataset numbering does not match sunnah.com, so no link.
+        expect(h['sourceUrl'], isNull);
+      } else {
+        expect(h['sourceUrl'], 'https://sunnah.com/bukhari:${h['number']}');
+      }
     }
   });
 }

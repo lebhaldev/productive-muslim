@@ -15,7 +15,7 @@ String fixture(String name) => File('test/fixtures/$name').readAsStringSync();
 
 /// Maps bundled asset paths to fixtures, so no real religious text is used.
 Future<String> fixtureAssets(String path) async =>
-    fixture(path.split('/').last.replaceAll('hadith_bukhari', 'hadith'));
+    fixture(path.split('/').last);
 
 AppDatabase memoryDb() {
   driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;

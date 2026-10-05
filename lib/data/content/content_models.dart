@@ -51,17 +51,21 @@ class Hadith {
     required this.bookName,
     required this.number,
     required this.text,
-    required this.grade,
-    required this.sourceUrl,
+    required this.translator,
+    this.sourceUrl,
   });
 
   final String collection;
   final int book;
   final String bookName;
-  final int number;
+
+  /// Bukhari: the standard number. Muslim: the Abdul-Baqi number.
+  final String number;
   final String text;
-  final String grade;
-  final String sourceUrl;
+  final String translator;
+
+  /// Null when the link could not be verified (Sahih Muslim).
+  final String? sourceUrl;
 
   String get source => '$collection · Book $book · No. $number';
 
@@ -69,10 +73,10 @@ class Hadith {
     collection: j['collection'] as String,
     book: j['book'] as int,
     bookName: j['bookName'] as String,
-    number: j['number'] as int,
+    number: j['number'] as String,
     text: j['text'] as String,
-    grade: j['grade'] as String,
-    sourceUrl: j['sourceUrl'] as String,
+    translator: j['translator'] as String,
+    sourceUrl: j['sourceUrl'] as String?,
   );
 }
 
