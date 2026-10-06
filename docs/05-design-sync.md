@@ -37,7 +37,7 @@ Closed by the 2026-10-05 export: OQ-1 (header + weather chip + ayah card), OQ-2 
 | OQ-9 | Organic DS exact hex values and heading font | Sampled hex, Fraunces |
 | OQ-10 | Dark theme | Provisional dark tokens in 03; needs design review |
 | OQ-21 | Prayer card and Prayer times screen look | Existing card components, sage highlight for the next prayer |
-| OQ-22 | Default prayer method | Muslim World League, Asr standard |
+| OQ-22 | Default prayer method | Usual method for the weather city's country (e.g. ISNA for US/CA, Karachi for PK/IN/BD, Umm al-Qura for SA, Diyanet for TR), else Muslim World League; Asr standard |
 | OQ-23 | Hadith in Arabic: full isnad or matn only? | Full text as in the dataset (includes the chain) |
 | OQ-11 | Default translation | Saheeh International (`en.sahih`); The Clear Quran selectable |
 | OQ-12 | Hadith dataset and licence | Bundled subset with sunnah.com references |

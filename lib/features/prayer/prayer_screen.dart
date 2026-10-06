@@ -160,10 +160,14 @@ class PrayerScreen extends ConsumerWidget {
       children: [
         const SubScreenTitle('Prayer times'),
         Text(
-          '${loc.place} · ${s.prayerMethod.label} · Asr ${s.madhab == AsrMadhab.hanafi ? 'Hanafi' : 'standard'}',
+          '${loc.place} · ${ref.watch(prayerMethodProvider).label} · Asr ${s.madhab == AsrMadhab.hanafi ? 'Hanafi' : 'standard'}',
           style: meta(size: 13),
         ),
-        Text(hijriLabel(parseDayKey(today)), style: meta(size: 13)),
+        Text(
+          '${hijriLabel(parseDayKey(today))} · calculated (Umm al-Qura); '
+          'local moon sighting can differ by a day',
+          style: meta(size: 13),
+        ),
         NCard(
           gap: 0,
           children: [
@@ -202,7 +206,7 @@ class PrayerScreen extends ConsumerWidget {
           children: [
             const Kicker('Qibla'),
             Text(
-              '${bearing.toStringAsFixed(0)}° from North',
+              '${bearing.toStringAsFixed(0)}° from true North',
               style: heading(22),
             ),
             Center(
@@ -222,8 +226,8 @@ class PrayerScreen extends ConsumerWidget {
           ],
         ),
         Text(
-          'Times are calculated on this phone. Check with your local mosque, '
-          'especially for Fajr and Isha.',
+          'Times are calculated on this phone and shown in its time zone. '
+          'Check with your local mosque, especially for Fajr and Isha.',
           style: meta(),
         ),
       ],

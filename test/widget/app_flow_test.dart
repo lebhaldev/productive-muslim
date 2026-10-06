@@ -310,7 +310,7 @@ void main() {
     }
     expect(find.textContaining('Muslim World League'), findsOneWidget);
     await scrollTo(tester, find.text('QIBLA'));
-    expect(find.textContaining('° from North'), findsOneWidget);
+    expect(find.textContaining('° from true North'), findsOneWidget);
     await closeApp(tester, db);
   });
 

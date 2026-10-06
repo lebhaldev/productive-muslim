@@ -14,6 +14,7 @@ class Weather {
     required this.place,
     this.lat,
     this.lon,
+    this.countryCode,
   });
 
   final double nowC;
@@ -26,6 +27,9 @@ class Weather {
   final double? lat;
   final double? lon;
 
+  /// ISO country code from geocoding, used to suggest a prayer method.
+  final String? countryCode;
+
   String get condition => conditionLabel(code);
 
   Map<String, dynamic> toJson() => {
@@ -36,6 +40,7 @@ class Weather {
     'place': place,
     'lat': lat,
     'lon': lon,
+    'countryCode': countryCode,
   };
 
   factory Weather.fromJson(Map<String, dynamic> j) => Weather(
@@ -46,6 +51,7 @@ class Weather {
     place: j['place'] as String,
     lat: (j['lat'] as num?)?.toDouble(),
     lon: (j['lon'] as num?)?.toDouble(),
+    countryCode: j['countryCode'] as String?,
   );
 }
 
@@ -85,6 +91,7 @@ class WeatherService {
     try {
       double la, lo;
       String place;
+      String? country;
       if (lat != null && lon != null) {
         la = lat;
         lo = lon;
@@ -104,6 +111,7 @@ class WeatherService {
         la = (r['latitude'] as num).toDouble();
         lo = (r['longitude'] as num).toDouble();
         place = r['name'] as String;
+        country = r['country_code'] as String?;
       } else {
         return await _cachedOr('Set a city in Settings');
       }
@@ -117,7 +125,13 @@ class WeatherService {
           'forecast_days': '1',
         }),
       );
-      final w = parseForecast(body, place, lat: la, lon: lo);
+      final w = parseForecast(
+        body,
+        place,
+        lat: la,
+        lon: lo,
+        countryCode: country,
+      );
       final at = now();
       await db.putWeather(place, jsonEncode(w.toJson()), at);
       return WeatherState(weather: w, fetchedAt: at);
@@ -146,6 +160,7 @@ class WeatherService {
     String place, {
     double? lat,
     double? lon,
+    String? countryCode,
   }) {
     final current = body['current'] as Map<String, dynamic>;
     final daily = body['daily'] as Map<String, dynamic>;
@@ -157,6 +172,7 @@ class WeatherService {
       place: place,
       lat: lat,
       lon: lon,
+      countryCode: countryCode,
     );
   }
 }

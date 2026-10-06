@@ -28,6 +28,21 @@ enum PrayerMethod {
 
   static PrayerMethod parse(String? s) =>
       values.firstWhere((m) => m.name == s, orElse: () => mwl);
+
+  /// The method commonly used in a country; Muslim World League otherwise.
+  static PrayerMethod forCountry(String? code) => switch (code?.toUpperCase()) {
+    'US' || 'CA' => isna,
+    'PK' || 'IN' || 'BD' || 'AF' => karachi,
+    'SA' || 'YE' => ummAlQura,
+    'EG' || 'SD' || 'LY' || 'SY' || 'LB' || 'IQ' || 'JO' || 'PS' => egyptian,
+    'AE' => dubai,
+    'QA' => qatar,
+    'KW' => kuwait,
+    'TR' => turkey,
+    'IR' => tehran,
+    'SG' || 'MY' || 'ID' || 'BN' => singapore,
+    _ => mwl,
+  };
 }
 
 enum AsrMadhab {

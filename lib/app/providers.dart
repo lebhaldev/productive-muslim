@@ -102,7 +102,11 @@ class AppSettings {
     'dark' => ThemeMode.dark,
     _ => ThemeMode.system,
   };
-  PrayerMethod get prayerMethod => PrayerMethod.parse(raw['prayerMethod']);
+
+  /// Null until the user picks one; then the country default applies.
+  PrayerMethod? get chosenPrayerMethod => raw['prayerMethod'] == null
+      ? null
+      : PrayerMethod.parse(raw['prayerMethod']);
   AsrMadhab get madhab => AsrMadhab.parse(raw['madhab']);
   HighLatitude get highLatitude => HighLatitude.parse(raw['highLatitude']);
   // Off by default, like the daily reminder.
@@ -212,6 +216,15 @@ final prayerLocationProvider =
       return (lat: w!.lat!, lon: w.lon!, place: w.place);
     });
 
+/// The chosen method, or the usual one for the weather city's country.
+final prayerMethodProvider = Provider<PrayerMethod>((ref) {
+  final s = ref.watch(settingsProvider).value;
+  final chosen = s?.chosenPrayerMethod;
+  if (chosen != null) return chosen;
+  final w = ref.watch(weatherProvider).value?.weather;
+  return PrayerMethod.forCountry(w?.countryCode);
+});
+
 /// Prayer times for [day] (a day key) at the prayer location.
 final prayerDayProvider = Provider.family<PrayerDay?, String>((ref, day) {
   final loc = ref.watch(prayerLocationProvider);
@@ -221,7 +234,7 @@ final prayerDayProvider = Provider.family<PrayerDay?, String>((ref, day) {
     lat: loc.lat,
     lon: loc.lon,
     date: parseDayKey(day),
-    method: s.prayerMethod,
+    method: ref.watch(prayerMethodProvider),
     madhab: s.madhab,
     highLatitude: s.highLatitude,
   );

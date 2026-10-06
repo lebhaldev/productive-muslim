@@ -181,7 +181,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           children: [
             const CardTitle('Prayer'),
             DropdownButtonFormField<PrayerMethod>(
-              initialValue: s.prayerMethod,
+              key: ValueKey(ref.watch(prayerMethodProvider)),
+              initialValue: ref.watch(prayerMethodProvider),
               isExpanded: true,
               decoration: const InputDecoration(
                 labelText: 'Calculation method',

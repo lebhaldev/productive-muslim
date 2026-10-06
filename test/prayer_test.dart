@@ -61,6 +61,15 @@ void main() {
     expect(hijriLabel(DateTime(2026, 10, 5)), "24 Rabi' Al-Thani 1448");
   });
 
+  test('country picks the usual method, others fall back to MWL', () {
+    expect(PrayerMethod.forCountry('us'), PrayerMethod.isna);
+    expect(PrayerMethod.forCountry('PK'), PrayerMethod.karachi);
+    expect(PrayerMethod.forCountry('SA'), PrayerMethod.ummAlQura);
+    expect(PrayerMethod.forCountry('TR'), PrayerMethod.turkey);
+    expect(PrayerMethod.forCountry('FR'), PrayerMethod.mwl);
+    expect(PrayerMethod.forCountry(null), PrayerMethod.mwl);
+  });
+
   test('methods parse with a safe default', () {
     expect(PrayerMethod.parse('ummAlQura'), PrayerMethod.ummAlQura);
     expect(PrayerMethod.parse(null), PrayerMethod.mwl);
