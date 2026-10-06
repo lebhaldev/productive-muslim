@@ -12,6 +12,8 @@ class Weather {
     required this.loC,
     required this.code,
     required this.place,
+    this.lat,
+    this.lon,
   });
 
   final double nowC;
@@ -19,6 +21,10 @@ class Weather {
   final double loC;
   final int code;
   final String place;
+
+  /// Where the forecast is for; also used for prayer times and Qibla.
+  final double? lat;
+  final double? lon;
 
   String get condition => conditionLabel(code);
 
@@ -28,6 +34,8 @@ class Weather {
     'loC': loC,
     'code': code,
     'place': place,
+    'lat': lat,
+    'lon': lon,
   };
 
   factory Weather.fromJson(Map<String, dynamic> j) => Weather(
@@ -36,6 +44,8 @@ class Weather {
     loC: (j['loC'] as num).toDouble(),
     code: j['code'] as int,
     place: j['place'] as String,
+    lat: (j['lat'] as num?)?.toDouble(),
+    lon: (j['lon'] as num?)?.toDouble(),
   );
 }
 
@@ -107,7 +117,7 @@ class WeatherService {
           'forecast_days': '1',
         }),
       );
-      final w = parseForecast(body, place);
+      final w = parseForecast(body, place, lat: la, lon: lo);
       final at = now();
       await db.putWeather(place, jsonEncode(w.toJson()), at);
       return WeatherState(weather: w, fetchedAt: at);
@@ -131,7 +141,12 @@ class WeatherService {
     return jsonDecode(utf8.decode(res.bodyBytes)) as Map<String, dynamic>;
   }
 
-  static Weather parseForecast(Map<String, dynamic> body, String place) {
+  static Weather parseForecast(
+    Map<String, dynamic> body,
+    String place, {
+    double? lat,
+    double? lon,
+  }) {
     final current = body['current'] as Map<String, dynamic>;
     final daily = body['daily'] as Map<String, dynamic>;
     return Weather(
@@ -140,6 +155,8 @@ class WeatherService {
       loC: ((daily['temperature_2m_min'] as List).first as num).toDouble(),
       code: current['weather_code'] as int,
       place: place,
+      lat: lat,
+      lon: lon,
     );
   }
 }

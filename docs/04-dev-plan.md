@@ -25,8 +25,15 @@ Each phase ends with `flutter analyze` clean, tests green, and a short entry in 
 - Hide-faith-cards setting; weather via location or typed city.
 - TR-1/TR-2 tests (no hardcoded scripture).
 
-## Phase 4 — Reminders and polish (done except dark theme)
-- Daily and per-habit reminders, Reflect screen, accessibility pass, app icon, splash, dark theme (once designed).
+## Phase 4 — Reminders and polish (done)
+- Daily and per-habit reminders, Reflect screen, accessibility pass, app icon, splash.
+
+## Phase 4b — v0.3 (2026-10-06, user request)
+- Arabic hadith text (CR-7), Arabic quotes once the reviewer's cited pool lands.
+- Dark theme with provisional tokens (03), Appearance setting.
+- Prayer times on Today and a Prayer times screen, method/madhab settings, optional prayer notifications.
+- Hijri date in the header, Qibla bearing.
+- Small release APKs split per CPU type, published by CI.
 
 ## Phase 5 — Play-ready, stop before submit
 - Release `.aab`, versioning, adaptive icon.

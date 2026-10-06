@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.0 (unreleased)
+- Hadith shown in Arabic (verbatim from the same dataset) above the English; Settings → Content language: Arabic + English or Arabic only.
+- Dark theme (provisional tokens until designed); Settings → Appearance: System, Light, Dark.
+- Prayer times calculated on the phone: next-prayer card on Today, Prayer times screen with Qibla bearing, 12 calculation methods, Standard or Hanafi Asr, optional prayer notifications.
+- Hijri date (Umm al-Qura) on Today.
+
 ## 0.1.0 (unreleased)
 - Phases 1–3: app shell, theme from the design, Drift database, Today, Habits, Calendar, Journal, Activities, Reflect, Settings.
 - Daily ayah from AlQuran Cloud / Quran.com with cache and offline fallback; bundled Bukhari subset and quotes.

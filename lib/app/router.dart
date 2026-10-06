@@ -10,6 +10,7 @@ import '../features/more/activities_screen.dart';
 import '../features/more/more_screen.dart';
 import '../features/more/reflect_screen.dart';
 import '../features/more/settings_screen.dart';
+import '../features/prayer/prayer_screen.dart';
 import '../features/today/today_screen.dart';
 import 'providers.dart';
 import 'theme.dart';
@@ -49,6 +50,10 @@ GoRouter buildRouter() => GoRouter(
               path: '/more',
               builder: (_, _) => const MoreScreen(),
               routes: [
+                GoRoute(
+                  path: 'prayer',
+                  builder: (_, _) => const PrayerScreen(),
+                ),
                 GoRoute(
                   path: 'activities',
                   builder: (_, _) => const ActivitiesScreen(),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart' show ThemeMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +10,7 @@ import '../data/content/content_models.dart';
 import '../data/content/daily_content_service.dart';
 import '../data/content/quran_client.dart';
 import '../data/db/database.dart';
+import '../data/prayer/prayer.dart';
 import '../data/reminders.dart';
 import '../data/weather/weather.dart';
 
@@ -94,6 +96,19 @@ class AppSettings {
   String get dailyReminder => raw['dailyReminder'] ?? '07:30';
   // Off until the user turns it on, so first launch shows no prompt.
   bool get dailyReminderOn => raw['dailyReminderOn'] == 'true';
+
+  ThemeMode get themeMode => switch (raw['themeMode']) {
+    'light' => ThemeMode.light,
+    'dark' => ThemeMode.dark,
+    _ => ThemeMode.system,
+  };
+  PrayerMethod get prayerMethod => PrayerMethod.parse(raw['prayerMethod']);
+  AsrMadhab get madhab => AsrMadhab.parse(raw['madhab']);
+  // Off by default, like the daily reminder.
+  bool get prayerAlerts => raw['prayerAlerts'] == 'true';
+
+  /// Content language: Arabic with the English translation, or Arabic only.
+  bool get arabicOnly => raw['contentLanguage'] == 'ar';
 }
 
 final settingsProvider = StreamProvider<AppSettings>(
@@ -166,16 +181,77 @@ final reminderSchedulerProvider = Provider<ReminderScheduler>(
   (ref) => LocalReminderScheduler(),
 );
 
+/// Ticks every minute, for countdowns.
+final minuteProvider = StreamProvider<DateTime>((ref) {
+  final clock = ref.watch(clockProvider);
+  final controller = StreamController<DateTime>();
+  controller.add(clock.now());
+  final timer = Timer.periodic(
+    const Duration(minutes: 1),
+    (_) => controller.add(clock.now()),
+  );
+  ref.onDispose(() {
+    timer.cancel();
+    controller.close();
+  });
+  return controller.stream;
+});
+
+/// Where prayer times and Qibla are computed: "Use my location" if set,
+/// otherwise the weather city (FR-12). Null until a location is known.
+final prayerLocationProvider =
+    Provider<({double lat, double lon, String place})?>((ref) {
+      final s = ref.watch(settingsProvider).value;
+      if (s == null) return null;
+      if (s.lat != null && s.lon != null) {
+        return (lat: s.lat!, lon: s.lon!, place: 'My location');
+      }
+      final w = ref.watch(weatherProvider).value?.weather;
+      if (w?.lat == null || w?.lon == null) return null;
+      return (lat: w!.lat!, lon: w.lon!, place: w.place);
+    });
+
+/// Prayer times for [day] (a day key) at the prayer location.
+final prayerDayProvider = Provider.family<PrayerDay?, String>((ref, day) {
+  final loc = ref.watch(prayerLocationProvider);
+  final s = ref.watch(settingsProvider).value;
+  if (loc == null || s == null) return null;
+  return prayerDay(
+    lat: loc.lat,
+    lon: loc.lon,
+    date: parseDayKey(day),
+    method: s.prayerMethod,
+    madhab: s.madhab,
+  );
+});
+
 /// Reminders implied by the current settings and habits.
 final reminderPlanProvider = Provider<List<Reminder>?>((ref) {
   final settings = ref.watch(settingsProvider).value;
   final habits = ref.watch(habitsProvider).value;
   if (settings == null || habits == null) return null;
+  final today = todayKey(ref);
+  final now = ref.read(clockProvider).now();
+  final loc = ref.watch(prayerLocationProvider);
+  final prayers = <({String name, DateTime at, String place})>[];
+  if (settings.prayerAlerts && loc != null) {
+    // One-off notifications for the next 7 days, rebuilt every day.
+    for (var d = 0; d < 7; d++) {
+      final times = ref.watch(prayerDayProvider(shiftDay(today, d)));
+      if (times == null) break;
+      for (final p in fivePrayers) {
+        if (times[p].isAfter(now)) {
+          prayers.add((name: prayerLabels[p]!, at: times[p], place: loc.place));
+        }
+      }
+    }
+  }
   return planReminders(
     dailyTime: settings.dailyReminderOn ? settings.dailyReminder : null,
     habits: [
       for (final h in habits)
         (id: h.id, name: h.name, time: h.reminderTime, archived: h.archived),
     ],
+    prayers: prayers,
   );
 });

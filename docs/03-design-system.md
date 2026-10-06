@@ -32,7 +32,35 @@ The design replaced the brief's deep green + gold with sage + terracotta. No gol
 
 Moods: rough=`accent-700`, low=`accent-400`, okay=`neutral-400`, good=`accent-2-400`, bright=`accent-2-600`.
 
-Dark theme: not designed [OQ-10]. Everything goes through tokens.
+## Colour tokens (dark, provisional)
+
+Not in the design yet [OQ-10]. Derived from the light tokens so the same names work; send to Claude Design for review.
+
+| Token | Hex | Note |
+|---|---|---|
+| `bg` | `#171512` | |
+| `surface` | `#221F1B` | |
+| `neutral-100` | `#2B2722` | Arabic box, inputs |
+| `neutral-200` | `#332E28` | progress track |
+| `neutral-300` | `#3E3830` | empty mood bar |
+| `neutral-400` | `#6B6255` | |
+| `neutral-500` | `#857B6C` | |
+| `neutral-600` | `#A0968A` | empty ring |
+| `neutral-700` | `#B9AF9F` | meta text |
+| `neutral-800` | `#D6CCBC` | secondary text, Arabic |
+| `text` | `#F3EBDD` | |
+| `divider` | `#3A342C` | |
+| `accent-200` | `#3A2418` | journal shortcut |
+| `accent-400` | `#F6A06B` | mood low |
+| `accent-700` | `#F0A577` | kickers, links, buttons (dark text on it) |
+| `accent-900` | `#FFE1D0` | text on accent-200 |
+| `accent-2-200` | `#2C3424` | weather chip, privacy card |
+| `accent-2-300` | `#3B4630` | active tab pill |
+| `accent-2-400` | `#8FA374` | mood good |
+| `accent-2-600` | `#AEBF92` | check, today border |
+| `accent-2-900` | `#E3ECD3` | text on sage |
+
+Dark moods: rough `#D9774A`, low `#F6A06B`, okay `#8A8172`, good `#8FA374`, bright `#C3D4A5`.
 
 ## Type
 - Heading font (`--font-heading`): soft heavy serif. Default: **Fraunces** (SemiBold/Bold) until the DS font is confirmed [OQ-9].

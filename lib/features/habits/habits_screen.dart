@@ -78,7 +78,7 @@ class _HabitsScreenState extends ConsumerState<HabitsScreen> {
                   Expanded(
                     child: Text(
                       h.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         color: AppColors.neutral800,
                       ),

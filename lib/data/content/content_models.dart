@@ -52,6 +52,7 @@ class Hadith {
     required this.number,
     required this.text,
     required this.translator,
+    this.arabic,
     this.sourceUrl,
   });
 
@@ -63,6 +64,9 @@ class Hadith {
   final String number;
   final String text;
   final String translator;
+
+  /// Verbatim Arabic from the same dataset (CR-7); null if the source has none.
+  final String? arabic;
 
   /// Null when the link could not be verified (Sahih Muslim).
   final String? sourceUrl;
@@ -76,6 +80,7 @@ class Hadith {
     number: j['number'] as String,
     text: j['text'] as String,
     translator: j['translator'] as String,
+    arabic: j['arabic'] as String?,
     sourceUrl: j['sourceUrl'] as String?,
   );
 }

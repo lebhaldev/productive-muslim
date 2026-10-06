@@ -10,10 +10,14 @@ class Reminder {
     required this.time,
     required this.title,
     required this.body,
+    this.at,
   });
 
   final int id;
   final String time; // HH:mm local
+
+  /// Set for a one-off reminder (prayer times); null repeats daily at [time].
+  final DateTime? at;
   final String title;
   final String body;
 
@@ -23,10 +27,11 @@ class Reminder {
       other.id == id &&
       other.time == time &&
       other.title == title &&
-      other.body == body;
+      other.body == body &&
+      other.at == at;
 
   @override
-  int get hashCode => Object.hash(id, time, title, body);
+  int get hashCode => Object.hash(id, time, title, body, at);
 
   @override
   String toString() => 'Reminder($id $time $title)';
@@ -34,11 +39,15 @@ class Reminder {
 
 const dailyReminderId = 0;
 
+/// Prayer reminders use ids 2000 + day * 5 + prayer index.
+const prayerReminderBase = 2000;
+
 /// The full set of reminders implied by settings and habits. Archived habits
 /// and habits without a time get none.
 List<Reminder> planReminders({
   required String? dailyTime,
   required List<({int id, String name, String? time, bool archived})> habits,
+  List<({String name, DateTime at, String place})> prayers = const [],
 }) => [
   if (dailyTime != null)
     Reminder(
@@ -55,7 +64,18 @@ List<Reminder> planReminders({
         title: h.name,
         body: 'Time for: ${h.name}',
       ),
+  for (final (i, p) in prayers.indexed)
+    Reminder(
+      id: prayerReminderBase + i,
+      time: _hhmm(p.at),
+      title: p.name,
+      body: '${p.name} at ${_hhmm(p.at)} · ${p.place}',
+      at: p.at,
+    ),
 ];
+
+String _hhmm(DateTime t) =>
+    '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
 
 abstract class ReminderScheduler {
   /// Asks for the notification permission. Call only from a user action.
@@ -103,6 +123,23 @@ class LocalReminderScheduler implements ReminderScheduler {
     await _init();
     await _plugin.cancelAllPendingNotifications();
     for (final r in plan) {
+      if (r.at != null) {
+        await _plugin.zonedSchedule(
+          id: r.id,
+          scheduledDate: tz.TZDateTime.from(r.at!, tz.local),
+          title: r.title,
+          body: r.body,
+          notificationDetails: const NotificationDetails(
+            android: AndroidNotificationDetails(
+              'prayer',
+              'Prayer times',
+              importance: Importance.defaultImportance,
+            ),
+          ),
+          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        );
+        continue;
+      }
       final parts = r.time.split(':').map(int.parse).toList();
       final now = tz.TZDateTime.now(tz.local);
       var at = tz.TZDateTime(

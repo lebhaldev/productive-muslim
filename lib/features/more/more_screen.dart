@@ -8,9 +8,10 @@ class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
 
   static const _rows = [
+    ('prayer', 'Prayer times', "Today's times and Qibla"),
     ('activities', 'Activities', 'Log what you did, grouped by day'),
     ('reflect', 'Reflect', 'Your last 30 days'),
-    ('settings', 'Settings', 'Weather, reminders, faith cards, privacy'),
+    ('settings', 'Settings', 'Weather, prayer, reminders, theme, privacy'),
   ];
 
   @override

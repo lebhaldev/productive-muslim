@@ -146,7 +146,7 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
             children: [
               Text(
                 dayLabel(d),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: AppColors.neutral800,

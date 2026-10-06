@@ -17,12 +17,14 @@ class ContentCards extends ConsumerStatefulWidget {
 
 class _ContentCardsState extends ConsumerState<ContentCards> {
   String? open;
+  bool arabicOnly = false;
 
   void _toggle(String id) => setState(() => open = open == id ? null : id);
 
   @override
   Widget build(BuildContext context) {
     final content = ref.watch(dailyContentProvider);
+    arabicOnly = settingsOf(ref).arabicOnly;
     return content.when(
       loading: () => const NCard(children: [LinearProgressIndicator()]),
       error: (e, _) =>
@@ -51,7 +53,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       open: open == 'ayah',
       onTap: () => _toggle('ayah'),
       arabic: a.arabic,
-      text: a.translation,
+      text: arabicOnly ? null : a.translation,
       source: a.source,
       // Offline with an earlier day's ayah: say so instead of passing it off
       // as today's (review R3).
@@ -69,7 +71,10 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       kicker: 'Hadith of the day',
       open: open == 'hadith',
       onTap: () => _toggle('hadith'),
-      text: h.text,
+      // Arabic copied verbatim from the same dataset (CR-7).
+      arabic: h.arabic,
+      arabicSize: 19,
+      text: arabicOnly && h.arabic != null ? null : h.text,
       source: h.source,
       reference: [
         h.bookName,
@@ -110,6 +115,7 @@ class _ContentCard extends StatelessWidget {
     required this.source,
     required this.reference,
     this.arabic,
+    this.arabicSize = 22,
     this.tag,
     this.notice,
   });
@@ -118,7 +124,8 @@ class _ContentCard extends StatelessWidget {
   final bool open;
   final VoidCallback onTap;
   final String? arabic;
-  final String text;
+  final double arabicSize;
+  final String? text;
   final String source;
   final String reference;
   final String? tag;
@@ -146,15 +153,18 @@ class _ContentCard extends StatelessWidget {
               arabic!,
               textDirection: TextDirection.rtl,
               textAlign: TextAlign.right,
-              style: arabicStyle,
+              maxLines: open ? null : 4,
+              overflow: open ? null : TextOverflow.ellipsis,
+              style: arabicStyle.copyWith(fontSize: arabicSize),
             ),
           ),
-        Text(
-          text,
-          maxLines: open ? null : 4,
-          overflow: open ? null : TextOverflow.ellipsis,
-          style: const TextStyle(fontSize: 15, height: 1.5),
-        ),
+        if (text != null)
+          Text(
+            text!,
+            maxLines: open ? null : 4,
+            overflow: open ? null : TextOverflow.ellipsis,
+            style: const TextStyle(fontSize: 15, height: 1.5),
+          ),
         Text(source, style: meta()),
         if (notice != null)
           Text(notice!, style: meta(color: AppColors.accent700)),

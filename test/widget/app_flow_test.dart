@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nurday/app/app.dart';
+import 'package:nurday/app/theme.dart';
 import 'package:nurday/data/db/database.dart';
 
 import '../helpers.dart';
@@ -69,6 +70,16 @@ void main() {
         find.text('Surah Ash-Sharh 94:5 · Saheeh International'),
         findsOneWidget,
       );
+      // Hijri date under the Gregorian one, prayer card from the city.
+      expect(find.text("24 Rabi' Al-Thani 1448"), findsOneWidget);
+      expect(find.text('NEXT PRAYER'), findsOneWidget);
+      expect(find.text('London'), findsOneWidget);
+      // Hadith in Arabic from the dataset, with the English below (CR-7).
+      await scrollTo(tester, find.text('[ fixture hadith text ]'));
+      // Lift the card clear of the bottom navigation bar before tapping it.
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -250));
+      await settle(tester);
+      expect(find.text('[ fixture hadith arabic ]'), findsOneWidget);
       expect(find.text('Sahih al-Bukhari · Book 2 · No. 13'), findsOneWidget);
       // Expanded: reference only, no made-up grading or summary (CR-1, CR-4).
       await tester.tap(find.text('[ fixture hadith text ]'));
@@ -247,4 +258,67 @@ void main() {
       await closeApp(tester, db);
     },
   );
+
+  testWidgets('Arabic only hides the English under ayah and hadith', (
+    tester,
+  ) async {
+    final db = memoryDb();
+    await tester.runAsync(() => db.putSetting('contentLanguage', 'ar'));
+    await pumpApp(tester, db: db);
+    await scrollTo(tester, find.text('[ fixture hadith arabic ]'));
+    expect(find.text('[ fixture arabic text ]'), findsOneWidget);
+    expect(find.text('[ fixture translation text ]'), findsNothing);
+    expect(find.text('[ fixture hadith text ]'), findsNothing);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('dark theme can be chosen in Settings', (tester) async {
+    final db = await pumpApp(tester);
+    expect(
+      Theme.of(tester.element(find.text('Good morning'))).brightness,
+      Brightness.light,
+    );
+    await tapTab(tester, 'More');
+    await tester.tap(find.text('Settings'));
+    await settle(tester);
+    await scrollTo(tester, find.text('Dark'));
+    await tester.tap(find.text('Dark'));
+    await settle(tester);
+    expect(
+      Theme.of(tester.element(find.text('Dark'))).brightness,
+      Brightness.dark,
+    );
+    expect(AppColors.current, Palette.dark);
+    await closeApp(tester, db);
+    AppColors.current = Palette.light;
+  });
+
+  testWidgets('Prayer times screen shows the six times and Qibla', (
+    tester,
+  ) async {
+    final db = memoryDb();
+    await tester.runAsync(() => db.putSetting('city', 'London'));
+    await pumpApp(tester, db: db);
+    await tapTab(tester, 'More');
+    await tester.tap(find.text('Prayer times'));
+    await settle(tester);
+    for (final p in ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']) {
+      expect(find.text(p), findsOneWidget);
+    }
+    expect(find.textContaining('Muslim World League'), findsOneWidget);
+    await scrollTo(tester, find.text('QIBLA'));
+    expect(find.textContaining('° from North'), findsOneWidget);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('without a location the prayer card asks for a city', (
+    tester,
+  ) async {
+    final db = await pumpApp(tester);
+    expect(
+      find.text('Set your city in Settings to see prayer times.'),
+      findsOneWidget,
+    );
+    await closeApp(tester, db);
+  });
 }

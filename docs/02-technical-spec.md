@@ -87,3 +87,12 @@ Content payload must include: `text`, `arabic` (ayah), `translator`/`edition`, `
 - Widget: Today renders cards from fixtures; habit toggle updates counter and streak; mood selection; hide-faith-cards.
 - Integration (emulator): fresh install → log habit, activity, mood, journal → restart offline → Calendar day shows all four.
 - Golden tests for Today against the design snapshot once tokens are final.
+
+## 7. Additions in v0.3
+- `adhan` (Dart port of adhan-js) computes prayer times and the Qibla bearing on the device. Methods offered: Muslim World League (default), Egyptian, Karachi, Umm al-Qura, Dubai, Qatar, Kuwait, Moonsighting Committee, Singapore, Turkey, Tehran, North America (ISNA). Asr: Shafi'i (standard) or Hanafi.
+- `hijri` (Umm al-Qura) for the Hijri date.
+- Settings keys: `themeMode` (system|light|dark), `prayerMethod`, `madhab` (shafi|hanafi), `prayerAlerts` (true|false), `contentLanguage` (ar_en|ar).
+- Prayer notifications: one-off notifications for the next 7 days (ids 2000–2034), rebuilt on every sync (app start, resume, settings change). Inexact, like the other reminders.
+- Hadith JSON gains `arabic` (verbatim from `ara-<collection>` in fawazahmed0/hadith-api@1, same hadith number, reference checked equal by the reviewer's build script).
+- Dark theme: the palette is a `ThemeExtension`-free token set swapped at the app root; the app subtree is rebuilt when brightness changes.
+- Release APKs: CI builds `--release --split-per-abi --obfuscate`; arm64 APK is the one to install.

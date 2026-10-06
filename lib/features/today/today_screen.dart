@@ -9,8 +9,10 @@ import '../../app/theme.dart';
 import '../../core/day_key.dart';
 import '../../core/moods.dart';
 import '../../core/streak.dart';
+import '../../data/prayer/prayer.dart';
 import '../../data/weather/weather.dart';
 import '../../widgets/common.dart';
+import '../prayer/prayer_screen.dart';
 import 'content_cards.dart';
 
 class TodayScreen extends ConsumerWidget {
@@ -32,6 +34,7 @@ class TodayScreen extends ConsumerWidget {
         gap: 18,
         children: [
           _Header(date: parseDayKey(today), hour: now.hour),
+          if (settings.showFaith) const PrayerCard(),
           if (settings.showFaith) const ContentCards(),
           _HabitsSection(today: today),
           _MoodSection(today: today),
@@ -68,6 +71,7 @@ class _Header extends ConsumerWidget {
                 DateFormat('EEEE d MMMM').format(date),
                 style: meta(size: 13),
               ),
+              Text(hijriLabel(date), style: meta(size: 13)),
               const SizedBox(height: 2),
               Semantics(
                 container: true,
@@ -92,7 +96,7 @@ class _WeatherChip extends ConsumerWidget {
     final s = settingsOf(ref);
     final wx = ref.watch(weatherProvider).value;
     final w = wx?.weather;
-    const color = AppColors.sage900;
+    final color = AppColors.sage900;
     return Material(
       color: AppColors.sage200,
       borderRadius: BorderRadius.circular(AppRadii.lg),
@@ -108,7 +112,7 @@ class _WeatherChip extends ConsumerWidget {
                     Text('—', style: heading(24, color: color)),
                     Text(
                       wx?.error ?? 'Loading weather',
-                      style: const TextStyle(fontSize: 11, color: color),
+                      style: TextStyle(fontSize: 11, color: color),
                       textAlign: TextAlign.right,
                     ),
                   ],
@@ -128,12 +132,12 @@ class _WeatherChip extends ConsumerWidget {
                       Text(
                         'H ${formatTemp(w.hiC, fahrenheit: s.fahrenheit)} · '
                         'L ${formatTemp(w.loC, fahrenheit: s.fahrenheit)}',
-                        style: const TextStyle(fontSize: 11, color: color),
+                        style: TextStyle(fontSize: 11, color: color),
                         textAlign: TextAlign.right,
                       ),
                       Text(
                         '${w.condition} · ${w.place}',
-                        style: const TextStyle(fontSize: 11, color: color),
+                        style: TextStyle(fontSize: 11, color: color),
                         textAlign: TextAlign.right,
                       ),
                     ],
@@ -245,11 +249,11 @@ class _HabitRow extends StatelessWidget {
                       ? Container(
                           width: 28,
                           height: 28,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: AppColors.sage600,
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.check,
                             size: 17,
                             color: AppColors.bg,
@@ -357,9 +361,7 @@ class MoodDot extends StatelessWidget {
                           ? Border.all(color: AppColors.bg, width: 3)
                           : null,
                       boxShadow: selected
-                          ? const [
-                              BoxShadow(color: AppColors.text, spreadRadius: 2),
-                            ]
+                          ? [BoxShadow(color: AppColors.text, spreadRadius: 2)]
                           : null,
                     ),
                   ),
@@ -454,10 +456,7 @@ class _JournalShortcut extends ConsumerWidget {
               const SizedBox(height: 4),
               Text(
                 sub,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.accent900,
-                ),
+                style: TextStyle(fontSize: 13, color: AppColors.accent900),
               ),
             ],
           ),

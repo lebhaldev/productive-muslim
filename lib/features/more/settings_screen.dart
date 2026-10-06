@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/content/quran_client.dart';
+import '../../data/prayer/prayer.dart';
 import '../../widgets/common.dart';
 import 'more_screen.dart';
 
@@ -41,6 +42,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     }
     setState(() => _reminderNote = null);
     await _put('dailyReminderOn', '$on');
+  }
+
+  String? _prayerNote;
+
+  Future<void> _setPrayerAlerts(bool on) async {
+    if (on && !await ref.read(reminderSchedulerProvider).requestPermission()) {
+      setState(
+        () => _prayerNote = 'Notifications are off for Nurday. Allow them in Android settings to get prayer alerts.',
+      );
+      await _put('prayerAlerts', 'false');
+      return;
+    }
+    setState(() => _prayerNote = null);
+    await _put('prayerAlerts', '$on');
   }
 
   Future<void> _saveCity() async {
@@ -117,7 +132,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
             if (_locationNote != null) Text(_locationNote!, style: meta()),
             Text(
-              'Location is used only for weather (Open-Meteo).',
+              'Location is sent only to Open-Meteo for weather. Prayer times '
+              'and Qibla are calculated on this phone from it.',
               style: meta(),
             ),
             Align(
@@ -134,6 +150,86 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 ),
                 onSelectionChanged: (v) => _put('unit', v.first ? 'F' : 'C'),
               ),
+            ),
+          ],
+        ),
+        NCard(
+          gap: 10,
+          children: [
+            const CardTitle('Appearance'),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: SegmentedButton<ThemeMode>(
+                key: const Key('theme-mode'),
+                segments: const [
+                  ButtonSegment(value: ThemeMode.system, label: Text('System')),
+                  ButtonSegment(value: ThemeMode.light, label: Text('Light')),
+                  ButtonSegment(value: ThemeMode.dark, label: Text('Dark')),
+                ],
+                selected: {s.themeMode},
+                showSelectedIcon: false,
+                style: SegmentedButton.styleFrom(
+                  selectedBackgroundColor: AppColors.sage300,
+                ),
+                onSelectionChanged: (v) => _put('themeMode', v.first.name),
+              ),
+            ),
+          ],
+        ),
+        NCard(
+          gap: 10,
+          children: [
+            const CardTitle('Prayer'),
+            DropdownButtonFormField<PrayerMethod>(
+              initialValue: s.prayerMethod,
+              isExpanded: true,
+              decoration: const InputDecoration(
+                labelText: 'Calculation method',
+              ),
+              items: [
+                for (final m in PrayerMethod.values)
+                  DropdownMenuItem(
+                    value: m,
+                    child: Text(m.label, overflow: TextOverflow.ellipsis),
+                  ),
+              ],
+              onChanged: (m) {
+                if (m != null) _put('prayerMethod', m.name);
+              },
+            ),
+            DropdownButtonFormField<AsrMadhab>(
+              initialValue: s.madhab,
+              isExpanded: true,
+              decoration: const InputDecoration(labelText: 'Asr'),
+              items: [
+                for (final m in AsrMadhab.values)
+                  DropdownMenuItem(
+                    value: m,
+                    child: Text(m.label, overflow: TextOverflow.ellipsis),
+                  ),
+              ],
+              onChanged: (m) {
+                if (m != null) {
+                  _put('madhab', m == AsrMadhab.hanafi ? 'hanafi' : 'shafi');
+                }
+              },
+            ),
+            SwitchListTile(
+              key: const Key('prayer-alerts-switch'),
+              contentPadding: EdgeInsets.zero,
+              title: const Text(
+                'Prayer time notifications',
+                style: TextStyle(fontSize: 15),
+              ),
+              value: s.prayerAlerts,
+              activeTrackColor: AppColors.sage600,
+              onChanged: _setPrayerAlerts,
+            ),
+            if (_prayerNote != null)
+              Text(_prayerNote!, style: meta(color: AppColors.accent700)),
+            Text(
+              'Times are calculated on this phone from your weather location.',
+              style: meta(),
             ),
           ],
         ),
@@ -164,6 +260,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ],
               onChanged: (t) {
                 if (t != null) _put('translation', t.name);
+              },
+            ),
+            DropdownButtonFormField<bool>(
+              initialValue: s.arabicOnly,
+              isExpanded: true,
+              decoration: const InputDecoration(labelText: 'Content language'),
+              items: const [
+                DropdownMenuItem(value: false, child: Text('Arabic + English')),
+                DropdownMenuItem(value: true, child: Text('Arabic only')),
+              ],
+              onChanged: (v) {
+                if (v != null) _put('contentLanguage', v ? 'ar' : 'ar_en');
               },
             ),
           ],
@@ -202,7 +310,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Text('Per-habit reminders are set on each habit.', style: meta()),
           ],
         ),
-        const NCard(
+        NCard(
           gap: 6,
           color: AppColors.sage200,
           children: [
@@ -224,9 +332,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           children: [
             CardTitle('Sources & licenses'),
             Text(
-              'Quran: AlQuran Cloud (Uthmani text, Saheeh International) and Quran.com API '
-              '(The Clear Quran) · Hadith: Sahih al-Bukhari, English text from the '
-              'fawazahmed0/hadith-api dataset (public domain), references to sunnah.com · '
+              'Quran: AlQuran Cloud (Uthmani text, Saheeh International) · '
+              'Hadith: Sahih al-Bukhari and Sahih Muslim, Arabic and English from the '
+              'fawazahmed0/hadith-api dataset (public domain); English by Muhammad Muhsin Khan '
+              'and Abdul Hamid Siddiqui; Bukhari references to sunnah.com · '
+              'Prayer times: adhan library (MIT), calculated on this phone · '
+              'Hijri date: Umm al-Qura calendar (hijri library) · '
               'Weather: Open-Meteo (CC BY 4.0) · Quotes: bundled list with authors · '
               'Fonts: Amiri Quran and Fraunces (SIL Open Font License)',
               style: TextStyle(fontSize: 13, height: 1.6),

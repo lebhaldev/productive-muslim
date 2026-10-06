@@ -26,20 +26,21 @@ Bottom bar, 5 tabs, each an icon in a pill plus a text label underneath. Active 
 
 Order top to bottom:
 
-1. **Header** — long date (`Monday 5 October`) above `Good morning`. Weather chip on the right (sage background): current temp large, `H 18° · L 9°`, `<condition> · <city>`. Greeting by time of day [OQ-16].
-2. **Faith cards** (hidden when "Show faith cards" is off): Ayah of the day, Hadith of the day.
-3. **Quote of the day** card (always shown; in the design it sits in the same list as the faith cards, so it is hidden with them [OQ-17]).
-4. **Habits** — heading + `N of M`. Pill rows: empty ring or filled sage check, name, streak `3 days` / `1 day` / nothing at 0.
-5. **How do you feel?** — 5 mood dots with labels. Selected dot grows (32→40) with a dark ring and bold label.
-6. **Today's activity** — `+ Log` opens Activities. Rows `06:30  Title  25 min`, sorted by time. Empty: `Nothing logged yet.`
-7. **Journal shortcut** (peach) — `Write today's journal` / `A few lines is enough.`; once an entry exists: `Continue today's journal` / title or first 40 chars of body + `…`. Opens Journal on today.
-8. **Cache note** — `Content and weather updated HH:mm · works offline`.
+1. **Header** — long date (`Monday 5 October`), then the Hijri date (`24 Rabi' Al-Thani 1448`) [FR-13], above `Good morning`. Weather chip on the right (sage background): current temp large, `H 18° · L 9°`, `<condition> · <city>`. Greeting by time of day [OQ-16].
+2. **Prayer times card** [FR-12]: next prayer name, time and `in 1 h 20 min`; a row of the five prayers (Fajr, Dhuhr, Asr, Maghrib, Isha) with the next one highlighted, plus sunrise. Without a location: `Set your city in Settings to see prayer times.` Hidden with the faith cards.
+3. **Faith cards** (hidden when "Show faith cards" is off): Ayah of the day, Hadith of the day.
+4. **Quote of the day** card (always shown; in the design it sits in the same list as the faith cards, so it is hidden with them [OQ-17]).
+5. **Habits** — heading + `N of M`. Pill rows: empty ring or filled sage check, name, streak `3 days` / `1 day` / nothing at 0.
+6. **How do you feel?** — 5 mood dots with labels. Selected dot grows (32→40) with a dark ring and bold label.
+7. **Today's activity** — `+ Log` opens Activities. Rows `06:30  Title  25 min`, sorted by time. Empty: `Nothing logged yet.`
+8. **Journal shortcut** (peach) — `Write today's journal` / `A few lines is enough.`; once an entry exists: `Continue today's journal` / title or first 40 chars of body + `…`. Opens Journal on today.
+9. **Cache note** — `Content and weather updated HH:mm · works offline`.
 
 ### Content cards [D]
 - Header: kicker (`Ayah of the day`, `Hadith of the day`, `Quote of the day`) in terracotta, `More` / `Less` toggle on the right. Tapping anywhere on the card toggles. Only one card open at a time.
 - Ayah: Arabic block (Amiri Quran, RTL, light tinted box), English translation, source `Surah <name> <s>:<v> · <translator>`.
-- Hadith: text, source `<collection> · Book <n> · No. <n>`.
-- Quote: text in quotes, author.
+- Hadith: Arabic text first (RTL box, as for the ayah), then the English translation unless the content language is `Arabic only`; source `<collection> · Book <n> · No. <n>`.
+- Quote: Arabic text when the Arabic quote pool is available (CR-7), else English; author and work.
 - Expanded: a tag (`App summary — not tafsir` for ayah, `App summary` for hadith, `Encouragement, not scripture` for quote), the note, and a reference line (ayah: `Edition: quran-uthmani + en.sahih · fetched 06:58`; hadith: `Grading per source · sunnah.com reference`).
 
 ## 4. Habits [D]
@@ -64,7 +65,12 @@ Order top to bottom:
 - An entry counts only when body is non-empty.
 
 ## 7. More [D]
-List of large rows: `Activities — Log what you did, grouped by day`, `Reflect — Your last 30 days`, `Settings — Weather, reminders, faith cards, privacy`.
+List of large rows: `Prayer times — Today's times and Qibla`, `Activities — Log what you did, grouped by day`, `Reflect — Your last 30 days`, `Settings — Weather, prayer, reminders, theme, privacy`.
+
+### Prayer times [new, not in design]
+- Today's six times (Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha), the next highlighted, city and method under the title.
+- Qibla card: bearing in degrees from true North and a compass rose with the Qibla arrow (static, no sensor) [FR-14].
+- Without a location: the same prompt as Today and a `Open Settings` button.
 
 ### Activities [D]
 - Form card: `What did you do?`, `Note (optional)`, start time (defaults to now), duration in `min` (default 30, min 1), button `Log activity` (disabled while title empty) / `Save changes` when editing.
@@ -79,6 +85,9 @@ List of large rows: `Activities — Log what you did, grouped by day`, `Reflect 
 ### Settings [D]
 - **Weather:** City override (text), note `Location is used only for weather (Open-Meteo).`, segmented `Celsius | Fahrenheit`. "Use my location" button not in design [OQ-20, default: add a small button].
 - **Content:** switch `Show faith cards`; Translation select `Saheeh International` / `Dr. Mustafa Khattab, The Clear Quran`.
+- **Appearance:** segmented `System | Light | Dark` (default System) [FR-15].
+- **Prayer:** calculation method select (default Muslim World League), Asr select `Standard (Shafi'i, Maliki, Hanbali) | Hanafi`, switch `Prayer time notifications` (off by default; asks permission when turned on). Note `Times are calculated on this phone from your weather location.`
+- **Content:** content language `Arabic + English | Arabic only` (default Arabic + English).
 - **Reminders:** `Daily reminder` time (default 07:30); note `Per-habit reminders are set on each habit.`
 - **Privacy card** (sage): `Your data stays on this phone` / `Journal, mood, habits and activities are never uploaded. No account needed.`
 - **Sources & licenses** card.
@@ -95,6 +104,10 @@ List of large rows: `Activities — Log what you did, grouped by day`, `Reflect 
 - FR-9 **Hide faith cards** hides the content cards on Today.
 - FR-10 **Privacy**: personal data never leaves the device; no account.
 - FR-11 Calendar and Journal never navigate into the future.
+- FR-12 **Prayer times** are computed on the device (adhan library) from the weather location, the chosen method and Asr madhab, in the device time zone. No network. Next prayer after Isha is tomorrow's Fajr.
+- FR-13 **Hijri date** uses the Umm al-Qura calendar (hijri library). It can differ by a day from local moon sighting; the app does not claim otherwise.
+- FR-14 **Qibla** is the great-circle bearing to the Kaaba from the weather location.
+- FR-15 **Theme**: System follows the phone; Light/Dark override it. All colours come from tokens (03).
 
 ## 9. Content rules (non-negotiable)
 - CR-1 Never invent an ayah, translation, tafsir, hadith, grading or chain. The design shows placeholders only, by intent.
@@ -103,3 +116,4 @@ List of large rows: `Activities — Log what you did, grouped by day`, `Reflect 
 - CR-4 v1 ships no explanations. The expanded card shows only the reference. A note may be added later only when a person has reviewed it, labelled `App summary`, never as tafsir.
 - CR-5 Quotes: attributed, or `Unknown`; labelled `Encouragement, not scripture`.
 - CR-6 If a source fails with nothing cached, the card says which source failed. Never fill the gap.
+- CR-7 Arabic: hadith Arabic is copied verbatim from the same dataset as the English (`ara-bukhari`, `ara-muslim`). Arabic quotes come only from a curated pool with author, work and a fetchable source; never machine-translated and attributed to someone. Until that pool exists, quotes stay in English.

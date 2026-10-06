@@ -193,7 +193,7 @@ class _DayCell extends ConsumerWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
             side: isToday
-                ? const BorderSide(color: AppColors.sage600, width: 2)
+                ? BorderSide(color: AppColors.sage600, width: 2)
                 : BorderSide.none,
           ),
           child: InkWell(

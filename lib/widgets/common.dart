@@ -48,12 +48,12 @@ class NCard extends StatelessWidget {
   const NCard({
     super.key,
     required this.children,
-    this.color = AppColors.surface,
+    this.color,
     this.gap = 8,
     this.onTap,
   });
   final List<Widget> children;
-  final Color color;
+  final Color? color;
   final double gap;
   final VoidCallback? onTap;
 
@@ -72,7 +72,7 @@ class NCard extends StatelessWidget {
       ),
     );
     return Material(
-      color: color,
+      color: color ?? AppColors.surface,
       borderRadius: BorderRadius.circular(AppRadii.lg),
       clipBehavior: Clip.antiAlias,
       child: onTap == null ? content : InkWell(onTap: onTap, child: content),
@@ -87,7 +87,7 @@ class Kicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Text(
     text.toUpperCase(),
-    style: const TextStyle(
+    style: TextStyle(
       fontSize: 11,
       letterSpacing: 1.2,
       fontWeight: FontWeight.w600,
@@ -141,9 +141,7 @@ class RoundIconButton extends StatelessWidget {
     tooltip: label,
     onPressed: onPressed,
     icon: Icon(icon),
-    style: IconButton.styleFrom(
-      side: const BorderSide(color: AppColors.divider),
-    ),
+    style: IconButton.styleFrom(side: BorderSide(color: AppColors.divider)),
   );
 }
 

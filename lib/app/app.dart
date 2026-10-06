@@ -52,11 +52,23 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
 
   @override
   Widget build(BuildContext context) {
+    final mode = ref.watch(
+      settingsProvider.select((s) => s.value?.themeMode ?? ThemeMode.system),
+    );
     return MaterialApp.router(
       title: 'Nurday',
       debugShowCheckedModeBanner: false,
-      theme: buildTheme(),
+      theme: buildTheme(Palette.light),
+      darkTheme: buildTheme(Palette.dark),
+      themeMode: mode,
+      themeAnimationDuration: Duration.zero,
       routerConfig: _router,
+      builder: (context, child) {
+        final dark = Theme.of(context).brightness == Brightness.dark;
+        AppColors.current = dark ? Palette.dark : Palette.light;
+        // Widgets read AppColors directly, so rebuild them all on a switch.
+        return KeyedSubtree(key: ValueKey(dark), child: child!);
+      },
     );
   }
 }

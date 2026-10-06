@@ -159,7 +159,7 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(AppRadii.lg),
-                  borderSide: const BorderSide(color: AppColors.divider),
+                  borderSide: BorderSide(color: AppColors.divider),
                 ),
               ),
             ),

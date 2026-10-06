@@ -7,7 +7,7 @@ The design is made in Claude Design (`Nurday.dc.html`) by a separate agent that 
 - DS-1 **Design wins on look and layout**: colours, type, order of sections, labels, copy. The specs update to match.
 - DS-2 **Specs win on rules**: content-sourcing (CR-x), privacy, offline, data model. If a design breaks one, it is flagged back to the design agent, not silently built.
 - DS-3 Anything not visible in a design is an open question below, never invented.
-- DS-4 Every sync adds a dated snapshot to `design/` and a row to the sync log.
+- DS-4 Every sync adds a dated snapshot to `../design/` and a row to the sync log.
 
 ## How to sync (the user's part)
 1. When the design agent finishes a change, either export/download `Nurday.dc.html` or take screenshots of every changed screen.
@@ -22,6 +22,7 @@ The design is made in Claude Design (`Nurday.dc.html`) by a separate agent that 
 | 2026-10-05 | Screenshot of Today (hadith → journal) + design agent notes | Initial specs. Palette switched to sage/terracotta, no gold. Placeholders for scripture confirmed as intended. |
 | 2026-10-05 | Reviewer thread findings (review/01, review/02) | No grading line (source has none); no "App summary" until a person reviews notes; offline ayah labelled "Last saved ayah"; The Clear Quran hidden until licence and endpoint confirmed (spec rule wins over design, DS-2); 120 hadith incl. Sahih Muslim without links. |
 | 2026-10-05 | Full export `design/2026-10-05-Nurday.dc.html` (all tabs) | 01 rewritten to v0.2 with every screen; 03 tokens mapped to Organic DS names; OQ-1–8, 13, 14 closed. |
+| 2026-10-06 | User request (no design yet) | v0.3: Arabic hadith/quotes, dark theme (provisional tokens), prayer times card + screen, Hijri date, Qibla. These screens need a design pass in Claude Design; built with existing components until then. |
 
 ## Conflicts between brief and design (resolved)
 - Palette: brief said deep green + gold; design uses sage + terracotta, no gold → **design wins**.
@@ -34,7 +35,10 @@ Closed by the 2026-10-05 export: OQ-1 (header + weather chip + ayah card), OQ-2 
 |---|---|---|
 | OQ-8 | First-install empty states beyond "Nothing logged yet." | Plain text prompts in the same style |
 | OQ-9 | Organic DS exact hex values and heading font | Sampled hex, Fraunces |
-| OQ-10 | Dark theme | Light only until designed |
+| OQ-10 | Dark theme | Provisional dark tokens in 03; needs design review |
+| OQ-21 | Prayer card and Prayer times screen look | Existing card components, sage highlight for the next prayer |
+| OQ-22 | Default prayer method | Muslim World League, Asr standard |
+| OQ-23 | Hadith in Arabic: full isnad or matn only? | Full text as in the dataset (includes the chain) |
 | OQ-11 | Default translation | Saheeh International (`en.sahih`); The Clear Quran selectable |
 | OQ-12 | Hadith dataset and licence | Bundled subset with sunnah.com references |
 | OQ-13 | Daily ayah pool | Curated list of ayah references, text fetched from AlQuran Cloud |
