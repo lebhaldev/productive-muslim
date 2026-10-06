@@ -91,10 +91,13 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       kicker: 'Quote of the day',
       open: open == 'quote',
       onTap: () => _toggle('quote'),
-      text: '“${q.text}”',
-      source: q.attribution,
+      // Arabic only: there is no translation we may show (CR-7).
+      arabic: q.arabic,
+      arabicSize: 19,
+      text: null,
+      source: '${q.attribution} · ${q.work}',
       tag: 'Encouragement, not scripture',
-      reference: q.source,
+      reference: ['OpenITI corpus', ?q.locator, ?q.sourceUrl].join(' · '),
     );
   }
 

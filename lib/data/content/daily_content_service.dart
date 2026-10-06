@@ -28,7 +28,7 @@ class DailyContentService {
 
   static const ayahRefsAsset = 'assets/content/ayah_refs.json';
   static const hadithAsset = 'assets/content/hadith.json';
-  static const quotesAsset = 'assets/content/quotes.json';
+  static const quotesAsset = 'assets/content/quotes_ar.json';
 
   Future<DailyContent> load(String day, Translation translation) async {
     return DailyContent(

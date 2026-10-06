@@ -214,6 +214,20 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 }
               },
             ),
+            DropdownButtonFormField<HighLatitude>(
+              initialValue: s.highLatitude,
+              isExpanded: true,
+              decoration: const InputDecoration(
+                labelText: 'High latitude rule (far north or south)',
+              ),
+              items: [
+                for (final h in HighLatitude.values)
+                  DropdownMenuItem(value: h, child: Text(h.label)),
+              ],
+              onChanged: (h) {
+                if (h != null) _put('highLatitude', h.name);
+              },
+            ),
             SwitchListTile(
               key: const Key('prayer-alerts-switch'),
               contentPadding: EdgeInsets.zero,
@@ -338,7 +352,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               'and Abdul Hamid Siddiqui; Bukhari references to sunnah.com · '
               'Prayer times: adhan library (MIT), calculated on this phone · '
               'Hijri date: Umm al-Qura calendar (hijri library) · '
-              'Weather: Open-Meteo (CC BY 4.0) · Quotes: bundled list with authors · '
+              'Weather: Open-Meteo (CC BY 4.0) · Quotes: Arabic texts from the OpenITI corpus '
+              '(Diwan al-Shafi\'i, al-Mutanabbi, Ibn al-Jawzi\'s Sayd al-Khatir) · '
               'Fonts: Amiri Quran and Fraunces (SIL Open Font License)',
               style: TextStyle(fontSize: 13, height: 1.6),
             ),

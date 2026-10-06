@@ -41,6 +41,20 @@ enum AsrMadhab {
   static AsrMadhab parse(String? s) => s == 'hanafi' ? hanafi : standard;
 }
 
+/// How Fajr and Isha are bounded where twilight never ends (summer, far north).
+enum HighLatitude {
+  middle('Middle of the night', adhan.HighLatitudeRule.middle_of_the_night),
+  seventh('Seventh of the night', adhan.HighLatitudeRule.seventh_of_the_night),
+  angle('Twilight angle', adhan.HighLatitudeRule.twilight_angle);
+
+  const HighLatitude(this.label, this.rule);
+  final String label;
+  final adhan.HighLatitudeRule rule;
+
+  static HighLatitude parse(String? s) =>
+      values.firstWhere((h) => h.name == s, orElse: () => middle);
+}
+
 enum PrayerName { fajr, sunrise, dhuhr, asr, maghrib, isha }
 
 const prayerLabels = {
@@ -76,8 +90,11 @@ PrayerDay prayerDay({
   required DateTime date,
   PrayerMethod method = PrayerMethod.mwl,
   AsrMadhab madhab = AsrMadhab.standard,
+  HighLatitude highLatitude = HighLatitude.middle,
 }) {
-  final params = method.method.getParameters()..madhab = madhab.madhab;
+  final params = method.method.getParameters()
+    ..madhab = madhab.madhab
+    ..highLatitudeRule = highLatitude.rule;
   final t = adhan.PrayerTimes.utc(
     adhan.Coordinates(lat, lon),
     adhan.DateComponents(date.year, date.month, date.day),

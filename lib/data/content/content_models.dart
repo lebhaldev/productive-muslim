@@ -86,18 +86,29 @@ class Hadith {
 }
 
 class Quote {
-  const Quote({required this.text, required this.author, required this.source});
+  const Quote({
+    required this.arabic,
+    required this.author,
+    required this.work,
+    this.locator,
+    this.sourceUrl,
+  });
 
-  final String text;
+  /// Verbatim Arabic; verse hemistichs are separated by newlines (CR-7).
+  final String arabic;
   final String? author;
-  final String source;
+  final String work;
+  final String? locator;
+  final String? sourceUrl;
 
   String get attribution => author ?? 'Unknown';
 
   factory Quote.fromJson(Map<String, dynamic> j) => Quote(
-    text: j['text'] as String,
+    arabic: j['arabic'] as String,
     author: j['author'] as String?,
-    source: j['source'] as String,
+    work: j['work'] as String,
+    locator: j['locator'] as String?,
+    sourceUrl: j['sourceUrl'] as String?,
   );
 }
 

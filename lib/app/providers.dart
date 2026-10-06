@@ -104,6 +104,7 @@ class AppSettings {
   };
   PrayerMethod get prayerMethod => PrayerMethod.parse(raw['prayerMethod']);
   AsrMadhab get madhab => AsrMadhab.parse(raw['madhab']);
+  HighLatitude get highLatitude => HighLatitude.parse(raw['highLatitude']);
   // Off by default, like the daily reminder.
   bool get prayerAlerts => raw['prayerAlerts'] == 'true';
 
@@ -222,6 +223,7 @@ final prayerDayProvider = Provider.family<PrayerDay?, String>((ref, day) {
     date: parseDayKey(day),
     method: s.prayerMethod,
     madhab: s.madhab,
+    highLatitude: s.highLatitude,
   );
 });
 

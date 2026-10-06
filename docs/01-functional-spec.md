@@ -40,7 +40,7 @@ Order top to bottom:
 - Header: kicker (`Ayah of the day`, `Hadith of the day`, `Quote of the day`) in terracotta, `More` / `Less` toggle on the right. Tapping anywhere on the card toggles. Only one card open at a time.
 - Ayah: Arabic block (Amiri Quran, RTL, light tinted box), English translation, source `Surah <name> <s>:<v> · <translator>`.
 - Hadith: Arabic text first (RTL box, as for the ayah), then the English translation unless the content language is `Arabic only`; source `<collection> · Book <n> · No. <n>`.
-- Quote: Arabic text when the Arabic quote pool is available (CR-7), else English; author and work.
+- Quote: Arabic text (verse lines on separate lines, RTL box), `<author> · <work>`; expanded reference `OpenITI corpus · <page> · <source file>`.
 - Expanded: a tag (`App summary — not tafsir` for ayah, `App summary` for hadith, `Encouragement, not scripture` for quote), the note, and a reference line (ayah: `Edition: quran-uthmani + en.sahih · fetched 06:58`; hadith: `Grading per source · sunnah.com reference`).
 
 ## 4. Habits [D]
@@ -86,7 +86,7 @@ List of large rows: `Prayer times — Today's times and Qibla`, `Activities — 
 - **Weather:** City override (text), note `Location is used only for weather (Open-Meteo).`, segmented `Celsius | Fahrenheit`. "Use my location" button not in design [OQ-20, default: add a small button].
 - **Content:** switch `Show faith cards`; Translation select `Saheeh International` / `Dr. Mustafa Khattab, The Clear Quran`.
 - **Appearance:** segmented `System | Light | Dark` (default System) [FR-15].
-- **Prayer:** calculation method select (default Muslim World League), Asr select `Standard (Shafi'i, Maliki, Hanbali) | Hanafi`, switch `Prayer time notifications` (off by default; asks permission when turned on). Note `Times are calculated on this phone from your weather location.`
+- **Prayer:** calculation method select (default Muslim World League), Asr select `Standard (Shafi'i, Maliki, Hanbali) | Hanafi`, high latitude rule `Middle of the night | Seventh of the night | Twilight angle`, switch `Prayer time notifications` (off by default; asks permission when turned on). Note `Times are calculated on this phone from your weather location.`
 - **Content:** content language `Arabic + English | Arabic only` (default Arabic + English).
 - **Reminders:** `Daily reminder` time (default 07:30); note `Per-habit reminders are set on each habit.`
 - **Privacy card** (sage): `Your data stays on this phone` / `Journal, mood, habits and activities are never uploaded. No account needed.`
@@ -114,6 +114,6 @@ List of large rows: `Prayer times — Today's times and Qibla`, `Activities — 
 - CR-2 Ayah: Uthmani Arabic + selected translation from AlQuran Cloud (`quran-uthmani` + `en.sahih` or `en.khattab` [OQ-11]).
 - CR-3 Hadith: bundled cited dataset (120 items, Bukhari + Muslim), shows collection · book · number, the translator and, for Bukhari only, a sunnah.com link. No grading line: the source has none.
 - CR-4 v1 ships no explanations. The expanded card shows only the reference. A note may be added later only when a person has reviewed it, labelled `App summary`, never as tafsir.
-- CR-5 Quotes: attributed, or `Unknown`; labelled `Encouragement, not scripture`.
+- CR-5 Quotes: Arabic only, from the OpenITI corpus (55 items, reviewer-verified), with author and work; labelled `Encouragement, not scripture`.
 - CR-6 If a source fails with nothing cached, the card says which source failed. Never fill the gap.
-- CR-7 Arabic: hadith Arabic is copied verbatim from the same dataset as the English (`ara-bukhari`, `ara-muslim`). Arabic quotes come only from a curated pool with author, work and a fetchable source; never machine-translated and attributed to someone. Until that pool exists, quotes stay in English.
+- CR-7 Arabic: hadith Arabic is copied verbatim from the same dataset as the English (`ara-bukhari`, `ara-muslim`). Arabic quotes come only from a curated pool with author, work and a fetchable source; never machine-translated and attributed to someone. The English quote list was removed in v0.3.

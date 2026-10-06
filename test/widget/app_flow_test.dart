@@ -92,7 +92,8 @@ void main() {
       );
       expect(find.textContaining('Grading'), findsNothing);
       expect(find.textContaining('App summary'), findsNothing);
-      expect(find.text('Fixture Author'), findsOneWidget);
+      expect(find.text('Fixture Author · Fixture work'), findsOneWidget);
+      expect(find.text('[ fixture arabic quote ]'), findsOneWidget);
       await closeApp(tester, db);
     },
   );
@@ -243,7 +244,9 @@ void main() {
       await tester.tap(find.text('Settings'));
       await settle(tester);
       await scrollTo(tester, find.text('Daily reminder'));
-      await tester.tap(find.byType(Switch).last);
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -250));
+      await settle(tester);
+      await tester.tap(find.byKey(const Key('daily-reminder-switch')));
       await settle(tester);
       expect(
         find.textContaining('Notifications are off for Nurday'),

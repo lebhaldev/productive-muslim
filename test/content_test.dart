@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -43,6 +44,8 @@ void main() {
     final c = await service().load('2026-10-05', Translation.sahih);
     expect(c.hadith.value!.source, 'Sahih al-Bukhari · Book 2 · No. 13');
     expect(c.quote.value!.attribution, 'Fixture Author');
+    expect(c.quote.value!.arabic, '[ fixture arabic quote ]');
+    expect(c.quote.value!.work, 'Fixture work');
   });
 
   test('offline: shows the cached ayah, then names the failed source when nothing is cached', () async {
@@ -85,5 +88,29 @@ void main() {
     expect(cached.weather!.place, 'London');
     expect(cached.fetchedAt, now);
     expect(jsonDecode((await db.cachedWeather())!.payload)['code'], 2);
+  });
+
+  test('bundled Arabic quotes are complete and cited', () {
+    final data = jsonDecode(
+      File('assets/content/quotes_ar.json').readAsStringSync(),
+    );
+    final quotes = data['quotes'] as List;
+    expect(quotes.length, greaterThanOrEqualTo(40));
+    for (final q in quotes) {
+      expect((q['arabic'] as String).trim(), isNotEmpty, reason: q['id']);
+      expect(q['author'], isNotNull, reason: q['id']);
+      expect(q['work'], isNotNull, reason: q['id']);
+      expect(q['sourceUrl'] as String, startsWith('https://'), reason: q['id']);
+      expect(q.containsKey('english'), isFalse, reason: 'no translations');
+    }
+  });
+
+  test('bundled hadith all carry Arabic', () {
+    final data = jsonDecode(
+      File('assets/content/hadith.json').readAsStringSync(),
+    );
+    for (final h in data['hadiths'] as List) {
+      expect((h['arabic'] as String).trim(), isNotEmpty, reason: h['id']);
+    }
   });
 }
