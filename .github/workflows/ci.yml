@@ -30,13 +30,26 @@ jobs:
       - run: flutter test
       - name: Build debug APK
         run: flutter build apk --debug
+      # Small per-phone APKs: release mode (AOT, R8 shrinking, icon tree-shaking),
+      # one APK per CPU type instead of all of them in one file.
+      - name: Build release APKs split per CPU type
+        run: |
+          flutter build apk --release --split-per-abi --obfuscate --split-debug-info=build/symbols
+          ls -la build/app/outputs/flutter-apk/
       - uses: actions/upload-artifact@v4
         with:
           name: nurday-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
-      - name: Rename APK
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nurday-release-apks
+          path: build/app/outputs/flutter-apk/app-*-release.apk
+      - name: Rename APKs
         if: github.event_name == 'push'
-        run: cp build/app/outputs/flutter-apk/app-debug.apk nurday-debug.apk
+        run: |
+          cp build/app/outputs/flutter-apk/app-debug.apk nurday-debug.apk
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk nurday.apk
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk nurday-armv7.apk
       # A public pre-release so testers (and the Notion sync) can download the
       # latest debug APK without signing in to GitHub.
       - name: Publish latest debug APK
@@ -51,3 +64,20 @@ jobs:
             Debug APK from branch ${{ github.ref_name }}, commit ${{ github.sha }}.
             Not signed for release. Install on an Android phone with "Install unknown apps" allowed.
           files: nurday-debug.apk
+      # The small APK most phones need (arm64), plus one for older 32-bit phones.
+      - name: Publish latest small APK
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-latest
+          name: Nurday APK (latest)
+          prerelease: true
+          make_latest: false
+          body: |
+            Release-mode APK from branch ${{ github.ref_name }}, commit ${{ github.sha }}.
+            nurday.apk fits almost every phone from the last ~8 years (arm64).
+            nurday-armv7.apk is for older 32-bit phones.
+            Signed with a test key, not the Play Store key. Install with "Install unknown apps" allowed.
+          files: |
+            nurday.apk
+            nurday-armv7.apk
