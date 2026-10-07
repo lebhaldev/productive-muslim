@@ -27,6 +27,10 @@ void main() {
     await tester.runAsync(() async {
       await loadFont('Fraunces', 'assets/fonts/Fraunces.ttf');
       await loadFont('AmiriQuran', 'assets/fonts/AmiriQuran.ttf');
+      await loadFont('ScheherazadeNew', 'assets/fonts/ScheherazadeNew.ttf');
+      await loadFont('NotoNaskhArabic', 'assets/fonts/NotoNaskhArabic.ttf');
+      await loadFont('Nunito', 'assets/fonts/Nunito.ttf');
+      await loadFont('Lora', 'assets/fonts/Lora.ttf');
       final roboto = Directory('/usr/share/fonts')
           .listSync(recursive: true)
           .whereType<File>()

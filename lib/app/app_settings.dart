@@ -34,6 +34,9 @@ class AppSettings {
     orElse: () => ColorTheme.sage,
   );
 
+  AppFont get appFont => AppFont.parse(raw['appFont']);
+  ArabicFont get arabicFont => ArabicFont.parse(raw['arabicFont']);
+
   ThemeMode get themeMode => switch (raw['themeMode']) {
     'light' => ThemeMode.light,
     'dark' => ThemeMode.dark,

@@ -501,6 +501,41 @@ void main() {
     await closeApp(tester, db);
   });
 
+  testWidgets('font and Arabic font can be chosen in Appearance', (
+    tester,
+  ) async {
+    final db = await pumpApp(tester);
+    await openSettings(tester, 'appearance');
+    await scrollTo(tester, find.byKey(const Key('app-font')));
+    await tester.tap(find.byKey(const Key('app-font')));
+    await settle(tester);
+    await tester.tap(find.text('Rounded').last);
+    await settle(tester);
+    expect(AppFonts.current, AppFont.rounded);
+    await scrollTo(tester, find.byKey(const Key('arabic-font')));
+    await tester.tap(find.byKey(const Key('arabic-font')));
+    await settle(tester);
+    await tester.tap(find.text('Noto Naskh Arabic').last);
+    await settle(tester);
+    expect(AppFonts.arabic, ArabicFont.naskh);
+    await closeApp(tester, db);
+    AppFonts.current = AppFont.classic;
+    AppFonts.arabic = ArabicFont.amiri;
+  });
+
+  testWidgets('every colour theme can be picked', (tester) async {
+    final db = await pumpApp(tester);
+    await openSettings(tester, 'appearance');
+    for (final t in [ColorTheme.lavender, ColorTheme.mono]) {
+      await scrollTo(tester, find.byKey(Key('color-theme-${t.name}')));
+      await tester.tap(find.byKey(Key('color-theme-${t.name}')));
+      await settle(tester);
+      expect(AppColors.current, t.light);
+    }
+    await closeApp(tester, db);
+    AppColors.current = Palette.light;
+  });
+
   testWidgets('city search suggests places and picking one names the weather', (
     tester,
   ) async {

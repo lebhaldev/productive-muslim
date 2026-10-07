@@ -1,6 +1,10 @@
 # Changelog
 
 ## 0.3.0 (unreleased)
+- Today shows the ayah, hadith and quote together again, each in its own card with its own ↻ Show another, instead of tabs.
+- Location: Settings → Location has a city search with suggestions (name, region, country). The weather chip and prayer card show the real place name; "Use my location" asks the phone's geocoder for the name, and locations saved earlier are named once.
+- Four more colour themes: Lavender, Sunrise, Indigo and Mono (12 in all).
+- Fonts: Settings → Appearance → Font (Classic, Modern, Rounded, Serif) and Arabic font (Amiri Quran, Scheherazade New, Noto Naskh Arabic), with a preview.
 - Play readiness: release builds sign with the upload key from `android/key.properties` or CI secrets; CI builds the Play bundle when the key exists; RELEASE.md (human steps, Data safety and permission answers) and a store listing draft. Version 0.3.0+3.
 - Code: settings split into one file per section; shared widgets for menus, tiles, Arabic blocks and settings controls.
 - Calmer Today: ayah, hadith and quote now share one card with tabs; the prayer card shows only the next prayer (all times stay on the Prayer screen); the activity list and journal banner became two small tiles; the weather chip is one line shorter.

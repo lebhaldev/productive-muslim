@@ -29,7 +29,11 @@ class AboutSection extends StatelessWidget {
       "Arabic texts from the OpenITI corpus (Diwan al-Shafi'i, "
           "al-Mutanabbi, Ibn al-Jawzi's Sayd al-Khatir)",
     ),
-    ('Fonts', 'Amiri Quran and Fraunces (SIL Open Font License)'),
+    (
+      'Fonts',
+      'Amiri Quran, Scheherazade New, Noto Naskh Arabic, Fraunces, Nunito '
+          'and Lora (SIL Open Font License)',
+    ),
   ];
 
   @override

@@ -26,7 +26,7 @@ Bottom bar, 5 tabs, each an icon in a pill plus a text label underneath. Active 
 
 Order top to bottom:
 
-1. **Header** — long date (`Monday 5 October`), then the Hijri date (`24 Rabi' Al-Thani 1448`) [FR-13], above `Good morning`. Weather chip on the right (sage background): current temp large, `H 18° · L 9°`, `<condition> · <city>`. Greeting by time of day [OQ-16].
+1. **Header** — long date (`Monday 5 October`), then the Hijri date (`24 Rabi' Al-Thani 1448`) [FR-13], above `Good morning`. Weather chip on the right (sage background): current temp large, `H 18° · L 9°`, `<condition> · <place>`, where place is the picked city or the name the phone gives "Use my location" (never `My location` when a name is available). Greeting by time of day [OQ-16].
 2. **Prayer times card** [FR-12]: next prayer name, time and `in 1 h 20 min`; a row of the five prayers (Fajr, Dhuhr, Asr, Maghrib, Isha) with the next one highlighted, plus sunrise. Without a location: `Set your city in Settings to see prayer times.` Hidden with the faith cards.
 3. **Faith cards** (hidden when "Show faith cards" is off): Ayah of the day, Hadith of the day.
 4. **Quote of the day** card (always shown; in the design it sits in the same list as the faith cards, so it is hidden with them [OQ-17]).
@@ -37,7 +37,7 @@ Order top to bottom:
 9. **Cache note** — `Content and weather updated HH:mm · works offline`.
 
 ### Content cards [D]
-- Header: kicker (`Ayah of the day`, `Hadith of the day`, `Quote of the day`) in terracotta, `More` / `Less` toggle on the right. Tapping anywhere on the card toggles. Only one card open at a time.
+- Three cards, all visible at once (user request 2026-10-07; tabs removed): kicker (`Ayah of the day`, `Hadith of the day`, `Quote of the day`) and a `Show another` ↻ button on the right. Tapping a card opens or closes it; each opens on its own.
 - Ayah: Arabic block (Amiri Quran, RTL, light tinted box), English translation, source `Surah <name> <s>:<v> · <translator>`.
 - Hadith: Arabic text first (RTL box, as for the ayah), then the English translation unless the content language is `Arabic only`; source `<collection> · Book <n> · No. <n>`.
 - Quote: Arabic text (verse lines on separate lines, RTL box), `<author> · <work>`; expanded reference `OpenITI corpus · <page> · <source file>`.

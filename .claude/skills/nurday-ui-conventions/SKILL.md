@@ -25,7 +25,7 @@ Every duration goes through `motion(context, Motion.quick|medium|slow)`, which r
 3. If it changes data leaving the phone, update PRIVACY.md, FR-10/TR-9 and RELEASE.md's Data safety table.
 
 ## Today screen
-Keep it calm: header (date · Hijri, greeting, weather, settings gear), compact next-prayer card, one tabbed content card, habits, mood, then Journal + Activity tiles. New things go to More or Settings unless the user asks for them on Today.
+Keep it calm: header (date · Hijri, greeting, weather, settings gear), compact next-prayer card, three content cards (ayah, hadith, quote) all visible at once (the user asked for no tabs), habits, mood, then Journal + Activity tiles. New things go to More or Settings unless the user asks for them on Today.
 
 ## Privacy defaults
 Local-first: no account, no server, no analytics. Anything that sends data off the phone is opt-in, explained in plain words where it is turned on, and reversible.

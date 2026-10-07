@@ -241,6 +241,274 @@ class Palette {
     ],
   );
 
+  /// Lavender: violet actions, rose in place of sage.
+  static const lavenderLight = Palette(
+    brightness: Brightness.light,
+    bg: Color(0xFFF5F4F6),
+    surface: Color(0xFFE8E5EB),
+    neutral100: Color(0xFFFAF9FB),
+    neutral200: Color(0xFFEDEBEF),
+    neutral300: Color(0xFFDBD7E0),
+    neutral400: Color(0xFFBDB5C5),
+    neutral500: Color(0xFF9E92AA),
+    neutral600: Color(0xFF7F708F),
+    neutral700: Color(0xFF5C5167),
+    neutral800: Color(0xFF453D4D),
+    text: Color(0xFF1C191F),
+    divider: Color(0xFFD6D1DB),
+    accent200: Color(0xFFEAE1F4),
+    accent400: Color(0xFF9B72CA),
+    accent700: Color(0xFF522E7A),
+    accent900: Color(0xFF2F1B46),
+    onAccent: Color(0xFFFFFFFF),
+    sage200: Color(0xFFEEDDE6),
+    sage300: Color(0xFFE3C4D4),
+    sage400: Color(0xFFC78AA8),
+    sage600: Color(0xFF7C3C5C),
+    sage900: Color(0xFF3B1C2B),
+    moods: [
+      Color(0xFFA64030),
+      Color(0xFF9B72CA),
+      Color(0xFFBDB5C5),
+      Color(0xFFC78AA8),
+      Color(0xFF7C3C5C),
+    ],
+  );
+
+  static const lavenderDark = Palette(
+    brightness: Brightness.dark,
+    bg: Color(0xFF121014),
+    surface: Color(0xFF1C191F),
+    neutral100: Color(0xFF241F28),
+    neutral200: Color(0xFF2B2631),
+    neutral300: Color(0xFF362F3C),
+    neutral400: Color(0xFF5E536A),
+    neutral500: Color(0xFF7A6C89),
+    neutral600: Color(0xFF998DA5),
+    neutral700: Color(0xFFB8AFC0),
+    neutral800: Color(0xFFD6D1DB),
+    text: Color(0xFFEDEBEF),
+    divider: Color(0xFF2E2833),
+    accent200: Color(0xFF2A183F),
+    accent400: Color(0xFFA07ACD),
+    accent700: Color(0xFFBB9FDB),
+    accent900: Color(0xFFE5DAF1),
+    onAccent: Color(0xFF190E25),
+    sage200: Color(0xFF371B29),
+    sage300: Color(0xFF4F263B),
+    sage400: Color(0xFFAF5A85),
+    sage600: Color(0xFFCD98B2),
+    sage900: Color(0xFFEEDDE6),
+    moods: [
+      Color(0xFFD17061),
+      Color(0xFFA07ACD),
+      Color(0xFF5E536A),
+      Color(0xFFAF5A85),
+      Color(0xFFCD98B2),
+    ],
+  );
+
+  /// Sunrise: warm orange actions, amber in place of sage.
+  static const sunriseLight = Palette(
+    brightness: Brightness.light,
+    bg: Color(0xFFF7F5F3),
+    surface: Color(0xFFEDE8E3),
+    neutral100: Color(0xFFFBFAF9),
+    neutral200: Color(0xFFF1EDE9),
+    neutral300: Color(0xFFE3DBD3),
+    neutral400: Color(0xFFCBBDAE),
+    neutral500: Color(0xFFB39E89),
+    neutral600: Color(0xFF9C8063),
+    neutral700: Color(0xFF705C48),
+    neutral800: Color(0xFF544536),
+    text: Color(0xFF221C16),
+    divider: Color(0xFFDFD6CD),
+    accent200: Color(0xFFF9E4DC),
+    accent400: Color(0xFFE27E5A),
+    accent700: Color(0xFF8F3919),
+    accent900: Color(0xFF52210F),
+    onAccent: Color(0xFFFFFFFF),
+    sage200: Color(0xFFF5ECD6),
+    sage300: Color(0xFFEEDEBA),
+    sage400: Color(0xFFDCBD74),
+    sage600: Color(0xFF937225),
+    sage900: Color(0xFF453611),
+    moods: [
+      Color(0xFFA64030),
+      Color(0xFFE27E5A),
+      Color(0xFFCBBDAE),
+      Color(0xFFDCBD74),
+      Color(0xFF937225),
+    ],
+  );
+
+  static const sunriseDark = Palette(
+    brightness: Brightness.dark,
+    bg: Color(0xFF16120E),
+    surface: Color(0xFF221C16),
+    neutral100: Color(0xFF2C241C),
+    neutral200: Color(0xFF352B22),
+    neutral300: Color(0xFF41362A),
+    neutral400: Color(0xFF735E4A),
+    neutral500: Color(0xFF957A5F),
+    neutral600: Color(0xFFAF9983),
+    neutral700: Color(0xFFC7B8A8),
+    neutral800: Color(0xFFDFD6CD),
+    text: Color(0xFFF1EDE9),
+    divider: Color(0xFF382E24),
+    accent200: Color(0xFF4A1D0D),
+    accent400: Color(0xFFE38563),
+    accent700: Color(0xFFEBA78E),
+    accent900: Color(0xFFF7DDD4),
+    onAccent: Color(0xFF2B1108),
+    sage200: Color(0xFF413310),
+    sage300: Color(0xFF5E4917),
+    sage400: Color(0xFFCEA23B),
+    sage600: Color(0xFFE0C585),
+    sage900: Color(0xFFF5ECD6),
+    moods: [
+      Color(0xFFD17061),
+      Color(0xFFE38563),
+      Color(0xFF735E4A),
+      Color(0xFFCEA23B),
+      Color(0xFFE0C585),
+    ],
+  );
+
+  /// Indigo: deep blue actions, teal in place of sage.
+  static const indigoLight = Palette(
+    brightness: Brightness.light,
+    bg: Color(0xFFF3F4F6),
+    surface: Color(0xFFE5E6EB),
+    neutral100: Color(0xFFF9F9FB),
+    neutral200: Color(0xFFEBECF0),
+    neutral300: Color(0xFFD6D8E0),
+    neutral400: Color(0xFFB3B7C6),
+    neutral500: Color(0xFF9196AC),
+    neutral600: Color(0xFF6E7591),
+    neutral700: Color(0xFF4F5469),
+    neutral800: Color(0xFF3B3F4E),
+    text: Color(0xFF181A20),
+    divider: Color(0xFFD0D3DC),
+    accent200: Color(0xFFE0E3F5),
+    accent400: Color(0xFF6E7BCF),
+    accent700: Color(0xFF2A357E),
+    accent900: Color(0xFF181F49),
+    onAccent: Color(0xFFFFFFFF),
+    sage200: Color(0xFFDBF0EE),
+    sage300: Color(0xFFC2E5E3),
+    sage400: Color(0xFF86CBC6),
+    sage600: Color(0xFF37817C),
+    sage900: Color(0xFF1A3D3A),
+    moods: [
+      Color(0xFFA64030),
+      Color(0xFF6E7BCF),
+      Color(0xFFB3B7C6),
+      Color(0xFF86CBC6),
+      Color(0xFF37817C),
+    ],
+  );
+
+  static const indigoDark = Palette(
+    brightness: Brightness.dark,
+    bg: Color(0xFF0F1014),
+    surface: Color(0xFF181A20),
+    neutral100: Color(0xFF1F2129),
+    neutral200: Color(0xFF252831),
+    neutral300: Color(0xFF2E313D),
+    neutral400: Color(0xFF51566C),
+    neutral500: Color(0xFF69708C),
+    neutral600: Color(0xFF8B90A7),
+    neutral700: Color(0xFFAEB2C2),
+    neutral800: Color(0xFFD0D3DC),
+    text: Color(0xFFEBECF0),
+    divider: Color(0xFF272A34),
+    accent200: Color(0xFF161B41),
+    accent400: Color(0xFF7582D1),
+    accent700: Color(0xFF9CA4DE),
+    accent900: Color(0xFFD9DCF2),
+    onAccent: Color(0xFF0D1026),
+    sage200: Color(0xFF183937),
+    sage300: Color(0xFF23524F),
+    sage400: Color(0xFF54B6AF),
+    sage600: Color(0xFF94D1CD),
+    sage900: Color(0xFFDBF0EE),
+    moods: [
+      Color(0xFFD17061),
+      Color(0xFF7582D1),
+      Color(0xFF51566C),
+      Color(0xFF54B6AF),
+      Color(0xFF94D1CD),
+    ],
+  );
+
+  /// Mono: graphite and grey, for a quiet screen.
+  static const monoLight = Palette(
+    brightness: Brightness.light,
+    bg: Color(0xFFF5F5F5),
+    surface: Color(0xFFE8E8E8),
+    neutral100: Color(0xFFFAFAFA),
+    neutral200: Color(0xFFEDEDED),
+    neutral300: Color(0xFFDBDBDB),
+    neutral400: Color(0xFFBDBDBD),
+    neutral500: Color(0xFF9E9E9E),
+    neutral600: Color(0xFF808080),
+    neutral700: Color(0xFF5C5C5C),
+    neutral800: Color(0xFF454545),
+    text: Color(0xFF1C1C1C),
+    divider: Color(0xFFD6D6D6),
+    accent200: Color(0xFFE9EAEC),
+    accent400: Color(0xFF969CA6),
+    accent700: Color(0xFF4D525B),
+    accent900: Color(0xFF2D2F34),
+    onAccent: Color(0xFFFFFFFF),
+    sage200: Color(0xFFE4E6E7),
+    sage300: Color(0xFFD1D5D6),
+    sage400: Color(0xFFA3AAAE),
+    sage600: Color(0xFF565E61),
+    sage900: Color(0xFF292C2E),
+    moods: [
+      Color(0xFFA64030),
+      Color(0xFF969CA6),
+      Color(0xFFBDBDBD),
+      Color(0xFFA3AAAE),
+      Color(0xFF565E61),
+    ],
+  );
+
+  static const monoDark = Palette(
+    brightness: Brightness.dark,
+    bg: Color(0xFF121212),
+    surface: Color(0xFF1C1C1C),
+    neutral100: Color(0xFF242424),
+    neutral200: Color(0xFF2B2B2B),
+    neutral300: Color(0xFF363636),
+    neutral400: Color(0xFF5E5E5E),
+    neutral500: Color(0xFF7A7A7A),
+    neutral600: Color(0xFF999999),
+    neutral700: Color(0xFFB8B8B8),
+    neutral800: Color(0xFFD6D6D6),
+    text: Color(0xFFEDEDED),
+    divider: Color(0xFF2E2E2E),
+    accent200: Color(0xFF282A2F),
+    accent400: Color(0xFF9CA1AB),
+    accent700: Color(0xFFB7BBC2),
+    accent900: Color(0xFFE3E5E8),
+    onAccent: Color(0xFF17191C),
+    sage200: Color(0xFF262A2B),
+    sage300: Color(0xFF373C3E),
+    sage400: Color(0xFF7D878C),
+    sage600: Color(0xFFAEB4B7),
+    sage900: Color(0xFFE4E6E7),
+    moods: [
+      Color(0xFFD17061),
+      Color(0xFF9CA1AB),
+      Color(0xFF5E5E5E),
+      Color(0xFF7D878C),
+      Color(0xFFAEB4B7),
+    ],
+  );
+
   /// Night: true black for OLED screens; always dark.
   static const night = Palette(
     brightness: Brightness.dark,
@@ -554,6 +822,10 @@ enum ColorTheme {
   rose('Rose', Palette.roseLight, Palette.roseDark),
   dusk('Dusk', Palette.duskLight, Palette.duskDark),
   slate('Slate', Palette.slateLight, Palette.slateDark),
+  lavender('Lavender', Palette.lavenderLight, Palette.lavenderDark),
+  sunrise('Sunrise', Palette.sunriseLight, Palette.sunriseDark),
+  indigo('Indigo', Palette.indigoLight, Palette.indigoDark),
+  mono('Mono', Palette.monoLight, Palette.monoDark),
   night('Night', Palette.night, Palette.night);
 
   const ColorTheme(this.label, this.light, this.dark);
@@ -603,22 +875,61 @@ abstract final class AppRadii {
   static const pill = 999.0;
 }
 
-const _headingVariations = [
-  FontVariation('wght', 640),
-  FontVariation('SOFT', 100),
-];
+/// Font sets for Latin text, chosen in Settings → Appearance.
+enum AppFont {
+  classic('Classic', heading: 'Fraunces'),
+  modern('Modern'),
+  rounded('Rounded', heading: 'Nunito', body: 'Nunito'),
+  serif('Serif', heading: 'Lora', body: 'Lora');
 
-/// Display serif used for titles and section headings.
-TextStyle heading(double size, {Color? color}) => TextStyle(
-  fontFamily: 'Fraunces',
-  fontVariations: _headingVariations,
-  fontSize: size,
-  height: 1.15,
-  color: color ?? AppColors.text,
-);
+  const AppFont(this.label, {this.heading, this.body});
+  final String label;
+
+  /// Null means the phone's own font (Roboto on most phones).
+  final String? heading;
+  final String? body;
+
+  static AppFont parse(String? s) =>
+      values.firstWhere((f) => f.name == s, orElse: () => classic);
+}
+
+/// Fonts for Arabic text (ayah, hadith, quotes, tafsir).
+enum ArabicFont {
+  amiri('Amiri Quran', 'AmiriQuran'),
+  scheherazade('Scheherazade New', 'ScheherazadeNew'),
+  naskh('Noto Naskh Arabic', 'NotoNaskhArabic');
+
+  const ArabicFont(this.label, this.family);
+  final String label;
+  final String family;
+
+  static ArabicFont parse(String? s) =>
+      values.firstWhere((f) => f.name == s, orElse: () => amiri);
+}
+
+/// The active fonts; swapped at the app root like [AppColors].
+abstract final class AppFonts {
+  static AppFont current = AppFont.classic;
+  static ArabicFont arabic = ArabicFont.amiri;
+}
+
+/// Display face used for titles and section headings.
+TextStyle heading(double size, {Color? color}) {
+  final family = AppFonts.current.heading;
+  return TextStyle(
+    fontFamily: family,
+    fontVariations: family == 'Fraunces'
+        ? const [FontVariation('wght', 640), FontVariation('SOFT', 100)]
+        : const [FontVariation('wght', 700)],
+    fontWeight: FontWeight.w700,
+    fontSize: size,
+    height: 1.15,
+    color: color ?? AppColors.text,
+  );
+}
 
 TextStyle get arabicStyle => TextStyle(
-  fontFamily: 'AmiriQuran',
+  fontFamily: AppFonts.arabic.family,
   fontSize: 22,
   height: 1.9,
   color: AppColors.neutral800,
@@ -627,7 +938,7 @@ TextStyle get arabicStyle => TextStyle(
 TextStyle meta({Color? color, double size = 12}) =>
     TextStyle(fontSize: size, color: color ?? AppColors.neutral700);
 
-ThemeData buildTheme(Palette p) {
+ThemeData buildTheme(Palette p, {String? bodyFont}) {
   final scheme =
       ColorScheme.fromSeed(
         seedColor: p.sage600,
@@ -642,6 +953,7 @@ ThemeData buildTheme(Palette p) {
       );
   return ThemeData(
     useMaterial3: true,
+    fontFamily: bodyFont,
     brightness: p.brightness,
     colorScheme: scheme,
     scaffoldBackgroundColor: p.bg,

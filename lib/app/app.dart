@@ -70,19 +70,31 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
     final colors = ref.watch(
       settingsProvider.select((s) => s.value?.colorTheme ?? ColorTheme.sage),
     );
+    final font = ref.watch(
+      settingsProvider.select((s) => s.value?.appFont ?? AppFont.classic),
+    );
+    final arabic = ref.watch(
+      settingsProvider.select((s) => s.value?.arabicFont ?? ArabicFont.amiri),
+    );
     return MaterialApp.router(
       title: 'Nurday',
       debugShowCheckedModeBanner: false,
-      theme: buildTheme(colors.light),
-      darkTheme: buildTheme(colors.dark),
+      theme: buildTheme(colors.light, bodyFont: font.body),
+      darkTheme: buildTheme(colors.dark, bodyFont: font.body),
       themeMode: colors.alwaysDark ? ThemeMode.dark : mode,
       themeAnimationDuration: Duration.zero,
       routerConfig: _router,
       builder: (context, child) {
         final palette = colors.paletteFor(Theme.of(context).brightness);
         AppColors.current = palette;
-        // Widgets read AppColors directly, so rebuild them all on a switch.
-        return KeyedSubtree(key: ValueKey(palette), child: child!);
+        AppFonts.current = font;
+        AppFonts.arabic = arabic;
+        // Widgets read AppColors and AppFonts directly, so rebuild them all
+        // on a switch.
+        return KeyedSubtree(
+          key: ValueKey((palette, font, arabic)),
+          child: child!,
+        );
       },
     );
   }

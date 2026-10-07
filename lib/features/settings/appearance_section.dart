@@ -42,6 +42,22 @@ class AppearanceSection extends ConsumerWidget {
         ),
         if (s.colorTheme.alwaysDark)
           const Note('Night is always dark, for OLED screens.'),
+        const SizedBox(height: 4),
+        SettingPicker<AppFont>(
+          key: const Key('app-font'),
+          label: 'Font',
+          value: s.appFont,
+          options: {for (final f in AppFont.values) f: f.label},
+          onChanged: (f) => ref.putSetting('appFont', f.name),
+        ),
+        SettingPicker<ArabicFont>(
+          key: const Key('arabic-font'),
+          label: 'Arabic font',
+          value: s.arabicFont,
+          options: {for (final f in ArabicFont.values) f: f.label},
+          onChanged: (f) => ref.putSetting('arabicFont', f.name),
+        ),
+        _FontPreview(font: s.appFont, arabic: s.arabicFont),
       ],
     );
   }
@@ -108,4 +124,43 @@ class _ThemeSwatch extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A line in each chosen font, so the choice is visible before leaving.
+class _FontPreview extends StatelessWidget {
+  const _FontPreview({required this.font, required this.arabic});
+  final AppFont font;
+  final ArabicFont arabic;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text('Good morning', style: heading(20)),
+      Text(
+        'A calm rhythm for every day.',
+        style: TextStyle(fontFamily: font.body, fontSize: 15),
+      ),
+      const SizedBox(height: 4),
+      // Sample letters only (the alphabet), never scripture (TR-1).
+      Align(
+        alignment: Alignment.centerRight,
+        child: Text(
+          String.fromCharCodes(const [
+            0x623,
+            0x20,
+            0x628,
+            0x20,
+            0x62A,
+            0x20,
+            0x62B,
+            0x20,
+            0x62C,
+          ]),
+          textDirection: TextDirection.rtl,
+          style: arabicStyle.copyWith(fontFamily: arabic.family, fontSize: 24),
+        ),
+      ),
+    ],
+  );
 }
