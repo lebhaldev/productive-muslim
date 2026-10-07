@@ -304,6 +304,31 @@ void main() {
     AppColors.current = Palette.light;
   });
 
+  testWidgets('colour themes can be picked in Settings', (tester) async {
+    final db = await pumpApp(tester);
+    await tapTab(tester, 'More');
+    await tester.tap(find.text('Settings'));
+    await settle(tester);
+    await scrollTo(tester, find.byKey(const Key('color-theme-ocean')));
+    await tester.tap(find.byKey(const Key('color-theme-ocean')));
+    await settle(tester);
+    expect(AppColors.current, Palette.oceanLight);
+
+    await tester.tap(find.byKey(const Key('color-theme-night')));
+    await settle(tester);
+    expect(AppColors.current, Palette.night);
+    expect(
+      Theme.of(tester.element(find.text('Night'))).brightness,
+      Brightness.dark,
+    );
+    expect(
+      find.text('Night is always dark, for OLED screens.'),
+      findsOneWidget,
+    );
+    await closeApp(tester, db);
+    AppColors.current = Palette.light;
+  });
+
   testWidgets('Prayer times screen shows the six times and Qibla', (
     tester,
   ) async {
@@ -347,6 +372,8 @@ void main() {
     await tester.tap(find.text('Settings'));
     await settle(tester);
     await scrollTo(tester, find.byKey(const Key('export-backup')));
+    await tester.ensureVisible(find.byKey(const Key('import-backup')));
+    await settle(tester);
     await tester.tap(find.byKey(const Key('export-backup')));
     await settle(tester);
     expect(find.text('Backup saved.'), findsOneWidget);

@@ -106,6 +106,193 @@ class Palette {
       Color(0xFFC3D4A5),
     ],
   );
+
+  /// Ocean: deep blue actions, teal in place of sage.
+  static const oceanLight = Palette(
+    brightness: Brightness.light,
+    bg: Color(0xFFEEF2F3),
+    surface: Color(0xFFDFE7EA),
+    neutral100: Color(0xFFF7FAFA),
+    neutral200: Color(0xFFE6ECEE),
+    neutral300: Color(0xFFD0D9DC),
+    neutral400: Color(0xFFAEBBC0),
+    neutral500: Color(0xFF8B999F),
+    neutral600: Color(0xFF6B7A80),
+    neutral700: Color(0xFF4F5D63),
+    neutral800: Color(0xFF36434A),
+    text: Color(0xFF142026),
+    divider: Color(0xFFCAD5D9),
+    accent200: Color(0xFFD6EAF4),
+    accent400: Color(0xFF5FA7C9),
+    accent700: Color(0xFF1F5C78),
+    accent900: Color(0xFF0E3346),
+    onAccent: Color(0xFFFFFFFF),
+    sage200: Color(0xFFD3EAE6),
+    sage300: Color(0xFFB9DDD6),
+    sage400: Color(0xFF8CC2B8),
+    sage600: Color(0xFF3E7F74),
+    sage900: Color(0xFF173A35),
+    moods: [
+      Color(0xFFA04A3A),
+      Color(0xFFE3A27A),
+      Color(0xFFAEBBC0),
+      Color(0xFF8CC2B8),
+      Color(0xFF3E7F74),
+    ],
+  );
+
+  static const oceanDark = Palette(
+    brightness: Brightness.dark,
+    bg: Color(0xFF0F1518),
+    surface: Color(0xFF172024),
+    neutral100: Color(0xFF1D282D),
+    neutral200: Color(0xFF243035),
+    neutral300: Color(0xFF2E3B41),
+    neutral400: Color(0xFF55666D),
+    neutral500: Color(0xFF708187),
+    neutral600: Color(0xFF8E9EA4),
+    neutral700: Color(0xFFAAB8BD),
+    neutral800: Color(0xFFCBD6DA),
+    text: Color(0xFFE8F0F2),
+    divider: Color(0xFF2A363B),
+    accent200: Color(0xFF15303D),
+    accent400: Color(0xFF6FB3D2),
+    accent700: Color(0xFF8CC8E3),
+    accent900: Color(0xFFD6EEF8),
+    onAccent: Color(0xFF0A1E28),
+    sage200: Color(0xFF183430),
+    sage300: Color(0xFF22463F),
+    sage400: Color(0xFF5FA396),
+    sage600: Color(0xFF8CC2B8),
+    sage900: Color(0xFFD3EEE9),
+    moods: [
+      Color(0xFFC96B5A),
+      Color(0xFFE3A27A),
+      Color(0xFF7E8C92),
+      Color(0xFF5FA396),
+      Color(0xFF8CC2B8),
+    ],
+  );
+
+  /// Desert: rose actions, olive gold in place of sage.
+  static const desertLight = Palette(
+    brightness: Brightness.light,
+    bg: Color(0xFFF8EFE7),
+    surface: Color(0xFFEFE0D3),
+    neutral100: Color(0xFFFCF7F2),
+    neutral200: Color(0xFFF1E6DC),
+    neutral300: Color(0xFFE0D2C5),
+    neutral400: Color(0xFFC5B5A6),
+    neutral500: Color(0xFFA39384),
+    neutral600: Color(0xFF827365),
+    neutral700: Color(0xFF67594C),
+    neutral800: Color(0xFF4B4037),
+    text: Color(0xFF231C18),
+    divider: Color(0xFFDFCDBE),
+    accent200: Color(0xFFF6D9DE),
+    accent400: Color(0xFFD98A98),
+    accent700: Color(0xFF8A3B4A),
+    accent900: Color(0xFF561E2A),
+    onAccent: Color(0xFFFFFFFF),
+    sage200: Color(0xFFEFE5C8),
+    sage300: Color(0xFFE5D6A9),
+    sage400: Color(0xFFCDB77E),
+    sage600: Color(0xFF86702F),
+    sage900: Color(0xFF3B2F10),
+    moods: [
+      Color(0xFF8A3B4A),
+      Color(0xFFD98A98),
+      Color(0xFFC5B5A6),
+      Color(0xFFCDB77E),
+      Color(0xFF86702F),
+    ],
+  );
+
+  static const desertDark = Palette(
+    brightness: Brightness.dark,
+    bg: Color(0xFF18130F),
+    surface: Color(0xFF231C17),
+    neutral100: Color(0xFF2C241E),
+    neutral200: Color(0xFF352B24),
+    neutral300: Color(0xFF40352C),
+    neutral400: Color(0xFF6E6155),
+    neutral500: Color(0xFF887A6D),
+    neutral600: Color(0xFFA3958A),
+    neutral700: Color(0xFFBDB0A3),
+    neutral800: Color(0xFFD9CDC1),
+    text: Color(0xFFF4EBE2),
+    divider: Color(0xFF3C3129),
+    accent200: Color(0xFF3B1D24),
+    accent400: Color(0xFFE59AA8),
+    accent700: Color(0xFFEFA9B6),
+    accent900: Color(0xFFFBDDE3),
+    onAccent: Color(0xFF2B0E15),
+    sage200: Color(0xFF33301E),
+    sage300: Color(0xFF48422A),
+    sage400: Color(0xFFB39C5E),
+    sage600: Color(0xFFD2BC7E),
+    sage900: Color(0xFFF1E7C6),
+    moods: [
+      Color(0xFFD96F80),
+      Color(0xFFE59AA8),
+      Color(0xFF8A7D70),
+      Color(0xFFB39C5E),
+      Color(0xFFD2BC7E),
+    ],
+  );
+
+  /// Night: true black for OLED screens; always dark.
+  static const night = Palette(
+    brightness: Brightness.dark,
+    bg: Color(0xFF000000),
+    surface: Color(0xFF111311),
+    neutral100: Color(0xFF181A18),
+    neutral200: Color(0xFF1F221F),
+    neutral300: Color(0xFF2A2E2A),
+    neutral400: Color(0xFF555B54),
+    neutral500: Color(0xFF737A72),
+    neutral600: Color(0xFF939A91),
+    neutral700: Color(0xFFB1B8AF),
+    neutral800: Color(0xFFD2D8CF),
+    text: Color(0xFFEEF2EA),
+    divider: Color(0xFF262A25),
+    accent200: Color(0xFF3A2418),
+    accent400: Color(0xFFF6A06B),
+    accent700: Color(0xFFF0A577),
+    accent900: Color(0xFFFFE1D0),
+    onAccent: Color(0xFF2A160A),
+    sage200: Color(0xFF1C2418),
+    sage300: Color(0xFF2B3622),
+    sage400: Color(0xFF8FA374),
+    sage600: Color(0xFFAEBF92),
+    sage900: Color(0xFFE3ECD3),
+    moods: [
+      Color(0xFFD9774A),
+      Color(0xFFF6A06B),
+      Color(0xFF8A8172),
+      Color(0xFF8FA374),
+      Color(0xFFC3D4A5),
+    ],
+  );
+}
+
+/// Colour themes the user can pick (Settings → Appearance). Sage is the
+/// design; the others are provisional until designed (DS-1).
+enum ColorTheme {
+  sage('Sage', Palette.light, Palette.dark),
+  ocean('Ocean', Palette.oceanLight, Palette.oceanDark),
+  desert('Desert', Palette.desertLight, Palette.desertDark),
+  night('Night', Palette.night, Palette.night);
+
+  const ColorTheme(this.label, this.light, this.dark);
+  final String label;
+  final Palette light;
+  final Palette dark;
+
+  /// Night has no light variant, so it ignores the light/dark choice.
+  bool get alwaysDark => light == dark;
+
+  Palette paletteFor(Brightness b) => b == Brightness.dark ? dark : light;
 }
 
 /// The active palette. Feature widgets use these names, never hex. The app

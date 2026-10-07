@@ -8,6 +8,7 @@ import '../../data/backup.dart';
 import '../../data/content/quran_client.dart';
 import '../../data/prayer/prayer.dart';
 import '../../widgets/common.dart';
+import '../../widgets/motion.dart';
 import 'more_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -220,6 +221,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           gap: 10,
           children: [
             const CardTitle('Appearance'),
+            Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: [
+                for (final t in ColorTheme.values)
+                  _ThemeSwatch(
+                    theme: t,
+                    selected: s.colorTheme == t,
+                    onTap: () => _put('colorTheme', t.name),
+                  ),
+              ],
+            ),
             Align(
               alignment: Alignment.centerLeft,
               child: SegmentedButton<ThemeMode>(
@@ -234,9 +247,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 style: SegmentedButton.styleFrom(
                   selectedBackgroundColor: AppColors.sage300,
                 ),
-                onSelectionChanged: (v) => _put('themeMode', v.first.name),
+                onSelectionChanged: s.colorTheme.alwaysDark
+                    ? null
+                    : (v) => _put('themeMode', v.first.name),
               ),
             ),
+            if (s.colorTheme.alwaysDark)
+              Text('Night is always dark, for OLED screens.', style: meta()),
           ],
         ),
         NCard(
@@ -454,6 +471,72 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ],
         ),
       ],
+    );
+  }
+}
+
+class _ThemeSwatch extends StatelessWidget {
+  const _ThemeSwatch({
+    required this.theme,
+    required this.selected,
+    required this.onTap,
+  });
+  final ColorTheme theme;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final p = theme.paletteFor(Theme.of(context).brightness);
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: '${theme.label} colours',
+      excludeSemantics: true,
+      child: InkWell(
+        key: Key('color-theme-${theme.name}'),
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadii.md),
+        child: Padding(
+          padding: const EdgeInsets.all(4),
+          child: Column(
+            children: [
+              AnimatedContainer(
+                duration: motion(context, Motion.quick),
+                width: 52,
+                height: 52,
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: selected ? AppColors.text : Colors.transparent,
+                    width: 2,
+                  ),
+                ),
+                child: ClipOval(
+                  child: Container(
+                    color: p.bg,
+                    child: Row(
+                      children: [
+                        Expanded(child: Container(color: p.accent700)),
+                        Expanded(child: Container(color: p.sage600)),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                theme.label,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: selected ? FontWeight.w700 : FontWeight.w400,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -62,6 +62,12 @@ Not in the design yet [OQ-10]. Derived from the light tokens so the same names w
 
 Dark moods: rough `#D9774A`, low `#F6A06B`, okay `#8A8172`, good `#8FA374`, bright `#C3D4A5`.
 
+## Colour themes (provisional) [OQ-21]
+Settings → Appearance offers Sage (the design), Ocean, Desert and Night. Each swaps the same token names, so no widget changes. Ocean and Desert have light and dark sets; Night is true black and always dark. All pass WCAG AA for text, meta, accent text and text on sage. Exact values are in `lib/app/theme.dart`.
+
+## Motion
+Durations: quick 150 ms, medium 250 ms, slow 400 ms; all become 0 when Android's "Remove animations" is on. Used for: habit check pop, streak and count changes, "All done today", content card expand, tab fade.
+
 ## Type
 - Heading font (`--font-heading`): soft heavy serif. Default: **Fraunces** (SemiBold/Bold) until the DS font is confirmed [OQ-9].
 - Body: system sans (Roboto) at 15px base.

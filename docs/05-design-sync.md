@@ -48,3 +48,5 @@ Closed by the 2026-10-05 export: OQ-1 (header + weather chip + ayah card), OQ-2 
 | OQ-18 | Confirm before deleting a habit | Confirm dialog |
 | OQ-19 | Can an activity be logged for a past day? | Today only, as in design |
 | OQ-20 | "Use my location" button for weather | Small button next to City override |
+| OQ-21 | Colour themes beyond Sage (Ocean, Desert, Night) and the swatch picker | Built with provisional palettes, AA contrast checked |
+| OQ-22 | Backup card (Export / Import) in Settings | Plain card with two outlined buttons |

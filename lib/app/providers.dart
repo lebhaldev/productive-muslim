@@ -14,6 +14,7 @@ import '../data/db/database.dart';
 import '../data/prayer/prayer.dart';
 import '../data/reminders.dart';
 import '../data/weather/weather.dart';
+import 'theme.dart';
 
 final clockProvider = Provider<Clock>((ref) => const Clock());
 
@@ -99,6 +100,11 @@ class AppSettings {
   String get dailyReminder => raw['dailyReminder'] ?? '07:30';
   // Off until the user turns it on, so first launch shows no prompt.
   bool get dailyReminderOn => raw['dailyReminderOn'] == 'true';
+
+  ColorTheme get colorTheme => ColorTheme.values.firstWhere(
+    (t) => t.name == raw['colorTheme'],
+    orElse: () => ColorTheme.sage,
+  );
 
   ThemeMode get themeMode => switch (raw['themeMode']) {
     'light' => ThemeMode.light,
