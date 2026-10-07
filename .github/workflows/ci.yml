@@ -10,6 +10,13 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Optional upload key (see RELEASE.md). Without these secrets, release
+      # builds are signed with a throwaway debug key and cannot go to Play.
+      UPLOAD_KEYSTORE_BASE64: ${{ secrets.UPLOAD_KEYSTORE_BASE64 }}
+      UPLOAD_KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_PASSWORD }}
+      UPLOAD_KEY_ALIAS: ${{ secrets.UPLOAD_KEY_ALIAS }}
+      UPLOAD_KEY_PASSWORD: ${{ secrets.UPLOAD_KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -28,6 +35,16 @@ jobs:
           git diff --exit-code -- lib/
       - run: flutter analyze
       - run: flutter test
+      - name: Use the upload key when its secrets are set
+        if: env.UPLOAD_KEYSTORE_BASE64 != ''
+        run: |
+          echo "$UPLOAD_KEYSTORE_BASE64" | base64 --decode > android/upload-keystore.jks
+          cat > android/key.properties <<EOF
+          storeFile=upload-keystore.jks
+          storePassword=$UPLOAD_KEYSTORE_PASSWORD
+          keyAlias=$UPLOAD_KEY_ALIAS
+          keyPassword=$UPLOAD_KEY_PASSWORD
+          EOF
       - name: Build debug APK
         run: flutter build apk --debug
       # Small per-phone APKs: release mode (AOT, R8 shrinking, icon tree-shaking),
@@ -36,6 +53,16 @@ jobs:
         run: |
           flutter build apk --release --split-per-abi --obfuscate --split-debug-info=build/symbols
           ls -la build/app/outputs/flutter-apk/
+      # The bundle Play needs. Only useful when signed with the upload key;
+      # a human uploads it in Play Console (RELEASE.md).
+      - name: Build Play bundle
+        if: env.UPLOAD_KEYSTORE_BASE64 != ''
+        run: flutter build appbundle --release --obfuscate --split-debug-info=build/symbols-aab
+      - uses: actions/upload-artifact@v4
+        if: env.UPLOAD_KEYSTORE_BASE64 != ''
+        with:
+          name: nurday-play-bundle
+          path: build/app/outputs/bundle/release/app-release.aab
       - uses: actions/upload-artifact@v4
         with:
           name: nurday-debug-apk

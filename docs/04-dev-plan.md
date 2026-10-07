@@ -36,6 +36,8 @@ Each phase ends with `flutter analyze` clean, tests green, and a short entry in 
 - Small release APKs split per CPU type, published by CI.
 
 ## Phase 5 — Play-ready, stop before submit
+Status (v0.3.0): agent side done — upload-key signing (`key.properties` / CI secrets), `.aab` built in CI when the key exists, RELEASE.md, Data safety draft, store listing draft (`docs/store-listing.md`). Waiting on the human steps in RELEASE.md.
+
 - Release `.aab`, versioning, adaptive icon.
 - `PRIVACY.md`, Data safety notes (location optional for weather; personal data stays on device), content rating notes.
 - Store listing copy and screenshot list.

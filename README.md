@@ -59,4 +59,4 @@ Drive backup works only after a Google Cloud OAuth client exists for the app. Un
 CI signs APKs with the runner's debug key, which changes on every run, so a stable signing key is needed before Drive sign-in can work on CI builds.
 
 ## Publishing
-The app is not on Google Play. Submitting it needs a human with a Google Play Console developer account (one-time $25 fee), an upload keystore kept outside this repo, and the privacy policy ([PRIVACY.md](PRIVACY.md)) hosted at a public URL. See `docs/04-dev-plan.md`, Phase 5.
+The app is not on Google Play yet. Everything an agent can prepare is done: release signing from `android/key.properties` or CI secrets, a Play bundle built by CI once the upload key exists, the privacy policy, Data safety answers and the store listing draft. The human steps are in [RELEASE.md](RELEASE.md); the listing text is in [docs/store-listing.md](docs/store-listing.md).

@@ -1,6 +1,8 @@
 # Changelog
 
 ## 0.3.0 (unreleased)
+- Play readiness: release builds sign with the upload key from `android/key.properties` or CI secrets; CI builds the Play bundle when the key exists; RELEASE.md (human steps, Data safety and permission answers) and a store listing draft. Version 0.3.0+3.
+- Code: settings split into one file per section; shared widgets for menus, tiles, Arabic blocks and settings controls.
 - Calmer Today: ayah, hadith and quote now share one card with tabs; the prayer card shows only the next prayer (all times stay on the Prayer screen); the activity list and journal banner became two small tiles; the weather chip is one line shorter.
 - Tafsir: open the ayah to read published tafsir for it, Al-Muyassar (Arabic) and Al-Mukhtasar (English), bundled verbatim for all 120 daily ayahs. Hadith cards say plainly that no reviewed explanation is available yet.
 - Show another: the ↻ button on the content card shows the next ayah, hadith or quote for today.
