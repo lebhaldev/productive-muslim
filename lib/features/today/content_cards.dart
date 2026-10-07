@@ -17,9 +17,9 @@ enum _Kind {
   final String label;
 }
 
-/// The day's ayah, hadith and quote in one card, one at a time, so Today
-/// stays calm. Tap to open the explanation and source; "Show another"
-/// moves to the next item of that kind for today.
+/// The day's ayah, hadith and quote, each in its own card so all three
+/// are readable at a glance. Tap a card to open its explanation and
+/// source; "Show another" moves to the next item of that kind for today.
 class ContentCards extends ConsumerStatefulWidget {
   const ContentCards({super.key});
 
@@ -28,8 +28,7 @@ class ContentCards extends ConsumerStatefulWidget {
 }
 
 class _ContentCardsState extends ConsumerState<ContentCards> {
-  _Kind kind = _Kind.ayah;
-  bool open = false;
+  final _open = <_Kind>{};
 
   @override
   Widget build(BuildContext context) {
@@ -40,68 +39,67 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       loading: () => const NCard(children: [LinearProgressIndicator()]),
       error: (e, _) =>
           NCard(children: [Text('Daily content could not load: $e')]),
-      data: (c) => NCard(
-        onTap: () => setState(() => open = !open),
-        animateSize: true,
+      data: (c) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: [
-                    for (final k in _Kind.values)
-                      _KindTab(
-                        kind: k,
-                        selected: kind == k,
-                        onTap: () => setState(() {
-                          kind = k;
-                          open = false;
-                        }),
-                      ),
-                  ],
-                ),
-              ),
-              IconButton(
-                key: const Key('content-next'),
-                tooltip: 'Show another ${kind.label.toLowerCase()}',
-                icon: Icon(Icons.autorenew, color: AppColors.neutral700),
-                onPressed: () {
-                  setState(() => open = false);
-                  ref
-                      .read(contentOffsetsProvider.notifier)
-                      .next(watchToday(ref), kind.name);
-                },
-              ),
-            ],
-          ),
-          AnimatedSwitcher(
-            duration: motion(context, Motion.medium),
-            child: KeyedSubtree(
-              key: ValueKey(
-                '${kind.name}|${switch (kind) {
-                  _Kind.ayah => c.ayah.value?.ref,
-                  _Kind.hadith => c.hadith.value?.source,
-                  _Kind.quote => c.quote.value?.arabic.hashCode,
-                }}',
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: switch (kind) {
-                  _Kind.ayah => _ayah(c.ayah, arabicOnly),
-                  _Kind.hadith => _hadith(c.hadith, arabicOnly),
-                  _Kind.quote => _quote(c.quote),
-                },
-              ),
-            ),
-          ),
+          for (final (i, k) in _Kind.values.indexed) ...[
+            if (i > 0) const SizedBox(height: 10),
+            _card(k, c, arabicOnly),
+          ],
         ],
       ),
     );
   }
 
-  List<Widget> _ayah(ContentSlot<Ayah> slot, bool arabicOnly) {
+  Widget _card(_Kind kind, DailyContent c, bool arabicOnly) {
+    final open = _open.contains(kind);
+    return NCard(
+      key: Key('content-card-${kind.name}'),
+      onTap: () => setState(() => open ? _open.remove(kind) : _open.add(kind)),
+      animateSize: true,
+      children: [
+        Row(
+          children: [
+            Expanded(child: Kicker('${kind.label} of the day')),
+            IconButton(
+              key: Key('content-next-${kind.name}'),
+              tooltip: 'Show another ${kind.label.toLowerCase()}',
+              visualDensity: VisualDensity.compact,
+              icon: Icon(Icons.autorenew, color: AppColors.neutral700),
+              onPressed: () {
+                setState(() => _open.remove(kind));
+                ref
+                    .read(contentOffsetsProvider.notifier)
+                    .next(watchToday(ref), kind.name);
+              },
+            ),
+          ],
+        ),
+        AnimatedSwitcher(
+          duration: motion(context, Motion.medium),
+          child: KeyedSubtree(
+            key: ValueKey(
+              '${kind.name}|${switch (kind) {
+                _Kind.ayah => c.ayah.value?.ref,
+                _Kind.hadith => c.hadith.value?.source,
+                _Kind.quote => c.quote.value?.arabic.hashCode,
+              }}',
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: switch (kind) {
+                _Kind.ayah => _ayah(c.ayah, arabicOnly, open),
+                _Kind.hadith => _hadith(c.hadith, arabicOnly, open),
+                _Kind.quote => _quote(c.quote, open),
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> _ayah(ContentSlot<Ayah> slot, bool arabicOnly, bool open) {
     final a = slot.value;
     if (a == null) return [_error(slot.error!)];
     final fetched = slot.fetchedAt == null
@@ -110,7 +108,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     final tafsir = open ? ref.watch(tafsirProvider(a.ref)).value : null;
     return [
       ArabicBlock(a.arabic, size: 22, maxLines: open ? null : 4),
-      if (!arabicOnly) ..._gap(_body(a.translation)),
+      if (!arabicOnly) ..._gap(_body(a.translation, open: open)),
       ..._gap(Text(a.source, style: meta())),
       // Offline with an earlier day's ayah: say so instead of passing it off
       // as today's (review R3).
@@ -136,7 +134,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
           ),
           ..._gap(Text(tafsir.arabicSource, style: meta(size: 11))),
           if (!arabicOnly) ...[
-            ..._gap(_body(tafsir.english)),
+            ..._gap(_body(tafsir.english, open: open)),
             ..._gap(Text(tafsir.englishSource, style: meta(size: 11))),
           ],
         ] else
@@ -151,7 +149,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     ];
   }
 
-  List<Widget> _hadith(ContentSlot<Hadith> slot, bool arabicOnly) {
+  List<Widget> _hadith(ContentSlot<Hadith> slot, bool arabicOnly, bool open) {
     final h = slot.value;
     if (h == null) return [_error(slot.error!)];
     return [
@@ -159,10 +157,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       if (h.arabic != null)
         ArabicBlock(h.arabic!, size: 19, maxLines: open ? null : 4),
       if (!(arabicOnly && h.arabic != null))
-        ..._gap(
-          _body(h.text, maxLines: open ? null : 4),
-          first: h.arabic == null,
-        ),
+        ..._gap(_body(h.text, open: open), first: h.arabic == null),
       ..._gap(Text(h.source, style: meta())),
       if (!open) ..._gap(_hint('Tap for source')),
       if (open) ...[
@@ -184,7 +179,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     ];
   }
 
-  List<Widget> _quote(ContentSlot<Quote> slot) {
+  List<Widget> _quote(ContentSlot<Quote> slot, bool open) {
     final q = slot.value;
     if (q == null) return [_error(slot.error!)];
     return [
@@ -213,9 +208,9 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     w,
   ];
 
-  Widget _body(String text, {int? maxLines}) => Text(
+  Widget _body(String text, {required bool open}) => Text(
     text,
-    maxLines: open ? null : (maxLines ?? 4),
+    maxLines: open ? null : 4,
     overflow: open ? null : TextOverflow.ellipsis,
     style: const TextStyle(fontSize: 15, height: 1.5),
   );
@@ -224,48 +219,4 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
 
   Widget _error(String error) =>
       Text(error, style: meta(size: 13, color: AppColors.neutral800));
-}
-
-class _KindTab extends StatelessWidget {
-  const _KindTab({
-    required this.kind,
-    required this.selected,
-    required this.onTap,
-  });
-  final _Kind kind;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      selected: selected,
-      label: kind.label,
-      excludeSemantics: true,
-      child: InkWell(
-        key: Key('content-tab-${kind.name}'),
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(AppRadii.pill),
-        child: AnimatedContainer(
-          duration: motion(context, Motion.quick),
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-          decoration: BoxDecoration(
-            color: selected ? AppColors.sage300 : Colors.transparent,
-            borderRadius: BorderRadius.circular(AppRadii.pill),
-            border: Border.all(
-              color: selected ? AppColors.sage300 : AppColors.divider,
-            ),
-          ),
-          child: Text(
-            kind.label,
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
 }

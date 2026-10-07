@@ -88,7 +88,10 @@ void main() {
       expect(find.text('NEXT PRAYER'), findsOneWidget);
       expect(find.text('London'), findsOneWidget);
 
-      // One content card; the ayah shows first.
+      // Ayah, hadith and quote all show at once, no tabs.
+      expect(find.text('AYAH OF THE DAY'), findsOneWidget);
+      expect(find.text('HADITH OF THE DAY'), findsOneWidget);
+      expect(find.text('QUOTE OF THE DAY'), findsOneWidget);
       expect(find.text('[ fixture arabic text ]'), findsOneWidget);
       expect(find.text('[ fixture translation text ]'), findsOneWidget);
       expect(
@@ -104,7 +107,8 @@ void main() {
       expect(find.text('Fixture Tafsir EN · Fixture Center'), findsOneWidget);
 
       // Hadith in Arabic from the dataset, with the English below (CR-7).
-      await tester.tap(find.byKey(const Key('content-tab-hadith')));
+      await scrollTo(tester, find.text('[ fixture hadith text ]'));
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -250));
       await settle(tester);
       expect(find.text('[ fixture hadith arabic ]'), findsOneWidget);
       expect(find.text('[ fixture hadith text ]'), findsOneWidget);
@@ -125,14 +129,15 @@ void main() {
       expect(find.textContaining('Grading'), findsNothing);
       expect(find.textContaining('App summary'), findsNothing);
 
-      await tester.tap(find.byKey(const Key('content-tab-quote')));
+      await scrollTo(tester, find.byKey(const Key('content-next-quote')));
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -250));
       await settle(tester);
       expect(find.text('Fixture Author · Fixture work'), findsOneWidget);
       final first = find.text('[ fixture arabic quote ]').evaluate().isEmpty
           ? '[ second fixture quote ]'
           : '[ fixture arabic quote ]';
       // "Show another" moves to the next quote of the pool.
-      await tester.tap(find.byKey(const Key('content-next')));
+      await tester.tap(find.byKey(const Key('content-next-quote')));
       await settle(tester);
       expect(find.text(first), findsNothing);
       await closeApp(tester, db);
@@ -153,6 +158,8 @@ void main() {
 
       await tapTab(tester, 'Today');
       await scrollTo(tester, find.text('Morning walk'));
+      await tester.drag(find.byType(Scrollable).first, const Offset(0, -250));
+      await settle(tester);
       expect(find.text('0 of 1'), findsOneWidget);
       await tester.tap(find.text('Morning walk'));
       await settle(tester);
@@ -236,7 +243,8 @@ void main() {
     final db = memoryDb();
     await tester.runAsync(() => db.putSetting('faith', 'false'));
     await pumpApp(tester, db: db);
-    expect(find.byKey(const Key('content-tab-ayah')), findsNothing);
+    expect(find.byKey(const Key('content-card-ayah')), findsNothing);
+    expect(find.byKey(const Key('content-card-quote')), findsNothing);
     expect(find.text('Habits'), findsWidgets);
     await closeApp(tester, db);
   });
@@ -309,13 +317,9 @@ void main() {
     await tester.runAsync(() => db.putSetting('contentLanguage', 'ar'));
     await pumpApp(tester, db: db);
     expect(find.text('[ fixture arabic text ]'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('content-tab-hadith')));
-    await settle(tester);
-    expect(find.text('[ fixture hadith arabic ]'), findsOneWidget);
-    expect(find.text('[ fixture hadith text ]'), findsNothing);
-    await tester.tap(find.byKey(const Key('content-tab-ayah')));
-    await settle(tester);
     expect(find.text('[ fixture translation text ]'), findsNothing);
+    await scrollTo(tester, find.text('[ fixture hadith arabic ]'));
+    expect(find.text('[ fixture hadith text ]'), findsNothing);
     await closeApp(tester, db);
   });
 
