@@ -28,6 +28,7 @@ void main() {
     AppDatabase? db,
     bool online = true,
     BackupFiles? files,
+    FakeLock? lock,
   }) async {
     final database = db ?? memoryDb();
     tester.view.physicalSize = const Size(1080, 2340);
@@ -36,7 +37,7 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          ...testOverrides(database, now, online: online),
+          ...testOverrides(database, now, online: online, lock: lock),
           if (files != null) backupFilesProvider.overrideWithValue(files),
         ],
         child: const NurdayApp(),
@@ -302,6 +303,57 @@ void main() {
     expect(AppColors.current, Palette.dark);
     await closeApp(tester, db);
     AppColors.current = Palette.light;
+  });
+
+  testWidgets('a locked journal hides its text until unlocked', (tester) async {
+    final lock = FakeLock(accept: false);
+    final db = memoryDb();
+    await tester.runAsync(() async {
+      await db.saveJournal('2026-10-05', 'Private', 'Secret words', now);
+      await db.putSetting('journalLock', 'true');
+    });
+    await pumpApp(tester, db: db, lock: lock);
+    await scrollTo(tester, find.text('Written today · locked'));
+    expect(find.text('Private'), findsNothing);
+
+    await tapTab(tester, 'Calendar');
+    expect(find.textContaining('Secret words'), findsNothing);
+
+    await tapTab(tester, 'Journal');
+    expect(find.text('Your journal is locked'), findsOneWidget);
+    expect(find.text('Secret words'), findsNothing);
+    await tester.tap(find.byKey(const Key('unlock-journal')));
+    await settle(tester);
+    expect(find.text('Not unlocked. Try again.'), findsOneWidget);
+
+    lock.accept = true;
+    await tester.tap(find.byKey(const Key('unlock-journal')));
+    await settle(tester);
+    expect(find.text('Secret words'), findsOneWidget);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('the journal lock needs a phone screen lock', (tester) async {
+    final lock = FakeLock(hasLock: false);
+    final db = await pumpApp(tester, lock: lock);
+    await tapTab(tester, 'More');
+    await tester.tap(find.text('Settings'));
+    await settle(tester);
+    final sw = find.byKey(const Key('journal-lock-switch'));
+    await scrollTo(tester, sw);
+    await tester.ensureVisible(sw);
+    await settle(tester);
+    await tester.tap(sw);
+    await settle(tester);
+    expect(find.textContaining('Set up a screen lock'), findsOneWidget);
+    expect(tester.widget<SwitchListTile>(sw).value, isFalse);
+
+    lock.hasLock = true;
+    await tester.tap(sw);
+    await settle(tester);
+    expect(tester.widget<SwitchListTile>(sw).value, isTrue);
+    expect(lock.asked, 1);
+    await closeApp(tester, db);
   });
 
   testWidgets('colour themes can be picked in Settings', (tester) async {

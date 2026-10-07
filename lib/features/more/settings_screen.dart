@@ -100,6 +100,27 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   String? _backupNote;
+  String? _lockNote;
+
+  Future<void> _setJournalLock(bool on) async {
+    final lock = ref.read(appLockProvider);
+    if (on && !await lock.available()) {
+      setState(
+        () => _lockNote =
+            'Set up a screen lock in Android settings first, then try again.',
+      );
+      return;
+    }
+    // Confirm it is really the owner, both to turn it on and to turn it off.
+    if (!await lock.unlock(
+      on ? 'Lock your Nurday journal' : 'Turn off the journal lock',
+    )) {
+      return;
+    }
+    setState(() => _lockNote = null);
+    await _put('journalLock', '$on');
+    ref.read(journalUnlockedProvider.notifier).set(false);
+  }
 
   Future<void> _export() async {
     final db = ref.read(databaseProvider);
@@ -403,6 +424,26 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             if (_reminderNote != null)
               Text(_reminderNote!, style: meta(color: AppColors.accent700)),
             Text('Per-habit reminders are set on each habit.', style: meta()),
+          ],
+        ),
+        NCard(
+          gap: 10,
+          children: [
+            const CardTitle('Privacy'),
+            SwitchListTile(
+              key: const Key('journal-lock-switch'),
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Lock journal', style: TextStyle(fontSize: 15)),
+              subtitle: Text(
+                'Asks for your fingerprint, face or screen lock to read it.',
+                style: meta(),
+              ),
+              value: s.journalLock,
+              activeTrackColor: AppColors.sage600,
+              onChanged: _setJournalLock,
+            ),
+            if (_lockNote != null)
+              Text(_lockNote!, style: meta(color: AppColors.accent700)),
           ],
         ),
         NCard(

@@ -9,6 +9,7 @@ import 'package:http/testing.dart';
 import 'package:nurday/app/providers.dart';
 import 'package:nurday/core/clock.dart';
 import 'package:nurday/data/db/database.dart';
+import 'package:nurday/data/app_lock.dart';
 import 'package:nurday/data/reminders.dart';
 
 String fixture(String name) => File('test/fixtures/$name').readAsStringSync();
@@ -53,7 +54,9 @@ List<Override> testOverrides(
   DateTime now, {
   bool online = true,
   ReminderScheduler? scheduler,
+  AppLock? lock,
 }) => [
+  appLockProvider.overrideWithValue(lock ?? FakeLock()),
   databaseProvider.overrideWithValue(db),
   reminderSchedulerProvider.overrideWithValue(scheduler ?? FakeScheduler()),
   clockProvider.overrideWithValue(FixedClock(now)),
@@ -78,4 +81,18 @@ class FakeScheduler implements ReminderScheduler {
   Future<bool> requestPermission() async => granted;
   @override
   Future<void> sync(List<Reminder> plan) async => synced.add(plan);
+}
+
+class FakeLock implements AppLock {
+  FakeLock({this.hasLock = true, this.accept = true});
+  bool hasLock;
+  bool accept;
+  int asked = 0;
+  @override
+  Future<bool> available() async => hasLock;
+  @override
+  Future<bool> unlock(String reason) async {
+    asked++;
+    return accept;
+  }
 }

@@ -1,5 +1,6 @@
 package com.nurday.app
 
-import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.android.FlutterFragmentActivity
 
-class MainActivity : FlutterActivity()
+// FragmentActivity so the fingerprint/PIN dialog (local_auth) can show.
+class MainActivity : FlutterFragmentActivity()

@@ -25,6 +25,8 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
     super.initState();
     // On resume, reschedule in case the time zone changed while away.
     _lifecycle = AppLifecycleListener(
+      // Lock the journal again whenever Nurday leaves the screen.
+      onHide: () => ref.read(journalUnlockedProvider.notifier).set(false),
       onResume: () {
         final plan = ref.read(reminderPlanProvider);
         if (plan != null) {

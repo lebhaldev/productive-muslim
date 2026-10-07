@@ -76,6 +76,7 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (ref.watch(journalLockedProvider)) return const _LockedJournal();
     final today = watchToday(ref);
     final sel = ref.watch(selectedDayProvider);
     // Wait for stored entries before filling the fields.
@@ -167,6 +168,66 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
           const SizedBox(height: 12),
           Text(status, style: meta()),
         ],
+      ),
+    );
+  }
+}
+
+class _LockedJournal extends ConsumerStatefulWidget {
+  const _LockedJournal();
+
+  @override
+  ConsumerState<_LockedJournal> createState() => _LockedJournalState();
+}
+
+class _LockedJournalState extends ConsumerState<_LockedJournal> {
+  bool _failed = false;
+
+  Future<void> _unlock() async {
+    final ok = await ref
+        .read(appLockProvider)
+        .unlock('Unlock your Nurday journal');
+    if (!mounted) return;
+    if (ok) {
+      ref.read(journalUnlockedProvider.notifier).set(true);
+    } else {
+      setState(() => _failed = true);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.lock_outline, size: 40, color: AppColors.sage600),
+            const SizedBox(height: 12),
+            Text('Your journal is locked', style: heading(22)),
+            const SizedBox(height: 6),
+            Text(
+              'Use your fingerprint, face or screen lock to open it.',
+              textAlign: TextAlign.center,
+              style: meta(size: 13),
+            ),
+            const SizedBox(height: 16),
+            FilledButton.icon(
+              key: const Key('unlock-journal'),
+              onPressed: _unlock,
+              icon: const Icon(Icons.fingerprint),
+              label: const Text('Unlock'),
+            ),
+            if (_failed) ...[
+              const SizedBox(height: 8),
+              Text(
+                'Not unlocked. Try again.',
+                style: meta(color: AppColors.accent700),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

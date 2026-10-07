@@ -455,7 +455,10 @@ class _JournalShortcut extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final j = ref.watch(journalsProvider).value?[today];
-    final sub = j == null
+    final locked = ref.watch(journalLockedProvider);
+    final sub = locked && j != null
+        ? 'Written today · locked'
+        : j == null
         ? 'A few lines is enough.'
         : (j.title.isNotEmpty
               ? j.title

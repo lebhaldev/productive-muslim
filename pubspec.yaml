@@ -45,6 +45,7 @@ dependencies:
   adhan: ^2.0.0+1
   hijri: ^3.0.1
   file_picker: ^13.1.0
+  local_auth: ^3.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

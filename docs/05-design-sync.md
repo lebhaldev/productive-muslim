@@ -50,3 +50,4 @@ Closed by the 2026-10-05 export: OQ-1 (header + weather chip + ayah card), OQ-2 
 | OQ-20 | "Use my location" button for weather | Small button next to City override |
 | OQ-21 | Colour themes beyond Sage (Ocean, Desert, Night) and the swatch picker | Built with provisional palettes, AA contrast checked |
 | OQ-22 | Backup card (Export / Import) in Settings | Plain card with two outlined buttons |
+| OQ-23 | Journal lock: Privacy card switch and locked Journal screen | Lock icon, title, Unlock button |

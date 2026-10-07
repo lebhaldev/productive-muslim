@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import '../core/clock.dart';
 import '../core/day_key.dart';
+import '../data/app_lock.dart';
 import '../data/backup_files.dart';
 import '../data/content/content_models.dart';
 import '../data/content/daily_content_service.dart';
@@ -26,6 +27,27 @@ final databaseProvider = Provider<AppDatabase>(
 final httpClientProvider = Provider<http.Client>((ref) => http.Client());
 
 final backupFilesProvider = Provider<BackupFiles>((ref) => const BackupFiles());
+
+final appLockProvider = Provider<AppLock>((ref) => AppLock());
+
+/// True once the user has unlocked the journal; cleared when the app goes to
+/// the background.
+class JournalUnlocked extends Notifier<bool> {
+  @override
+  bool build() => false;
+  void set(bool v) => state = v;
+}
+
+final journalUnlockedProvider = NotifierProvider<JournalUnlocked, bool>(
+  JournalUnlocked.new,
+);
+
+/// Whether journal text must be hidden right now.
+final journalLockedProvider = Provider<bool>(
+  (ref) =>
+      (ref.watch(settingsProvider).value?.journalLock ?? false) &&
+      !ref.watch(journalUnlockedProvider),
+);
 
 final assetLoaderProvider = Provider<AssetLoader>((ref) => rootBundleLoader);
 
@@ -93,6 +115,7 @@ class AppSettings {
 
   bool get showFaith => raw['faith'] != 'false';
   bool get fahrenheit => raw['unit'] == 'F';
+  bool get journalLock => raw['journalLock'] == 'true';
   Translation get translation => Translation.parse(raw['translation']);
   String get city => raw['city'] ?? '';
   double? get lat => double.tryParse(raw['lat'] ?? '');

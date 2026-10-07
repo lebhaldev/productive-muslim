@@ -4,6 +4,7 @@
 - Backup: Settings → Backup exports habits, habit checks, moods, activities, journal and settings to a JSON file you choose, and imports it again. Merge keeps what is on the phone (habits matched by name, newer mood or journal of a day wins, duplicates skipped); Replace restores the backup exactly. Files from other apps or newer versions are rejected without changing anything.
 - Animations: habit checks pop in, streak and count changes fade, Today says "All done today" when every habit is checked, ayah/hadith/quote cards open and close smoothly, tabs fade in. All are off when Android's "Remove animations" is on.
 - Colour themes: Settings → Appearance → Sage, Ocean, Desert or Night (true black, always dark). Provisional until designed.
+- Journal lock: Settings → Privacy → Lock journal. The Journal tab, Today's journal shortcut and the Calendar day hide journal text until unlocked with the phone's fingerprint, face or screen lock; it locks again whenever Nurday leaves the screen. Android: MainActivity is now a FlutterFragmentActivity with an AppCompat launch theme, and the app declares USE_BIOMETRIC.
 
 ## 0.2.0 (unreleased)
 - Hadith shown in Arabic (verbatim from the same dataset) above the English; Settings → Content language: Arabic + English or Arabic only.

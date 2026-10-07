@@ -120,6 +120,8 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             Text(
               selJournal == null
                   ? 'No entry for this day.'
+                  : ref.watch(journalLockedProvider)
+                  ? 'Entry written · journal is locked'
                   : '${selJournal.title.isEmpty ? '' : '${selJournal.title} — '}${selJournal.body}',
               style: const TextStyle(fontSize: 14),
             ),

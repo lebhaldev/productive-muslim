@@ -51,4 +51,6 @@ flutter {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.4")
+    // AppCompat launch theme, needed by the fingerprint/PIN dialog (local_auth).
+    implementation("androidx.appcompat:appcompat:1.7.1")
 }
