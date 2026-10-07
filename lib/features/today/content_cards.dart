@@ -138,6 +138,7 @@ class _ContentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return NCard(
       onTap: onTap,
+      animateSize: true,
       children: [
         Row(
           children: [

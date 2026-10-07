@@ -14,6 +14,7 @@ import '../features/prayer/prayer_screen.dart';
 import '../features/today/today_screen.dart';
 import 'providers.dart';
 import 'theme.dart';
+import '../widgets/motion.dart';
 
 GoRouter buildRouter() => GoRouter(
   initialLocation: '/today',
@@ -102,7 +103,10 @@ class AppShell extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: SafeArea(bottom: false, child: shell),
+      body: SafeArea(
+        bottom: false,
+        child: FadeOnChange(trigger: shell.currentIndex, child: shell),
+      ),
       // Nav labels scale up to 1.4x; larger sizes would push five tabs off
       // screen, and each tab still has its spoken label.
       bottomNavigationBar: MediaQuery.withClampedTextScaling(

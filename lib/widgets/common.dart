@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app/theme.dart';
+import 'motion.dart';
 
 /// Scrollable screen body with the design's 20px side padding.
 class ScreenBody extends StatelessWidget {
@@ -51,15 +52,19 @@ class NCard extends StatelessWidget {
     this.color,
     this.gap = 8,
     this.onTap,
+    this.animateSize = false,
   });
   final List<Widget> children;
   final Color? color;
   final double gap;
   final VoidCallback? onTap;
 
+  /// Animates height changes, e.g. when an expandable card opens.
+  final bool animateSize;
+
   @override
   Widget build(BuildContext context) {
-    final content = Padding(
+    Widget content = Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -71,6 +76,14 @@ class NCard extends StatelessWidget {
         ],
       ),
     );
+    if (animateSize) {
+      content = AnimatedSize(
+        duration: motion(context, Motion.medium),
+        curve: Curves.easeOutCubic,
+        alignment: Alignment.topCenter,
+        child: content,
+      );
+    }
     return Material(
       color: color ?? AppColors.surface,
       borderRadius: BorderRadius.circular(AppRadii.lg),

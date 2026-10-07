@@ -121,7 +121,7 @@ void main() {
       expect(find.text('0 of 1'), findsOneWidget);
       await tester.tap(find.text('Morning walk'));
       await settle(tester);
-      expect(find.text('1 of 1'), findsOneWidget);
+      expect(find.text('All done today'), findsOneWidget);
       expect(find.text('1 day'), findsOneWidget);
 
       // Mood

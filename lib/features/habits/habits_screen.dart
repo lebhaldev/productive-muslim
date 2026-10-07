@@ -8,6 +8,7 @@ import '../../core/day_key.dart';
 import '../../core/streak.dart';
 import '../../data/db/database.dart';
 import '../../widgets/common.dart';
+import '../../widgets/motion.dart';
 
 class HabitsScreen extends ConsumerStatefulWidget {
   const HabitsScreen({super.key});
@@ -258,7 +259,9 @@ class _DayRing extends ConsumerWidget {
               style: meta(size: 10),
             ),
             const SizedBox(height: 3),
-            Container(
+            AnimatedContainer(
+              duration: motion(context, Motion.medium),
+              curve: Curves.easeOut,
               width: 30,
               height: 30,
               decoration: BoxDecoration(

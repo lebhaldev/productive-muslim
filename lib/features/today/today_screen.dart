@@ -12,6 +12,7 @@ import '../../core/streak.dart';
 import '../../data/prayer/prayer.dart';
 import '../../data/weather/weather.dart';
 import '../../widgets/common.dart';
+import '../../widgets/motion.dart';
 import '../prayer/prayer_screen.dart';
 import 'content_cards.dart';
 
@@ -190,7 +191,20 @@ class _HabitsSection extends ConsumerWidget {
       children: [
         _SectionHeader(
           'Habits',
-          trailing: Text('$doneCount of ${habits.length}', style: meta()),
+          trailing: PopSwitcher(
+            child: habits.isNotEmpty && doneCount == habits.length
+                ? Text(
+                    'All done today',
+                    key: const ValueKey('all-done'),
+                    style: meta(color: AppColors.sage900)
+                        .copyWith(fontWeight: FontWeight.w600),
+                  )
+                : Text(
+                    '$doneCount of ${habits.length}',
+                    key: ValueKey(doneCount),
+                    style: meta(),
+                  ),
+          ),
         ),
         const SizedBox(height: 8),
         if (habits.isEmpty)
@@ -245,39 +259,49 @@ class _HabitRow extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               child: Row(
                 children: [
-                  done
-                      ? Container(
-                          width: 28,
-                          height: 28,
-                          decoration: BoxDecoration(
-                            color: AppColors.sage600,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.check,
-                            size: 17,
-                            color: AppColors.bg,
-                          ),
-                        )
-                      : Container(
-                          width: 24,
-                          height: 24,
-                          margin: const EdgeInsets.symmetric(horizontal: 2),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: AppColors.neutral600,
-                              width: 2,
+                  SizedBox(
+                    width: 28,
+                    height: 28,
+                    child: PopSwitcher(
+                      child: done
+                          ? Container(
+                              key: const ValueKey('done'),
+                              width: 28,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                color: AppColors.sage600,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.check,
+                                size: 17,
+                                color: AppColors.bg,
+                              ),
+                            )
+                          : Container(
+                              key: const ValueKey('open'),
+                              width: 24,
+                              height: 24,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.neutral600,
+                                  width: 2,
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+                    ),
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(name, style: const TextStyle(fontSize: 15)),
                   ),
-                  Text(
-                    streakLabel(streak),
-                    style: meta(color: AppColors.accent700),
+                  PopSwitcher(
+                    child: Text(
+                      streakLabel(streak),
+                      key: ValueKey(streak),
+                      style: meta(color: AppColors.accent700),
+                    ),
                   ),
                 ],
               ),
