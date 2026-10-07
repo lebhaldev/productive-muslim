@@ -1,0 +1,499 @@
+{
+ "note": "Verbatim tafsir for the daily ayah pool. Copied unchanged from the spa5k/tafsir_api dataset (a mirror of Quran.com / QUL tafsir resources). Never edited or generated in the app.",
+ "sources": {
+  "en": {
+   "name": "Al-Mukhtasar in Interpreting the Noble Quran (English)",
+   "author": "Tafsir Center for Quranic Studies",
+   "url": "https://qul.tarteel.ai/resources/tafsir/266",
+   "dataset": "https://github.com/spa5k/tafsir_api (en-tafsir-al-mukhtasar)"
+  },
+  "ar": {
+   "name": "التفسير الميسر (Tafsir Al-Muyassar)",
+   "author": "King Fahd Glorious Quran Printing Complex",
+   "url": "https://qul.tarteel.ai/resources/tafsir/38",
+   "dataset": "https://github.com/spa5k/tafsir_api (ar-tafsir-muyassar)"
+  }
+ },
+ "ayahs": {
+  "2:45": {
+   "en": "Ask for help in sacred and worldly affairs, with patience and prayer, which bring you close to Allah and allow you to reach Him, so that He will help you, protect you and take away your difficulties. Prayer is a hardship except for those who are humble to their Lord.",
+   "ar": "واستعينوا في كل أموركم بالصبر بجميع أنواعه، وكذلك الصلاة. وإنها لشاقة إلا على الخاشعين، الذين يخشون الله ويرجون ما عنده، ويوقنون أنهم ملاقو ربِّهم جلَّ وعلا بعد الموت، وأنهم إليه راجعون يوم القيامة للحساب والجزاء."
+  },
+  "2:152": {
+   "en": "So, remember Allah with your hearts and your whole beings, and He will remember you with approval and protection, for you are rewarded according to what you do. Also, be grateful to Allah for the blessings He has given you, and do not be ungrateful by denying them or using them in prohibited ways.",
+   "ar": "أمر تعالى المؤمنين بذكره، ووعد عليه أفضل الجزاء، وهو الثناء في الملأ الأعلى على مَن ذكره، وخُصُّوني -أيها المؤمنون- بالشكر قولًا وعملًا، ولا تجحدوا نعميَ عليكم."
+  },
+  "2:153": {
+   "en": "O you who have faith in Allah and follow His Messenger, ask for help from Allah in everything, through the beauty of patience and by establishing the prayer in the way Allah has instructed. Allah is truly with those who are patient, giving them success and helping them.",
+   "ar": "يا أيها المؤمنون اطلبوا العون من الله في كل أموركم: بالصبر على النوائب والمصائب، وبالصبر على تركِ المعاصي والذنوب، وبالصبر على الطاعات والقربات، وبالصلاة التي تطمئن بها النفس، وتنهى عن الفحشاء والمنكر. إن الله مع الصابرين بعونه وتوفيقه وتسديده. وفي الآية إثبات معيَّة الله الخاصة بالمؤمنين، المقتضية لما سلف ذكره؛ أما المعية العامة المقتضية للعلم والإحاطة، فهي لجميع الخلق."
+  },
+  "2:155": {
+   "en": "Allah will test people with different types of hardships: some with fear of those who are against them; hunger because of lack of food; lack of money because of losing it or difficulty gaining it; loss of lives due to death from diseases and tragedies that kill people, or being martyred for the sake of Allah; and a lack of resources from the earth. Give good news, O Prophet, to those who are patient in the face of these hardships, of what will make them happy in this world and in the Afterlife.",
+   "ar": "ولنختبرنكم بشيء يسير من الخوف، ومن الجوع، وبنقص من الأموال بتعسر الحصول عليها، أو ذَهابها، ومن الأنفس: بالموت أو الشهادة في سبيل الله، وبنقص من ثمرات النخيل والأعناب والحبوب، بقلَّة ناتجها أو فسادها. وبشِّر -أيها النبي- الصابرين على هذا وأمثاله، بما يفرحهم ويَسُرُّهم من حسن العاقبة في الدنيا والآخرة."
+  },
+  "2:156": {
+   "en": "The patient are those who, when they are struck by one of these hardships, say, in acceptance, that all power belongs to Allah, He deals with us as He wills, and we will return to Him on the Day of Judgement, and it is He Who created us and showers us with many blessings; so, to Him is our return and our end.",
+   "ar": "من صفة هؤلاء الصابرين أنهم إذا أصابهم شيء يكرهونه قالوا: إنّا عبيد مملوكون لله، مُدَبَّرون بأمره وتصريفه، يفعل بنا ما يشاء، وإنا إليه راجعون بالموت، ثم بالبعث للحساب والجزاء."
+  },
+  "2:186": {
+   "en": "If they ask you, O Prophet, about how close Allah is and about His answering of prayers, Allah is close to them and knows everything about them. He hears their prayer, and they do not need intermediaries or to raise their voices. Allah responds to the call of whoever calls Him sincerely, praying to Him; so, let them be devoted to Him and His sacred law, firm in their faith, as that is the best route to Allah’s response – perhaps in that way they might be rightly guided in worldly and sacred matters.",
+   "ar": "وإذا سألك -أيها النبي- عبادي عني فقل لهم: إني قريب منهم، أُجيب دعوة الداعي إذا دعاني، فليطيعوني فيما أمرتهم به ونهيتهم عنه، وليؤمنوا بي، لعلهم يهتدون إلى مصالح دينهم ودنياهم. وفي هذه الآية إخبار منه سبحانه عن قربه من عباده، القربَ اللائق بجلاله."
+  },
+  "2:201": {
+   "en": "Yet there is another group of people who have faith in Allah and the Afterlife who ask their Lord for blessing in this world and the ability to do good, just as they ask Him for entry into Paradise and safety from the punishment of the fire of Hell.",
+   "ar": "ومن الناس فريق مؤمن يقول في دعائه: ربنا آتنا في الدنيا عافية ورزقًا وعلمًا نافعًا، وعملًا صالحًا، وغير ذلك من أمور الدين والدنيا، وفي الآخرة الجنة، واصرف عنّا عذاب النار. وهذا الدعاء من أجمع الأدعية، ولهذا كان أكثر دعاء النبي ﷺ، كما ثبت في الصحيحين."
+  },
+  "2:216": {
+   "en": "Fighting in Allah’s path has been chosen for believers even though it is something that is naturally disliked, because it means risking one’s life and wealth. However, you may dislike something when, it is good and beneficial. An example of this is striving in Allah’s path, which means – in addition to the great reward – the defeat of the enemy and promotion of Allah’s word. On the other hand, you may like something whilst it is bad and harmful to you, such as holding back from fighting: this will result in you being defeated and the enemy’s gaining authority over you. Allah knows full well what is good and what is not, whereas you do not. Therefore, follow His instruction which is better for you.",
+   "ar": "فرض الله عليكم -أيها المؤمنون- قتال الكفار، والقتال مكروه لكم من جهة الطبع؛ لمشقته وكثرة مخاطره، وقد تكرهون شيئًا وهو في حقيقته خير لكم، وقد تحبون شيئًا لما فيه من الراحة أو اللذة العاجلة، وهو شر لكم. والله تعالى يعلم ما هو خير لكم، وأنتم لا تعلمون ذلك. فبادروا إلى الجهاد في سبيله."
+  },
+  "2:222": {
+   "en": "O Prophet! Your Companions ask you about menses (which is the blood of menstruation that naturally comes out of the womb at certain times of the month). Say in reply to them: Menses is harmful to the man and woman, so avoid sexual intercourse during this time. Do not approach them for sexual intercourse until the blood stops and they have cleaned themselves by taking a bath. If the blood has stopped and they have cleaned themselves, then you may have sexual intercourse with them through the vagina in the manner that Allah has permitted for you. Allah loves those that frequently repent from their sins and are extra mindful of cleanliness.",
+   "ar": "ويسألونك عن الحيض -وهو الدم الذي يسيل من أرحام النساء جِبِلَّة في أوقات مخصوصة-، قل لهم -أيها النبي-: هو أذى مستقذر يضر من يَقْرَبُه، فاجتنبوا جماع النساء مدة الحيض حتى ينقطع الدم، فإذا انقطع الدم، واغتسلن، فجامعوهن في الموضع الذي أحلَّه الله لكم، وهو القُبُل لا الدُّبُر. إن الله يحب عباده المكثرين من الاستغفار والتوبة، ويحب عباده المتطهرين الذين يبتعدون عن الفواحش والأقذار."
+  },
+  "2:261": {
+   "en": "The example of the reward of the believers who spend their wealth in Allah’s path is like that of a grain that is planted by a farmer in fertile ground. This grain then produces seven spikes, each carrying a hundred grains. Allah multiplies the reward for whomever of His servants He wishes and gives them their reward without account. Allah is Bountiful and Giving and He knows who deserves to have their reward multiplied.",
+   "ar": "ومِن أعظم ما ينتفع به المؤمنون الإنفاقُ في سبيل الله. ومَثَلُ المؤمنين الذين ينفقون أموالهم في سبيل الله كمثل حبة زُرِعتْ في أرض طيبة، فإذا بها قد أخرجت ساقًا تشعب منها سبع شعب، لكل واحدة سنبلة، في كل سنبلة مائة حبة. والله يضاعف الأجر لمن يشاء، بحسب ما يقوم بقلب المنفق من الإيمان والإخلاص التام. وفضل الله واسع، وهو سبحانه عليم بمن يستحقه، مطلع على نيات عباده."
+  },
+  "2:263": {
+   "en": "A kind word that makes a believer happy or forgiveness of the one who is ill-mannered is better than charity followed by harm caused by reminding the person of the favour. Allah is in no need of His servants; and because He is tolerant with them, He does not often quickly punish.",
+   "ar": "كلام طيب يُرَدُّ به السائل، وعفو عما بدر منه مِن إلحاحٍ في السؤال، خير من صدقة يتبعها من المتصدق أذى وإساءة. والله غني عن صدقات العباد، حليم لا يعاجلهم بالعقوبة."
+  },
+  "2:286": {
+   "en": "Allah only burdens a person with actions that he is able to do. Allah’s religion is based on ease and not difficulty. If any person does good, he will receive the reward for it in full. If any person does evil, he will receive the punishment for the sin he committed and no one will carry it for him. The Messenger and the believers said, ‘O Lord, do not punish us if we forget or make a mistake in doing something or saying something unintentionally. O Lord, do not burden us with that which is difficult for us and which we are unable to do as you had tasked those before us who were punished for their wrongs. Do not give us such instructions and prohibitions which are difficult for us and which we are unable to fulfil. By Your grace, overlook our sins, forgive us and have mercy on us. You are our guardian and helper, so give us victory over the disbelievers’.",
+   "ar": "دين الله يسر لا مشقة فيه، فلا يطلب الله مِن عباده ما لا يطيقونه، فمن فعل خيرًا نال خيرًا، ومن فعل شرًّا نال شرًّا. ربنا لا تعاقبنا إن نسينا شيئًا مما افترضته علينا، أو أخطأنا في فِعْل شيء نهيتنا عن فعله، ربَّنا ولا تكلِّفنا من الأعمال الشاقة ما كلَّفته مَن قبلنا من العصاة عقوبة لهم، ربنا ولا تُحمِّلْنا ما لا نستطيعه من التكاليف والمصائب، وامح ذنوبنا، واستر عيوبنا، وأحسن إلينا، أنت مالك أمرنا ومُدَبِّرُه، فانصرنا على مَن جحدوا دينك وأنكروا وحدانيتك، وكذَّبوا نبيَّك محمدًا ﷺ، واجعل العاقبة لنا عليهم في الدنيا والآخرة."
+  },
+  "3:8": {
+   "en": "The ones firm in knowledge say, ‘O Lord, do not let our hearts move away from the truth after you have shown it to us. Save us from what happened to those who moved away from the truth. Give us, from Your vast mercy, that which will guide our hearts and protect us from misguidance. Our Lord, You are the One who gives much’.",
+   "ar": "ويقولون: يا ربنا لا تصْرِف قلوبنا عن الإيمان بك بعد أن مننت علينا بالهداية لدينك، وامنحنا من فضلك رحمة واسعة، إنك أنت الوهاب: كثير الفضل والعطاء، تعطي مَن تشاء بغير حساب."
+  },
+  "3:31": {
+   "en": "O Prophet, say: If you really love Allah, then follow what I have brought, on the inside and the outside. By doing this, you will gain Allah’s love and He will forgive your sins. Allah is Forgiving and Merciful to those who repent to Him.",
+   "ar": "قل -أيها الرسول-: إن كنتم تحبون الله حقًّا فاتبعوني وآمنوا بي ظاهرًا وباطنًا، يحببكم الله، ويمْحُ ذنوبكم، فإنه غفور لذنوب عباده المؤمنين، رحيم بهم. وهذه الآية الكريمة حاكمة على كل من ادعى محبة الله -تعالى- وليس متبعًا لنبيه محمد ﷺ حق الاتباع، مطيعًا له في أمره ونهيه، فإنه كاذب في دعواه حتى يتابع الرسول ﷺ حق الاتباع."
+  },
+  "3:92": {
+   "en": "O believers, you will not receive the reward of the people of goodness and their rank until you spend the wealth you love in the way of Allah. Whatever you spend, big or small, Allah is aware of your intentions and of what you do; and everyone will be rewarded accordingly.",
+   "ar": "لن تدركوا الجنة حتى تتصدقوا مما تحبون، وأي شيء تتصدقوا به مهما كان قليلًا أو كثيرًا فإن الله به عليم، وسيجازي كلَّ منفق بحسب عمله."
+  },
+  "3:103": {
+   "en": "Hold tightly, O you who have faith, to the Book and the traditions of the Prophet, and do not do that which will bring division amongst you. Remember the blessings of Allah upon you when you were enemies before Islam, fighting each other for the slightest reason, and He brought your hearts together through Islam, so that you became brothers in your faith through His grace, showing each other love and respect and listening to each other’s advice. Before that you were on the brink of entering the fire of Hell because of your disbelief. Allah saved you from the fire of Hell through Islam and guided you to faith. In the way that Allah has made this clear to you, He also makes clear to you what will put things right for you in this world and the Afterlife, so that you are guided to the right way of life.",
+   "ar": "وتمسَّكوا جميعًا بكتاب ربكم وهدي نبيكم، ولا تفعلوا ما يؤدي إلى فرقتكم. واذكروا نعمة جليلة أنعم الله بها عليكم: إذ كنتم -أيها المؤمنون- قبل الإسلام أعداء، فجمع الله قلوبكم على محبته ومحبة رسوله، وألقى في قلوبكم محبة بعضكم لبعض، فأصبحتم بفضله إخوانًا متحابّين، وكنتم على حافَة نار جهنم، فهداكم الله بالإسلام ونجّاكم من النار. وكما بَيَّن الله لكم معالم الإيمان الصحيح فكذلك يبيِّن لكم كل ما فيه صلاحكم؛ لتهتدوا إلى سبيل الرشاد، وتسلكوها، فلا تضلوا عنها."
+  },
+  "3:134": {
+   "en": "The Mindful are those who spend their wealth for the sake of Allah, in ease and hardship, who control their anger when they could seek revenge, and who forgive those who wrong them. Allah loves the doers of good, whose behaviour is this way.",
+   "ar": "الذين ينفقون أموالهم في اليسر والعسر، والذين يمسكون ما في أنفسهم من الغيظ بالصبر، وإذا قَدَروا عَفَوا عمَّن ظلمهم. وهذا هو الإحسان الذي يحب الله أصحابه."
+  },
+  "3:139": {
+   "en": "Do not become weak, O believers, and do not be sad about what happened to you on the day of Uḥud. That is not appropriate for you, because you are superior because of your faith, and the uppermost with Allah’s help and the hope of victory, if you have faith in Allah and in His promise to those who are Mindful.",
+   "ar": "ولا تَضْعُفوا -أيها المؤمنون- عن قتال عدوكم، ولا تحزنوا لما أصابكم في «أُحد»، وأنتم الغالبون والعاقبة لكم، إن كنتم مصدقين بالله ورسوله، متَّبعين شرعه."
+  },
+  "3:160": {
+   "en": "If Allah supports you with His help and aid, then no one can overcome you, even if everyone in the earth came together against you; yet if He does not help or protect you, then no one can help you after Him. Help is in His Hands alone. So let those who have faith depend on Him and on no one else.",
+   "ar": "إن يمددكم الله بنصره ومعونته فلا أحد يستطيع أن يغلبكم، وإن يخذلكم فمن هذا الذي يستطيع أن ينصركم من بعد خِذْلانه لكم؟ وعلى الله وحده فليتوكل المؤمنون."
+  },
+  "3:173": {
+   "en": "Some of the idolaters said to them that the Quraysh, led by Abū Sufyān, had come together in great numbers to fight against them and to finish them off, warning them against meeting them. But their words and attempts to scare them only increased their reliance on Allah and their trust in His promise. So they went out to meet them, saying that Allah was enough for them and that He is the best Protector, while committing their lives to Him.",
+   "ar": "وهم الذين قال لهم بعض المشركين: إن أبا سفيان ومن معه قد أجمعوا أمرهم على الرجوع إليكم لاستئصالكم، فاحذروهم واتقوا لقاءهم، فإنه لا طاقة لكم بهم، فزادهم ذلك التخويف يقينًا وتصديقًا بوعد الله لهم، ولم يَثْنِهم ذلك عن عزمهم، فساروا إلى حيث شاء الله، وقالوا: حسبنا الله أي: كافينا، ونِعْم الوكيل المفوَّض إليه تدبير عباده."
+  },
+  "3:190": {
+   "en": "In the creation of the heavens and the earth, from nothing with no precedent, and in the following of the night and day, and the difference in their length, are clear signs for those of understanding, which lead them to the Creator of the universe, worthy alone of worship.",
+   "ar": "إن في خلق السموات والأرض على غير مثال سابق، وفي تعاقُب الليل والنهار، واختلافهما طولًا وقِصَرًا، لَدلائلَ وبراهين عظيمة على وحدانية الله لأصحاب العقول السليمة."
+  },
+  "3:200": {
+   "en": "O you who have faith in Allah and follow His Messenger, be patient with the obligations of the sacred law, and with the misfortunes that you are given in this world; and outdo the disbelievers in patience and determination, so that they are not more patient than you; and struggle for the sake of Allah and be Mindful, following His instructions and staying away from what He has prohibited, so that you may reach what you desire of safety from the fire of Hell and entry into Paradise.",
+   "ar": "يا أيها الذين صَدَّقوا الله ورسوله وعملوا بشرعه اصبروا على طاعة ربكم، وعلى ما ينزل بكم من ضر وبلاء، وغالبوا أعداءكم في الصبر حتى لا يكونوا أشد صبرًا منكم، وأقيموا على جهاد عدوي وعدوكم، وخافوا الله في جميع أحوالكم؛ رجاء أن تفوزوا برضاه في الدنيا والآخرة."
+  },
+  "4:28": {
+   "en": "Allah wants to make things easy for you in His sacred law. He does not burden you with more than you are able to do, because He knows the weakness of human beings in their creation and nature.",
+   "ar": "يريد الله تعالى بما شرعه لكم التيسير، وعدم التشديد عليكم؛ لأنكم خلقتم ضعفاء."
+  },
+  "4:110": {
+   "en": "If anyone does an evil action or wrongs themselves by committing sins, and then they ask for forgiveness from Allah, regretfully admitting their sin and leaving it, they will find that Allah is always ready to forgive their sins and show them mercy.",
+   "ar": "ومن يُقْدِمْ على عمل سيِّئ قبيح، أو يظلم نفسه بارتكاب ما يخالف حكم الله وشرعه، ثم يرجع إلى الله نادمًا على ما عمل، راجيًا مغفرته وستر ذنبه، يجد الله تعالى غفورًا له، رحيمًا به."
+  },
+  "5:8": {
+   "en": "O you who believe in Allah and His Messenger and follow His laws, uphold Allah’s rights over you, seeking His pleasure. Be witnesses for justice and not for oppression. The hatred for a people should not make you leave justice: justice is a requirement with a friend, as well as with an enemy, so be just with both. Justice is closer to the fear of Allah, and oppression is closer to disrespect against Him. Be mindful of Allah by fulfilling His instructions and avoiding His prohibitions. Allah knows what you do. Nothing of your actions is hidden from Him and He will repay you accordingly.",
+   "ar": "يا أيها الذين آمَنوا بالله ورسوله محمد ﷺ كونوا قوّامين بالحق؛ ابتغاء وجه الله، شُهداء بالعدل، ولا يحملنكم بُغْضُ قوم على ألا تعدلوا، اعدِلوا بين الأعداء والأحباب على درجة سواء، فذلك العدل أقرب لخشية الله، واحذروا أن تجوروا. إن الله خبير بما تعملون، وسيجازيكم به."
+  },
+  "6:54": {
+   "en": "When those who accept My signs that indicate the truth of what you have brought come to you, O Messenger, then reply to their greeting of peace in honour of them and tell them the good news of My mercy. I have gracefully made mercy obligatory on Myself. If anyone among you commits sin, out of ignorance and foolishness, and then repents from that sin and sets their actions right, then I will forgive them, for I am Forgiving and Compassionate to the servant who repents to Me.",
+   "ar": "وإذا جاءك -أيها النبي- الذين صَدَّقوا بآيات الله الشاهدة على صدقك من القرآن وغيره مستفتين عن التوبة من ذنوبهم السابقة، فأكرِمْهم بردِّ السلام عليهم، وبَشِّرهم برحمة الله الواسعة؛ فإنه جلَّ وعلا قد كتب على نفسه الرحمة بعباده تفضلًا أنه من اقترف ذنبًا بجهالة منه لعاقبتها وإيجابها لسخط الله -فكل عاص لله -مخطئًا أو متعمدًا- فهو جاهل بهذا الاعتبار وإن كان عالمًا بالتحريم- ثم تاب من بعده وداوم على العمل الصالح، فأنَّه تعالى يغفر ذنبه، فهو غفور لعباده التائبين، رحيم بهم."
+  },
+  "6:162": {
+   "en": "Say, O Messenger: My prayer and sacrifice is for Allah and in His name, not for anyone else. My life and death is only for Allah, the Lord of all creation, and no one else has any share in that from me.",
+   "ar": "قل -أيها الرسول- لهؤلاء المشركين: إن صلاتي، ونسكي، أي: ذَبْحي لله وحده - لا للأصنام، ولا للأموات، ولا للجن، ولا لغير ذلك مما تذبحونه لغير الله، وعلى غير اسمه كما تفعلون- وحياتي وموتي لله تعالى رب العالمين."
+  },
+  "7:23": {
+   "en": "Adam and Eve said: 'O our Lord! We have wronged ourselves by doing what You forbade us from, and surely If You do not forgive us and have mercy on us we will be amongst the losers, losing our share of the worldly life and Hereafter.'",
+   "ar": "قال آدم وحواء: ربنا ظلمنا أنفسنا بالأكل من الشجرة، وإن لم تغفر لنا وترحمنا لنكونن ممن أضاعوا حظَّهم في دنياهم وأخراهم. وهذه الكلمات هي التي تلقاها آدم من ربه، فدعا بها فتاب الله عليه."
+  },
+  "7:56": {
+   "en": "Do not ruin things on earth by committing sins after Allah has put it right by sending the messengers (peace be upon them) and establishing things in accordance with His laws. Call on Allah alone, fearing His punishment and hoping for His reward. The mercy of Allah is truly close to those who do good, so be from among them.",
+   "ar": "ولا تُفْسدوا في الأرض بأيِّ نوع من أنواع الفساد، بعد إصلاح الله إياها ببعثة الرسل -عليهم السلام- وعُمْرانها بطاعة الله، وادعوه -سبحانه- مخلصين له الدعاء؛ خوفًا من عقابه ورجاء لثوابه. إن رحمة الله قريب من المحسنين."
+  },
+  "7:156": {
+   "en": "' And make us among those You have favoured with Your blessings and well-being, enabling us to do good works. And make us from among Your righteous servants for whom You have prepared Paradise. Indeed we turn to You in repentance, admitting our mistakes.' Allah said: 'I give My punishment to whom I will; those who do the actions leading to misery, and My Mercy surrounds all things in this world. There is no created being or object that My Mercy has not reached, immersed in My Grace and Kindness. I will decree My Mercy in the Afterlife for those who are mindful of Me, following what I instruct and staying away from what I have prohibited, giving charity from their wealth as they have been ordered, and who have faith in My signs.'",
+   "ar": "واجعلنا ممن كتبتَ له الصالحات من الأعمال في الدنيا وفي الآخرة، إنا رجعنا تائبين إليك، قال الله تعالى لموسى: عذابي أصيب به مَن أشاء مِن خلقي، كما أصبتُ هؤلاء الذين أصبتهم من قومك، ورحمتي وسعت خلقي كلَّهم، فسأكتبها للذين يخافون الله، ويخشون عقابه، فيؤدون فرائضه، ويجتنبون معاصيه، والذين هم بدلائل التوحيد وبراهينه يصدقون."
+  },
+  "7:199": {
+   "en": "Accept from people O Messenger what they are able to do, the actions and conduct that is easy for them, and do not require them to do things that are too difficult for them, because that will drive them away. Instruct them to speak in a beautiful way and to do good actions, and turn away from those who are foolish and do not face them in their ignorance, returning like for like. Whoever harms you, do not harm them; and whoever denies you something, do not deny them.",
+   "ar": "اقْبَلْ -أيها النبي أنت وأمتك- الفضل من أخلاق الناس وأعمالهم، ولا تطلب منهم ما يشق عليهم حتى لا ينفروا، وأْمر بكل قول حسن وفِعْلٍ جميل، وأعرض عن منازعة السفهاء ومساواة الجهلة الأغبياء."
+  },
+  "8:46": {
+   "en": "Observe Allah’s obedience and the obedience of His Prophet in all of your statements, actions and circumstances. Do not argue with one another because dispute leads to weakness, cowardliness and the diminishing of your strength. Be patient when facing the enemy because Allah supports and assists the patient. Whoever Allah is with will definitely be victorious.",
+   "ar": "والتزموا طاعة الله وطاعة رسوله في كل أحوالكم، ولا تختلفوا فتتفرق كلمتكم وتختلف قلوبكم، فتضعُفوا وتذهب قوتكم ونصركم، واصبروا عند لقاء العدو. إن الله مع الصابرين بالعون والنصر والتأييد، ولن يخذلهم."
+  },
+  "9:51": {
+   "en": "O Messenger, tell these hypocrites: 'Nothing will afflict us except what Allah has written for us, He is our Protector, the one whom we take refuge in, and we put our trust in Him in all our affairs. Let the believers place their trust in Him for He is sufficient for them and the best of guardians.",
+   "ar": "قل -أيها النبي- لهؤلاء المتخاذلين زجرًا لهم وتوبيخًا: لن يصيبنا إلا ما قدَّره الله علينا وكتبه في اللوح المحفوظ، هو ناصرنا على أعدائنا، وعلى الله وحده فليعتمد المؤمنون به."
+  },
+  "9:129": {
+   "en": "If they reject you O Messenger, not believing in what you come with, then say: 'Allah is sufficient for me, there is nothing worthy of worship except Him. I rely on Him alone, and He, Glory be to Him, is the Lord of the Great Throne.'",
+   "ar": "فإن أعرض المشركون والمنافقون عن الإيمان بك -أيها الرسول- فقل لهم: حسبي الله، يكفيني جميع ما أهمَّني، لا معبود بحق إلا هو، عليه اعتمدت، وإليه فَوَّضْتُ جميع أموري؛ فإنه ناصري ومعيني، وهو ربُّ العرشِ العظيمِ، فعرشُ الرحمن أعظمُ المخلوقات."
+  },
+  "10:57": {
+   "en": "O people, now this Qur’ān has come to you, a powerful reminder, encouragement and warning. It is a cure for the illnesses of doubt and uncertainty that are in the hearts. It contains guidance to the path of truth and is a mercy for the believers, who are the ones who benefit from it.",
+   "ar": "يا أيها الناس قد جاءتكم موعظة من ربكم تذكِّركم عقاب الله وتخوفكم وعيده، وهي القرآن وما اشتمل عليه من الآيات والعظات؛ لإصلاح أخلاقكم وأعمالكم، وفيه دواء لما في القلوب من الجهل والشرك وسائر الأمراض، ورشد لمن اتبعه من الخلق فينجيه من الهلاك، جعله سبحانه وتعالى نعمة ورحمة للمؤمنين، وخصَّهم بذلك؛ لأنهم المنتفعون بالإيمان، وأما الكافرون فهو عليهم عَمى."
+  },
+  "10:62": {
+   "en": "The friends of Allah will not have any fear of the terrors to come on the Day of Rising and they will not grieve over the pleasures of the world that they missed.",
+   "ar": "ألا إن أولياء الله لا خوف عليهم في الآخرة من عقاب الله، ولا هم يحزنون على ما فاتهم من حظوظ الدنيا."
+  },
+  "11:6": {
+   "en": "There is no creature that walks on the surface of the earth, whatever it may be, except that Allah has undertaken, through His grace, to provide for it. He, may He be glorified, knows where it lives on earth and He knows where it will die. The provision, place of living and place of death for everything – including creatures – are in a clear book, which is the Preserved Tablet.",
+   "ar": "لقد تكفَّل الله برزق جميع ما دبَّ على وجه الأرض، تفضلًا منه، ويعلم مكان استقراره في حياته وبعد موته، ويعلم الموضع الذي يموت فيه، كل ذلك مكتوب في كتاب عند الله مبين عن جميع ذلك."
+  },
+  "11:88": {
+   "en": "Shu’ayb said to his people: O my people, tell me what will be your position if I am on clear proof and insight from my Lord, and He has given me lawful provision from Him, as well as prophethood? I do not wish to prohibit you from something and go against you and do it myself. I only wish to set your matter right, to the best of my ability, by inviting you to declare the Oneness of your Lord and to obey Him. My success in achieving this is only with Allah, may He be glorified! I place my trust in Him alone and I turn to Him in all my affairs.",
+   "ar": "قال شعيب: يا قوم أرأيتم إن كنت على طريق واضح من ربي فيما أدعوكم إليه من إخلاص العبادة له، وفيما أنهاكم عنه من إفساد المال، ورزقني منه رزقًا واسعًا حلالًا طيبًا؟ وما أريد أن أخالفكم فأرتكب أمرًا نهيتكم عنه، وما أريد فيما آمركم به وأنهاكم عنه إلا إصلاحكم قَدْر طاقتي واستطاعتي، وما توفيقي -في إصابة الحق ومحاولة إصلاحكم- إلا بالله، على الله وحده توكلت وإليه أرجع بالتوبة والإنابة."
+  },
+  "11:114": {
+   "en": "Maintain, O Messenger, the prayer in the best manner at the two ends of the day: at the beginning and end of the day. Also, maintain the prayer during the hours of the night. Good actions wipe out minor sins. This is a warning for those who pay attention and a lesson for those who accept.",
+   "ar": "وأدِّ الصلاة -أيها النبي- على أتمِّ وجه، طَرَفَي النهار في الصباح والمساء، وفي ساعات من الليل. إنَّ فِعْلَ الخيرات يكفِّر الذنوب السالفة ويمحو آثارها، والأمر بإقامة الصلاة وبيان أن الحسنات يذهبن السيئات، موعظة لمن اتعظ بها وتذكر."
+  },
+  "11:115": {
+   "en": "Be patient in doing what you have been instructed to do with respect to being upright and avoiding the things you have been prohibited from, such as transgression and leaning towards the wrongdoers. Allah will not cause the reward of those who do good to be wasted. Instead, He will accept from them the best of what they did and will give them their reward in accordance with their best actions.",
+   "ar": "واصبر -أيها النبي- على الصلاة، وعلى ما تَلْقى من الأذى من مشركي قومك؛ فإن الله لا يضيع ثواب المحسنين في أعمالهم."
+  },
+  "12:64": {
+   "en": "Their father asked them if he should trust them with him as he had trusted them with his full brother, Joseph. He had trusted them with Joseph and made them promise to take care of him, and they had not done what they promised, so he did not trust their promise to take care of his brother; but he trusted in Allah, for He is the best of guardians to whom He wills, and the most Merciful of the merciful to whom He wills.",
+   "ar": "قال لهم أبوهم: كيف آمنكم على «بِنْيامين» وقد أمنتكم على أخيه يوسف من قبل، والتزمتم بحفظه فلم تفوا بذلك؟ فلا أثق بالتزامكم وحفظكم، ولكني أثق بحفظ الله، خير الحافظين وأرحم الراحمين، أرجو أن يرحمني فيحفظه ويردَّه عليَّ."
+  },
+  "12:86": {
+   "en": "Their father said to them that he only complained to Allah of the grief and sorrow that had occurred him, and that he knew of the kindness and generosity of Allah and His response to those who were in need, and His reward for those who suffered, which they did not know.",
+   "ar": "قال يعقوب مجيبًا لهم: لا أُظهر همِّي وحزني إلا لله وحده، فهو كاشف الضرِّ والبلاء، وأعلم من رحمة الله وفرجه ما لا تعلمونه."
+  },
+  "12:87": {
+   "en": "Their father told them to go and find out news about Joseph and his brother, and not to despair of relief from Allah and His release of His servants. Without doubt, only disbelieving people despair of relief from Allah and His release of His servants, because they do not know the greatness of Allah’s power and His subtle favour upon His servants.",
+   "ar": "قال يعقوب: يا أبنائي عودوا إلى «مصر» فاستقصوا أخبار يوسف وأخيه، ولا تقطعوا رجاءكم من رحمة الله؛ إنه لا يقطع الرجاء من رحمة الله إلا الجاحدون لقدرته، الكافرون به."
+  },
+  "12:92": {
+   "en": "Joseph accepted their apology, saying that there would be no blame on them requiring a punishment, nor any criticism, from that day. He asked that Allah forgive them, and He, glory be to Him, is the most Merciful of the merciful.",
+   "ar": "قال لهم يوسف: لا تأنيب عليكم اليوم، يغفر الله لكم، وهو أرحم الراحمين لمن تاب من ذنبه وأناب إلى طاعته."
+  },
+  "13:11": {
+   "en": "He, may He be glorified, has angels that come upon a person one after the other. Some of them come at night and some during the day. They protect the person by Allah’s command and they record his statements and actions. Allah does not change the good condition of a people for the worse unless they change the state of gratitude within themselves. When Allah, may He be glorified, wills destruction for a people, then no one can ward off what He wills. You, O people, do not have any one apart from Him who will take charge of your affairs and to whom you can resort to ward off the calamity that afflicts you.",
+   "ar": "لله تعالى ملائكة يتعاقبون على الإنسان مِن بين يديه ومِن خلفه، يحفظونه بأمر الله ويحصون ما يصدر عنه من خير أو شر. إن الله سبحانه وتعالى لا يغيِّر نعمة أنعمها على قوم إلا إذا غيَّروا ما أمرهم به فعصوه. وإذا أراد الله بجماعةٍ بلاءً فلا مفرَّ منه، وليس لهم مِن دون الله مِن والٍ يتولى أمورهم، فيجلب لهم المحبوب، ويدفع عنهم المكروه."
+  },
+  "13:28": {
+   "en": "These people whom Allah guides are those who have faith and whose hearts find comfort in the remembrance of Allah and in His glorification and praise and by reciting and listening to His book. Truly it is only natural that in the remembrance of Allah hearts find comfort.",
+   "ar": "ويهدي الذين تسكن قلوبهم بتوحيد الله وذكره فتطمئن، ألا بطاعة الله وذكره وثوابه تسكن القلوب وتستأنس."
+  },
+  "14:7": {
+   "en": "Moses said to them: Remember when your Lord clearly announced to you: If you are grateful to Allah for the above-mentioned favours that He has blessed you with, then He will give you more from His favour and grace. But, if you deny His favours to you and do not show gratitude for them, His punishment is severe for those who deny His favours and are not grateful for them.",
+   "ar": "وقال لهم موسى: واذكروا حين أعلم ربكم إعلامًا مؤكَّدًا: لئن شكرتموه على نعمه ليزيدنكم من فضله، ولئن جحدتم نعمة الله ليعذبنَّكم عذابًا شديدًا."
+  },
+  "14:24": {
+   "en": "O Messenger, do you not know how Allah presented an example of the monotheistic phrase: “There is no deity but Allah”, when He likened it to an excellent tree, the date palm. Its trunk shoots into the earth’s floor and it drinks water with its excellent roots. Its branches reach out into the sky, drinking from the moisture and inhaling the good wind.",
+   "ar": "ألم تعلم -أيها الرسول- كيف ضرب الله مثلًا لكلمة التوحيد «لا إله إلا الله» بشجرة عظيمة، وهي النخلة، أصلها متمكن في الأرض، وأعلاها مرتفع علوًّا نحو السماء؟"
+  },
+  "14:34": {
+   "en": "He gave you from everything you requested, and even from what you did not request. If you try to count Allah’s favors, you will not be able to due to their plenitude and variety. What was mentioned is but examples of His favours to you. Indeed, man is ever oppressive towards himself and very ungrateful of Allah’s (the Exalted, may He be Glorified) favours.",
+   "ar": "وأعطاكم من كل ما طلبتموه، وإن تعدُّوا نِعَم الله عليكم لا تطيقوا عدها ولا إحصاءها ولا القيام بشكرها؛ لكثرتها وتنوُّعها. إن الإنسان لَكثير الظلم لنفسه، كثير الجحود لنعم ربه."
+  },
+  "15:49": {
+   "en": "O Messenger, inform My servants that I am the Forgiving towards whomever of them repents, and I am Merciful to them.",
+   "ar": "أخبِرْ -أيها الرسول- عبادي أني أنا الغفور للمؤمنين التائبين، الرحيم بهم، وأن عذابي هو العذاب المؤلم الموجع لغير التائبين."
+  },
+  "16:18": {
+   "en": "If you - O people - tried to count and list Allah’s many blessings that He has favoured you with, you will not be able to do so because they are so numerous and diverse. Allah is Forgiving, as He did not take you to task for being neglectful of showing thanks to Him, and Merciful, as he did not stop these blessings from you on account of your sins and failure to thank Him.",
+   "ar": "وإن تحاولوا حَصْرَ نِعَم الله عليكم لا تَفُوا بحَصْرها؛ لكثرتها وتنوعها. إن الله لَغفور لكم رحيم بكم؛ إذ يتجاوز عن تقصيركم في أداء شكر النعم، ولا يقطعها عنكم لتفريطكم، ولا يعاجلكم بالعقوبة."
+  },
+  "16:53": {
+   "en": "Whatever blessing you - O people - have in this world or in the afterlife is from Allah, may He be glorified, and not from anyone else. Then when some calamity, sickness or poverty afflicts you, it is to Him alone that you plead in supplication to remove what has afflicted you. Thus, the One who grants blessings and who removes difficulties is the One Who must be worshipped alone.",
+   "ar": "وما بكم مِن نعمةِ هدايةٍ، أو صحةِ جسم، وسَعَة رزقٍ، وولدٍ، وغير ذلك، فمِنَ الله وحده، فهو المُنْعِم بها عليكم، ثم إذا نزل بكم السَّقَم والبلاء والقحط فإلى الله وحده تَضِجُّون بالدعاء."
+  },
+  "16:97": {
+   "en": "Whoever does good deeds in accordance with the sacred law, whether male or female, while having faith in Allah, We will grant them in this world a good life, by their being pleased with Allah’s decree, content and guided towards righteous actions, and We will reward them in the afterlife in accordance with the best good deeds that they used to do in the world.",
+   "ar": "مَن عمل عملًا صالحًا، ذكرًا كان أم أنثى، وهو مؤمن بالله ورسوله، فلنحيينه في الدنيا حياة سعيدة مطمئنة، ولو كان قليل المال، ولنجزينَّهم في الآخرة ثوابهم بأحسن ما عملوا في الدنيا."
+  },
+  "16:127": {
+   "en": "So be patient - O Messenger - over the harm that they afflict on you. You are only granted the ability to be patient by Allah’s granting it to you. Do not grieve over the disbelievers’ turning away from you, and do not let your heart be constrained by the schemes and plots they carry out.",
+   "ar": "واصبر -أيها الرسول- على ما أصابك مِن أذى في الله حتى يأتيك الفرج، وما صبرك إلا بالله، فهو الذي يعينك عليه ويثبتك، ولا تحزن على مَن خالفك ولم يستجب لدعوتك، ولا تغتم مِن مكرهم وكيدهم؛ فإن ذلك عائد عليهم بالشر والوبال."
+  },
+  "16:128": {
+   "en": "Allah is with those who are mindful of Him by leaving out sin and those who are good by doings acts of obedience and by fulfilling what they have been instructed to do. Allah’s help and support is with them.",
+   "ar": "إن الله سبحانه وتعالى -بتوفيقه وعونه وتأييده ونصره- مع الذين اتقوه بامتثال ما أمر واجتناب ما نهى، ومع الذين يحسنون أداء فرائضه والقيام بحقوقه ولزوم طاعته."
+  },
+  "17:23": {
+   "en": "Your Lord - O servant - has instructed and made obligatory that you worship none but Him, and He has instructed that you be good to your parents, especially when they become old. If either of them or both of them reach old age with you, do not become annoyed with them by uttering words that indicate the same, do not scold them and do not be harsh when speaking to them, but say to them kind words that are soft and courteous.",
+   "ar": "وأَمَر ربك -أيها الإنسان- وألزم وأوجب أن يفرد سبحانه وتعالى وحده بالعبادة، وأمر بالإحسان إلى الأب والأم، وبخاصة حالةُ الشيخوخة إذا كانا في رعايتك، فلا تضجر ولا تستثقل شيئًا تراه من أحدهما أو منهما، ولا تُسْمِعهما قولًا سيئًا، حتى ولا التأفيف الذي هو أدنى مراتب القول السيئ، ولا يصدر منك إليهما فعل قبيح، ولكن ارفق بهما، وقل لهما -دائمًا- قولًا لينًا لطيفًا."
+  },
+  "17:24": {
+   "en": "Humble yourself before them in humility and out of compassion, and say: O My Lord, be merciful to them as they have brought me up in my childhood.",
+   "ar": "وكُنْ لأمك وأبيك ذليلًا متواضعًا رحمة بهما، واطلب من ربك أن يرحمهما برحمته الواسعة أحياءً وأمواتًا، كما صبرا على تربيتك طفلًا ضعيف الحول والقوة."
+  },
+  "17:53": {
+   "en": "Say, O Messenger, to my believing servants: that they should say good words when speaking and refrain from bad off-putting words, because the satan exploits them to spread between them what will spoil their worldly life and their Hearafter. Surely, the satan is an open enemy, so it is necessary to be wary of him.",
+   "ar": "وقل لعبادي المؤمنين يقولوا في تخاطبهم وتحاورهم الكلام الحسن الطيب؛ فإنهم إن لم يفعلوا ذلك ألقى الشيطان بينهم العداوة والفساد والخصام. إن الشيطان كان للإنسان عدوًّا ظاهر العداوة."
+  },
+  "17:70": {
+   "en": "And I have honoured the children of Adam through intellect, making the angels prostrate to their father, and I subjugated for them the animals and vehicles that carry them on land, and the ships that carry them by sea. And I provided them with good food, drink, spouses and other things, and I granted them much virtue over much of My creation. They must be grateful therefore for Allah’s favours on them.",
+   "ar": "ولقد كرَّمنا ذرية آدم بالعقل وإرسال الرسل، وسَخَّرنا لهم جميع ما في الكون، وسَخَّرنا لهم الدواب في البر والسفن في البحر لحملهم، ورزقناهم من طيبات المطاعم والمشارب، وفضَّلناهم على كثير من المخلوقات تفضيلًا عظيمًا."
+  },
+  "17:82": {
+   "en": "And I reveal in the Qur’ān that which cures the hearts of ignorance, disbelief and doubt, cures the bodies when treated through it, and that which is a mercy for the believers who practice it. And this Qur’ān only increases the disbelievers in destruction, as listening to it angers them and makes them deny and turn away from it even more.",
+   "ar": "وننزل من آيات القرآن العظيم ما يشفي القلوب مِنَ الأمراض، كالشك والنفاق والجهالة، وما يشفي الأبدان برُقْيتها به، وما يكون سببًا للفوز برحمة الله بما فيه من الإيمان، ولا يزيد هذا القرآن الكفار عند سماعه إلا كفرًا وضلالًا؛ لتكذيبهم به وعدم إيمانهم."
+  },
+  "18:10": {
+   "en": "Remember, O Messenger, when the believing youngsters took refuge in the cave, fleeing with their religion. Then they said in their supplication to their Lord: Our Lord, give us mercy from Yourself, by forgiving our sins and saving us from our enemies, and grant us guidance towards the right path and correctness in the matter of migrating from the disbelievers and in faith.",
+   "ar": "اذكر -أيها الرسول- حين لجأ الشبّان المؤمنون إلى الكهف؛ خشية من فتنة قومهم لهم، وإرغامهم على عبادة الأصنام، فقالوا: ربنا أعطنا مِن عندك رحمة، تثبتنا بها، وتحفظنا من الشر، ويسِّر لنا الطريق الصواب الذي يوصلنا إلى العمل الذي تحب، فنكون راشدين غير ضالين."
+  },
+  "18:46": {
+   "en": "Wealth and children are things of adornment in this worldly life. Wealth will only be of benefit in the afterlife if it is spent on that which pleases Allah. Actions and statements that are pleasing to Allah are better in reward than all the beauty in the world. That is the best thing a person can have hope in, because the beauty of the world will perish while the reward for actions and statements that are pleasing to Allah will last.",
+   "ar": "الأموال والأولاد جَمال وقوة في هذه الدنيا الفانية، والأعمالُ الصالحة -وبخاصة التسبيحُ والتحميد والتكبير والتهليل- أفضل أجرًا عند ربك من المال والبنين، وهذه الأعمال الصالحة أفضل ما يرجو الإنسان من الثواب عند ربه، فينال بها في الآخرة ما كان يأمُله في الدنيا."
+  },
+  "19:96": {
+   "en": "Those who have faith in Allah, and do righteous actions that Allah is pleased with, Allah will create for them love by His loving them and by making them beloved to His servants.",
+   "ar": "إن الذين آمنوا بالله واتَّبَعوا رسله وعملوا الصالحات وَفْق شرعه، سيجعل لهم الرحمن محبة ومودة في قلوب عباده."
+  },
+  "20:25": {
+   "en": "Moses (peace be upon him) said: Lord, expand my breast for me so that I can bear the difficulty.",
+   "ar": "قال موسى: رب وسِّع لي صدري، وسَهِّل لي أمري، وأطلق لساني بفصيح المنطق؛ ليفهموا كلامي. واجعل لي معينًا من أهلي، هارون أخي. قَوِّني به وشدَّ به ظهري، وأشركه معي في النبوة وتبليغ الرسالة؛ كي ننزهك بالتسبيح كثيرًا، ونذكرك كثيرًا فنحمدك. إنك كنت بنا بصيرًا، لا يخفى عليك شيء من أفعالنا."
+  },
+  "20:26": {
+   "en": "Make my task easy.",
+   "ar": "قال موسى: رب وسِّع لي صدري، وسَهِّل لي أمري، وأطلق لساني بفصيح المنطق؛ ليفهموا كلامي. واجعل لي معينًا من أهلي، هارون أخي. قَوِّني به وشدَّ به ظهري، وأشركه معي في النبوة وتبليغ الرسالة؛ كي ننزهك بالتسبيح كثيرًا، ونذكرك كثيرًا فنحمدك. إنك كنت بنا بصيرًا، لا يخفى عليك شيء من أفعالنا."
+  },
+  "20:46": {
+   "en": "Allah said to them: Do not be afraid, I am with you both with My help and support. I hear and see everything that occurs between you and him.",
+   "ar": "قال الله لموسى وهارون: لا تخافا من فرعون؛ فإنني معكما أسمع كلامكما وأرى أفعالكما، فاذهبا إليه وقولا له: إننا رسولان إليك من ربك أن أطلق بني إسرائيل، ولا تكلِّفهم ما لا يطيقون من الأعمال، قد أتيناك بدلالة معجزة من ربك تدل على صدقنا في دعوتنا، والسلامة من عذاب الله تعالى لمن اتبع هداه. إن ربك قد أوحى إلينا أن عذابه على مَن كذَّب وأعرض عن دعوته وشريعته."
+  },
+  "20:114": {
+   "en": "Allah is High above and Exalted from what the idolaters describe Him with of deficiencies and from what they attribute as partners to Him. He is the Majestic King, to whom belongs the kingdom of everything, and who is the Truth and speaks the truth. Do not hasten, O Messenger, in reciting the Qur’ān with Gabriel before it is completely conveyed to you, and say: O Lord, increase me in knowledge, on top of what You have already taught me.",
+   "ar": "فتنزَّه الله -سبحانه- وارتفع، وتقدَّس عن كل نقص، الملِكُ الذي قهر سلطانُه كل ملك وجبار، المتصرف بكل شيء، الذي هو حق، ووعده حق، ووعيده حق، وكل شيء منه حق. ولا تعجل -أيها الرسول- بمسابقة جبريل في تَلَقِّي القرآن قبل أن يَفْرَغ منه، وقل: ربِّ زدني علمًا إلى ما علمتني."
+  },
+  "20:132": {
+   "en": "And order your family, O Messenger, to perform prayer, and you also remain constant in its performance. I do not ask you for your own sustenance or that of others; I will take care of your sustenance. The praiseworthy outcome in this world and the afterlife is for the pious who fear Allah, carrying out His commands and refraining from His prohibitions.",
+   "ar": "وَأْمُرْ -أيها النبي- أهلك بالصلاة، واصطبر على أدائها، لا نسألك مالًا، نحن نرزقك ونعطيك. والعاقبة الصالحة في الدنيا والآخرة لأهل التقوى."
+  },
+  "21:83": {
+   "en": "O Messenger! Mention the story of Job, when he prayed to his Lord at the time of affliction, saying, “O my Lord! I have been afflicted with an illness and loss of family, yet you are the most merciful from all those who show mercy, so remove the afflictions that have befallen me.”",
+   "ar": "واذكر -أيها الرسول- عبدنا أيوب، إذ ابتليناه بضر وسقم عظيم في جسده، وفقد أهله وماله وولده، فصبر واحتسب، ونادى ربه عز وجل أني قد أصابني الضر، وأنت أرحم الراحمين، فاكشفه عني."
+  },
+  "21:87": {
+   "en": "O Messenger! Also mention the story of the Companion of the Whale: Jonah (peace be upon him), when he went away without the permission of his Lord, angry with his people for their insistence on sin. He thought I would not constrain him by punishing him for his hurrying away; and so he was afflicted with a severe form of constraint and imprisonment when the Whale swallowed him. He then called out in the darknesses of the belly of the Whale, the ocean and the night, acknowledging his error and repenting to Allah for it, saying, “There is no true deity except You, You are glorified of all faults and sanctified. Indeed, I was one of the wrongdoers.”",
+   "ar": "واذكر قصة صاحب الحوت، وهو يونس بن مَتّى عليه السلام، أرسله الله إلى قومه فدعاهم فلم يؤمنوا، فتوعَّدهم بالعذاب فلم ينيبوا، ولم يصبر عليهم كما أمره الله، وخرج مِن بينهم غاضبًا عليهم، ضائقًا صدره بعصيانهم، وظن أن الله لن يضيِّق عليه ويؤاخذه بهذه المخالفة، فابتلاه الله بشدة الضيق والحبس، والتقمه الحوت في البحر، فنادى ربه في ظلمات الليل والبحر وبطن الحوت -تائبًا معترفًا بظلمه؛ لتركه الصبر على قومه- قائلًا: لا إله إلا أنت سبحانك، إني كنت من الظالمين."
+  },
+  "23:1": {
+   "en": "Those who believed in Allah and acted according to His laws have indeed succeeded by achieving whatever they sought, and gaining salvation from whatever they feared.",
+   "ar": "تسمية السورة\n\n• سميت المؤمنون؛ لافتتاحها بذكر المؤمنين وفلاحهم، واشتمالها على جلائل أوصافهم، وجزائهم في الآخرة.\n\nمن مقاصد السورة\n\n• بشارة المؤمنين بالفلاح العظيم؛ لما تحلَّوا به من أصول الفضائل الرُّوحية والعَمَلية، التي تحصل بها تزكية النفس واستقامةُ السلوك، واستحقاقُ ميراث الفردوس الأعلى في جنات الخلد.\n\n• بيانُ أدلة الوحدانية في خلق الإنسان والنبات والحيوان، وتذكيرُ الإنسان بأطواره التي مرَّ بها في خلقه، ودلالة ذلك على إثبات البعث بعد الممات، وأنَّ الله لم يخلق الخلق سُدىً.\n\n• التنصيص على وحدة الرسالات، والتذكيرُ ببعثة الرُّسل للإرشاد إلى التوحيد والعمل الصالح، وما تلقاهم به أقوامهم من الإعراض، وما كان من عقاب المكذبين؛ تذكرةً وموعظةً للمعرضين عن دعوة النبي ﷺ، وتسليةً له عمّا ناله من أذى المشركين وتكذيبِهم واستهزائِهم.\n\n• تعليمُ النبي ﷺ بعضَ الآداب الشرعية في الدعاء وفي الرد على الأعداء، والالتجاءِ إلى الله سبحانه وتعالى.\n\n• ذكر ما يكون بعد الموت من مشاهد القيامة؛ من الحشر والنشر، وانقسام الناس إلى فريقين، فلا حسبٌ ولا نسبٌ ينفع في ذلك اليوم، إنما هو العمل الصالح، وذكر حال أهل الشقاء وما ينتهون إليه، وحال أهل السعادة عند إعلان فوزهم في الدار الآخرة.\n\n[التفسير]\n\nقد فاز المصدِّقون بالله وبرسوله العاملون بشرعه."
+  },
+  "23:118": {
+   "en": "Say - O Messenger: “O Lord, forgive my sins, grant me Your mercy, and You are the best of those who show mercy”.",
+   "ar": "وقل -أيها النبي-: ربِّ تجاوَزْ عن الذنوب وارحم؛ وأنت خير مَن رحم ذا ذنب، فقبل توبته ولم يعاقبه على ذنبه."
+  },
+  "24:22": {
+   "en": "The people of virtue in religion and expanse in wealth should not swear an oath to stop giving their needy relatives, due to their poverty, amongst the migrants in Allah’s way, due to a sin they committed. They should pardon them and overlook them. Do you not love that Allah should forgive your sins when you pardon them and overlook them? Allah is Forgiving to those who repent amongst His servants and Merciful to them, so His servants should follow Him. This verse was revealed regarding Abu Bakr Siddiq (may Allah be pleased with him) when he swore an oath to stop spending on Mistah, due to his joining in the slander.",
+   "ar": "ولا يحلف أهل الفضل في الدين والسَّعَة في المال على ترك صلة أقربائهم الفقراء، والمحتاجين الذين لا يملكون ما يكفيهم ويسدُّ حاجتهم، والمهاجرين في سبيل الله، ومنعهم النفقة؛ بسبب ذنب فعلوه، وليتجاوزوا عن إساءتهم، ولا يعاقبوهم. ألا تحبون أن يتجاوز الله عنكم؟ فتجاوزوا عنهم. والله غفور لعباده، رحيم بهم. وفي هذا الحثُّ على العفو والصفح، ولو قوبل بالإساءة."
+  },
+  "25:63": {
+   "en": "The servants of the Merciful are the believers who walk humbly on the earth with dignity, and when the foolish address them they do not retaliate in the same manner but they tell them something that saves them from their evil.",
+   "ar": "وعباد الرحمن الصالحون يمشون على الأرض بسكينة متواضعين، وإذا خاطبهم الجهلة السفهاء بالأذى أجابوهم بالمعروف من القول، وخاطبوهم خطابًا يَسْلَمون فيه من الإثم، ومن مقابلة الجاهل بجهله."
+  },
+  "25:74": {
+   "en": "Those who say in their prayer to their Lord: Our Lord, give us from our spouses and offspring those who will be the coolness of our eyes due to their piety and steadfastness on the truth. Make us leaders in truth who are emulated by those who are mindful of You.",
+   "ar": "والذين يسألون الله تعالى قائلين: ربنا هب لنا مِن أزواجنا وذريّاتنا ما تَقَرُّ به أعيننا، وفيه أنسنا وسرورنا، واجعلنا قدوة يَقْتدي بنا المتقون في الخير."
+  },
+  "25:58": {
+   "en": "Put your trust - O Messenger - in all of your affairs in Allah, the Living and Everlasting who never dies, declare His purity and celebrate His praise, may He be glorified. He knows the sins of His servants well enough. Nothing of that is hidden from Him and He will recompense them for the same.",
+   "ar": "وتوكل على الله الذي له جميع معاني الحياة الكاملة كما يليق بجلاله، الذي لا يموت، ونزِّهه عن صفات النقصان. وكفى بالله خبيرًا بذنوب خلقه، لا يخفى عليه شيء منها، وسيحاسبهم عليها ويجازيهم بها."
+  },
+  "26:80": {
+   "en": "“And when I am ill, He alone cures me from illness; there is no healer for me except Him.”",
+   "ar": "قال إبراهيم: أفأبصرتم بتدبر ما كنتم تعبدون من الأصنام التي لا تسمع ولا تنفع ولا تضر، أنتم وآباؤكم الأقدمون من قبلكم؟ فإن ما تعبدونهم من دون الله أعداء لي، لكن رب العالمين ومالك أمرهم هو وحده الذي أعبده. هو الذي خلقني في أحسن صورة فهو يرشدني إلى مصالح الدنيا والآخرة، وهو الذي ينعم عليَّ بالطعام والشراب، وإذا أصابني مرض فهو الذي يَشْفيني ويعافيني منه، وهو الذي يميتني في الدنيا بقبض روحي، ثم يحييني يوم القيامة، لا يقدر على ذلك أحد سواه، والذي أطمع أن يتجاوز عن ذنبي يوم الجزاء."
+  },
+  "28:24": {
+   "en": "So he felt pity for them and watered their livestock for them. He then took shelter in the shade and rested there, beseeching Allah and presenting his need to him, saying, “O my Lord! Indeed I am for any and every goodness you send down to me in dire need for and it is my only recourse.”",
+   "ar": "فسقى موسى للمرأتين ماشيتهما، ثم تولى إلى ظل شجرة فاستظلَّ بها وقال: ربِّ إني مفتقر إلى ما تسوقه إليَّ مِن أي خير كان، كالطعام. وكان قد اشتد به الجوع."
+  },
+  "29:45": {
+   "en": "Read - O Messenger - to people what Allah has revealed to you of the Qur’ān and do the prayer in the most perfect manner. Prayer that is discharged perfectly restrains the doer from falling into sins and wrong, because it creates a light in the heart that prevents the perpetration of sins and guides the person to doing righteous deeds. The remembrance of Allah is greater than and superior to every thing. Allah knows everything you are doing. None of your actions are hidden from him and He will recompense you for them. If they are good the recompense will be good and if they are evil the recompense will be evil.",
+   "ar": "اتل ما أُنزل إليك من هذا القرآن واعمل به، وأدِّ الصلاة بحدودها، إن المحافظة على الصلاة تنهى صاحبها عن الوقوع في المعاصي والمنكرات؛ وذلك لأن المقيم لها، المتمم لأركانها وشروطها، يستنير قلبه، ويزداد إيمانه، وتقوى رغبته في الخير، وتقل أو تنعدم رغبته في الشر، ولَذكر الله في الصلاة وغيرها أعظم وأكبر وأفضل من كل شيء. والله يعلم ما تصنعون مِن خيرٍ وشر، فيجازيكم على ذلك أكمل الجزاء وأوفاه."
+  },
+  "29:69": {
+   "en": "And those who strive hard in My cause, seeking My pleasure, I will certainly grant them the ability to tread the straight path. Indeed, Allah is with those who do good by helping, assisting and guiding them.",
+   "ar": "والمؤمنون الذين جاهدوا أعداء الله، والنفس، والشيطان، وصبروا على الفتن والأذى في سبيل الله، سيهديهم الله سبل الخير، ويثبتهم على الصراط المستقيم، ومَن هذه صفته فهو محسن إلى نفسه وإلى غيره. وإن الله سبحانه وتعالى لمع مَن أحسن مِن خَلْقِه بالنصرة والتأييد والحفظ والهداية."
+  },
+  "30:21": {
+   "en": "From also from among the great signs of Allah which prove His power and oneness, is that He created for you - O men! - wives from among your species so that you may find contentment in them due to your special compatibility, and He put love and affection between you. Indeed, in the aforementioned are clear proofs and evidences for people who contemplate, because they are the ones who benefit by using their intellect.",
+   "ar": "ومن آياته الدالة على عظمته وكمال قدرته أن خلق لأجلكم من جنسكم -أيها الرجال- أزواجًا؛ لتطمئن نفوسكم إليها وتسكن، وجعل بين المرأة وزوجها محبة وشفقة، إن في خلق الله ذلك لآيات دالة على قدرة الله ووحدانيته لقوم يتفكرون، ويتدبرون."
+  },
+  "31:17": {
+   "en": "O my son! Establish the prayer by performing it to perfection; enjoin good and forbid evil, and bear patience upon whatever adversity you face in the process. Indeed, my instructions to you are from those that Allah has decided you should do, so you have no choice in doing or not doing them.",
+   "ar": "يا بنيَّ أقم الصلاة تامة بأركانها وشروطها وواجباتها، وأْمر بالمعروف، وانْه عن المنكر بلطفٍ ولينٍ وحكمة بحسب جهدك، وتحمَّل ما يصيبك من الأذى مقابل أمرك بالمعروف ونهيك عن المنكر، واعلم أن هذه الوصايا مما أمر الله به من الأمور التي ينبغي الحرص عليها."
+  },
+  "33:21": {
+   "en": "There has been for you an excellent example in what Allah’s Messenger said, carried out and practiced, for he presented his own noble self and personally engaged in battle, so how after that can you be miserly with your souls over his soul? And only he who is hopeful of the Last Day, works for it and remembers Allah abundantly will follow Allah’s Messenger (peace be upon him). As for the one who is not hopeful of the Last Day and does not remember Allah abundantly, he does not follow His Messenger (peace be upon him).",
+   "ar": "لقد كان لكم -أيها المؤمنون- في أقوال رسول الله ﷺ وأفعاله وأحواله قدوة حسنة تتأسَّون بها، فالزموا سنته، فإنما يسلكها ويتأسى بها مَن كان يرجو الله واليوم الآخر، وأكثرَ مِن ذكر الله واستغفاره، وشكره في كل حال."
+  },
+  "33:41": {
+   "en": "O those who have faith in Allah and do whatever He has legislated for them! Remember Allah abundantly with your hearts, tongues and limbs.",
+   "ar": "يا أيها الذين صَدَّقوا الله ورسوله وعملوا بشرعه، اذكروا الله بقلوبكم وألسنتكم وجوارحكم ذِكْرًا كثيرًا، واشغلوا أوقاتكم بذكر الله تعالى عند الصباح والمساء، وأدبار الصلوات المفروضات، وعند العوارض والأسباب، فإن ذلك عبادة مشروعة، تدعو إلى محبة الله، وكف اللسان عن الآثام، وتعين على كل خير."
+  },
+  "39:10": {
+   "en": "O Messenger, say to my servants who have faith in Me and My messengers: “Be mindful of your Lord by carrying out His commands and refraining from His prohibitions. For those amongst you who did good actions in the world is good in this world through divine assistance, health and provision, and in the Afterlife through Paradise. And the land of Allah is vast, so migrate therein until you find a place in which you can worship Allah without anything stopping you. The patient will be given their reward on the day of judgment without any counting or limit, due to its abundance and different types”.",
+   "ar": "قل -أيها النبي- لعبادي المؤمنين بالله ورسوله: اتقوا ربكم بطاعته واجتناب معصيته. للذين أحسنوا في هذه الدنيا بعبادة ربهم وطاعته حسنة في الآخرة، وهي الجنة، وحسنة في الدنيا من صحة ورزق ونصر وغير ذلك. وأرض الله واسعة، فهاجِروا فيها إلى حيث تعبدون ربكم، وتتمكنون من إقامة دينكم. إنما يُعطى الصابرون ثوابهم في الآخرة بغير حدٍّ ولا عدٍّ ولا مقدار، وهذا تعظيم لجزاء الصابرين وثوابهم."
+  },
+  "39:36": {
+   "en": "Is Allah not sufficient for His servant, Muhammad (peace be upon him), in his religious and worldly matters and to ward off his enemy? Indeed, He is sufficient. They frighten you, O Messenger, because of their ignorance and foolishness, with the idols that they worship besides Allah, that they will harm you. Those whom Allah abandons and does not bless with guidance, will have no one to guide them.",
+   "ar": "أليس الله بكاف عبده محمدًا وعيد المشركين وكيدهم من أن ينالوه بسوء؟ بلى إنه سيكفيه في أمر دينه ودنياه، ويدفع عنه مَن أراده بسوء، ويخوِّفونك -أيها الرسول- بآلهتهم التي زعموا أنها ستؤذيك. ومن يخذله الله فيضله عن طريق الحق، فما له مِن هاد يهديه إليه."
+  },
+  "39:53": {
+   "en": "Say - O Messenger, to My servants who have gone beyond the limit against themselves by ascribing partners to Allah and committing sins: Do not lose hope of Allah’s mercy and of His forgiveness for your sins. Allah forgives all the sins of those who repent to Him. He is the Forgiving towards the sins of those who repent and the Merciful towards them.",
+   "ar": "قل -أيها الرسول- لعبادي الذين تمادَوا في المعاصي، وأسرفوا على أنفسهم بإتيان ما تدعوهم إليه نفوسهم من الذنوب: لا تَيْئسوا من رحمة الله؛ لكثرة ذنوبكم، إن الله يغفر الذنوب جميعًا لمن تاب منها ورجع عنها مهما كانت، إنه هو الغفور لذنوب التائبين من عباده، الرحيم بهم."
+  },
+  "40:44": {
+   "en": "But they rejected his advice, and so he said: “You will remember the advice I gave you and you will regret not accepting it. And I entrust all my affairs over to Allah alone. Allah is Seeing of His servants; nothing of their actions is hidden from Him”.",
+   "ar": "فلما نصحهم ولم يطيعوه قال لهم: فستذكرون أني نصحت لكم وذكَّرتكم، وسوف تندمون حيث لا ينفع الندم، وألجأ إلى الله، وأعتصم به، وأتوكل عليه. إن الله سبحانه وتعالى بصير بأحوال العباد، وما يستحقونه من جزاء، لا يخفى عليه شيء منها."
+  },
+  "40:60": {
+   "en": "O people, your Lord said: “Call upon Me alone and worship Me alone, and do not associate any partner with Me. Those who are too arrogant in worshipping Me alone will enter the fire on the Day of Judgment, low and disgraced”.",
+   "ar": "وقال ربكم -أيها العباد-: ادعوني وحدي وخصُّوني بالعبادة أستجب لكم، إن الذين يتكبرون عن إفرادي بالعبودية والألوهية، سيدخلون جهنم صاغرين حقيرين."
+  },
+  "41:34": {
+   "en": "Doing good deeds in obedience to Allah that please Him, and doing evil and committing sins which anger Him, are not equal. Counter with good conduct the evil of the one who does bad to you. If you counter his evil by doing good to him, you will soon find the previous enmity you had between you change, and it will be as if he is now an affectionate close friend.",
+   "ar": "ولا تستوي حسنة الذين آمنوا بالله واستقاموا على شرعه، وأحسنوا إلى خلقه، وسيئة الذين كفروا به وخالفوا أمره، وأساؤوا إلى خلقه. ادفع -أيها الرسول- بعفوك وحلمك وإحسانك مَن أساء إليك، وقابِل إساءته لك بالإحسان إليه، فبذلك يصير المسيء إليك الذي بينك وبينه عداوة كأنه محبٌّ مناصر لك وقريب شفيق عليك. وما يُوفَّق لهذه الخَصْلة الحميدة إلا الذين صبروا على المكاره والأذى، وحملوا أنفسَهم على ما يحبه الله، وما يُوفَّق لها إلا ذو نصيب وافر من السعادة في الدنيا والآخرة."
+  },
+  "42:19": {
+   "en": "Allah is kind towards His servants. He provides for whoever He wills and expands their provision, and He narrows it for whoever He wills out of mercy for them, even though it may appear otherwise. He is the Strong, Whom none can overpower and the Mighty, Who takes retribution from His enemies.",
+   "ar": "الله لطيف بعباده، يوسِّع الرزق على مَن يشاء، ويضيِّقه على مَن يشاء وَفْق حكمته سبحانه، وهو القوي الذي له القوة كلها، العزيز في انتقامه من أهل معاصيه."
+  },
+  "42:43": {
+   "en": "As for those who are patient and who overlook the harm caused to them by others, then such patience will bring good for them and for the society. This is a praiseworthy thing and only a person of great fortune is blessed with this.",
+   "ar": "ولمن صبر على الأذى، وقابل الإساءة بالعفو والصفح والسَّتر، إن ذلك لمن عزائم الأمور المشكورة والأفعال الحميدة التي أمر الله بها، ورتَّب لها ثوابًا جزيلًا وثناءً حميدًا."
+  },
+  "47:7": {
+   "en": "O you who have faith in Allah, and who acted on what He ordained for them, if you help Allah by helping His prophet and his religion, and by fighting the disbelievers, He will help you by granting you dominance over them and He will keep your feet firm in battle when you face them.",
+   "ar": "يا أيها الذين صدَّقوا الله ورسوله وعملوا بشرعه، إن تنصروا دين الله بالجهاد في سبيله، والحكم بكتابه، وامتثال أوامره، واجتناب نواهيه، ينصركم الله على أعدائكم، ويثبت أقدامكم عند القتال."
+  },
+  "49:10": {
+   "en": "The believers are brothers in Islam, and brotherhood in Islam demands that you, O believers, reconcile between your quarrelling brothers. And be mindful of Allah by fulfilling His commands and refrain from that which He has prohibited; in the hope that you will be shown mercy.",
+   "ar": "إنما المؤمنون إخوة في الدِّين، فأصلحوا بين أخويكم إذا اقتتلا، وخافوا الله في جميع أموركم؛ رجاء أن تُرحموا."
+  },
+  "49:13": {
+   "en": "O people! Indeed, I have created you from one male: your father Adam, and one female: your mother Eve. Therefore, your lineage is the same, so some of you should not take pride in lineage over others. Then, I made you into many nations and dispersed tribes, so that you may recognise one another; not so that you take pride in them, because pride can only be due to Allah-consciousness; Indeed, the most noble from among you according to Allah is the one who is most mindful of Him. Indeed, Allah is aware of your conditions, knowing of what levels of perfection and deficiency you are on; nothing is hidden from him.",
+   "ar": "يا أيها الناس إنّا خلقناكم من أب واحد هو آدم، وأُم واحدة هي حواء، فلا تفاضل بينكم في النسب، وجعلناكم بالتناسل شعوبًا وقبائل متعددة؛ ليعرف بعضكم بعضًا، إن أكرمكم عند الله أشدكم اتقاءً له. إن الله عليم بالمتقين، خبير بهم."
+  },
+  "50:16": {
+   "en": "And I have already created man and know what his soul whispers to him, and I am closer to him than [his] jugular vein. Verily, I created the human and I know the thoughts and desires that pass his mind. I am closer to him than the vein that is present in his neck and connected to his heart.",
+   "ar": "ولقد خلقنا الإنسان، ونعلم ما تُحَدِّث به نفسه، ونحن أقرب إليه من حبل الوريد، وهو عِرْق في العنق متصل بالقلب."
+  },
+  "51:58": {
+   "en": "Allah is the Provider for His servants, all of them are in need of His provision, He is the Supreme-Lord, Every Mighty, nothing is outside His ability. All of the jinns and men submit to His power (may He be glorified).",
+   "ar": "إن الله وحده هو الرزاق لخلقه، المتكفل بأقواتهم، ذو القوة المتين، لا يُقْهَر ولا يغالَب، فله القدرة والقوة كلها."
+  },
+  "52:48": {
+   "en": "Be patient, O Messenger, on the decree of your Lord and His divine law, as you are in My sight and protection. And glorify and praise your Lord when you stand from your sleep.",
+   "ar": "واصبر -أيها الرسول- لحكم ربك وأمره فيما حَمَّلك من الرسالة، وعلى ما يلحقك من أذى قومك، فإنك بمرأى منا وحفظ واعتناء، وسبِّح بحمد ربك حين تقوم إلى الصلاة، وحين تقوم من نومك، ومن الليل فسبِّح بحمد ربك وعظِّمه، وصلِّ له، وافعل ذلك عند صلاة الصبح وقت إدبار النجوم. وفي هذه الآية إثبات لصفة العينين لله تعالى بما يليق به، دون تشبيه بخلقه أو تكييف لذاته، سبحانه وبحمده، كما ثبت ذلك بالسنة، وأجمع عليه سلف الأمة، واللفظ ورد هنا بصيغة الجمع للتعظيم."
+  },
+  "53:39": {
+   "en": "And that man will only obtain the reward of the action that he did.",
+   "ar": "أنه لا تؤخذ نفس بمأثم غيرها، ووزرها لا يحمله عنها أحد، وأنه لا يحصل للإنسان من الأجر إلّا ما كسب هو لنفسه بسعيه."
+  },
+  "55:13": {
+   "en": "Which of Allah’s numerous favours to you, O group of Jinn and men, do you deny?",
+   "ar": "فبأي نِعَم ربكما الدينية والدنيوية -يا معشر الجن والإنس- تكذِّبان؟ وما أحسن جواب الجن حين تلا عليهم النبي ﷺ هذه السورة، فكلما مَرَّ بهذه الآية، قالوا: «ولا بشيء من آلائك ربَّنا نكذب، فلك الحمد»، وهكذا ينبغي للعبد إذا تليت عليه نعم الله وآلاؤه، أن يُقرَّ بها، ويشكر الله ويحمده عليها."
+  },
+  "55:60": {
+   "en": "The reward of those who properly followed their Lord is only that Allah will give them a proper recompense.",
+   "ar": "هل جزاء مَن أحسن بعمله في الدنيا إلا الإحسان إليه بالجنة في الآخرة؟ فبأي نِعَم ربكما -أيها الثقلان- تكذِّبان؟"
+  },
+  "57:23": {
+   "en": "O people! That is so that you do not grieve over anything you miss out on, and so that you do not show happiness that leads to arrogance over every blessing Allah has given you. Indeed, Allah does not love anyone who is arrogant and boastful over what Allah has granted him.",
+   "ar": "لكي لا تحزنوا على ما فاتكم من الدنيا، ولا تفرحوا بما آتاكم فرحَ بطر وأشر. والله لا يحب كل متكبر بما أوتي من الدنيا فخور به على غيره. هؤلاء المتكبرون هم الذين يبخلون بمالهم، ولا ينفقونه في سبيل الله، ويأمرون الناس بالبخل بتحسينه لهم. ومن يتولَّ عن طاعة الله لا يضر إلا نفسه، ولن يضر الله شيئًا، فإن الله هو الغني عن خلقه، الحميد الذي له كل وصف حسن كامل، وفعل جميل يستحق أن يحمد عليه."
+  },
+  "58:11": {
+   "en": "After Allah mentioned the etiquette of speech, He mentions the etiquette of gatherings, and says: O those who have faith in Allah and act upon what Allah has legislated for them! When you are told: “Make space in gatherings”, then make space; Allah will create ease for you in your worldly lives and in the afterlife. And when you are told: “Leave from so and so gathering so that people of virtue may take part in them”, leave those gatherings; Allah (may He be glorified) will raise in great stature those who have faith among you and those blessed with knowledge. And Allah is the knower of whatever you do; none of your actions are hidden from Him, and He will requite you for them.",
+   "ar": "يا أيها الذين صدَّقوا الله ورسوله وعملوا بشرعه، إذا طُلب منكم أن يوسع بعضكم لبعض المجالس فأوسعوا، يوسع الله عليكم في الدنيا والآخرة، وإذا طلب منكم -أيها المؤمنون- أن تقوموا من مجالسكم لأمر من الأمور التي يكون فيها خير لكم فقوموا، يرفع الله مكانة المؤمنين المخلصين منكم، ويرفع مكانة أهل العلم درجات كثيرة في الثواب ومراتب الرضوان، والله تعالى خبير بأعمالكم لا يخفى عليه شيء منها، وهو مجازيكم عليها. وفي الآية تنويه بمكانة العلماء وفضلهم، ورفع درجاتهم."
+  },
+  "59:18": {
+   "en": "O those who have faith in Allah and act upon whatever He has legislated for them! Be mindful of Allah by fulfilling His commands and refraining from the things he has not allowed. Each soul should ponder over what good deeds it has send forth for the Day of Judgement. So be mindful of Allah; indeed, Allah is aware of your actions, none of them are hidden from Him, and He will soon requite you for them.",
+   "ar": "يا أيها الذين صدَّقوا الله ورسوله وعملوا بشرعه، خافوا الله، واحذروا عقابه بفعل ما أمركم به وترك ما نهاكم عنه، ولتتدبر كل نفس ما قدمت من الأعمال ليوم القيامة، وخافوا الله في كل ما تأتون وما تَذَرون، إن الله سبحانه خبير بما تعملون، لا يخفى عليه شيء من أعمالكم، وهو مجازيكم عليها."
+  },
+  "62:10": {
+   "en": "When you have completed the Friday prayer then spread out on earth searching for lawful earnings and the fulfilment of your needs, and seek of Allah’s bounty by way of lawful earnings and lawful profit. Remember Allah abundantly during your search for provision and do not let your search for provision make you forget Allah’s remembrance, in the hope that you will attain what you love and be saved from what you fear.",
+   "ar": "فإذا سمعتم الخطبة، وأدَّيتم الصلاة، فانتشروا في الأرض، واطلبوا من رزق الله بسعيكم، واذكروا الله كثيرًا في جميع أحوالكم؛ لعلكم تفوزون بخيري الدنيا والآخرة."
+  },
+  "64:11": {
+   "en": "No one is afflicted with any difficulty in himself, his wealth or his children except by Allah’s decree and decision. Those who have faith in Allah and in His decree and decision, Allah guides their hearts to submit to his Command and to be pleased with His decree. Allah knows everything, nothing is hidden from Him.",
+   "ar": "ما أصاب أحدًا شيءٌ من مكروه يَحُلُّ به إلا بإذن الله وقضائه وقدره. ومَن يؤمن بالله يهد قلبه للتسليم بأمره والرضا بقضائه، وَيَهْدِهِ لأحسن الأقوال والأفعال والأحوال؛ لأن أصل الهداية للقلب، والجوارح تبع. والله بكل شيء عليم، لا يخفى عليه شيء من ذلك."
+  },
+  "64:16": {
+   "en": "So be mindful of Allah by fulfilling His instructions and avoiding His prohibitions as far as you can follow Him. Listen and follow Allah and His messenger. Spend your wealth, which Allah has provided to you, in avenues of good. Those whom Allah has protected from the greed of their souls, they are the ones who will attain what they desire and who will be saved from what they fear.",
+   "ar": "فابذلوا -أيها المؤمنون- في تقوى الله جهدكم وطاقتكم، واسمعوا لرسول الله ﷺ سماع تدبُّر وتفكر، وأطيعوا أوامره واجتنبوا نواهيه، وأنفقوا مما رزقكم الله يكن خيرًا لكم. ومن سَلِم من البخل ومَنْعِ الفضل من المال، فأولئك هم الظافرون بكل خير، الفائزون بكل مطلب."
+  },
+  "65:2": {
+   "en": "So when they draw nearer to the end of their waiting periods, take them back if you long to do so, while maintaining the best of conduct, or do not take them back until their waiting periods finish and they gain control over their own affairs, after fulfilling for them their rights. And if you intend to either take them back or separate from them, make two honest people from among you witness it to dispel any dispute in future. O witnesses! Give testimony seeking the pleasure of Allah. These laws are mentioned to remind those that bring faith in Allah and in the Day of Judgement, because it is them who truly benefit from reminders and advice. And whoever is mindful of Allah by fulfilling His commands and refraining from the things He has not allowed, Allah will create an exit for him from every difficulty and worry.",
+   "ar": "فإذا قاربت المطلقات نهاية عدتهن فراجعوهن مع حسن المعاشرة، والإنفاق عليهن، أو فارقوهن مع إيفاء حقهن، دون المضارَّة بهنَّ، وأشهدوا على الرجعة أو المفارقة رجلين عدلين منكم، وأدُّوا -أيها الشهود- الشهادة خالصة لله لا لشيء آخر، ذلك الذي أمركم الله به يوعظ به مَن كان يؤمن بالله واليوم الآخر. ومن يخف الله فيعمل بما أمره به، ويجتنب ما نهاه عنه، يجعل له مخرجًا من كل ضيق، وييسِّر له أسباب الرزق من حيث لا يخطر على باله، ولا يكون في حسبانه. ومن يتوكل على الله فهو كافيه ما أهمَّه في جميع أموره. إن الله بالغ أمره، لا يفوته شيء، ولا يعجزه مطلوب، قد جعل الله لكل شيء أجلًا ينتهي إليه، وتقديرًا لا يجاوزه."
+  },
+  "65:3": {
+   "en": "And He will provide for him in ways he did not even imagine, nor had ever thought of. Whoever relies on Allah in his matters, He will be sufficient for him. Indeed, Allah will make His decision come to pass; nothing makes him incapable nor does He miss anything. He has appointed a fixed time for everything, so the severity and ease both have fixed times; they are never permanent on the human.",
+   "ar": "فإذا قاربت المطلقات نهاية عدتهن فراجعوهن مع حسن المعاشرة، والإنفاق عليهن، أو فارقوهن مع إيفاء حقهن، دون المضارَّة بهنَّ، وأشهدوا على الرجعة أو المفارقة رجلين عدلين منكم، وأدُّوا -أيها الشهود- الشهادة خالصة لله لا لشيء آخر، ذلك الذي أمركم الله به يوعظ به مَن كان يؤمن بالله واليوم الآخر. ومن يخف الله فيعمل بما أمره به، ويجتنب ما نهاه عنه، يجعل له مخرجًا من كل ضيق، وييسِّر له أسباب الرزق من حيث لا يخطر على باله، ولا يكون في حسبانه. ومن يتوكل على الله فهو كافيه ما أهمَّه في جميع أموره. إن الله بالغ أمره، لا يفوته شيء، ولا يعجزه مطلوب، قد جعل الله لكل شيء أجلًا ينتهي إليه، وتقديرًا لا يجاوزه."
+  },
+  "65:7": {
+   "en": "Whoever has abundance in wealth should spend well on the wife he has divorced and upon his child; and whoever is financially restricted should spend according to what Allah has given him. Allah does not burden any soul except with what He has provided it with, never does He burden them with more than that or more than the strength it holds. Allah will soon create abundance and independence after his difficult state.",
+   "ar": "لينفق الزوج مما وسَّع الله عليه على زوجته المطلقة، وعلى ولده إذا كان الزوج ذا سَعَة في الرزق، ومن ضُيِّق عليه في الرزق وهو الفقير، فلينفق مما أعطاه الله من الرزق، لا يُكَلَّف الفقير مثل ما يُكَلَّف الغني، سيجعل الله بعد ضيق وشدة سَعَة وغنى."
+  },
+  "67:2": {
+   "en": "The one who created death and life to test you, O people, which one of you is better in terms of actions. He is the Almighty who no one can overpower; the Forgiving of the sins of whichever of His servants repents to him.",
+   "ar": "الذي خلق الموت والحياة؛ ليختبركم -أيها الناس-: أيكم خيرٌ عملًا وأخلصه؟ وهو العزيز الذي لا يعجزه شيء، الغفور لمن تاب من عباده. وفي الآية ترغيب في فعل الطاعات، وزجر عن اقتراف المعاصي."
+  },
+  "70:5": {
+   "en": "O Messenger! So be patient; a patience free of worry and complaint.",
+   "ar": "فاصبر -أيها الرسول- على استهزائهم واستعجالهم العذاب صبرًا لا جزع فيه، ولا شكوى منه إلى غير الله."
+  },
+  "93:3": {
+   "en": "O Messenger! Your Lord has not left you, nor has he begun to hate you, as the idolaters claimed when there was a break in the revelation.",
+   "ar": "تسمية السورة\n\n• سميت الضحى؛ لافتتاحها بقَسَم الله بوقت الضحى.\n\nمن مقاصد السورة\n\n• تذكير الله نبيَّه ﷺ بما أكرمه به في صِغَره وشبابه وكِبَره، وإبطالُ قول المشركين فيما زعموا بأنَّ الله هجر النبي ﷺ وأبغضه عند انقطاع الوحي، وتبشيره ﷺ بما أُعِدَّ له من الكرامات في الآخرة، وأَمْرُه بالشكر على تلك النِّعَم بما يناسبها؛ كالعطف على اليتيم، ورحمة المحتاجين.\n\n[التفسير]\n\nأقسم الله بوقت الضحى، والمراد به النهار كله، وبالليل إذا سكن بالخلق واشتد ظلامه. ويقسم الله بما يشاء من مخلوقاته، أما المخلوق فلا يجوز له أن يقسم بغير خالقه، فإن القسم بغير الله شرك. ما تركك -أيها النبي- ربك، وما أبغضك بإبطاء الوحي عنك."
+  },
+  "93:4": {
+   "en": "Indeed, the abode of the afterlife is better for you than the worldly one, because of the everlasting bounties that it has.",
+   "ar": "ولَلدار الآخرة خير لك من دار الدنيا، ولسوف يعطيك ربك -أيها النبي- مِن أنواع الإنعام في الآخرة، فترضى بذلك."
+  },
+  "93:5": {
+   "en": "Very soon He will grant you an abundant reward, and your nation also, until you become content with what He has granted you and your nation.",
+   "ar": "ولَلدار الآخرة خير لك من دار الدنيا، ولسوف يعطيك ربك -أيها النبي- مِن أنواع الإنعام في الآخرة، فترضى بذلك."
+  },
+  "94:5": {
+   "en": "Indeed, with difficulty and constraint, comes ease and options.",
+   "ar": "فلا يَثْنِكَ أذى أعدائك عن نشر الرسالة؛ فإن مع الضيق فرجًا، إن مع الضيق فرجًا."
+  },
+  "94:6": {
+   "en": "Indeed, with difficulty and constraint, comes ease and options; when you know that well, the troubling of your people will not terrify you and will not stop you from calling towards Allah.",
+   "ar": "فلا يَثْنِكَ أذى أعدائك عن نشر الرسالة؛ فإن مع الضيق فرجًا، إن مع الضيق فرجًا."
+  },
+  "94:7": {
+   "en": "So when you finish your work and complete it, strive in the worship of your Lord.",
+   "ar": "فإذا فرغت من أمور الدنيا وأشغالها فَجِدَّ في العبادة، وإلى ربك وحده فارغب فيما عنده."
+  },
+  "94:8": {
+   "en": "And divert your passion and resolve towards Allah alone.",
+   "ar": "فإذا فرغت من أمور الدنيا وأشغالها فَجِدَّ في العبادة، وإلى ربك وحده فارغب فيما عنده."
+  },
+  "103:3": {
+   "en": "Except for those who have faith in Allah and His Messenger, perform good deeds, and encourage each other to follow the truth and remain steadfast upon it. Those who have these qualities are the ones who are successful in the world and the afterlife.",
+   "ar": "إلا الذين آمنوا بالله وعملوا عملًا صالحًا، وأوصى بعضهم بعضًا بالاستمساك بالحق، والعمل بطاعة الله، والصبر على ذلك."
+  }
+ }
+}

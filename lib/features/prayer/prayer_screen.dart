@@ -29,7 +29,7 @@ class PrayerCard extends ConsumerWidget {
     final tomorrow = ref.watch(prayerDayProvider(shiftDay(today, 1)));
     if (day == null || tomorrow == null) {
       return NCard(
-        onTap: () => context.go('/more/settings'),
+        onTap: () => context.push('/settings/location'),
         children: [
           const Kicker('Prayer times'),
           Text(_noLocation, style: meta(size: 13, color: AppColors.neutral800)),
@@ -71,18 +71,6 @@ class PrayerCard extends ConsumerWidget {
             ),
           ),
         ),
-        Wrap(
-          spacing: 6,
-          runSpacing: 6,
-          children: [
-            for (final p in PrayerName.values)
-              _TimeChip(
-                label: prayerLabels[p]!,
-                time: _t(day[p]),
-                highlight: next.name == p && isSameDay(next.at, day[p]),
-              ),
-          ],
-        ),
       ],
     );
   }
@@ -90,34 +78,6 @@ class PrayerCard extends ConsumerWidget {
 
 bool isSameDay(DateTime a, DateTime b) =>
     a.year == b.year && a.month == b.month && a.day == b.day;
-
-class _TimeChip extends StatelessWidget {
-  const _TimeChip({
-    required this.label,
-    required this.time,
-    required this.highlight,
-  });
-  final String label;
-  final String time;
-  final bool highlight;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-    decoration: BoxDecoration(
-      color: highlight ? AppColors.sage300 : AppColors.neutral100,
-      borderRadius: BorderRadius.circular(AppRadii.pill),
-    ),
-    child: Text(
-      '$label $time',
-      style: TextStyle(
-        fontSize: 12,
-        fontWeight: highlight ? FontWeight.w700 : FontWeight.w400,
-        color: highlight ? AppColors.sage900 : AppColors.neutral800,
-      ),
-    ),
-  );
-}
 
 /// More → Prayer times: today's times and the Qibla bearing.
 class PrayerScreen extends ConsumerWidget {
@@ -145,7 +105,7 @@ class PrayerScreen extends ConsumerWidget {
               Align(
                 alignment: Alignment.centerLeft,
                 child: FilledButton(
-                  onPressed: () => context.go('/more/settings'),
+                  onPressed: () => context.push('/settings/location'),
                   child: const Text('Open Settings'),
                 ),
               ),

@@ -19,6 +19,18 @@ import '../widgets/motion.dart';
 GoRouter buildRouter() => GoRouter(
   initialLocation: '/today',
   routes: [
+    // Settings sit outside the tabs, as their own full-screen menu.
+    GoRoute(
+      path: '/settings',
+      builder: (_, _) => const _SettingsPage(),
+      routes: [
+        GoRoute(
+          path: ':section',
+          builder: (_, state) =>
+              _SettingsPage(section: state.pathParameters['section']),
+        ),
+      ],
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, shell) => AppShell(shell: shell),
       branches: [
@@ -62,10 +74,6 @@ GoRouter buildRouter() => GoRouter(
                 GoRoute(
                   path: 'reflect',
                   builder: (_, _) => const ReflectScreen(),
-                ),
-                GoRoute(
-                  path: 'settings',
-                  builder: (_, _) => const SettingsScreen(),
                 ),
               ],
             ),
@@ -205,4 +213,14 @@ class _NavButton extends StatelessWidget {
       ),
     );
   }
+}
+
+class _SettingsPage extends StatelessWidget {
+  const _SettingsPage({this.section});
+  final String? section;
+
+  @override
+  Widget build(BuildContext context) => Scaffold(
+    body: SafeArea(child: SettingsScreen(section: section)),
+  );
 }

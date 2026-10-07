@@ -139,3 +139,18 @@ class DailyContent {
   final ContentSlot<Hadith> hadith;
   final ContentSlot<Quote> quote;
 }
+
+/// Published tafsir for one ayah, copied verbatim from a bundled dataset
+/// (CR-4). Never written or edited by the app.
+class Tafsir {
+  const Tafsir({
+    required this.english,
+    required this.arabic,
+    required this.englishSource,
+    required this.arabicSource,
+  });
+  final String english;
+  final String arabic;
+  final String englishSource;
+  final String arabicSource;
+}

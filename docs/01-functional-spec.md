@@ -113,7 +113,8 @@ List of large rows: `Prayer times — Today's times and Qibla`, `Activities — 
 - CR-1 Never invent an ayah, translation, tafsir, hadith, grading or chain. The design shows placeholders only, by intent.
 - CR-2 Ayah: Uthmani Arabic + selected translation from AlQuran Cloud (`quran-uthmani` + `en.sahih` or `en.khattab` [OQ-11]).
 - CR-3 Hadith: bundled cited dataset (120 items, Bukhari + Muslim), shows collection · book · number, the translator and, for Bukhari only, a sunnah.com link. No grading line: the source has none.
-- CR-4 v1 ships no explanations. The expanded card shows only the reference. A note may be added later only when a person has reviewed it, labelled `App summary`, never as tafsir.
+- CR-4 The app never writes explanations. Ayah: the opened card shows published tafsir copied verbatim from a bundled dataset (Al-Mukhtasar in English by the Tafsir Center for Quranic Studies; Tafsir Al-Muyassar in Arabic by the King Fahd Complex; `assets/content/tafsir.json`), with its name and author. Hadith: no reviewed explanation source is bundled yet, so the card says so. Quote: none.
+- CR-8 "Show another" (↻ on the content card) moves to the next item of the same pool for today only; the next day starts again from the daily pick. Nothing is fetched or generated outside the existing pools.
 - CR-5 Quotes: Arabic only, from the OpenITI corpus (55 items, reviewer-verified), with author and work; labelled `Encouragement, not scripture`.
 - CR-6 If a source fails with nothing cached, the card says which source failed. Never fill the gap.
 - CR-7 Arabic: hadith Arabic is copied verbatim from the same dataset as the English (`ara-bukhari`, `ara-muslim`). Arabic quotes come only from a curated pool with author, work and a fetchable source; never machine-translated and attributed to someone. The English quote list was removed in v0.3.

@@ -1,6 +1,11 @@
 # Changelog
 
 ## 0.3.0 (unreleased)
+- Calmer Today: ayah, hadith and quote now share one card with tabs; the prayer card shows only the next prayer (all times stay on the Prayer screen); the activity list and journal banner became two small tiles; the weather chip is one line shorter.
+- Tafsir: open the ayah to read published tafsir for it, Al-Muyassar (Arabic) and Al-Mukhtasar (English), bundled verbatim for all 120 daily ayahs. Hadith cards say plainly that no reviewed explanation is available yet.
+- Show another: the ↻ button on the content card shows the next ayah, hadith or quote for today.
+- Settings moved out of More into their own menu, opened from the gear on Today, with one page per section.
+- Four more colour themes: Emerald, Rose, Dusk and Slate.
 - Backup: Settings → Backup exports habits, habit checks, moods, activities, journal and settings to a JSON file you choose, and imports it again. Merge keeps what is on the phone (habits matched by name, newer mood or journal of a day wins, duplicates skipped); Replace restores the backup exactly. Files from other apps or newer versions are rejected without changing anything.
 - Animations: habit checks pop in, streak and count changes fade, Today says "All done today" when every habit is checked, ayah/hadith/quote cards open and close smoothly, tabs fade in. All are off when Android's "Remove animations" is on.
 - Colour themes: Settings → Appearance → Sage, Ocean, Desert or Night (true black, always dark). Provisional until designed.

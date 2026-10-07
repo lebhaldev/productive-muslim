@@ -66,36 +66,50 @@ void main() {
     await settle(tester);
   }
 
+  /// Settings open from the gear on Today, then one section.
+  Future<void> openSettings(WidgetTester tester, String section) async {
+    await tapTab(tester, 'Today');
+    await tester.tap(find.byKey(const Key('open-settings')));
+    await settle(tester);
+    await tester.tap(find.byKey(Key('settings-$section')));
+    await settle(tester);
+  }
+
   testWidgets(
     'Today shows the design sections with sourced content from fixtures',
     (tester) async {
       final db = memoryDb();
       await tester.runAsync(() => db.putSetting('city', 'London'));
       await pumpApp(tester, db: db);
-      expect(find.text('Monday 5 October'), findsOneWidget);
+      expect(find.text("Mon 5 Oct · 24 Rabi' Al-Thani 1448"), findsOneWidget);
       expect(find.text('Good morning'), findsOneWidget);
       expect(find.text('14°'), findsOneWidget);
       expect(find.text('Light cloud · London'), findsOneWidget);
-      expect(find.text('H 18° · L 9°'), findsOneWidget);
-      expect(find.text('AYAH OF THE DAY'), findsOneWidget);
+      expect(find.text('NEXT PRAYER'), findsOneWidget);
+      expect(find.text('London'), findsOneWidget);
+
+      // One content card; the ayah shows first.
       expect(find.text('[ fixture arabic text ]'), findsOneWidget);
       expect(find.text('[ fixture translation text ]'), findsOneWidget);
       expect(
         find.text('Surah Ash-Sharh 94:5 · Saheeh International'),
         findsOneWidget,
       );
-      // Hijri date under the Gregorian one, prayer card from the city.
-      expect(find.text("24 Rabi' Al-Thani 1448"), findsOneWidget);
-      expect(find.text('NEXT PRAYER'), findsOneWidget);
-      expect(find.text('London'), findsOneWidget);
+      // Tapping opens the published tafsir, copied from the dataset.
+      await tester.tap(find.text('[ fixture translation text ]'));
+      await settle(tester);
+      expect(find.text('TAFSIR'), findsOneWidget);
+      expect(find.text('[ fixture tafsir arabic ]'), findsOneWidget);
+      expect(find.text('[ fixture tafsir english ]'), findsOneWidget);
+      expect(find.text('Fixture Tafsir EN · Fixture Center'), findsOneWidget);
+
       // Hadith in Arabic from the dataset, with the English below (CR-7).
-      await scrollTo(tester, find.text('[ fixture hadith text ]'));
-      // Lift the card clear of the bottom navigation bar before tapping it.
-      await tester.drag(find.byType(Scrollable).first, const Offset(0, -250));
+      await tester.tap(find.byKey(const Key('content-tab-hadith')));
       await settle(tester);
       expect(find.text('[ fixture hadith arabic ]'), findsOneWidget);
+      expect(find.text('[ fixture hadith text ]'), findsOneWidget);
       expect(find.text('Sahih al-Bukhari · Book 2 · No. 13'), findsOneWidget);
-      // Expanded: reference only, no made-up grading or summary (CR-1, CR-4).
+      // Opened: reference and no made-up explanation or grading (CR-1, CR-4).
       await tester.tap(find.text('[ fixture hadith text ]'));
       await settle(tester);
       expect(
@@ -104,10 +118,23 @@ void main() {
         ),
         findsOneWidget,
       );
+      expect(
+        find.text('No reviewed explanation is available for this hadith yet.'),
+        findsOneWidget,
+      );
       expect(find.textContaining('Grading'), findsNothing);
       expect(find.textContaining('App summary'), findsNothing);
+
+      await tester.tap(find.byKey(const Key('content-tab-quote')));
+      await settle(tester);
       expect(find.text('Fixture Author · Fixture work'), findsOneWidget);
-      expect(find.text('[ fixture arabic quote ]'), findsOneWidget);
+      final first = find.text('[ fixture arabic quote ]').evaluate().isEmpty
+          ? '[ second fixture quote ]'
+          : '[ fixture arabic quote ]';
+      // "Show another" moves to the next quote of the pool.
+      await tester.tap(find.byKey(const Key('content-next')));
+      await settle(tester);
+      expect(find.text(first), findsNothing);
       await closeApp(tester, db);
     },
   );
@@ -138,8 +165,8 @@ void main() {
       await settle(tester);
 
       // Activity via + Log
-      await scrollTo(tester, find.text('+ Log'));
-      await tester.tap(find.text('+ Log'));
+      await scrollTo(tester, find.byKey(const Key('activity-tile')));
+      await tester.tap(find.byKey(const Key('activity-tile')));
       await settle(tester);
       await tester.enterText(
         find.byKey(const Key('activity-title')),
@@ -152,8 +179,8 @@ void main() {
 
       // Journal via Today shortcut
       await tapTab(tester, 'Today');
-      await scrollTo(tester, find.text('Write today’s journal'));
-      await tester.tap(find.text('Write today’s journal'));
+      await scrollTo(tester, find.byKey(const Key('journal-tile')));
+      await tester.tap(find.byKey(const Key('journal-tile')));
       await settle(tester);
       await tester.enterText(
         find.byKey(const Key('journal-body')),
@@ -209,8 +236,7 @@ void main() {
     final db = memoryDb();
     await tester.runAsync(() => db.putSetting('faith', 'false'));
     await pumpApp(tester, db: db);
-    expect(find.text('AYAH OF THE DAY'), findsNothing);
-    expect(find.text('HADITH OF THE DAY'), findsNothing);
+    expect(find.byKey(const Key('content-tab-ayah')), findsNothing);
     expect(find.text('Habits'), findsWidgets);
     await closeApp(tester, db);
   });
@@ -254,9 +280,7 @@ void main() {
       // First launch: nothing scheduled, so no permission prompt.
       expect(denied.synced.single, isEmpty);
 
-      await tapTab(tester, 'More');
-      await tester.tap(find.text('Settings'));
-      await settle(tester);
+      await openSettings(tester, 'reminders');
       await scrollTo(tester, find.byKey(const Key('daily-reminder-switch')));
       await tester.ensureVisible(
         find.byKey(const Key('daily-reminder-switch')),
@@ -284,10 +308,14 @@ void main() {
     final db = memoryDb();
     await tester.runAsync(() => db.putSetting('contentLanguage', 'ar'));
     await pumpApp(tester, db: db);
-    await scrollTo(tester, find.text('[ fixture hadith arabic ]'));
     expect(find.text('[ fixture arabic text ]'), findsOneWidget);
-    expect(find.text('[ fixture translation text ]'), findsNothing);
+    await tester.tap(find.byKey(const Key('content-tab-hadith')));
+    await settle(tester);
+    expect(find.text('[ fixture hadith arabic ]'), findsOneWidget);
     expect(find.text('[ fixture hadith text ]'), findsNothing);
+    await tester.tap(find.byKey(const Key('content-tab-ayah')));
+    await settle(tester);
+    expect(find.text('[ fixture translation text ]'), findsNothing);
     await closeApp(tester, db);
   });
 
@@ -297,9 +325,7 @@ void main() {
       Theme.of(tester.element(find.text('Good morning'))).brightness,
       Brightness.light,
     );
-    await tapTab(tester, 'More');
-    await tester.tap(find.text('Settings'));
-    await settle(tester);
+    await openSettings(tester, 'appearance');
     await scrollTo(tester, find.text('Dark'));
     await tester.tap(find.text('Dark'));
     await settle(tester);
@@ -343,9 +369,7 @@ void main() {
   testWidgets('the journal lock needs a phone screen lock', (tester) async {
     final lock = FakeLock(hasLock: false);
     final db = await pumpApp(tester, lock: lock);
-    await tapTab(tester, 'More');
-    await tester.tap(find.text('Settings'));
-    await settle(tester);
+    await openSettings(tester, 'privacy');
     final sw = find.byKey(const Key('journal-lock-switch'));
     await scrollTo(tester, sw);
     await tester.ensureVisible(sw);
@@ -366,9 +390,7 @@ void main() {
   testWidgets('Google Drive connect reports cancel and errors', (tester) async {
     final google = FakeAuth(granted: false);
     final db = await pumpApp(tester, google: google);
-    await tapTab(tester, 'More');
-    await tester.tap(find.text('Settings'));
-    await settle(tester);
+    await openSettings(tester, 'backup');
     final connect = find.byKey(const Key('drive-connect'));
     await scrollTo(tester, connect);
     await tester.ensureVisible(connect);
@@ -388,9 +410,7 @@ void main() {
 
   testWidgets('colour themes can be picked in Settings', (tester) async {
     final db = await pumpApp(tester);
-    await tapTab(tester, 'More');
-    await tester.tap(find.text('Settings'));
-    await settle(tester);
+    await openSettings(tester, 'appearance');
     await scrollTo(tester, find.byKey(const Key('color-theme-ocean')));
     await tester.tap(find.byKey(const Key('color-theme-ocean')));
     await settle(tester);
@@ -450,9 +470,7 @@ void main() {
       await db.saveJournal('2026-10-05', 'Day', 'Alhamdulillah', now);
     });
     await pumpApp(tester, db: db, files: files);
-    await tapTab(tester, 'More');
-    await tester.tap(find.text('Settings'));
-    await settle(tester);
+    await openSettings(tester, 'backup');
     await scrollTo(tester, find.byKey(const Key('export-backup')));
     await tester.ensureVisible(find.byKey(const Key('import-backup')));
     await settle(tester);

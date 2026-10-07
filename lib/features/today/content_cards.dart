@@ -6,8 +6,20 @@ import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/content/content_models.dart';
 import '../../widgets/common.dart';
+import '../../widgets/motion.dart';
 
-/// Ayah, hadith and quote cards. Only one is expanded at a time.
+enum _Kind {
+  ayah('Ayah'),
+  hadith('Hadith'),
+  quote('Quote');
+
+  const _Kind(this.label);
+  final String label;
+}
+
+/// The day's ayah, hadith and quote in one card, one at a time, so Today
+/// stays calm. Tap to open the explanation and source; "Show another"
+/// moves to the next item of that kind for today.
 class ContentCards extends ConsumerStatefulWidget {
   const ContentCards({super.key});
 
@@ -16,173 +28,269 @@ class ContentCards extends ConsumerStatefulWidget {
 }
 
 class _ContentCardsState extends ConsumerState<ContentCards> {
-  String? open;
-  bool arabicOnly = false;
-
-  void _toggle(String id) => setState(() => open = open == id ? null : id);
+  _Kind kind = _Kind.ayah;
+  bool open = false;
 
   @override
   Widget build(BuildContext context) {
     final content = ref.watch(dailyContentProvider);
-    arabicOnly = settingsOf(ref).arabicOnly;
+    final arabicOnly = settingsOf(ref).arabicOnly;
     return content.when(
+      skipLoadingOnReload: true,
       loading: () => const NCard(children: [LinearProgressIndicator()]),
       error: (e, _) =>
           NCard(children: [Text('Daily content could not load: $e')]),
-      data: (c) => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      data: (c) => NCard(
+        onTap: () => setState(() => open = !open),
+        animateSize: true,
         children: [
-          _ayahCard(c.ayah),
-          const SizedBox(height: 10),
-          _hadithCard(c.hadith),
-          const SizedBox(height: 10),
-          _quoteCard(c.quote),
+          Row(
+            children: [
+              Expanded(
+                child: Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    for (final k in _Kind.values)
+                      _KindTab(
+                        kind: k,
+                        selected: kind == k,
+                        onTap: () => setState(() {
+                          kind = k;
+                          open = false;
+                        }),
+                      ),
+                  ],
+                ),
+              ),
+              IconButton(
+                key: const Key('content-next'),
+                tooltip: 'Show another ${kind.label.toLowerCase()}',
+                icon: Icon(Icons.autorenew, color: AppColors.neutral700),
+                onPressed: () {
+                  setState(() => open = false);
+                  ref
+                      .read(contentOffsetsProvider.notifier)
+                      .next(watchToday(ref), kind.name);
+                },
+              ),
+            ],
+          ),
+          AnimatedSwitcher(
+            duration: motion(context, Motion.medium),
+            child: KeyedSubtree(
+              key: ValueKey(
+                '${kind.name}|${switch (kind) {
+                  _Kind.ayah => c.ayah.value?.ref,
+                  _Kind.hadith => c.hadith.value?.source,
+                  _Kind.quote => c.quote.value?.arabic.hashCode,
+                }}',
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: switch (kind) {
+                  _Kind.ayah => _ayah(c.ayah, arabicOnly),
+                  _Kind.hadith => _hadith(c.hadith, arabicOnly),
+                  _Kind.quote => _quote(c.quote),
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _ayahCard(ContentSlot<Ayah> slot) {
+  List<Widget> _ayah(ContentSlot<Ayah> slot, bool arabicOnly) {
     final a = slot.value;
-    if (a == null) return _failed('Ayah of the day', slot.error!);
+    if (a == null) return [_error(slot.error!)];
     final fetched = slot.fetchedAt == null
         ? ''
         : DateFormat('d MMM HH:mm').format(slot.fetchedAt!);
-    return _ContentCard(
-      kicker: 'Ayah of the day',
-      open: open == 'ayah',
-      onTap: () => _toggle('ayah'),
-      arabic: a.arabic,
-      text: arabicOnly ? null : a.translation,
-      source: a.source,
+    final tafsir = open ? ref.watch(tafsirProvider(a.ref)).value : null;
+    return [
+      _ArabicBlock(a.arabic, size: 22, open: open),
+      if (!arabicOnly) ..._gap(_body(a.translation)),
+      ..._gap(Text(a.source, style: meta())),
       // Offline with an earlier day's ayah: say so instead of passing it off
       // as today's (review R3).
-      notice: slot.stale && slot.fetchedAt != null
-          ? 'Last saved ayah · ${DateFormat('d MMM').format(slot.fetchedAt!)}'
-          : null,
-      reference: 'Edition: ${a.edition} · fetched $fetched · ${a.sourceUrl}',
-    );
+      if (slot.stale && slot.fetchedAt != null)
+        ..._gap(
+          Text(
+            'Last saved ayah · ${DateFormat('d MMM').format(slot.fetchedAt!)}',
+            style: meta(color: AppColors.accent700),
+          ),
+        ),
+      if (!open) ..._gap(_hint('Tap for tafsir')),
+      if (open) ...[
+        if (tafsir != null) ...[
+          ..._gap(const Divider(height: 8)),
+          ..._gap(const Kicker('Tafsir')),
+          ..._gap(
+            Text(
+              tafsir.arabic,
+              textDirection: TextDirection.rtl,
+              textAlign: TextAlign.right,
+              style: arabicStyle.copyWith(fontSize: 17, height: 1.8),
+            ),
+          ),
+          ..._gap(Text(tafsir.arabicSource, style: meta(size: 11))),
+          if (!arabicOnly) ...[
+            ..._gap(_body(tafsir.english)),
+            ..._gap(Text(tafsir.englishSource, style: meta(size: 11))),
+          ],
+        ] else
+          ..._gap(Text('No tafsir is bundled for this ayah.', style: meta())),
+        ..._gap(
+          Text(
+            'Edition: ${a.edition} · fetched $fetched · ${a.sourceUrl}',
+            style: meta(size: 11),
+          ),
+        ),
+      ],
+    ];
   }
 
-  Widget _hadithCard(ContentSlot<Hadith> slot) {
+  List<Widget> _hadith(ContentSlot<Hadith> slot, bool arabicOnly) {
     final h = slot.value;
-    if (h == null) return _failed('Hadith of the day', slot.error!);
-    return _ContentCard(
-      kicker: 'Hadith of the day',
-      open: open == 'hadith',
-      onTap: () => _toggle('hadith'),
+    if (h == null) return [_error(slot.error!)];
+    return [
       // Arabic copied verbatim from the same dataset (CR-7).
-      arabic: h.arabic,
-      arabicSize: 19,
-      text: arabicOnly && h.arabic != null ? null : h.text,
-      source: h.source,
-      reference: [
-        h.bookName,
-        'English: ${h.translator}',
-        ?h.sourceUrl,
-      ].join(' · '),
-    );
+      if (h.arabic != null) _ArabicBlock(h.arabic!, size: 19, open: open),
+      if (!(arabicOnly && h.arabic != null))
+        ..._gap(
+          _body(h.text, maxLines: open ? null : 4),
+          first: h.arabic == null,
+        ),
+      ..._gap(Text(h.source, style: meta())),
+      if (!open) ..._gap(_hint('Tap for source')),
+      if (open) ...[
+        // No reviewed explanation exists for this dataset yet; none is
+        // ever written by the app (CR-1, CR-4).
+        ..._gap(
+          Text(
+            'No reviewed explanation is available for this hadith yet.',
+            style: meta(),
+          ),
+        ),
+        ..._gap(
+          Text(
+            [h.bookName, 'English: ${h.translator}', ?h.sourceUrl].join(' · '),
+            style: meta(size: 11),
+          ),
+        ),
+      ],
+    ];
   }
 
-  Widget _quoteCard(ContentSlot<Quote> slot) {
+  List<Widget> _quote(ContentSlot<Quote> slot) {
     final q = slot.value;
-    if (q == null) return _failed('Quote of the day', slot.error!);
-    return _ContentCard(
-      kicker: 'Quote of the day',
-      open: open == 'quote',
-      onTap: () => _toggle('quote'),
+    if (q == null) return [_error(slot.error!)];
+    return [
       // Arabic only: there is no translation we may show (CR-7).
-      arabic: q.arabic,
-      arabicSize: 19,
-      text: null,
-      source: '${q.attribution} · ${q.work}',
-      tag: 'Encouragement, not scripture',
-      reference: ['OpenITI corpus', ?q.locator, ?q.sourceUrl].join(' · '),
-    );
+      _ArabicBlock(q.arabic, size: 19, open: open),
+      ..._gap(Text('${q.attribution} · ${q.work}', style: meta())),
+      if (open) ...[
+        ..._gap(
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Tag('Encouragement, not scripture', sage: true),
+          ),
+        ),
+        ..._gap(
+          Text(
+            ['OpenITI corpus', ?q.locator, ?q.sourceUrl].join(' · '),
+            style: meta(size: 11),
+          ),
+        ),
+      ],
+    ];
   }
 
-  Widget _failed(String kicker, String error) => NCard(
-    children: [
-      Kicker(kicker),
-      Text(error, style: meta(size: 13, color: AppColors.neutral800)),
-    ],
+  List<Widget> _gap(Widget w, {bool first = false}) => [
+    if (!first) const SizedBox(height: 8),
+    w,
+  ];
+
+  Widget _body(String text, {int? maxLines}) => Text(
+    text,
+    maxLines: open ? null : (maxLines ?? 4),
+    overflow: open ? null : TextOverflow.ellipsis,
+    style: const TextStyle(fontSize: 15, height: 1.5),
   );
+
+  Widget _hint(String text) => Text(text, style: meta(size: 11));
+
+  Widget _error(String error) =>
+      Text(error, style: meta(size: 13, color: AppColors.neutral800));
 }
 
-class _ContentCard extends StatelessWidget {
-  const _ContentCard({
-    required this.kicker,
-    required this.open,
+class _KindTab extends StatelessWidget {
+  const _KindTab({
+    required this.kind,
+    required this.selected,
     required this.onTap,
-    required this.text,
-    required this.source,
-    required this.reference,
-    this.arabic,
-    this.arabicSize = 22,
-    this.tag,
-    this.notice,
   });
-
-  final String kicker;
-  final bool open;
+  final _Kind kind;
+  final bool selected;
   final VoidCallback onTap;
-  final String? arabic;
-  final double arabicSize;
-  final String? text;
-  final String source;
-  final String reference;
-  final String? tag;
-  final String? notice;
 
   @override
   Widget build(BuildContext context) {
-    return NCard(
-      onTap: onTap,
-      animateSize: true,
-      children: [
-        Row(
-          children: [
-            Expanded(child: Kicker(kicker)),
-            Text(open ? 'Less' : 'More', style: meta()),
-          ],
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: kind.label,
+      excludeSemantics: true,
+      child: InkWell(
+        key: Key('content-tab-${kind.name}'),
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(AppRadii.pill),
+        child: AnimatedContainer(
+          duration: motion(context, Motion.quick),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+          decoration: BoxDecoration(
+            color: selected ? AppColors.sage300 : Colors.transparent,
+            borderRadius: BorderRadius.circular(AppRadii.pill),
+            border: Border.all(
+              color: selected ? AppColors.sage300 : AppColors.divider,
+            ),
+          ),
+          child: Text(
+            kind.label,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+            ),
+          ),
         ),
-        if (arabic != null)
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: AppColors.neutral100,
-              borderRadius: BorderRadius.circular(AppRadii.md),
-            ),
-            child: Text(
-              arabic!,
-              textDirection: TextDirection.rtl,
-              textAlign: TextAlign.right,
-              maxLines: open ? null : 4,
-              overflow: open ? null : TextOverflow.ellipsis,
-              style: arabicStyle.copyWith(fontSize: arabicSize),
-            ),
-          ),
-        if (text != null)
-          Text(
-            text!,
-            maxLines: open ? null : 4,
-            overflow: open ? null : TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 15, height: 1.5),
-          ),
-        Text(source, style: meta()),
-        if (notice != null)
-          Text(notice!, style: meta(color: AppColors.accent700)),
-        // Expanded: the reference only. No explanations ship until a person
-        // has reviewed them (CR-4); none are ever generated in-app.
-        if (open) ...[
-          if (tag != null)
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Tag(tag!, sage: true),
-            ),
-          Text(reference, style: meta(size: 11)),
-        ],
-      ],
+      ),
+    );
+  }
+}
+
+class _ArabicBlock extends StatelessWidget {
+  const _ArabicBlock(this.text, {required this.size, required this.open});
+  final String text;
+  final double size;
+  final bool open;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: AppColors.neutral100,
+        borderRadius: BorderRadius.circular(AppRadii.md),
+      ),
+      child: Text(
+        text,
+        textDirection: TextDirection.rtl,
+        textAlign: TextAlign.right,
+        maxLines: open ? null : 4,
+        overflow: open ? null : TextOverflow.ellipsis,
+        style: arabicStyle.copyWith(fontSize: size),
+      ),
     );
   }
 }

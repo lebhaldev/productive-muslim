@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../../app/providers.dart';
@@ -13,8 +14,62 @@ import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
 import 'more_screen.dart';
 
+/// Settings sections, listed on the Settings menu in this order.
+const settingsSections = [
+  (
+    id: 'location',
+    title: 'Location & weather',
+    sub: 'City, location, temperature unit',
+    icon: Icons.place_outlined,
+  ),
+  (
+    id: 'appearance',
+    title: 'Appearance',
+    sub: 'Colour theme, light or dark',
+    icon: Icons.palette_outlined,
+  ),
+  (
+    id: 'prayer',
+    title: 'Prayer',
+    sub: 'Calculation method, Asr, notifications',
+    icon: Icons.access_time,
+  ),
+  (
+    id: 'content',
+    title: 'Daily content',
+    sub: 'Faith cards, translation, language',
+    icon: Icons.menu_book_outlined,
+  ),
+  (
+    id: 'reminders',
+    title: 'Reminders',
+    sub: 'Daily reminder time',
+    icon: Icons.notifications_none,
+  ),
+  (
+    id: 'privacy',
+    title: 'Privacy',
+    sub: 'Journal lock, where your data lives',
+    icon: Icons.lock_outline,
+  ),
+  (
+    id: 'backup',
+    title: 'Backup',
+    sub: 'Export, import, Google Drive',
+    icon: Icons.cloud_outlined,
+  ),
+  (
+    id: 'about',
+    title: 'Sources & licenses',
+    sub: 'Where the ayah, hadith, tafsir and quotes come from',
+    icon: Icons.info_outline,
+  ),
+];
+
+/// Settings menu, or one section of it when [section] is set.
 class SettingsScreen extends ConsumerStatefulWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen({super.key, this.section});
+  final String? section;
 
   @override
   ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
@@ -231,13 +286,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       _cityLoaded = true;
     }
 
-    return ScreenBody(
-      children: [
-        const SubScreenTitle('Settings'),
+    final sections = <String, List<Widget>>{
+      'location': [
         NCard(
           gap: 10,
           children: [
-            const CardTitle('Weather'),
             TextField(
               controller: _city,
               decoration: const InputDecoration(labelText: 'City override'),
@@ -279,10 +332,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
           ],
         ),
+      ],
+      'appearance': [
         NCard(
           gap: 10,
           children: [
-            const CardTitle('Appearance'),
             Wrap(
               spacing: 12,
               runSpacing: 12,
@@ -318,10 +372,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Text('Night is always dark, for OLED screens.', style: meta()),
           ],
         ),
+      ],
+      'prayer': [
         NCard(
           gap: 10,
           children: [
-            const CardTitle('Prayer'),
             DropdownButtonFormField<PrayerMethod>(
               key: ValueKey(ref.watch(prayerMethodProvider)),
               initialValue: ref.watch(prayerMethodProvider),
@@ -390,10 +445,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
           ],
         ),
+      ],
+      'content': [
         NCard(
           gap: 10,
           children: [
-            const CardTitle('Content'),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
               title: const Text(
@@ -433,9 +489,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
           ],
         ),
+      ],
+      'reminders': [
         NCard(
           children: [
-            const CardTitle('Reminders'),
             Row(
               children: [
                 const Expanded(
@@ -467,10 +524,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Text('Per-habit reminders are set on each habit.', style: meta()),
           ],
         ),
+      ],
+      'privacy': [
         NCard(
           gap: 10,
           children: [
-            const CardTitle('Privacy'),
             SwitchListTile(
               key: const Key('journal-lock-switch'),
               contentPadding: EdgeInsets.zero,
@@ -488,9 +546,30 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ],
         ),
         NCard(
+          gap: 6,
+          color: AppColors.sage200,
+          children: [
+            Text(
+              'Your data stays on this phone',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: AppColors.sage900,
+              ),
+            ),
+            Text(
+              s.driveBackup
+                  ? 'Nurday has no server and no account. A daily backup goes '
+                        'only to your own Google Drive.'
+                  : 'Journal, mood, habits and activities are never uploaded. No account needed.',
+              style: TextStyle(fontSize: 13, color: AppColors.sage900),
+            ),
+          ],
+        ),
+      ],
+      'backup': [
+        NCard(
           gap: 10,
           children: [
-            const CardTitle('Backup'),
             Wrap(
               spacing: 8,
               runSpacing: 8,
@@ -582,32 +661,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
           ],
         ),
-        NCard(
-          gap: 6,
-          color: AppColors.sage200,
-          children: [
-            Text(
-              'Your data stays on this phone',
-              style: TextStyle(
-                fontWeight: FontWeight.w600,
-                color: AppColors.sage900,
-              ),
-            ),
-            Text(
-              s.driveBackup
-                  ? 'Nurday has no server and no account. A daily backup goes '
-                        'only to your own Google Drive.'
-                  : 'Journal, mood, habits and activities are never uploaded. No account needed.',
-              style: TextStyle(fontSize: 13, color: AppColors.sage900),
-            ),
-          ],
-        ),
+      ],
+      'about': [
         const NCard(
           gap: 6,
           children: [
-            CardTitle('Sources & licenses'),
             Text(
               'Quran: AlQuran Cloud (Uthmani text, Saheeh International) · '
+              'Tafsir: Al-Mukhtasar (Tafsir Center for Quranic Studies) and '
+              'Tafsir Al-Muyassar (King Fahd Complex), copied verbatim from the '
+              'spa5k/tafsir_api dataset (Quran.com / QUL) · '
               'Hadith: Sahih al-Bukhari and Sahih Muslim, Arabic and English from the '
               'fawazahmed0/hadith-api dataset (public domain); English by Muhammad Muhsin Khan '
               'and Abdul Hamid Siddiqui; Bukhari references to sunnah.com · '
@@ -620,6 +683,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
           ],
         ),
+      ],
+    };
+    final section = settingsSections.where((x) => x.id == widget.section);
+    if (section.isEmpty) return const _SettingsMenu();
+    return ScreenBody(
+      children: [
+        SubScreenTitle(
+          section.first.title,
+          backTooltip: 'Back to Settings',
+          onBack: () => context.go('/settings'),
+        ),
+        ...sections[widget.section]!,
       ],
     );
   }
@@ -687,6 +762,57 @@ class _ThemeSwatch extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _SettingsMenu extends StatelessWidget {
+  const _SettingsMenu();
+
+  @override
+  Widget build(BuildContext context) {
+    return ScreenBody(
+      gap: 10,
+      children: [
+        SubScreenTitle(
+          'Settings',
+          backTooltip: 'Back',
+          onBack: () => context.canPop() ? context.pop() : context.go('/today'),
+        ),
+        for (final x in settingsSections)
+          Material(
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(AppRadii.lg),
+            child: InkWell(
+              key: Key('settings-${x.id}'),
+              borderRadius: BorderRadius.circular(AppRadii.lg),
+              onTap: () => context.go('/settings/${x.id}'),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
+                child: Row(
+                  children: [
+                    Icon(x.icon, color: AppColors.sage600),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(x.title, style: heading(17)),
+                          const SizedBox(height: 2),
+                          Text(x.sub, style: meta(size: 13)),
+                        ],
+                      ),
+                    ),
+                    Icon(Icons.chevron_right, color: AppColors.neutral600),
+                  ],
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

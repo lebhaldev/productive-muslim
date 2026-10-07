@@ -45,12 +45,29 @@ void main() {
       await settle(tester);
       expect(tester.takeException(), isNull, reason: tab);
     }
-    for (final sub in ['Activities', 'Reflect', 'Settings']) {
+    for (final sub in ['Prayer times', 'Activities', 'Reflect']) {
       await tester.tap(find.byKey(const Key('tab-More')));
       await settle(tester);
       await tester.tap(find.text(sub));
       await settle(tester);
       expect(tester.takeException(), isNull, reason: sub);
+    }
+    await tester.tap(find.byKey(const Key('tab-Today')));
+    await settle(tester);
+    await tester.tap(find.byKey(const Key('open-settings')));
+    await settle(tester);
+    expect(tester.takeException(), isNull, reason: 'Settings menu');
+    for (final section in ['location', 'appearance', 'prayer', 'backup']) {
+      await tester.scrollUntilVisible(
+        find.byKey(Key('settings-$section')),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.tap(find.byKey(Key('settings-$section')));
+      await settle(tester);
+      expect(tester.takeException(), isNull, reason: section);
+      await tester.tap(find.byTooltip('Back to Settings'));
+      await settle(tester);
     }
 
     await tester.pumpWidget(const SizedBox());

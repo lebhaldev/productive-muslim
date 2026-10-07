@@ -1,0 +1,19 @@
+{
+ "note": "fixture",
+ "sources": {
+  "en": {
+   "name": "Fixture Tafsir EN",
+   "author": "Fixture Center"
+  },
+  "ar": {
+   "name": "Fixture Tafsir AR",
+   "author": "Fixture Complex"
+  }
+ },
+ "ayahs": {
+  "94:5": {
+   "en": "[ fixture tafsir english ]",
+   "ar": "[ fixture tafsir arabic ]"
+  }
+ }
+}

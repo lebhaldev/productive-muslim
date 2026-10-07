@@ -11,7 +11,6 @@ class MoreScreen extends StatelessWidget {
     ('prayer', 'Prayer times', "Today's times and Qibla"),
     ('activities', 'Activities', 'Log what you did, grouped by day'),
     ('reflect', 'Reflect', 'Your last 30 days'),
-    ('settings', 'Settings', 'Weather, prayer, reminders, theme, privacy'),
   ];
 
   @override
@@ -50,15 +49,22 @@ class MoreScreen extends StatelessWidget {
 
 /// Header with a back arrow for screens under More.
 class SubScreenTitle extends StatelessWidget {
-  const SubScreenTitle(this.text, {super.key});
+  const SubScreenTitle(
+    this.text, {
+    super.key,
+    this.onBack,
+    this.backTooltip = 'Back to More',
+  });
   final String text;
+  final VoidCallback? onBack;
+  final String backTooltip;
 
   @override
   Widget build(BuildContext context) => Row(
     children: [
       IconButton(
-        tooltip: 'Back to More',
-        onPressed: () => context.go('/more'),
+        tooltip: backTooltip,
+        onPressed: onBack ?? () => context.go('/more'),
         icon: const Icon(Icons.arrow_back),
       ),
       const SizedBox(width: 4),

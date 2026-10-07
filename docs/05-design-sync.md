@@ -51,3 +51,6 @@ Closed by the 2026-10-05 export: OQ-1 (header + weather chip + ayah card), OQ-2 
 | OQ-21 | Colour themes beyond Sage (Ocean, Desert, Night) and the swatch picker | Built with provisional palettes, AA contrast checked |
 | OQ-22 | Backup card (Export / Import) in Settings | Plain card with two outlined buttons |
 | OQ-23 | Journal lock: Privacy card switch and locked Journal screen | Lock icon, title, Unlock button |
+| OQ-24 | Calmer Today (v0.3): one content card with Ayah/Hadith/Quote tabs and ↻, compact next-prayer card, Journal and Activity as two tiles, settings gear in the header | Built as described; needs a design pass |
+| OQ-25 | Settings as its own menu (gear on Today) with one page per section | List of sections with icon, title and subtitle |
+| OQ-26 | Colour themes Emerald, Rose, Dusk, Slate | Provisional palettes, AA contrast checked |

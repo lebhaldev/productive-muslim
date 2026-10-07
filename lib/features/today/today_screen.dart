@@ -39,9 +39,14 @@ class TodayScreen extends ConsumerWidget {
           if (settings.showFaith) const ContentCards(),
           _HabitsSection(today: today),
           _MoodSection(today: today),
-          _ActivitySection(today: today),
-          _JournalShortcut(today: today),
-          const _CacheNote(),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: _JournalShortcut(today: today)),
+              const SizedBox(width: 10),
+              Expanded(child: _ActivityTile(today: today)),
+            ],
+          ),
         ],
       ),
     );
@@ -69,10 +74,9 @@ class _Header extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                DateFormat('EEEE d MMMM').format(date),
+                '${DateFormat('EEE d MMM').format(date)} · ${hijriLabel(date)}',
                 style: meta(size: 13),
               ),
-              Text(hijriLabel(date), style: meta(size: 13)),
               const SizedBox(height: 2),
               Semantics(
                 container: true,
@@ -82,8 +86,14 @@ class _Header extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(width: 12),
+        const SizedBox(width: 8),
         const Flexible(child: _WeatherChip()),
+        IconButton(
+          key: const Key('open-settings'),
+          tooltip: 'Settings',
+          onPressed: () => context.push('/settings'),
+          icon: Icon(Icons.settings_outlined, color: AppColors.neutral800),
+        ),
       ],
     );
   }
@@ -103,9 +113,9 @@ class _WeatherChip extends ConsumerWidget {
       borderRadius: BorderRadius.circular(AppRadii.lg),
       child: InkWell(
         borderRadius: BorderRadius.circular(AppRadii.lg),
-        onTap: w == null ? () => context.go('/more/settings') : null,
+        onTap: w == null ? () => context.push('/settings/location') : null,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: w == null
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -129,12 +139,6 @@ class _WeatherChip extends ConsumerWidget {
                       Text(
                         formatTemp(w.nowC, fahrenheit: s.fahrenheit),
                         style: heading(24, color: color),
-                      ),
-                      Text(
-                        'H ${formatTemp(w.hiC, fahrenheit: s.fahrenheit)} · '
-                        'L ${formatTemp(w.loC, fahrenheit: s.fahrenheit)}',
-                        style: TextStyle(fontSize: 11, color: color),
-                        textAlign: TextAlign.right,
                       ),
                       Text(
                         '${w.condition} · ${w.place}',
@@ -406,44 +410,77 @@ class MoodDot extends StatelessWidget {
   }
 }
 
-class _ActivitySection extends ConsumerWidget {
-  const _ActivitySection({required this.today});
+class _ActivityTile extends ConsumerWidget {
+  const _ActivityTile({required this.today});
   final String today;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final acts =
-        (ref.watch(activitiesProvider).value ?? const [])
-            .where((a) => a.dayKey == today)
-            .toList()
-          ..sort((a, b) => a.startTime.compareTo(b.startTime));
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _SectionHeader(
-          'Today’s activity',
-          trailing: TextButton(
-            onPressed: () => context.go('/more/activities'),
-            child: const Text('+ Log'),
-          ),
-        ),
-        if (acts.isEmpty) Text('Nothing logged yet.', style: meta(size: 13)),
-        for (final a in acts)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
+    final acts = (ref.watch(activitiesProvider).value ?? const [])
+        .where((a) => a.dayKey == today)
+        .toList();
+    final minutes = acts.fold<int>(0, (t, a) => t + a.durationMinutes);
+    return _Tile(
+      key: const Key('activity-tile'),
+      color: AppColors.sage200,
+      ink: AppColors.sage900,
+      icon: Icons.directions_walk,
+      title: 'Activity',
+      sub: acts.isEmpty
+          ? 'Nothing logged yet'
+          : '${acts.length} logged · $minutes min',
+      onTap: () => context.go('/more/activities'),
+    );
+  }
+}
+
+class _Tile extends StatelessWidget {
+  const _Tile({
+    super.key,
+    required this.color,
+    required this.ink,
+    required this.icon,
+    required this.title,
+    required this.sub,
+    required this.onTap,
+  });
+  final Color color;
+  final Color ink;
+  final IconData icon;
+  final String title;
+  final String sub;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color,
+      borderRadius: BorderRadius.circular(AppRadii.lg),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 96),
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(width: 56, child: Text(a.startTime, style: meta())),
-                Expanded(
-                  child: Text(a.title, style: const TextStyle(fontSize: 15)),
+                Icon(icon, size: 20, color: ink),
+                const SizedBox(height: 6),
+                Text(title, style: heading(17, color: ink)),
+                const SizedBox(height: 2),
+                Text(
+                  sub,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 12, color: ink),
                 ),
-                Text('${a.durationMinutes} min', style: meta()),
               ],
             ),
           ),
-      ],
+        ),
+      ),
     );
   }
 }
@@ -459,60 +496,18 @@ class _JournalShortcut extends ConsumerWidget {
     final sub = locked && j != null
         ? 'Written today · locked'
         : j == null
-        ? 'A few lines is enough.'
+        ? ''
         : (j.title.isNotEmpty
               ? j.title
               : '${j.body.length > 40 ? j.body.substring(0, 40) : j.body}…');
-    return Material(
+    return _Tile(
+      key: const Key('journal-tile'),
       color: AppColors.accent200,
-      borderRadius: BorderRadius.circular(AppRadii.lg),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(AppRadii.lg),
-        onTap: () => openJournal(context, ref, today),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                j == null
-                    ? 'Write today’s journal'
-                    : 'Continue today’s journal',
-                style: heading(19, color: AppColors.accent900),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                sub,
-                style: TextStyle(fontSize: 13, color: AppColors.accent900),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CacheNote extends ConsumerWidget {
-  const _CacheNote();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final content = ref.watch(dailyContentProvider).value;
-    final weather = ref.watch(weatherProvider).value;
-    final times = [
-      content?.ayah.fetchedAt,
-      weather?.fetchedAt,
-    ].whereType<DateTime>().toList()..sort();
-    if (times.isEmpty) {
-      return Text(
-        'Works offline after the first update',
-        style: meta(size: 11),
-      );
-    }
-    return Text(
-      'Content and weather updated ${DateFormat('HH:mm').format(times.first)} · works offline',
-      style: meta(size: 11),
+      ink: AppColors.accent900,
+      icon: Icons.edit_outlined,
+      title: 'Journal',
+      sub: j == null ? 'Write a few lines' : sub,
+      onTap: () => openJournal(context, ref, today),
     );
   }
 }

@@ -40,11 +40,39 @@ void main() {
     expect(a.translator, contains('Khattab'));
   });
 
+  test('show another moves to the next item and wraps around', () async {
+    final s = service();
+    final first = (await s.load('2026-10-05', Translation.sahih)).quote.value!;
+    final next = (await s.load(
+      '2026-10-05',
+      Translation.sahih,
+      offsets: {'quote': 1},
+    )).quote.value!;
+    final again = (await s.load(
+      '2026-10-05',
+      Translation.sahih,
+      offsets: {'quote': 2},
+    )).quote.value!;
+    expect(next.arabic, isNot(first.arabic));
+    expect(again.arabic, first.arabic);
+  });
+
+  test('bundled tafsir is found by ayah reference', () async {
+    final t = (await service().tafsirFor('94:5'))!;
+    expect(t.english, '[ fixture tafsir english ]');
+    expect(t.arabic, '[ fixture tafsir arabic ]');
+    expect(t.arabicSource, 'Fixture Tafsir AR · Fixture Complex');
+    expect(await service().tafsirFor('1:1'), isNull);
+  });
+
   test('hadith and quote carry their citations', () async {
     final c = await service().load('2026-10-05', Translation.sahih);
     expect(c.hadith.value!.source, 'Sahih al-Bukhari · Book 2 · No. 13');
     expect(c.quote.value!.attribution, 'Fixture Author');
-    expect(c.quote.value!.arabic, '[ fixture arabic quote ]');
+    expect(
+      c.quote.value!.arabic,
+      anyOf('[ fixture arabic quote ]', '[ second fixture quote ]'),
+    );
     expect(c.quote.value!.work, 'Fixture work');
   });
 

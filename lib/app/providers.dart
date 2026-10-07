@@ -179,11 +179,39 @@ final contentServiceProvider = Provider<DailyContentService>(
   ),
 );
 
+/// How many times the user tapped "Show another" per card, for one day.
+class ContentOffsets extends Notifier<({String day, Map<String, int> n})> {
+  @override
+  ({String day, Map<String, int> n}) build() => (day: '', n: const {});
+
+  void next(String day, String kind) {
+    final n = state.day == day ? {...state.n} : <String, int>{};
+    n[kind] = (n[kind] ?? 0) + 1;
+    state = (day: day, n: n);
+  }
+}
+
+final contentOffsetsProvider =
+    NotifierProvider<ContentOffsets, ({String day, Map<String, int> n})>(
+      ContentOffsets.new,
+    );
+
 final dailyContentProvider = FutureProvider<DailyContent>((ref) async {
   final day = todayKey(ref);
   final settings = await ref.watch(settingsProvider.future);
-  return ref.watch(contentServiceProvider).load(day, settings.translation);
+  final offsets = ref.watch(contentOffsetsProvider);
+  return ref
+      .watch(contentServiceProvider)
+      .load(
+        day,
+        settings.translation,
+        offsets: offsets.day == day ? offsets.n : const {},
+      );
 });
+
+final tafsirProvider = FutureProvider.family<Tafsir?, String>(
+  (ref, ayahRef) => ref.watch(contentServiceProvider).tafsirFor(ayahRef),
+);
 
 final weatherServiceProvider = Provider<WeatherService>(
   (ref) => WeatherService(
