@@ -15,12 +15,12 @@ Your journal entries, mood, habits, habit check-offs, activities and settings ar
 If you turn on Settings → Privacy → Lock journal, Nurday asks Android to check your fingerprint, face or screen lock. Nurday never sees or stores the fingerprint, face or PIN.
 
 ## Location
-Location is optional. It is only requested when you tap "Use my location" in Settings, and it is used only to ask Open-Meteo for your local weather. Coordinates are rounded to about 1 km and are not stored anywhere except on your phone. You can type a city instead.
+Location is optional. It is only requested when you tap "Use my location" in Settings, and it is used only to ask Open-Meteo for your local weather. Coordinates are rounded to about 1 km and are not stored anywhere except on your phone. You can search for a city instead. To show the place name, the app asks Android's built-in geocoder (part of the phone's system services, usually provided by Google) to name the rounded coordinates once; the name is kept on your phone.
 
 ## Network requests
 Nurday contacts only these services:
 - **AlQuran Cloud** (api.alquran.cloud) and **Quran.com** (api.quran.com) to fetch the day's ayah. The request contains the ayah reference only.
-- **Open-Meteo** (api.open-meteo.com, geocoding-api.open-meteo.com) for weather. The request contains the city you typed or rounded coordinates.
+- **Open-Meteo** (api.open-meteo.com, geocoding-api.open-meteo.com) for weather. The request contains the city text you type in the search box (to suggest matching places) or rounded coordinates.
 - **Google** (Google sign-in and www.googleapis.com) only if you connect Google Drive backup, to save and read the backup file.
 
 Hadith and quotes are bundled inside the app and need no network.

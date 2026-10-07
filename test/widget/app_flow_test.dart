@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nurday/app/app.dart';
 import 'package:nurday/app/providers.dart';
 import 'package:nurday/app/theme.dart';
@@ -497,6 +498,43 @@ void main() {
     await tester.tap(find.text('Merge'));
     await settle(tester);
     expect(find.text('This file is not a Nurday backup.'), findsOneWidget);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('city search suggests places and picking one names the weather', (
+    tester,
+  ) async {
+    final db = await pumpApp(tester);
+    await openSettings(tester, 'location');
+    await tester.enterText(find.byKey(const Key('city-search')), 'Lond');
+    await tester.pump(const Duration(milliseconds: 400));
+    await settle(tester);
+    expect(find.text('London'), findsOneWidget);
+    expect(find.text('United Kingdom'), findsOneWidget);
+    await tester.tap(find.text('London'));
+    await settle(tester);
+    expect(find.text('Current place: London'), findsOneWidget);
+    final s = await tester.runAsync(() => db.select(db.settings).get());
+    final m = {for (final r in s!) r.key: r.value};
+    expect(m['placeName'], 'London');
+    expect(m['lat'], '51.5085');
+    GoRouter.of(tester.element(find.byKey(const Key('city-search'))))
+        .go('/today');
+    await settle(tester);
+    expect(find.text('Light cloud · London'), findsOneWidget);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('a saved location without a name gets one from the geocoder', (
+    tester,
+  ) async {
+    final db = memoryDb();
+    await tester.runAsync(() async {
+      await db.putSetting('lat', '51.51');
+      await db.putSetting('lon', '-0.13');
+    });
+    await pumpApp(tester, db: db);
+    expect(find.text('Light cloud · Fixture Town'), findsOneWidget);
     await closeApp(tester, db);
   });
 }

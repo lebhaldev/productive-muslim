@@ -19,6 +19,12 @@ class AppSettings {
   String get city => raw['city'] ?? '';
   double? get lat => double.tryParse(raw['lat'] ?? '');
   double? get lon => double.tryParse(raw['lon'] ?? '');
+
+  /// Name shown for a picked city or "Use my location" (reverse geocoded).
+  String? get placeName =>
+      (raw['placeName'] ?? '').isEmpty ? null : raw['placeName'];
+  String? get countryCode =>
+      (raw['countryCode'] ?? '').isEmpty ? null : raw['countryCode'];
   String get dailyReminder => raw['dailyReminder'] ?? '07:30';
   // Off until the user turns it on, so first launch shows no prompt.
   bool get dailyReminderOn => raw['dailyReminderOn'] == 'true';

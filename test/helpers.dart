@@ -65,6 +65,9 @@ List<Override> testOverrides(
   clockProvider.overrideWithValue(FixedClock(now)),
   httpClientProvider.overrideWithValue(fakeHttp(online: online)),
   assetLoaderProvider.overrideWithValue(fixtureAssets),
+  reverseGeocoderProvider.overrideWithValue(
+    (lat, lon) async => (name: 'Fixture Town', countryCode: 'GB'),
+  ),
   todayProvider.overrideWith(
     (ref) => Stream.value(
       '${now.year}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}',

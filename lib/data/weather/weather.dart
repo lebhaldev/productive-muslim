@@ -69,6 +69,36 @@ String conditionLabel(int code) {
   return 'Thunderstorm';
 }
 
+/// One geocoding result, e.g. London, England, United Kingdom.
+class CityOption {
+  const CityOption({
+    required this.name,
+    required this.lat,
+    required this.lon,
+    this.region,
+    this.country,
+    this.countryCode,
+  });
+
+  final String name;
+  final double lat;
+  final double lon;
+  final String? region;
+  final String? country;
+  final String? countryCode;
+
+  String get label => [name, ?region, ?country].join(', ');
+
+  factory CityOption.fromJson(Map<String, dynamic> j) => CityOption(
+    name: j['name'] as String,
+    lat: (j['latitude'] as num).toDouble(),
+    lon: (j['longitude'] as num).toDouble(),
+    region: j['admin1'] as String?,
+    country: j['country'] as String?,
+    countryCode: j['country_code'] as String?,
+  );
+}
+
 String formatTemp(double c, {required bool fahrenheit}) =>
     '${(fahrenheit ? c * 9 / 5 + 32 : c).round()}°';
 
@@ -87,7 +117,13 @@ class WeatherService {
   final DateTime Function() now;
 
   /// Returns fresh weather when online, otherwise the last cached snapshot.
-  Future<WeatherState> load({String? city, double? lat, double? lon}) async {
+  Future<WeatherState> load({
+    String? city,
+    double? lat,
+    double? lon,
+    String? placeName,
+    String? countryCode,
+  }) async {
     try {
       double la, lo;
       String place;
@@ -95,7 +131,8 @@ class WeatherService {
       if (lat != null && lon != null) {
         la = lat;
         lo = lon;
-        place = 'My location';
+        place = placeName ?? 'My location';
+        country = countryCode;
       } else if (city != null && city.trim().isNotEmpty) {
         final geo = await _get(
           Uri.https('geocoding-api.open-meteo.com', '/v1/search', {
@@ -138,6 +175,22 @@ class WeatherService {
     } catch (_) {
       return _cachedOr('Open-Meteo could not be reached');
     }
+  }
+
+  /// City suggestions while typing (Open-Meteo geocoding, no key).
+  Future<List<CityOption>> searchCities(String query) async {
+    final q = query.trim();
+    if (q.length < 2) return const [];
+    final geo = await _get(
+      Uri.https('geocoding-api.open-meteo.com', '/v1/search', {
+        'name': q,
+        'count': '6',
+      }),
+    );
+    return [
+      for (final r in (geo['results'] as List?) ?? const [])
+        CityOption.fromJson(r as Map<String, dynamic>),
+    ];
   }
 
   Future<WeatherState> _cachedOr(String error) async {

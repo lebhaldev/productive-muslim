@@ -59,7 +59,7 @@ Copy from [docs/store-listing.md](docs/store-listing.md). Needs: 512×512 icon (
 | Question | Answer and why |
 |---|---|
 | Does the app collect or share user data? | Yes, see below. Everything else stays on the phone. |
-| Approximate location | **Collected**, not shared, optional, not stored off device. Rounded coordinates go to Open-Meteo to get weather, only after "Use my location". Purpose: App functionality. |
+| Approximate location | **Collected**, not shared, optional, not stored off device. Rounded coordinates go to Open-Meteo to get weather, and to Android's system geocoder to name the place, only after "Use my location". Purpose: App functionality. |
 | Personal info, messages, photos, contacts, health, financial | Not collected. |
 | App activity / app info and performance | Not collected (no analytics, no crash reporting). |
 | Journal, mood, habits, activities (user-generated content) | Only if the user turns on Google Drive backup or exports a file: sent to the user's **own** Google Drive app folder or a file they pick. Declare as **User-generated content → Collected, optional, user-initiated**, purpose: App functionality / backup. |

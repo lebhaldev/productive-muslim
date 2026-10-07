@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geocoding/geocoding.dart' show Geocoding;
 import 'package:http/http.dart' as http;
 
 import '../core/clock.dart';
@@ -180,12 +181,57 @@ final weatherServiceProvider = Provider<WeatherService>(
   ),
 );
 
+/// Turns coordinates into a place name with the phone's own geocoder;
+/// faked in tests.
+typedef ReverseGeocoder =
+    Future<({String? name, String? countryCode})> Function(
+      double lat,
+      double lon,
+    );
+
+final reverseGeocoderProvider = Provider<ReverseGeocoder>(
+  (ref) => (lat, lon) async {
+    final marks = await Geocoding().placemarkFromCoordinates(lat, lon);
+    if (marks.isEmpty) return (name: null, countryCode: null);
+    final m = marks.first;
+    String? pick(List<String?> xs) => xs.firstWhere(
+      (x) => x != null && x.trim().isNotEmpty,
+      orElse: () => null,
+    );
+    return (
+      name: pick([m.locality, m.subAdministrativeArea, m.administrativeArea]),
+      countryCode: m.isoCountryCode,
+    );
+  },
+);
+
 final weatherProvider = FutureProvider<WeatherState>((ref) async {
   todayKey(ref);
   final s = await ref.watch(settingsProvider.future);
+  // Saved before place names existed: name "Use my location" once.
+  if (s.lat != null && s.lon != null && s.placeName == null) {
+    try {
+      final p = await ref.read(reverseGeocoderProvider)(s.lat!, s.lon!);
+      if (p.name != null) {
+        final db = ref.read(databaseProvider);
+        await db.putSetting('placeName', p.name!);
+        if (p.countryCode != null) {
+          await db.putSetting('countryCode', p.countryCode!);
+        }
+      }
+    } catch (_) {
+      // No geocoder: keep "My location".
+    }
+  }
   return ref
       .watch(weatherServiceProvider)
-      .load(city: s.city, lat: s.lat, lon: s.lon);
+      .load(
+        city: s.city,
+        lat: s.lat,
+        lon: s.lon,
+        placeName: s.placeName,
+        countryCode: s.countryCode,
+      );
 });
 
 /// The day shown by Calendar and Journal (shared, as in the design).
@@ -243,7 +289,7 @@ final prayerLocationProvider =
       final s = ref.watch(settingsProvider).value;
       if (s == null) return null;
       if (s.lat != null && s.lon != null) {
-        return (lat: s.lat!, lon: s.lon!, place: 'My location');
+        return (lat: s.lat!, lon: s.lon!, place: s.placeName ?? 'My location');
       }
       final w = ref.watch(weatherProvider).value?.weather;
       if (w?.lat == null || w?.lon == null) return null;
@@ -256,7 +302,7 @@ final prayerMethodProvider = Provider<PrayerMethod>((ref) {
   final chosen = s?.chosenPrayerMethod;
   if (chosen != null) return chosen;
   final w = ref.watch(weatherProvider).value?.weather;
-  return PrayerMethod.forCountry(w?.countryCode);
+  return PrayerMethod.forCountry(s?.countryCode ?? w?.countryCode);
 });
 
 /// Prayer times for [day] (a day key) at the prayer location.
