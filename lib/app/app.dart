@@ -28,6 +28,7 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
       // Lock the journal again whenever Nurday leaves the screen.
       onHide: () => ref.read(journalUnlockedProvider.notifier).set(false),
       onResume: () {
+        _backUpIfDue();
         final plan = ref.read(reminderPlanProvider);
         if (plan != null) {
           ref
@@ -37,12 +38,21 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
         }
       },
     );
+    // Daily Drive backup, once settings have loaded.
+    ref.listenManual(settingsProvider, (prev, next) {
+      if (prev?.hasValue != true && next.hasValue) _backUpIfDue();
+    }, fireImmediately: true);
     // Keep scheduled notifications in step with settings and habits.
     ref.listenManual<List<Reminder>?>(reminderPlanProvider, (_, plan) {
       if (plan == null || listEquals(plan, _scheduled)) return;
       _scheduled = plan;
       ref.read(reminderSchedulerProvider).sync(plan).catchError((Object _) {});
     }, fireImmediately: true);
+  }
+
+  void _backUpIfDue() {
+    final s = ref.read(settingsProvider).value;
+    if (s != null) ref.read(driveSyncProvider).backUpIfDue(s.raw);
   }
 
   @override

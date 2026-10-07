@@ -12,6 +12,7 @@ import '../data/content/content_models.dart';
 import '../data/content/daily_content_service.dart';
 import '../data/content/quran_client.dart';
 import '../data/db/database.dart';
+import '../data/drive_backup.dart';
 import '../data/prayer/prayer.dart';
 import '../data/reminders.dart';
 import '../data/weather/weather.dart';
@@ -27,6 +28,17 @@ final databaseProvider = Provider<AppDatabase>(
 final httpClientProvider = Provider<http.Client>((ref) => http.Client());
 
 final backupFilesProvider = Provider<BackupFiles>((ref) => const BackupFiles());
+
+final googleAuthProvider = Provider<GoogleAuth>((ref) => GoogleSignInAuth());
+
+final driveSyncProvider = Provider<DriveSync>(
+  (ref) => DriveSync(
+    db: ref.watch(databaseProvider),
+    auth: ref.watch(googleAuthProvider),
+    drive: DriveBackup(ref.watch(httpClientProvider)),
+    now: ref.watch(clockProvider).now,
+  ),
+);
 
 final appLockProvider = Provider<AppLock>((ref) => AppLock());
 
@@ -116,6 +128,9 @@ class AppSettings {
   bool get showFaith => raw['faith'] != 'false';
   bool get fahrenheit => raw['unit'] == 'F';
   bool get journalLock => raw['journalLock'] == 'true';
+  bool get driveBackup => raw['driveBackup'] == 'true';
+  DateTime? get driveLastBackup =>
+      DateTime.tryParse(raw['driveLastBackup'] ?? '');
   Translation get translation => Translation.parse(raw['translation']);
   String get city => raw['city'] ?? '';
   double? get lat => double.tryParse(raw['lat'] ?? '');

@@ -77,7 +77,8 @@ Content payload must include: `text`, `arabic` (ayah), `translator`/`edition`, `
 - TR-6 All colours and text styles come from theme tokens; no hex literals in feature widgets.
 - TR-7 No secrets, keystores or API keys in the repo. `key.properties` and `*.jks` are gitignored.
 - TR-8 Location is requested only when the user taps "Use my location"; coordinates are only sent to Open-Meteo.
-- TR-9 Only network hosts allowed: AlQuran Cloud (or Quran.com), Open-Meteo. No analytics SDKs.
+- TR-9 Only network hosts allowed: AlQuran Cloud (or Quran.com), Open-Meteo, and Google (sign-in + `www.googleapis.com` Drive v3) only after the user connects Drive backup. No analytics SDKs.
+- TR-10 Drive backup uses the `drive.appdata` scope only, one file `nurday-backup.json` in `appDataFolder`, the same JSON as Export (`lib/data/backup.dart`, format 1). Automatic backup runs on app start/resume when the last one is over 20 h old and never shows a dialog.
 - TR-10 `flutter analyze` clean and all tests green before each phase is closed.
 - TR-A1 Accessibility: semantic labels on every icon button, nav tab and mood dot; text scales to 200% without clipping; contrast ≥ 4.5:1 for body text.
 

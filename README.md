@@ -50,5 +50,13 @@ No explanations ship in v1. An expanded card shows only its reference; explanati
 - Hadith and quotes are bundled and always available.
 - The last weather snapshot is shown with its update time.
 
+## Google Drive backup setup (one-time, needs the owner)
+Drive backup works only after a Google Cloud OAuth client exists for the app. Until then "Connect Google Drive" shows "Google sign-in is not available".
+1. In Google Cloud Console, create a project, enable the **Google Drive API**, and set up the OAuth consent screen (External, scope `.../auth/drive.appdata`, add yourself as a test user).
+2. Create an OAuth client of type **Android** with package name `com.nurday.app` and the SHA-1 of the key that signs the APK (`keytool -list -v -keystore <keystore>`). Builds signed with a different key cannot sign in.
+3. Nothing goes in the code: Android matches the package name and SHA-1.
+
+CI signs APKs with the runner's debug key, which changes on every run, so a stable signing key is needed before Drive sign-in can work on CI builds.
+
 ## Publishing
 The app is not on Google Play. Submitting it needs a human with a Google Play Console developer account (one-time $25 fee), an upload keystore kept outside this repo, and the privacy policy ([PRIVACY.md](PRIVACY.md)) hosted at a public URL. See `docs/04-dev-plan.md`, Phase 5.

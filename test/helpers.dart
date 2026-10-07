@@ -10,6 +10,7 @@ import 'package:nurday/app/providers.dart';
 import 'package:nurday/core/clock.dart';
 import 'package:nurday/data/db/database.dart';
 import 'package:nurday/data/app_lock.dart';
+import 'package:nurday/data/drive_backup.dart';
 import 'package:nurday/data/reminders.dart';
 
 String fixture(String name) => File('test/fixtures/$name').readAsStringSync();
@@ -55,7 +56,9 @@ List<Override> testOverrides(
   bool online = true,
   ReminderScheduler? scheduler,
   AppLock? lock,
+  GoogleAuth? google,
 }) => [
+  googleAuthProvider.overrideWithValue(google ?? FakeAuth(granted: false)),
   appLockProvider.overrideWithValue(lock ?? FakeLock()),
   databaseProvider.overrideWithValue(db),
   reminderSchedulerProvider.overrideWithValue(scheduler ?? FakeScheduler()),
@@ -95,4 +98,19 @@ class FakeLock implements AppLock {
     asked++;
     return accept;
   }
+}
+
+class FakeAuth implements GoogleAuth {
+  FakeAuth({this.granted = true});
+  bool granted;
+  final prompts = <bool>[];
+  bool signedOut = false;
+  @override
+  Future<String?> token({required bool prompt}) async {
+    prompts.add(prompt);
+    return granted ? 'tok' : null;
+  }
+
+  @override
+  Future<void> signOut() async => signedOut = true;
 }

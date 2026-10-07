@@ -8,7 +8,7 @@ Status: v0.2, synced to design export `design/2026-10-05-Nurday.dc.html`. Tags: 
 - **Primary user:** a Muslim who wants faith content and a simple daily log in one place.
 - **Secondary user:** wants habits, journal, mood and weather and hides the faith cards.
 - **Platform:** Android first, Google Play. English UI, Arabic for ayah text.
-- **Out of scope v1:** prayer times, qibla, adhan, full Quran reader, hadith search, social, cloud sync, accounts, payments, iOS, AI-written religious commentary.
+- **Out of scope v1:** prayer times, qibla, adhan, full Quran reader, hadith search, social, accounts (Google is used only to reach the user's own Drive), payments, iOS, AI-written religious commentary.
 
 ## 2. Navigation [D]
 
@@ -102,7 +102,7 @@ List of large rows: `Prayer times — Today's times and Qibla`, `Activities — 
 - FR-7 **Journal streak**: same rule as FR-5 over days with a non-empty journal.
 - FR-8 **Offline**: after one fetch, cached content and weather are shown with the update time.
 - FR-9 **Hide faith cards** hides the content cards on Today.
-- FR-10 **Privacy**: personal data never leaves the device; no account.
+- FR-10 **Privacy**: personal data never leaves the device unless the user exports a backup file or connects Google Drive backup (own Drive, app folder only); no Nurday account or server.
 - FR-11 Calendar and Journal never navigate into the future.
 - FR-12 **Prayer times** are computed on the device (adhan library) from the weather location, the chosen method and Asr madhab, in the device time zone. No network. Next prayer after Isha is tomorrow's Fajr.
 - FR-13 **Hijri date** uses the Umm al-Qura calendar (hijri library). It can differ by a day from local moon sighting; the app does not claim otherwise.

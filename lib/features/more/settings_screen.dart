@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart' show DateFormat;
 
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/backup.dart';
 import '../../data/content/quran_client.dart';
+import '../../data/drive_backup.dart';
 import '../../data/prayer/prayer.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
@@ -101,6 +103,43 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   String? _backupNote;
   String? _lockNote;
+  String? _driveNote;
+  bool _driveBusy = false;
+
+  Future<void> _drive(Future<String?> Function(DriveSync d) action) async {
+    setState(() {
+      _driveBusy = true;
+      _driveNote = null;
+    });
+    String? note;
+    try {
+      note = await action(ref.read(driveSyncProvider));
+    } on DriveException catch (e) {
+      note = e.message;
+    } on BackupException catch (e) {
+      note = e.message;
+    } catch (_) {
+      note = 'Google Drive is not available right now.';
+    }
+    if (!mounted) return;
+    setState(() {
+      _driveBusy = false;
+      _driveNote = note;
+    });
+  }
+
+  Future<void> _driveRestore() async {
+    final mode = await _askImportMode();
+    if (mode == null) return;
+    await _drive((d) async {
+      final summary = await d.restore(mode);
+      if (summary == null) return 'No backup found in your Google Drive.';
+      ref.invalidate(weatherProvider);
+      return summary.isEmpty
+          ? 'Nothing new in the Drive backup.'
+          : 'Restored $summary.';
+    });
+  }
 
   Future<void> _setJournalLock(bool on) async {
     final lock = ref.read(appLockProvider);
@@ -135,6 +174,31 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     }
   }
 
+  Future<ImportMode?> _askImportMode() => showDialog<ImportMode>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Import backup'),
+      content: const Text(
+        'Merge adds the backup to what is on this phone. '
+        'Replace deletes everything on this phone first.',
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.pop(context, ImportMode.replace),
+          child: const Text('Replace'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(context, ImportMode.merge),
+          child: const Text('Merge'),
+        ),
+      ],
+    ),
+  );
+
   Future<void> _import() async {
     final String? source;
     try {
@@ -144,30 +208,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       return;
     }
     if (source == null || !mounted) return;
-    final mode = await showDialog<ImportMode>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Import backup'),
-        content: const Text(
-          'Merge adds the backup to what is on this phone. '
-          'Replace deletes everything on this phone first.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.pop(context, ImportMode.replace),
-            child: const Text('Replace'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, ImportMode.merge),
-            child: const Text('Merge'),
-          ),
-        ],
-      ),
-    );
+    final mode = await _askImportMode();
     if (mode == null) return;
     try {
       final summary = await ref.read(databaseProvider).importJson(source, mode);
@@ -469,6 +510,71 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ],
             ),
             if (_backupNote != null) Text(_backupNote!, style: meta()),
+            const Divider(height: 12),
+            Text('Google Drive', style: TextStyle(fontWeight: FontWeight.w600)),
+            if (!s.driveBackup)
+              Text(
+                'Back up once a day to a hidden Nurday folder in your own '
+                'Google Drive. Nurday cannot see your other files and has no '
+                'server or account of its own.',
+                style: meta(),
+              )
+            else
+              Text(
+                s.driveLastBackup == null
+                    ? 'Backs up once a day.'
+                    : 'Backs up once a day · last backup '
+                          '${DateFormat('d MMM, HH:mm').format(s.driveLastBackup!)}',
+                style: meta(),
+              ),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: s.driveBackup
+                  ? [
+                      OutlinedButton(
+                        key: const Key('drive-backup-now'),
+                        onPressed: _driveBusy
+                            ? null
+                            : () => _drive(
+                                (d) async => await d.backUp()
+                                    ? 'Backed up to Google Drive.'
+                                    : null,
+                              ),
+                        child: const Text('Back up now'),
+                      ),
+                      OutlinedButton(
+                        key: const Key('drive-restore'),
+                        onPressed: _driveBusy ? null : _driveRestore,
+                        child: const Text('Restore'),
+                      ),
+                      TextButton(
+                        key: const Key('drive-disconnect'),
+                        onPressed: _driveBusy
+                            ? null
+                            : () => _drive((d) async {
+                                await d.disconnect();
+                                return 'Google Drive disconnected. Your backup stays in Drive.';
+                              }),
+                        child: const Text('Disconnect'),
+                      ),
+                    ]
+                  : [
+                      OutlinedButton.icon(
+                        key: const Key('drive-connect'),
+                        onPressed: _driveBusy
+                            ? null
+                            : () => _drive(
+                                (d) async => await d.connect()
+                                    ? 'Backed up to Google Drive.'
+                                    : null,
+                              ),
+                        icon: const Icon(Icons.cloud_upload_outlined, size: 18),
+                        label: const Text('Connect Google Drive'),
+                      ),
+                    ],
+            ),
+            if (_driveNote != null) Text(_driveNote!, style: meta()),
             Text(
               'Saves habits, moods, activities, journal and settings to a file '
               'you choose. The file is not encrypted, so keep it private.',
@@ -488,7 +594,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
             ),
             Text(
-              'Journal, mood, habits and activities are never uploaded. No account needed.',
+              s.driveBackup
+                  ? 'Nurday has no server and no account. A daily backup goes '
+                        'only to your own Google Drive.'
+                  : 'Journal, mood, habits and activities are never uploaded. No account needed.',
               style: TextStyle(fontSize: 13, color: AppColors.sage900),
             ),
           ],

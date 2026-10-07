@@ -29,6 +29,7 @@ void main() {
     bool online = true,
     BackupFiles? files,
     FakeLock? lock,
+    FakeAuth? google,
   }) async {
     final database = db ?? memoryDb();
     tester.view.physicalSize = const Size(1080, 2340);
@@ -37,7 +38,13 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          ...testOverrides(database, now, online: online, lock: lock),
+          ...testOverrides(
+            database,
+            now,
+            online: online,
+            lock: lock,
+            google: google,
+          ),
           if (files != null) backupFilesProvider.overrideWithValue(files),
         ],
         child: const NurdayApp(),
@@ -353,6 +360,29 @@ void main() {
     await settle(tester);
     expect(tester.widget<SwitchListTile>(sw).value, isTrue);
     expect(lock.asked, 1);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('Google Drive connect reports cancel and errors', (tester) async {
+    final google = FakeAuth(granted: false);
+    final db = await pumpApp(tester, google: google);
+    await tapTab(tester, 'More');
+    await tester.tap(find.text('Settings'));
+    await settle(tester);
+    final connect = find.byKey(const Key('drive-connect'));
+    await scrollTo(tester, connect);
+    await tester.ensureVisible(connect);
+    await settle(tester);
+    await tester.tap(connect);
+    await settle(tester);
+    expect(google.prompts, [true]);
+    expect(find.byKey(const Key('drive-backup-now')), findsNothing);
+
+    // The test network has no Drive, so the first backup fails visibly.
+    google.granted = true;
+    await tester.tap(connect);
+    await settle(tester);
+    expect(find.text('Google Drive error 404.'), findsOneWidget);
     await closeApp(tester, db);
   });
 
