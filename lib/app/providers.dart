@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 import '../core/clock.dart';
 import '../core/day_key.dart';
+import '../data/backup_files.dart';
 import '../data/content/content_models.dart';
 import '../data/content/daily_content_service.dart';
 import '../data/content/quran_client.dart';
@@ -22,6 +23,8 @@ final databaseProvider = Provider<AppDatabase>(
 );
 
 final httpClientProvider = Provider<http.Client>((ref) => http.Client());
+
+final backupFilesProvider = Provider<BackupFiles>((ref) => const BackupFiles());
 
 final assetLoaderProvider = Provider<AssetLoader>((ref) => rootBundleLoader);
 

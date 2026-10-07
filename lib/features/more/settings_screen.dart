@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme.dart';
+import '../../data/backup.dart';
 import '../../data/content/quran_client.dart';
 import '../../data/prayer/prayer.dart';
 import '../../widgets/common.dart';
@@ -94,6 +95,68 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       setState(
         () => _locationNote = 'Location is unavailable. Type a city instead.',
       );
+    }
+  }
+
+  String? _backupNote;
+
+  Future<void> _export() async {
+    final db = ref.read(databaseProvider);
+    final now = ref.read(clockProvider).now();
+    try {
+      final saved = await ref
+          .read(backupFilesProvider)
+          .save(backupFileName(now), await db.exportJson(now));
+      if (saved) setState(() => _backupNote = 'Backup saved.');
+    } catch (_) {
+      setState(() => _backupNote = 'The backup could not be saved.');
+    }
+  }
+
+  Future<void> _import() async {
+    final String? source;
+    try {
+      source = await ref.read(backupFilesProvider).open();
+    } catch (_) {
+      setState(() => _backupNote = 'The file could not be read.');
+      return;
+    }
+    if (source == null || !mounted) return;
+    final mode = await showDialog<ImportMode>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Import backup'),
+        content: const Text(
+          'Merge adds the backup to what is on this phone. '
+          'Replace deletes everything on this phone first.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, ImportMode.replace),
+            child: const Text('Replace'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(context, ImportMode.merge),
+            child: const Text('Merge'),
+          ),
+        ],
+      ),
+    );
+    if (mode == null) return;
+    try {
+      final summary = await ref.read(databaseProvider).importJson(source, mode);
+      setState(
+        () => _backupNote = summary.isEmpty
+            ? 'Nothing new in this backup.'
+            : 'Imported $summary.',
+      );
+      ref.invalidate(weatherProvider);
+    } on BackupException catch (e) {
+      setState(() => _backupNote = e.message);
     }
   }
 
@@ -323,6 +386,36 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             if (_reminderNote != null)
               Text(_reminderNote!, style: meta(color: AppColors.accent700)),
             Text('Per-habit reminders are set on each habit.', style: meta()),
+          ],
+        ),
+        NCard(
+          gap: 10,
+          children: [
+            const CardTitle('Backup'),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                OutlinedButton.icon(
+                  key: const Key('export-backup'),
+                  onPressed: _export,
+                  icon: const Icon(Icons.upload_file, size: 18),
+                  label: const Text('Export'),
+                ),
+                OutlinedButton.icon(
+                  key: const Key('import-backup'),
+                  onPressed: _import,
+                  icon: const Icon(Icons.download, size: 18),
+                  label: const Text('Import'),
+                ),
+              ],
+            ),
+            if (_backupNote != null) Text(_backupNote!, style: meta()),
+            Text(
+              'Saves habits, moods, activities, journal and settings to a file '
+              'you choose. The file is not encrypted, so keep it private.',
+              style: meta(),
+            ),
           ],
         ),
         NCard(

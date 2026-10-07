@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nurday/app/app.dart';
+import 'package:nurday/app/providers.dart';
 import 'package:nurday/app/theme.dart';
+import 'package:nurday/data/backup_files.dart';
 import 'package:nurday/data/db/database.dart';
 
 import '../helpers.dart';
@@ -25,6 +27,7 @@ void main() {
     WidgetTester tester, {
     AppDatabase? db,
     bool online = true,
+    BackupFiles? files,
   }) async {
     final database = db ?? memoryDb();
     tester.view.physicalSize = const Size(1080, 2340);
@@ -32,7 +35,10 @@ void main() {
     addTearDown(tester.view.reset);
     await tester.pumpWidget(
       ProviderScope(
-        overrides: testOverrides(database, now, online: online),
+        overrides: [
+          ...testOverrides(database, now, online: online),
+          if (files != null) backupFilesProvider.overrideWithValue(files),
+        ],
         child: const NurdayApp(),
       ),
     );
@@ -243,8 +249,10 @@ void main() {
       await tapTab(tester, 'More');
       await tester.tap(find.text('Settings'));
       await settle(tester);
-      await scrollTo(tester, find.text('Daily reminder'));
-      await tester.drag(find.byType(Scrollable).first, const Offset(0, -250));
+      await scrollTo(tester, find.byKey(const Key('daily-reminder-switch')));
+      await tester.ensureVisible(
+        find.byKey(const Key('daily-reminder-switch')),
+      );
       await settle(tester);
       await tester.tap(find.byKey(const Key('daily-reminder-switch')));
       await settle(tester);
@@ -324,4 +332,53 @@ void main() {
     );
     await closeApp(tester, db);
   });
+
+  testWidgets('a backup exported in Settings can be imported again', (
+    tester,
+  ) async {
+    final files = FakeBackupFiles();
+    final db = memoryDb();
+    await tester.runAsync(() async {
+      await db.addHabit('Walk');
+      await db.saveJournal('2026-10-05', 'Day', 'Alhamdulillah', now);
+    });
+    await pumpApp(tester, db: db, files: files);
+    await tapTab(tester, 'More');
+    await tester.tap(find.text('Settings'));
+    await settle(tester);
+    await scrollTo(tester, find.byKey(const Key('export-backup')));
+    await tester.tap(find.byKey(const Key('export-backup')));
+    await settle(tester);
+    expect(find.text('Backup saved.'), findsOneWidget);
+    expect(files.saved.keys.single, 'nurday-backup-2026-10-05.json');
+
+    // Importing into the same phone finds nothing new.
+    files.toOpen = files.saved.values.single;
+    await tester.tap(find.byKey(const Key('import-backup')));
+    await settle(tester);
+    await tester.tap(find.text('Merge'));
+    await settle(tester);
+    expect(find.text('Nothing new in this backup.'), findsOneWidget);
+
+    files.toOpen = 'hello';
+    await tester.tap(find.byKey(const Key('import-backup')));
+    await settle(tester);
+    await tester.tap(find.text('Merge'));
+    await settle(tester);
+    expect(find.text('This file is not a Nurday backup.'), findsOneWidget);
+    await closeApp(tester, db);
+  });
+}
+
+class FakeBackupFiles implements BackupFiles {
+  final saved = <String, String>{};
+  String? toOpen;
+  @override
+  Future<bool> save(String fileName, String contents) async {
+    saved[fileName] = contents;
+    return true;
+  }
+
+  @override
+  Future<String?> open() async => toOpen;
 }
