@@ -109,7 +109,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
         : DateFormat('d MMM HH:mm').format(slot.fetchedAt!);
     final tafsir = open ? ref.watch(tafsirProvider(a.ref)).value : null;
     return [
-      _ArabicBlock(a.arabic, size: 22, open: open),
+      ArabicBlock(a.arabic, size: 22, maxLines: open ? null : 4),
       if (!arabicOnly) ..._gap(_body(a.translation)),
       ..._gap(Text(a.source, style: meta())),
       // Offline with an earlier day's ayah: say so instead of passing it off
@@ -156,7 +156,8 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     if (h == null) return [_error(slot.error!)];
     return [
       // Arabic copied verbatim from the same dataset (CR-7).
-      if (h.arabic != null) _ArabicBlock(h.arabic!, size: 19, open: open),
+      if (h.arabic != null)
+        ArabicBlock(h.arabic!, size: 19, maxLines: open ? null : 4),
       if (!(arabicOnly && h.arabic != null))
         ..._gap(
           _body(h.text, maxLines: open ? null : 4),
@@ -188,7 +189,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     if (q == null) return [_error(slot.error!)];
     return [
       // Arabic only: there is no translation we may show (CR-7).
-      _ArabicBlock(q.arabic, size: 19, open: open),
+      ArabicBlock(q.arabic, size: 19, maxLines: open ? null : 4),
       ..._gap(Text('${q.attribution} · ${q.work}', style: meta())),
       if (open) ...[
         ..._gap(
@@ -264,32 +265,6 @@ class _KindTab extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _ArabicBlock extends StatelessWidget {
-  const _ArabicBlock(this.text, {required this.size, required this.open});
-  final String text;
-  final double size;
-  final bool open;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: AppColors.neutral100,
-        borderRadius: BorderRadius.circular(AppRadii.md),
-      ),
-      child: Text(
-        text,
-        textDirection: TextDirection.rtl,
-        textAlign: TextAlign.right,
-        maxLines: open ? null : 4,
-        overflow: open ? null : TextOverflow.ellipsis,
-        style: arabicStyle.copyWith(fontSize: size),
       ),
     );
   }

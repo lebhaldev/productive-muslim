@@ -166,3 +166,168 @@ TimeOfDay parseHhmm(String s) {
   final p = s.split(':');
   return TimeOfDay(hour: int.parse(p[0]), minute: int.parse(p[1]));
 }
+
+/// Header with a back arrow, for screens opened from a menu.
+class SubScreenTitle extends StatelessWidget {
+  const SubScreenTitle(
+    this.text, {
+    super.key,
+    required this.onBack,
+    required this.backTooltip,
+  });
+  final String text;
+  final VoidCallback onBack;
+  final String backTooltip;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      IconButton(
+        tooltip: backTooltip,
+        onPressed: onBack,
+        icon: const Icon(Icons.arrow_back),
+      ),
+      const SizedBox(width: 4),
+      Expanded(child: ScreenTitle(text)),
+    ],
+  );
+}
+
+/// A tappable row in a menu (More, Settings).
+class NavRow extends StatelessWidget {
+  const NavRow({
+    super.key,
+    required this.title,
+    required this.sub,
+    required this.onTap,
+    this.icon,
+  });
+  final String title;
+  final String sub;
+  final VoidCallback onTap;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: AppColors.surface,
+      borderRadius: BorderRadius.circular(AppRadii.lg),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            children: [
+              if (icon != null) ...[
+                Icon(icon, color: AppColors.sage600),
+                const SizedBox(width: 14),
+              ],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: heading(17)),
+                    const SizedBox(height: 2),
+                    Text(sub, style: meta(size: 13)),
+                  ],
+                ),
+              ),
+              Icon(Icons.chevron_right, color: AppColors.neutral600),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// A small coloured shortcut tile (Today's Journal and Activity).
+class ActionTile extends StatelessWidget {
+  const ActionTile({
+    super.key,
+    required this.color,
+    required this.ink,
+    required this.icon,
+    required this.title,
+    required this.sub,
+    required this.onTap,
+  });
+  final Color color;
+  final Color ink;
+  final IconData icon;
+  final String title;
+  final String sub;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color,
+      borderRadius: BorderRadius.circular(AppRadii.lg),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        onTap: onTap,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 96),
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(icon, size: 20, color: ink),
+                const SizedBox(height: 6),
+                Text(title, style: heading(17, color: ink)),
+                const SizedBox(height: 2),
+                Text(
+                  sub,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 12, color: ink),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Arabic scripture or poetry on its own tinted block, right to left.
+class ArabicBlock extends StatelessWidget {
+  const ArabicBlock(this.text, {super.key, this.size = 22, this.maxLines});
+  final String text;
+  final double size;
+  final int? maxLines;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: AppColors.neutral100,
+        borderRadius: BorderRadius.circular(AppRadii.md),
+      ),
+      child: Text(
+        text,
+        textDirection: TextDirection.rtl,
+        textAlign: TextAlign.right,
+        maxLines: maxLines,
+        overflow: maxLines == null ? null : TextOverflow.ellipsis,
+        style: arabicStyle.copyWith(fontSize: size),
+      ),
+    );
+  }
+}
+
+/// A short status line under a control; [warn] for problems.
+class Note extends StatelessWidget {
+  const Note(this.text, {super.key, this.warn = false});
+  final String text;
+  final bool warn;
+
+  @override
+  Widget build(BuildContext context) =>
+      Text(text, style: meta(color: warn ? AppColors.accent700 : null));
+}

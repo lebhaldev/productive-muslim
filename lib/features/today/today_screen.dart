@@ -420,7 +420,7 @@ class _ActivityTile extends ConsumerWidget {
         .where((a) => a.dayKey == today)
         .toList();
     final minutes = acts.fold<int>(0, (t, a) => t + a.durationMinutes);
-    return _Tile(
+    return ActionTile(
       key: const Key('activity-tile'),
       color: AppColors.sage200,
       ink: AppColors.sage900,
@@ -430,57 +430,6 @@ class _ActivityTile extends ConsumerWidget {
           ? 'Nothing logged yet'
           : '${acts.length} logged · $minutes min',
       onTap: () => context.go('/more/activities'),
-    );
-  }
-}
-
-class _Tile extends StatelessWidget {
-  const _Tile({
-    super.key,
-    required this.color,
-    required this.ink,
-    required this.icon,
-    required this.title,
-    required this.sub,
-    required this.onTap,
-  });
-  final Color color;
-  final Color ink;
-  final IconData icon;
-  final String title;
-  final String sub;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: color,
-      borderRadius: BorderRadius.circular(AppRadii.lg),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(AppRadii.lg),
-        onTap: onTap,
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: 96),
-          child: Padding(
-            padding: const EdgeInsets.all(14),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(icon, size: 20, color: ink),
-                const SizedBox(height: 6),
-                Text(title, style: heading(17, color: ink)),
-                const SizedBox(height: 2),
-                Text(
-                  sub,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 12, color: ink),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
@@ -500,7 +449,7 @@ class _JournalShortcut extends ConsumerWidget {
         : (j.title.isNotEmpty
               ? j.title
               : '${j.body.length > 40 ? j.body.substring(0, 40) : j.body}…');
-    return _Tile(
+    return ActionTile(
       key: const Key('journal-tile'),
       color: AppColors.accent200,
       ink: AppColors.accent900,

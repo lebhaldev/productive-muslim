@@ -269,6 +269,10 @@ class _Parsed {
 
 final _dayKey = RegExp(r'^\d{4}-\d{2}-\d{2}$');
 
+const _damaged = BackupException(
+  'This backup is damaged and was not imported.',
+);
+
 _Parsed _parse(String source) {
   const notBackup = BackupException('This file is not a Nurday backup.');
   Object? root;
@@ -289,16 +293,14 @@ _Parsed _parse(String source) {
   T field<T>(Map m, String key) {
     final v = m[key];
     if (v is T) return v;
-    throw const BackupException('This backup is damaged and was not imported.');
+    throw _damaged;
   }
 
   List<Map> list(String key) {
     final v = root as Map;
     final l = v[key] ?? const [];
     if (l is! List || l.any((e) => e is! Map)) {
-      throw const BackupException(
-        'This backup is damaged and was not imported.',
-      );
+      throw _damaged;
     }
     return l.cast<Map>();
   }
@@ -306,9 +308,7 @@ _Parsed _parse(String source) {
   DateTime date(Map m, String key) {
     final d = DateTime.tryParse(field<String>(m, key));
     if (d == null) {
-      throw const BackupException(
-        'This backup is damaged and was not imported.',
-      );
+      throw _damaged;
     }
     return d.toLocal();
   }
@@ -316,9 +316,7 @@ _Parsed _parse(String source) {
   String day(Map m) {
     final d = field<String>(m, 'dayKey');
     if (!_dayKey.hasMatch(d)) {
-      throw const BackupException(
-        'This backup is damaged and was not imported.',
-      );
+      throw _damaged;
     }
     return d;
   }
@@ -369,7 +367,7 @@ _Parsed _parse(String source) {
   }
   final s = root['settings'] ?? const {};
   if (s is! Map) {
-    throw const BackupException('This backup is damaged and was not imported.');
+    throw _damaged;
   }
   for (final e in s.entries) {
     if (e.key is String && e.value is String) {

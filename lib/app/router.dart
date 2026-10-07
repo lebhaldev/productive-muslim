@@ -9,7 +9,7 @@ import '../features/journal/journal_screen.dart';
 import '../features/more/activities_screen.dart';
 import '../features/more/more_screen.dart';
 import '../features/more/reflect_screen.dart';
-import '../features/more/settings_screen.dart';
+import '../features/settings/settings_screen.dart';
 import '../features/prayer/prayer_screen.dart';
 import '../features/today/today_screen.dart';
 import 'providers.dart';
@@ -22,12 +22,12 @@ GoRouter buildRouter() => GoRouter(
     // Settings sit outside the tabs, as their own full-screen menu.
     GoRoute(
       path: '/settings',
-      builder: (_, _) => const _SettingsPage(),
+      builder: (_, _) => const SettingsPage(),
       routes: [
         GoRoute(
           path: ':section',
           builder: (_, state) =>
-              _SettingsPage(section: state.pathParameters['section']),
+              SettingsPage(section: state.pathParameters['section']),
         ),
       ],
     ),
@@ -213,14 +213,4 @@ class _NavButton extends StatelessWidget {
       ),
     );
   }
-}
-
-class _SettingsPage extends StatelessWidget {
-  const _SettingsPage({this.section});
-  final String? section;
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    body: SafeArea(child: SettingsScreen(section: section)),
-  );
 }

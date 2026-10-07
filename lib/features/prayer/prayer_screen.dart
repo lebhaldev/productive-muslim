@@ -95,7 +95,7 @@ class PrayerScreen extends ConsumerWidget {
     if (loc == null || day == null || tomorrow == null) {
       return ScreenBody(
         children: [
-          const SubScreenTitle('Prayer times'),
+          const MoreTitle('Prayer times'),
           NCard(
             children: [
               Text(
@@ -118,7 +118,7 @@ class PrayerScreen extends ConsumerWidget {
     final bearing = qiblaBearing(loc.lat, loc.lon);
     return ScreenBody(
       children: [
-        const SubScreenTitle('Prayer times'),
+        const MoreTitle('Prayer times'),
         Text(
           '${loc.place} · ${ref.watch(prayerMethodProvider).label} · Asr ${s.madhab == AsrMadhab.hanafi ? 'Hanafi' : 'standard'}',
           style: meta(size: 13),

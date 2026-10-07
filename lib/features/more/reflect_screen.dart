@@ -28,7 +28,7 @@ class ReflectScreen extends ConsumerWidget {
     return ScreenBody(
       gap: 16,
       children: [
-        const SubScreenTitle('Reflect'),
+        const MoreTitle('Reflect'),
         NCard(
           gap: 10,
           children: [

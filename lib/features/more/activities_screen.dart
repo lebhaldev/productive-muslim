@@ -89,7 +89,7 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
 
     return ScreenBody(
       children: [
-        const SubScreenTitle('Activities'),
+        const MoreTitle('Activities'),
         NCard(
           children: [
             TextField(

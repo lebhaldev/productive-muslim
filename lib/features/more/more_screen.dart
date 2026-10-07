@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../app/theme.dart';
 import '../../widgets/common.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({super.key});
 
   static const _rows = [
-    ('prayer', 'Prayer times', "Today's times and Qibla"),
-    ('activities', 'Activities', 'Log what you did, grouped by day'),
-    ('reflect', 'Reflect', 'Your last 30 days'),
+    ('prayer', 'Prayer times', "Today's times and Qibla", Icons.access_time),
+    (
+      'activities',
+      'Activities',
+      'Log what you did, grouped by day',
+      Icons.directions_walk,
+    ),
+    ('reflect', 'Reflect', 'Your last 30 days', Icons.insights_outlined),
   ];
 
   @override
@@ -19,56 +23,27 @@ class MoreScreen extends StatelessWidget {
       gap: 10,
       children: [
         const ScreenTitle('More'),
-        for (final (id, label, sub) in _rows)
-          Material(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.circular(AppRadii.lg),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(AppRadii.lg),
-              onTap: () => context.go('/more/$id'),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 16,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(label, style: heading(18)),
-                    const SizedBox(height: 2),
-                    Text(sub, style: meta(size: 13)),
-                  ],
-                ),
-              ),
-            ),
+        for (final (id, label, sub, icon) in _rows)
+          NavRow(
+            title: label,
+            sub: sub,
+            icon: icon,
+            onTap: () => context.go('/more/$id'),
           ),
       ],
     );
   }
 }
 
-/// Header with a back arrow for screens under More.
-class SubScreenTitle extends StatelessWidget {
-  const SubScreenTitle(
-    this.text, {
-    super.key,
-    this.onBack,
-    this.backTooltip = 'Back to More',
-  });
+/// Title for screens under More, with a back arrow to More.
+class MoreTitle extends StatelessWidget {
+  const MoreTitle(this.text, {super.key});
   final String text;
-  final VoidCallback? onBack;
-  final String backTooltip;
 
   @override
-  Widget build(BuildContext context) => Row(
-    children: [
-      IconButton(
-        tooltip: backTooltip,
-        onPressed: onBack ?? () => context.go('/more'),
-        icon: const Icon(Icons.arrow_back),
-      ),
-      const SizedBox(width: 4),
-      Expanded(child: ScreenTitle(text)),
-    ],
+  Widget build(BuildContext context) => SubScreenTitle(
+    text,
+    backTooltip: 'Back to More',
+    onBack: () => context.go('/more'),
   );
 }
