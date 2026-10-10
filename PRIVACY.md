@@ -1,8 +1,8 @@
 # Nurday privacy policy
 
-Last updated: 7 October 2026
+Last updated: 10 October 2026
 
-Nurday keeps your personal data on your phone.
+Nurday is published by Leb Apps. Nurday keeps your personal data on your phone.
 
 ## Data that stays on this device
 Your journal entries, mood, habits, habit check-offs, activities and settings are stored in a local database on your phone. Nurday has no account and no server of its own. They leave the phone only if you choose one of the backups below.
@@ -26,7 +26,7 @@ Nurday contacts only these services:
 Hadith and quotes are bundled inside the app and need no network.
 
 ## Notifications
-Reminders are scheduled on the phone with Android's local notifications. Nothing is sent to a server.
+Reminders and prayer alerts are scheduled on the phone with Android's local notifications. If you allow "Alarms & reminders", prayer alerts are set for the exact minute. Nothing is sent to a server.
 
 ## No tracking
 Nurday contains no analytics, advertising or crash-reporting SDKs.
@@ -35,4 +35,4 @@ Nurday contains no analytics, advertising or crash-reporting SDKs.
 Uninstalling the app, or clearing its storage in Android settings, deletes everything.
 
 ## Contact
-Open an issue at https://github.com/lebhaldev/productive-muslim.
+Leb Apps · lebapplications@gmail.com

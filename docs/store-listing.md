@@ -1,6 +1,6 @@
 # Play store listing (draft)
 
-Category: **Lifestyle** · Tags: habit tracker, journal, Islam · Contact email: owner's choice · Website: the GitHub repo or the privacy policy page.
+Category: **Lifestyle** · Tags: habit tracker, journal, Islam · Developer: **Leb Apps** · Contact email: **lebapplications@gmail.com** · Website: the privacy policy page.
 
 ## App name (max 30)
 Nurday: Ayah, Habits, Journal
