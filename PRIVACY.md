@@ -5,7 +5,7 @@ Last updated: 10 October 2026
 Nurday is published by Leb Apps. Nurday keeps your personal data on your phone.
 
 ## Data that stays on this device
-Your journal entries, mood, habits, habit check-offs, activities and settings are stored in a local database on your phone. Nurday has no account and no server of its own. They leave the phone only if you choose one of the backups below.
+Your journal entries, mood, habits, habit check-offs, activities and settings are stored in a local database on your phone. Nurday has no account and no server of its own. They leave the phone only if you choose one of the backups below. Android's automatic Google backup is turned off for Nurday, so the phone does not copy them to Google on its own.
 
 ## Backups (optional, off by default)
 - **Export to a file**: Settings → Backup → Export saves a JSON file wherever you choose. The file is not encrypted.

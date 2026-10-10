@@ -29,7 +29,7 @@ The Drift database code (`lib/data/db/database.g.dart`) is committed. After chan
 Every pull request builds a debug APK in GitHub Actions (artifact `nurday-debug-apk`), so you can install it on a phone without a local setup.
 
 ## Content sources
-Nurday never generates religious text. Everything shown comes from these sources, and widgets only display what the data layer loads.
+Nurday never generates religious text. Everything shown comes from these sources, used unchanged and with attribution, and widgets only display what the data layer loads.
 
 | Content | Source | Licence |
 |---|---|---|

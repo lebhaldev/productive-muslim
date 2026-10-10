@@ -35,6 +35,8 @@ keyPassword=...
 ## 3. Google Drive backup (optional feature, needs OAuth)
 Follow README → "Google Drive backup setup". Register **two** Android OAuth clients for `com.nurday.app`: one with the upload key's SHA-1 (sideloaded test builds) and, after step 5, one with the **Play app signing** key's SHA-1 (Play Console → Test and release → App integrity). Without the second, Drive sign-in fails for people who install from Play.
 
+Then publish the **OAuth consent screen** (Google Auth Platform → Branding and Audience): app name Nurday, logo (`docs/store/icon-512.png`), support email lebapplications@gmail.com, privacy policy URL (step 7), and set it to **In production**. Check under Data access how Google classes `drive.appdata`. If it is listed as sensitive, submit the app for OAuth verification; until it passes, users see an "unverified app" warning and sign-ins are capped at 100 users.
+
 ## 4. Play Console account
 - Create a developer account at https://play.google.com/console (one-time US$25, identity verification).
 - New personal accounts must run a **closed test with at least 12 testers for 14 days** before production access. Plan for this.
@@ -45,10 +47,11 @@ Follow README → "Google Drive backup setup". Register **two** Android OAuth cl
 - Package name is fixed forever: `com.nurday.app`.
 
 ## 6. Store listing
-Copy from [docs/store-listing.md](docs/store-listing.md). Needs: 512×512 icon (`assets/icon/icon.png` scaled), 1024×500 feature graphic, 2–8 phone screenshots (list in that file).
+Copy from [docs/store-listing.md](docs/store-listing.md). Needs: 512×512 icon and 1024×500 feature graphic (`docs/store/`), 2–8 phone screenshots (CI release `store-assets`). Describe mood as a wellness check-in, never as mental-health support, and never call the journal lock encryption.
 
 ## 7. Policy forms
-- **Privacy policy URL**: host [PRIVACY.md](PRIVACY.md) publicly (for example GitHub Pages) and paste the URL.
+- **Privacy policy URL**: the Notion page "Nurday privacy policy" (under Android Projects → Nurday) with Share → Publish turned on; paste its `notion.site` link. Check it opens in a private browser window without login, and keep it identical to [PRIVACY.md](PRIVACY.md).
+- **Health apps declaration**: the app has no health features. Mood is a wellness check-in, not a health or mental-health feature.
 - **App access**: all features available without login.
 - **Ads**: no ads.
 - **Content rating** (IARC questionnaire): reference app; no violence, sexual content, gambling, or user-to-user communication; religious text is shown. Expected rating: Everyone / PEGI 3.
@@ -61,7 +64,9 @@ Copy from [docs/store-listing.md](docs/store-listing.md). Needs: 512×512 icon (
 | Does the app collect or share user data? | Yes, see below. Everything else stays on the phone. |
 | Approximate location | **Collected**, not shared, optional, not stored off device. Rounded coordinates go to Open-Meteo to get weather, and to Android's system geocoder to name the place, only after "Use my location". Purpose: App functionality. |
 | Personal info, messages, photos, contacts, health, financial | Not collected. |
-| App activity / app info and performance | Not collected (no analytics, no crash reporting). |
+| App activity → In-app search history | **Collected**, not shared, not stored. The city text typed in Settings → Location goes to Open-Meteo's geocoder to suggest places; it is processed ephemerally. Purpose: App functionality. |
+| Other app activity / app info and performance | Not collected (no analytics, no crash reporting). |
+| Android cloud backup | Off: `allowBackup="false"` and data extraction rules exclude everything, so Android does not copy the database to Google. |
 | Journal, mood, habits, activities (user-generated content) | Only if the user turns on Google Drive backup or exports a file: sent to the user's **own** Google Drive app folder or a file they pick. Declare as **User-generated content → Collected, optional, user-initiated**, purpose: App functionality / backup. |
 | Is data encrypted in transit? | Yes (HTTPS to Open-Meteo, AlQuran Cloud, Google). |
 | Can users request deletion? | Yes: uninstall or clear storage deletes everything; Drive backup is deleted from Google Drive → Manage apps. |
@@ -77,6 +82,9 @@ Copy from [docs/store-listing.md](docs/store-listing.md). Needs: 512×512 icon (
 | `SCHEDULE_EXACT_ALARM` | Prayer alerts at the exact minute of each prayer. Not granted by default on Android 14+; the user allows it from Settings → Prayer, otherwise alerts are inexact. No Play declaration is needed (only `USE_EXACT_ALARM` needs one, and Nurday does not request it). |
 
 No `USE_EXACT_ALARM`, background-location, contacts, storage or camera permissions are requested.
+
+### Content licences
+Tafsir (Al-Muyassar from KFGQPC, Al-Mukhtasar from Tafsir Center), the English hadith translations and the OpenITI quotes are used unchanged, with attribution, in a free app. Adding ads, a price or in-app purchases re-opens these licences; check each one first.
 
 ## 8. Before each release
 1. Bump `version:` in `pubspec.yaml` (`name+code`; the code must always increase).
