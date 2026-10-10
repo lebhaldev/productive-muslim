@@ -31,6 +31,7 @@ void main() {
     BackupFiles? files,
     FakeLock? lock,
     FakeAuth? google,
+    FakeScheduler? scheduler,
   }) async {
     final database = db ?? memoryDb();
     tester.view.physicalSize = const Size(1080, 2340);
@@ -45,6 +46,7 @@ void main() {
             online: online,
             lock: lock,
             google: google,
+            scheduler: scheduler,
           ),
           if (files != null) backupFilesProvider.overrideWithValue(files),
         ],
@@ -570,6 +572,57 @@ void main() {
     });
     await pumpApp(tester, db: db);
     expect(find.text('Light cloud · Fixture Town'), findsOneWidget);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('prayer alerts can ask for on-time alarms and send a test', (
+    tester,
+  ) async {
+    final db = memoryDb();
+    await tester.runAsync(() => db.putSetting('prayerAlerts', 'true'));
+    final sched = FakeScheduler();
+    await pumpApp(tester, db: db, scheduler: sched);
+    await openSettings(tester, 'prayer');
+    await scrollTo(tester, find.byKey(const Key('allow-exact')));
+    await tester.tap(find.byKey(const Key('allow-exact')));
+    await settle(tester);
+    expect(sched.exactAsked, 1);
+    expect(find.byKey(const Key('allow-exact')), findsNothing);
+    await scrollTo(tester, find.byKey(const Key('test-notification')));
+    await tester.tap(find.byKey(const Key('test-notification')));
+    await settle(tester);
+    expect(sched.tests, 1);
+    expect(find.text('Test notification sent.'), findsOneWidget);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('Hijri offset and mosque minute adjustments are saved', (
+    tester,
+  ) async {
+    final db = await pumpApp(tester);
+    await openSettings(tester, 'prayer');
+    await scrollTo(tester, find.byKey(const Key('hijri-offset')));
+    await tester.tap(find.byKey(const Key('hijri-offset')));
+    await settle(tester);
+    await tester.tap(find.text('1 day later').last);
+    await settle(tester);
+    await scrollTo(tester, find.byKey(const Key('prayer-adjust')));
+    await tester.tap(find.byKey(const Key('prayer-adjust')));
+    await settle(tester);
+    await scrollTo(tester, find.byKey(const Key('adjust-plus-maghrib')));
+    await tester.tap(find.byKey(const Key('adjust-plus-maghrib')));
+    await settle(tester);
+    await tester.tap(find.byKey(const Key('adjust-plus-maghrib')));
+    await settle(tester);
+    await tester.tap(find.byKey(const Key('adjust-minus-fajr')));
+    await settle(tester);
+    expect(find.text('+2 min'), findsOneWidget);
+    expect(find.text('−1 min'), findsOneWidget);
+    final rows = await tester.runAsync(() => db.select(db.settings).get());
+    final m = {for (final r in rows!) r.key: r.value};
+    expect(m['hijriOffset'], '1');
+    expect(m['adjust_maghrib'], '2');
+    expect(m['adjust_fajr'], '-1');
     await closeApp(tester, db);
   });
 }

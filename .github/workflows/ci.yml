@@ -35,6 +35,25 @@ jobs:
           git diff --exit-code -- lib/
       - run: flutter analyze
       - run: flutter test
+      # Play Store screenshots with the real ayah (the runner can reach the
+      # Quran APIs; the cloud container cannot).
+      - name: Store screenshots
+        run: flutter test tool/store_shots_test.dart --dart-define=LIVE=true
+      - name: Publish store graphics
+        if: github.event_name == 'push'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: store-assets
+          name: Nurday Play Store graphics (latest)
+          prerelease: true
+          make_latest: false
+          body: |
+            Phone screenshots (1080×2340), 512 icon and 1024×500 feature graphic
+            from branch ${{ github.ref_name }}, commit ${{ github.sha }}.
+          files: |
+            build/store/*.png
+            docs/store/icon-512.png
+            docs/store/feature-graphic.png
       - name: Use the upload key when its secrets are set
         if: env.UPLOAD_KEYSTORE_BASE64 != ''
         run: |

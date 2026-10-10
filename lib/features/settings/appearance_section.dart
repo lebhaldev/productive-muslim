@@ -103,6 +103,9 @@ class _ThemeSwatch extends StatelessWidget {
                 ),
                 child: ClipOval(
                   child: Row(
+                    // Without stretch the boxes have no height and the
+                    // swatch shows empty.
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Expanded(child: ColoredBox(color: p.accent700)),
                       Expanded(child: ColoredBox(color: p.sage600)),

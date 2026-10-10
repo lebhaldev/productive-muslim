@@ -28,6 +28,9 @@ Your rhythm
 Prayer and weather
 • Prayer times calculated on your phone, 12 calculation methods, Standard or Hanafi Asr
 • Next-prayer countdown, Qibla direction and the Hijri date
+• Prayer alerts on the exact minute, if you allow it
+• Match your mosque: shift each prayer by a few minutes, and the Hijri date by a day or two
+• Search for your city, or use your location once
 • Local weather for your city
 
 Private by design
@@ -37,17 +40,20 @@ Private by design
 • No ads, no analytics, no tracking
 
 Made with care
-• Nine colour themes, light and dark, including true black for OLED
+• Twelve colour themes, light and dark, including true black for OLED
+• Choose the app font and the Arabic font (Amiri Quran, Scheherazade New, Noto Naskh Arabic)
 • Works offline after the first day
 • Every ayah, hadith, tafsir and quote is copied from a named source and never written or changed by the app
 
-## Screenshots to take (phone, 1080×2340)
-1. Today, Sage theme, morning: greeting, next prayer, ayah card
+## Screenshots (phone, 1080×2340)
+Made by `tool/store_shots_test.dart`; CI publishes them with the icon and feature graphic to the `store-assets` release. The icon (512×512) and feature graphic (1024×500) are in `docs/store/`.
+
+1. Today, Sage theme, morning: greeting, next prayer, ayah, hadith and quote cards
 2. Ayah opened with tafsir
 3. Habits with streaks
 4. Calendar month with mood colours, a day selected
 5. Journal entry
-6. Prayer times with Qibla
+6. Prayer times with Qibla and the Hijri date
 7. Settings → Appearance showing the colour themes
 8. Today in Night theme
 

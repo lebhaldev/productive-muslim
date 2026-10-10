@@ -954,6 +954,8 @@ ThemeData buildTheme(Palette p, {String? bodyFont}) {
   return ThemeData(
     useMaterial3: true,
     fontFamily: bodyFont,
+    // Arabic names inside English text (quote and hadith sources).
+    fontFamilyFallback: const ['NotoNaskhArabic'],
     brightness: p.brightness,
     colorScheme: scheme,
     scaffoldBackgroundColor: p.bg,

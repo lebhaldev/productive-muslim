@@ -74,8 +74,9 @@ Copy from [docs/store-listing.md](docs/store-listing.md). Needs: 512×512 icon (
 | `POST_NOTIFICATIONS` | Reminders and prayer alerts the user turns on. |
 | `RECEIVE_BOOT_COMPLETED` | Reschedule those reminders after a restart. |
 | `USE_BIOMETRIC` | Optional journal lock. |
+| `SCHEDULE_EXACT_ALARM` | Prayer alerts at the exact minute of each prayer. Not granted by default on Android 14+; the user allows it from Settings → Prayer, otherwise alerts are inexact. No Play declaration is needed (only `USE_EXACT_ALARM` needs one, and Nurday does not request it). |
 
-No exact-alarm, background-location, contacts, storage or camera permissions are requested.
+No `USE_EXACT_ALARM`, background-location, contacts, storage or camera permissions are requested.
 
 ## 8. Before each release
 1. Bump `version:` in `pubspec.yaml` (`name+code`; the code must always increase).

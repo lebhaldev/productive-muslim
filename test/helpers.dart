@@ -57,14 +57,16 @@ List<Override> testOverrides(
   ReminderScheduler? scheduler,
   AppLock? lock,
   GoogleAuth? google,
+  Future<String> Function(String path)? assets,
+  http.Client? client,
 }) => [
   googleAuthProvider.overrideWithValue(google ?? FakeAuth(granted: false)),
   appLockProvider.overrideWithValue(lock ?? FakeLock()),
   databaseProvider.overrideWithValue(db),
   reminderSchedulerProvider.overrideWithValue(scheduler ?? FakeScheduler()),
   clockProvider.overrideWithValue(FixedClock(now)),
-  httpClientProvider.overrideWithValue(fakeHttp(online: online)),
-  assetLoaderProvider.overrideWithValue(fixtureAssets),
+  httpClientProvider.overrideWithValue(client ?? fakeHttp(online: online)),
+  assetLoaderProvider.overrideWithValue(assets ?? fixtureAssets),
   reverseGeocoderProvider.overrideWithValue(
     (lat, lon) async => (name: 'Fixture Town', countryCode: 'GB'),
   ),

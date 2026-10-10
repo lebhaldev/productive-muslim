@@ -1,6 +1,12 @@
 # Changelog
 
-## 0.3.0 (unreleased)
+## 1.0.0 (10 October 2026)
+First Play Store release, published by Leb Apps.
+- Prayer alerts fire on the exact minute when Android's "Alarms & reminders" is allowed (Settings → Prayer → Allow on-time alerts); otherwise Android may delay them a few minutes. Declares `SCHEDULE_EXACT_ALARM`, not `USE_EXACT_ALARM`.
+- Settings → Prayer: Send a test notification; Hijri date offset (±2 days); "Adjust times to match your mosque" shifts each prayer by up to ±30 minutes.
+- Privacy policy and store listing name Leb Apps (lebapplications@gmail.com) as publisher and contact. Version 1.0.0+4.
+
+## 0.3.0
 - Today shows the ayah, hadith and quote together again, each in its own card with its own ↻ Show another, instead of tabs.
 - Location: Settings → Location has a city search with suggestions (name, region, country). The weather chip and prayer card show the real place name; "Use my location" asks the phone's geocoder for the name, and locations saved earlier are named once.
 - Four more colour themes: Lavender, Sunrise, Indigo and Mono (12 in all).
