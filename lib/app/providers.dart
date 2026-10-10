@@ -317,6 +317,7 @@ final prayerDayProvider = Provider.family<PrayerDay?, String>((ref, day) {
     method: ref.watch(prayerMethodProvider),
     madhab: s.madhab,
     highLatitude: s.highLatitude,
+    adjust: s.prayerAdjustments,
   );
 });
 

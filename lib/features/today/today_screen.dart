@@ -74,7 +74,7 @@ class _Header extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${DateFormat('EEE d MMM').format(date)} · ${hijriLabel(date)}',
+                '${DateFormat('EEE d MMM').format(date)} · ${hijriLabel(date, offset: settingsOf(ref).hijriOffset)}',
                 style: meta(size: 13),
               ),
               const SizedBox(height: 2),

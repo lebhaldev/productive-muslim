@@ -83,6 +83,16 @@ abstract class ReminderScheduler {
 
   /// Replaces every scheduled reminder with [plan]. Never prompts.
   Future<void> sync(List<Reminder> plan);
+
+  /// Whether prayer alerts can fire at the exact minute (Android's
+  /// "Alarms & reminders" access). Without it they may arrive late.
+  Future<bool> canExact();
+
+  /// Opens Android's "Alarms & reminders" screen. Call only on a tap.
+  Future<void> requestExact();
+
+  /// Shows a notification now, so the user can check they arrive.
+  Future<void> test();
 }
 
 /// Local notifications only; nothing leaves the phone.
@@ -118,10 +128,47 @@ class LocalReminderScheduler implements ReminderScheduler {
     return await android?.requestNotificationsPermission() ?? true;
   }
 
+  AndroidFlutterLocalNotificationsPlugin? get _android => _plugin
+      .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin
+      >();
+
+  @override
+  Future<bool> canExact() async {
+    await _init();
+    return await _android?.canScheduleExactNotifications() ?? true;
+  }
+
+  @override
+  Future<void> requestExact() async {
+    await _init();
+    await _android?.requestExactAlarmsPermission();
+  }
+
+  @override
+  Future<void> test() async {
+    await _init();
+    await _plugin.show(
+      id: 1,
+      title: 'Nurday',
+      body: 'Notifications work. Prayer alerts will look like this.',
+      notificationDetails: const NotificationDetails(
+        android: AndroidNotificationDetails(
+          'prayer',
+          'Prayer times',
+          importance: Importance.high,
+        ),
+      ),
+    );
+  }
+
   @override
   Future<void> sync(List<Reminder> plan) async {
     await _init();
     await _plugin.cancelAllPendingNotifications();
+    // Prayer alerts are exact when Android allows it, so Fajr is not late;
+    // otherwise inexact, which can drift by some minutes in Doze.
+    final exact = await canExact();
     for (final r in plan) {
       if (r.at != null) {
         await _plugin.zonedSchedule(
@@ -133,10 +180,12 @@ class LocalReminderScheduler implements ReminderScheduler {
             android: AndroidNotificationDetails(
               'prayer',
               'Prayer times',
-              importance: Importance.defaultImportance,
+              importance: Importance.high,
             ),
           ),
-          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+          androidScheduleMode: exact
+              ? AndroidScheduleMode.exactAllowWhileIdle
+              : AndroidScheduleMode.inexactAllowWhileIdle,
         );
         continue;
       }

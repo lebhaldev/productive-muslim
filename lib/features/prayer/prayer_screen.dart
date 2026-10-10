@@ -124,7 +124,8 @@ class PrayerScreen extends ConsumerWidget {
           style: meta(size: 13),
         ),
         Text(
-          '${hijriLabel(parseDayKey(today))} · calculated (Umm al-Qura); '
+          '${hijriLabel(parseDayKey(today), offset: s.hijriOffset)} · '
+          'calculated (Umm al-Qura${s.hijriOffset == 0 ? '' : ', ${s.hijriOffset > 0 ? '+' : ''}${s.hijriOffset} days'}); '
           'local moon sighting can differ by a day',
           style: meta(size: 13),
         ),

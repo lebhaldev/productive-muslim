@@ -87,6 +87,19 @@ class FakeScheduler implements ReminderScheduler {
   Future<bool> requestPermission() async => granted;
   @override
   Future<void> sync(List<Reminder> plan) async => synced.add(plan);
+  bool exact = false;
+  int exactAsked = 0;
+  int tests = 0;
+  @override
+  Future<bool> canExact() async => exact;
+  @override
+  Future<void> requestExact() async {
+    exactAsked++;
+    exact = true;
+  }
+
+  @override
+  Future<void> test() async => tests++;
 }
 
 class FakeLock implements AppLock {

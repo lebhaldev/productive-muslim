@@ -34,6 +34,18 @@ class AppSettings {
     orElse: () => ColorTheme.sage,
   );
 
+  /// Days added to the calculated Hijri date (−2…+2).
+  int get hijriOffset =>
+      (int.tryParse(raw['hijriOffset'] ?? '') ?? 0).clamp(-2, 2);
+
+  /// Minutes added to one prayer time (−30…+30), to match the local mosque.
+  int prayerAdjust(PrayerName p) =>
+      (int.tryParse(raw['adjust_${p.name}'] ?? '') ?? 0).clamp(-30, 30);
+
+  Map<PrayerName, int> get prayerAdjustments => {
+    for (final p in PrayerName.values) p: prayerAdjust(p),
+  };
+
   AppFont get appFont => AppFont.parse(raw['appFont']);
   ArabicFont get arabicFont => ArabicFont.parse(raw['arabicFont']);
 

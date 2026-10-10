@@ -106,6 +106,9 @@ PrayerDay prayerDay({
   PrayerMethod method = PrayerMethod.mwl,
   AsrMadhab madhab = AsrMadhab.standard,
   HighLatitude highLatitude = HighLatitude.middle,
+
+  /// Minutes added to each time so it matches the local mosque (±30).
+  Map<PrayerName, int> adjust = const {},
 }) {
   final params = method.method.getParameters()
     ..madhab = madhab.madhab
@@ -115,13 +118,17 @@ PrayerDay prayerDay({
     adhan.DateComponents(date.year, date.month, date.day),
     params,
   );
-  return PrayerDay({
+  final raw = {
     PrayerName.fajr: t.fajr.toLocal(),
     PrayerName.sunrise: t.sunrise.toLocal(),
     PrayerName.dhuhr: t.dhuhr.toLocal(),
     PrayerName.asr: t.asr.toLocal(),
     PrayerName.maghrib: t.maghrib.toLocal(),
     PrayerName.isha: t.isha.toLocal(),
+  };
+  return PrayerDay({
+    for (final e in raw.entries)
+      e.key: e.value.add(Duration(minutes: adjust[e.key] ?? 0)),
   });
 }
 
@@ -151,7 +158,11 @@ double qiblaBearing(double lat, double lon) =>
     adhan.Qibla(adhan.Coordinates(lat, lon)).direction;
 
 /// Umm al-Qura Hijri date, e.g. `23 Rabi' al-Thani 1448` (FR-13).
-String hijriLabel(DateTime date) {
-  final h = HijriCalendar.fromDate(DateTime(date.year, date.month, date.day));
+///
+/// [offset] shifts it by whole days (−2…+2) to match local moon sighting.
+String hijriLabel(DateTime date, {int offset = 0}) {
+  final h = HijriCalendar.fromDate(
+    DateTime(date.year, date.month, date.day + offset),
+  );
   return '${h.hDay} ${h.getLongMonthName()} ${h.hYear}';
 }
