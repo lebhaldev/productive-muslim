@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- Daily content (AlQuran Cloud, Quran.com) and weather (Open-Meteo). -->
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- Optional, only when the user taps "Use my location" for weather. -->
@@ -10,6 +11,11 @@
          "Alarms & reminders". Without it alerts are scheduled inexactly. -->
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <!-- No ads or analytics: keep the advertising ID out even if a library
+         adds it (Play's Advertising ID declaration says "No"). -->
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
     <application
         android:label="Nurday"
         android:name="${applicationName}"

@@ -72,6 +72,13 @@ jobs:
         run: |
           flutter build apk --release --split-per-abi --obfuscate --split-debug-info=build/symbols
           ls -la build/app/outputs/flutter-apk/
+      # Play's Advertising ID declaration is "No", so the merged manifest must
+      # not carry AD_ID (a library could add it).
+      - name: Check the release APK has no advertising ID permission
+        run: |
+          AAPT2="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)aapt2"
+          "$AAPT2" dump permissions build/app/outputs/flutter-apk/app-arm64-v8a-release.apk | tee perms.txt
+          ! grep -q "AD_ID" perms.txt
       # The bundle Play needs. Only useful when signed with the upload key;
       # a human uploads it in Play Console (RELEASE.md).
       - name: Build Play bundle

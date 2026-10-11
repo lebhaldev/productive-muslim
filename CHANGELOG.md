@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 (11 October 2026)
+- Removes the advertising ID permission (`AD_ID`) in case a library adds it, matching Play's "No" Advertising ID declaration; a test and a CI check on the release APK keep it out.
+- docs/play-console.md records what was set up in Play Console (internal testing track, declarations, Data safety, listing).
+
 ## 1.0.0 (10 October 2026)
 First Play Store release, published by Leb Apps.
 - Prayer alerts fire on the exact minute when Android's "Alarms & reminders" is allowed (Settings → Prayer → Allow on-time alerts); otherwise Android may delay them a few minutes. Declares `SCHEDULE_EXACT_ALARM`, not `USE_EXACT_ALARM`.

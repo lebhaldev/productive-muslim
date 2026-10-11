@@ -4,6 +4,9 @@ The app is built to be Play-ready, but every step below that spends money, creat
 
 Status: **not on Play yet.** Steps 1–3 can be done now; 4 onward need the Play Console account.
 
+## Current status (11 October 2026)
+Play Console is set up and 1.0.0 (4) is live on **internal testing**; full record in [docs/play-console.md](docs/play-console.md). Play App Signing is on, so the local keystore is only the upload key. Still open: Advertising ID declaration ("No"), the Play app-signing SHA-1 in the Google Cloud OAuth client for Drive backup, and the closed test (12 testers, 14 days) before production. Every upload needs a higher versionCode; release names follow `x.y.z (code)`. CI publishes the signed bundle at release tag `play-bundle`.
+
 ## 1. Create the upload key (once, on your own computer)
 ```
 keytool -genkeypair -v -keystore upload-keystore.jks -keyalg RSA -keysize 2048 \
