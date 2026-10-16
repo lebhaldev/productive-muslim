@@ -47,14 +47,16 @@ An agent never buys the Play Console account, uploads a release, or stores a key
 
 ## Phase 6 — v1.1 (planned 2026-10-16, from the Balum review)
 Scope and reasons: [research/balum-review.md](research/balum-review.md); screens in 01 §7b; design brief `design/2026-10-16-design-brief.md`. Order, each shipped as its own internal-testing build:
+0. Foundations: Drift migration strategy + migration test, backup format 2 (reads format 1). Start Arabic string extraction (flutter_localizations + ARB) in parallel, since it touches every screen.
 1. Prayer log + prayer day arc on Today and the Prayer screen (FR-16), calendar dots, Reflect count.
-2. Gentle consistency, `N of M today` bar, excused day, consistency hadith card (FR-17, FR-18).
+2. `N of M today` bar right after, then gentle consistency, excused day and the consistency hadith card (FR-17, FR-18).
 3. Mood reply line and mood week strip (FR-19).
-4. Duas screen, lock and backup (FR-20; backup format 2, reads format 1).
-5. Journal prompts and gratitude block.
-6. First-run steps with starter habits.
-7. Weekly review card, Saved list.
-8. Arabic UI with RTL (FR-21), moved up from "After V1".
+4. Duas screen with lock, plus the journal gratitude block, sharing one backup-format change (FR-20).
+5. First-run steps with starter habits.
+6. Weekly review card, Saved list.
+7. Arabic UI with RTL (FR-21), moved up from "After V1"; a native speaker reviews the strings and the Arabic store listing before release.
+
+Before the build with duas or prayer logs in backups goes to Play: Data safety adds "Personal info → Religious or political beliefs: collected, optional, user-initiated, not shared, purpose backup", and PRIVACY.md lists duas and the prayer log among backed-up data.
 
 Each step: Drift migration test when the schema changes, backup round-trip test, widget test of the new screen, `flutter analyze` clean, CHANGELOG entry, versionCode bump. Screens built before the design lands use existing components and are marked pending design in 05. Not in scope: lessons, points, levels, guided sessions, app-written explanations.
 

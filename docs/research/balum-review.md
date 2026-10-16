@@ -27,13 +27,13 @@ Reviewed by the spec thread (proposal), the builder thread (cost and fit with th
 
 | # | Balum idea | Call | Nurday version |
 |---|---|---|---|
-| B1 | Mood check-in that answers back with one small next step | Adapt | After a mood is picked, Today shows one calm line and one suggestion (write a gratitude note, open the journal, a habit not done yet). Lines are fixed app copy written once and reviewed, never generated, never religious claims. "Not now" hides it for the day. |
-| B2 | Ayah matched to mood | Adapt, later | Only through human tags on the existing 120-ayah pool (e.g. `hope`, `patience`, `gratitude`) checked by the reviewer. No tags, no matching. The daily pick stays the default. |
+| B1 | Mood check-in that answers back with one small next step | Adapt | After a mood is picked, Today shows one calm line and one suggestion (write a gratitude note, open the journal, a habit not done yet). Lines are fixed app copy written once and reviewed, never generated, with no religious promises and no mental-health advice (Play Health declaration is "no health features"). Rough and low moods get a neutral action only. "Not now" hides it for the day. |
+| B2 | Ayah matched to mood | Adapt, later | Only through tags set by a person (the owner or someone knowledgeable), never by an agent, on the existing 120-ayah pool (e.g. `hope`, `patience`, `gratitude`). The reviewer checks format and that each tag maps to a real ref. The card stays "Ayah of the day" and never shows the tag. No tags, no matching. |
 | B3 | Prayer arc with done ticks | Take | Already planned as the prayer log (v1-plan "Must"). The arc becomes the visual of the next-prayer card and the Prayer screen: sunrise to sunset, five points, done ones filled sage. Tapping a point logs that prayer. Qibla shortcut on the card. Countdown in minutes, no seconds. |
 | B4 | Prayer list states | Take | Prayer screen rows show `Done`, `Next · in 1 h 12 min`, or nothing. Never "Missed" in red. |
 | B5 | Day progress bar | Adapt | One line under the habits header: `5 of 7 today` with a thin segmented bar (habits + logged prayers). No points. |
 | B6 | Starter habits and habit rotation | Adapt | First run offers 6 suggested habits to tick (Read Qur'an, Morning adhkar, Evening adhkar, Gratitude note, Call family, Walk). Rotation is left out: it adds rules for little value. |
-| B7 | Consistency with the "small regular deeds" hadith | Take | Habits header shows `X of the last 7 days` (already in the v1 plan) and, once, the hadith `bukhari:6465` from the bundled dataset, verbatim with its reference. |
+| B7 | Consistency with the "small regular deeds" hadith | Take | Habits header shows `X of the last 7 days` (already in the v1 plan) and, once, the hadith `bukhari:6465` from the bundled dataset: full Arabic and English text as in the dataset with its reference, and no app sentence linking it to the user's numbers. |
 | B8 | Mood week strip | Take | A 7-day mood strip on Reflect and under the mood picker on Today (tap a day opens it in Calendar). |
 | B9 | Journal prompt | Adapt | The journal placeholder rotates through a short fixed list of neutral prompts (`What are you grateful for today?`, `What went well?`, `What weighed on you?`). |
 | B10 | Gratitude moment | Adapt | A "Gratitude" block in the Journal: three short lines, saved with the day's entry, shown on the Calendar day. Counts as a journal entry. |
@@ -56,8 +56,25 @@ Play's impersonation and repetitive-content policies reject apps that look like 
 - No navy + gold, no night sky, stars, constellations, moon-fill or lantern art. Nurday stays sage + terracotta with its light, warm base.
 - None of these labels: "Your sky", "held in trust", "Daily Peace", "Your journey", "Make it yours", "tended", "light" as points, "Your heart", "A moment of gratitude", "More than a prayer app", "Faith. Reflection. Wellbeing.".
 - Feature ideas are not protected, but each Nurday screen keeps its own layout and copy, written from the Nurday spec, not from the screenshots.
-- Store text and screenshots never name or compare to Balum.
+- Store text, keywords and tags never name or compare to Balum.
+- The icon and screenshot frame layouts are Nurday's own, not mirrors of Balum's frames.
+- Nurday keeps its tab set (Today, Habits, Calendar, Journal, More), not Learn / Prayer / Today / You / More.
 
-## 4. Meeting notes
+## 4. Meeting notes (2026-10-16)
 
-Pending: the builder and reviewer answers are added here when they arrive.
+**Builder** (checked against app-v0.1 at 9de1f8d, version 1.0.1+5):
+- Shared blocker: the Drift schema is still version 1 with no migration code, and backup is format 1. The first new table brings a migration strategy, a migration test and backup format 2 (still reading format 1). Done once, with the prayer log.
+- Costs: B1 S, B3/B4 M–L (arc is a CustomPainter; most cost is per-point accessibility), B5 S, B6 S, B7 S, B8 S, B10 M (a `gratitude` column on journals), B11 M, B18 L (no flutter_localizations or ARB yet, every string is a literal across about 25 files, RTL pass on every screen).
+- Order: B5 right after the prayer log; B10 next to B11 so both share one backup bump; start Arabic string extraction early in parallel, because it touches every screen.
+- No clashes with work in flight.
+
+**Reviewer** (content rules and Play): no blockers.
+- B1 fine as fixed copy: no religious promises, no mental-health advice; neutral action for rough and low moods.
+- B2 only with tags set by a person, never an agent (tagging ayat by meaning is AI interpretation, CR-4). Tag never shown.
+- B7 fine: show the full dataset text (EN + AR) with its reference, nothing tying it to the user's score.
+- B9, B10, B12 fine. B11 fine with the user's own text only; any sample duas need a cited, licensed source (Hisn al-Muslim translations are copyrighted). Same for adhkar text behind the B6 habit names: names are fine, bundled text is not.
+- B18: machine help for UI strings is fine, but a native speaker reviews them and the Arabic store listing before release.
+- Play: section 3 is enough with the three lines added above. Data safety: once export or Drive backup includes duas and the prayer log, declare "Personal info → Religious or political beliefs: collected, optional, user-initiated, not shared, purpose backup", next to "Other user-generated content", and list duas and prayer log in PRIVACY.md.
+- Agrees with every Leave; blocks no Take.
+
+**Result:** proposal kept, with the changes above folded into section 2, section 3, 01 §7b and 04 Phase 6.
