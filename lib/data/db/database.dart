@@ -131,16 +131,6 @@ class Settings extends Table {
     Bookmarks,
   ],
 )
-/// The entry's gratitude lines (up to three, blanks kept in place).
-List<String> gratitudeLines(Journal? j) {
-  if (j?.gratitude == null) return [];
-  try {
-    return [for (final g in jsonDecode(j!.gratitude!) as List) '$g'];
-  } on FormatException {
-    return [];
-  }
-}
-
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
     : super(executor ?? driftDatabase(name: 'nurday'));
@@ -438,3 +428,13 @@ class AppDatabase extends _$AppDatabase {
 
 String? _blankToNull(String? s) =>
     s == null || s.trim().isEmpty ? null : s.trim();
+
+/// The entry's gratitude lines (up to three, blanks kept in place).
+List<String> gratitudeLines(Journal? j) {
+  if (j?.gratitude == null) return [];
+  try {
+    return [for (final g in jsonDecode(j!.gratitude!) as List) '$g'];
+  } on FormatException {
+    return [];
+  }
+}

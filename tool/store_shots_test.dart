@@ -57,7 +57,12 @@ void main() {
       await tester.runAsync(() async {
         final c = http.Client();
         for (final u in ayahUrls) {
-          final r = await c.get(Uri.parse(u));
+          // The API sometimes answers 503 for a moment: retry with backoff.
+          var r = await c.get(Uri.parse(u));
+          for (var wait = 2; r.statusCode != 200 && wait <= 16; wait *= 2) {
+            await Future<void>.delayed(Duration(seconds: wait));
+            r = await c.get(Uri.parse(u));
+          }
           if (r.statusCode != 200) throw StateError('$u: ${r.statusCode}');
           fetched[u] = r;
         }

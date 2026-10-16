@@ -37,10 +37,14 @@ jobs:
       - run: flutter test
       # Play Store screenshots with the real ayah (the runner can reach the
       # Quran APIs; the cloud container cannot).
+      # If the Quran API is down, the app still builds; the last published
+      # screenshots stay as they are.
       - name: Store screenshots
+        id: shots
+        continue-on-error: true
         run: flutter test tool/store_shots_test.dart --dart-define=LIVE=true
       - name: Publish store graphics
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && steps.shots.outcome == 'success'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: store-assets
