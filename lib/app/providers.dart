@@ -133,6 +133,10 @@ final excusedDaysProvider = StreamProvider<Set<String>>(
   (ref) => ref.watch(databaseProvider).watchExcusedDays(),
 );
 
+final duasProvider = StreamProvider<List<Dua>>(
+  (ref) => ref.watch(databaseProvider).watchDuas(),
+);
+
 final journalsProvider = StreamProvider<Map<String, Journal>>(
   (ref) => ref
       .watch(databaseProvider)

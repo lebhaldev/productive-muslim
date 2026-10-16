@@ -6,6 +6,8 @@
 - Excused day (FR-18): an `Excused today` link under Today's habits marks the day excused, with no reason asked; it is left out of consistency counts and the bar, and `Count today again` undoes it.
 - Mood reply (FR-19): after a mood is picked, Today shows one fixed line and one suggestion (open today's journal, write something you're grateful for, or mark an open habit done); rough and low moods get the journal only. `Not now` hides it for the day. All lines live in `lib/core/copy.dart`.
 - Mood week strip: seven dots, Monday to Sunday, under the mood picker and at the top of Reflect; tapping a day opens it in Calendar (on that day's month).
+- Duas (FR-20): More → Duas, your own duas on this phone. Add one with an optional note; `Asking` and `Answered` sections with counts; Mark answered stores the date; Edit, Move back to Asking and Delete (with a confirm). Locked with the journal lock and included in Export and Drive backup. The app never adds text to this list.
+- Journal: a `Gratitude` block with three optional lines above the body, saved with the day's entry (gratitude lines alone count as an entry) and shown on the Calendar day. The body placeholder rotates daily through three fixed prompts. The journal now scrolls as one page.
 - Database schema 2 (prayer logs, excused days, duas, saved items, journal gratitude) with an add-only upgrade and a migration test from the released schema 1.
 - Backup format 2 includes the new data; format 1 files still import.
 

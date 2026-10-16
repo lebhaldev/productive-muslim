@@ -6,6 +6,7 @@ import 'package:nurday/app/app.dart';
 import 'package:nurday/app/providers.dart';
 import 'package:nurday/app/theme.dart';
 import 'package:nurday/core/day_key.dart';
+import 'package:nurday/features/journal/journal_screen.dart';
 import 'package:nurday/features/today/mood_week.dart';
 import 'package:nurday/data/backup_files.dart';
 import 'package:nurday/data/db/database.dart';
@@ -799,6 +800,91 @@ void main() {
     await tester.tap(find.byKey(Key('mood-week-$today')));
     await settle(tester);
     expect(find.text('Mon 5 October'), findsOneWidget);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('journal gratitude lines save and show on the Calendar day', (
+    tester,
+  ) async {
+    final db = await pumpApp(tester);
+    await tapTab(tester, 'Journal');
+    expect(find.text(journalPromptFor('2026-10-05')), findsOneWidget);
+    await tester.enterText(find.byKey(const Key('gratitude-0')), 'Sunshine');
+    await tester.enterText(find.byKey(const Key('gratitude-2')), 'Tea');
+    await tester.pump(const Duration(milliseconds: 500));
+    await settle(tester);
+    final j = await tester.runAsync(() => db.watchJournals().first);
+    expect(gratitudeLines(j!.single), ['Sunshine', '', 'Tea']);
+
+    await tapTab(tester, 'Calendar');
+    await scrollTo(tester, find.byKey(const Key('calendar-gratitude-0')));
+    expect(find.text('Grateful 1. Sunshine'), findsOneWidget);
+    expect(find.text('Grateful 3. Tea'), findsOneWidget);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('duas are added, answered, moved back and deleted', (
+    tester,
+  ) async {
+    final db = await pumpApp(tester);
+    await tapTab(tester, 'More');
+    await tester.tap(find.text('Duas'));
+    await settle(tester);
+    expect(
+      find.text('Write the duas you are making. Only you see them.'),
+      findsOneWidget,
+    );
+    await tester.enterText(
+      find.byKey(const Key('dua-text')),
+      'Ease for my family',
+    );
+    await tester.enterText(find.byKey(const Key('dua-note')), 'every night');
+    await tester.tap(find.byKey(const Key('dua-add')));
+    await settle(tester);
+    expect(find.text('Asking · 1'), findsOneWidget);
+    expect(find.text('every night'), findsOneWidget);
+    expect(find.text('Added 5 Oct'), findsOneWidget);
+
+    final id = (await tester.runAsync(() => db.watchDuas().first))!.single.id;
+    await tester.tap(find.byKey(Key('dua-answer-$id')));
+    await settle(tester);
+    expect(find.text('Answered · 1'), findsOneWidget);
+    expect(find.text('Answered 5 Oct'), findsOneWidget);
+
+    await tester.tap(find.byKey(Key('dua-menu-$id')));
+    await settle(tester);
+    await tester.tap(find.text('Move back to Asking'));
+    await settle(tester);
+    expect(find.text('Asking · 1'), findsOneWidget);
+
+    await tester.tap(find.byKey(Key('dua-menu-$id')));
+    await settle(tester);
+    await tester.tap(find.text('Delete'));
+    await settle(tester);
+    await tester.tap(find.widgetWithText(TextButton, 'Delete'));
+    await settle(tester);
+    expect(await tester.runAsync(() => db.watchDuas().first), isEmpty);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('duas are locked with the journal lock', (tester) async {
+    final lock = FakeLock(accept: false);
+    final db = memoryDb();
+    await tester.runAsync(() async {
+      await db.addDua('Private dua', null, now);
+      await db.putSetting('journalLock', 'true');
+    });
+    await pumpApp(tester, db: db, lock: lock);
+    await tapTab(tester, 'More');
+    await tester.tap(find.text('Duas'));
+    await settle(tester);
+    expect(find.text('Your duas are locked'), findsOneWidget);
+    expect(find.text('Private dua'), findsNothing);
+    lock.accept = true;
+    await tester.tap(find.byKey(const Key('unlock-duas')));
+    await settle(tester);
+    expect(find.text('Private dua'), findsOneWidget);
+    expect(lock.asked, 1);
     await closeApp(tester, db);
   });
 }

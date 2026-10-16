@@ -14,6 +14,12 @@ class MoreScreen extends StatelessWidget {
       'Log what you did, grouped by day',
       Icons.directions_walk,
     ),
+    (
+      'duas',
+      'Duas',
+      'Your own duas, private to this phone',
+      Icons.spa_outlined,
+    ),
     ('reflect', 'Reflect', 'Your last 30 days', Icons.insights_outlined),
   ];
 

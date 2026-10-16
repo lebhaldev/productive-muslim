@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 
@@ -129,6 +131,16 @@ class Settings extends Table {
     Bookmarks,
   ],
 )
+/// The entry's gratitude lines (up to three, blanks kept in place).
+List<String> gratitudeLines(Journal? j) {
+  if (j?.gratitude == null) return [];
+  try {
+    return [for (final g in jsonDecode(j!.gratitude!) as List) '$g'];
+  } on FormatException {
+    return [];
+  }
+}
+
 class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor])
     : super(executor ?? driftDatabase(name: 'nurday'));
@@ -252,19 +264,29 @@ class AppDatabase extends _$AppDatabase {
   Stream<List<Journal>> watchJournals() => select(journals).watch();
 
   /// One entry per day (FR-3). An empty body removes the day's entry.
+  /// Saves the day's entry. [gratitude] (up to three lines) replaces the
+  /// stored lines when given. An entry with neither body nor gratitude is
+  /// removed; gratitude lines alone count as an entry (FR-3 as amended).
   Future<void> saveJournal(
     String day,
     String title,
     String body,
-    DateTime now,
-  ) async {
-    if (body.trim().isEmpty) {
-      await (delete(journals)..where((j) => j.dayKey.equals(day))).go();
-      return;
-    }
+    DateTime now, {
+    List<String>? gratitude,
+  }) async {
     final existing = await (select(
       journals,
     )..where((j) => j.dayKey.equals(day))).getSingleOrNull();
+    final lines = gratitude == null
+        ? gratitudeLines(existing)
+        : [for (final g in gratitude.take(3)) g.trim()];
+    while (lines.isNotEmpty && lines.last.isEmpty) {
+      lines.removeLast();
+    }
+    if (body.trim().isEmpty && lines.isEmpty) {
+      await (delete(journals)..where((j) => j.dayKey.equals(day))).go();
+      return;
+    }
     await into(journals).insertOnConflictUpdate(
       JournalsCompanion.insert(
         dayKey: day,
@@ -272,6 +294,7 @@ class AppDatabase extends _$AppDatabase {
         body: body,
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
+        gratitude: Value(lines.isEmpty ? null : jsonEncode(lines)),
       ),
     );
   }

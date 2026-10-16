@@ -8,6 +8,7 @@ import '../../app/router.dart';
 import '../../app/theme.dart';
 import '../../core/day_key.dart';
 import '../../core/moods.dart';
+import '../../data/db/database.dart' show gratitudeLines;
 import '../../widgets/common.dart';
 
 class CalendarScreen extends ConsumerStatefulWidget {
@@ -143,6 +144,14 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   : '${selJournal.title.isEmpty ? '' : '${selJournal.title} — '}${selJournal.body}',
               style: const TextStyle(fontSize: 14),
             ),
+            if (selJournal != null && !ref.watch(journalLockedProvider))
+              for (final (i, g) in gratitudeLines(selJournal).indexed)
+                if (g.isNotEmpty)
+                  Text(
+                    'Grateful ${i + 1}. $g',
+                    key: Key('calendar-gratitude-$i'),
+                    style: const TextStyle(fontSize: 14),
+                  ),
             Align(
               alignment: Alignment.centerLeft,
               child: OutlinedButton(

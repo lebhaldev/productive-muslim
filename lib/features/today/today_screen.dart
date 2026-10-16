@@ -590,9 +590,11 @@ class _JournalShortcut extends ConsumerWidget {
         ? 'Written today · locked'
         : j == null
         ? ''
-        : (j.title.isNotEmpty
-              ? j.title
-              : '${j.body.length > 40 ? j.body.substring(0, 40) : j.body}…');
+        : j.title.isNotEmpty
+        ? j.title
+        : j.body.trim().isEmpty
+        ? 'Gratitude written'
+        : '${j.body.length > 40 ? j.body.substring(0, 40) : j.body}…';
     return ActionTile(
       key: const Key('journal-tile'),
       color: AppColors.accent200,

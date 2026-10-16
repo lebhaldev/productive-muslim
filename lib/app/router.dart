@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../core/day_key.dart';
 import '../features/calendar/calendar_screen.dart';
+import '../features/duas/duas_screen.dart';
 import '../features/habits/habits_screen.dart';
 import '../features/journal/journal_screen.dart';
 import '../features/more/activities_screen.dart';
@@ -71,6 +72,7 @@ GoRouter buildRouter() => GoRouter(
                   path: 'activities',
                   builder: (_, _) => const ActivitiesScreen(),
                 ),
+                GoRoute(path: 'duas', builder: (_, _) => const DuasScreen()),
                 GoRoute(
                   path: 'reflect',
                   builder: (_, _) => const ReflectScreen(),
