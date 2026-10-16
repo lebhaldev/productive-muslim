@@ -29,6 +29,9 @@ class AppSettings {
     (l) => l.name == raw['language'],
     orElse: () => AppLanguage.system,
   );
+
+  /// The colour theme was chosen on first run (or skipped there).
+  bool get themePicked => raw['themePicked'] == 'true';
   bool get journalLock => raw['journalLock'] == 'true';
   bool get driveBackup => raw['driveBackup'] == 'true';
   DateTime? get driveLastBackup =>

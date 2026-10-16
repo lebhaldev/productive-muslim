@@ -111,7 +111,7 @@ void main() {
       ),
     );
     await settle(tester);
-    for (var step = 0; step < 3; step++) {
+    for (var step = 0; step < 4; step++) {
       expect(tester.takeException(), isNull, reason: 'step $step');
       final next = find.byKey(const Key('welcome-next'));
       await tester.scrollUntilVisible(

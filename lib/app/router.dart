@@ -35,7 +35,12 @@ GoRouter buildRouter() => GoRouter(
         ),
       ],
     ),
-    GoRoute(path: '/welcome', builder: (_, _) => const WelcomeScreen()),
+    GoRoute(
+      path: '/welcome',
+      builder: (_, state) => WelcomeScreen(
+        themeOnly: state.uri.queryParameters['only'] == 'theme',
+      ),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, shell) => AppShell(shell: shell),
       branches: [
@@ -120,11 +125,21 @@ void _maybeFirstRun(BuildContext context, WidgetRef ref) {
   final s = ref.watch(settingsProvider).value;
   final habits = ref.watch(habitsProvider).value;
   if (s == null || habits == null) return;
-  if (s.onboarded || habits.isNotEmpty || s.city.isNotEmpty || s.lat != null) {
+  final String where;
+  if (!s.onboarded &&
+      habits.isEmpty &&
+      s.city.isEmpty &&
+      s.lat == null &&
+      !s.themePicked) {
+    where = '/welcome';
+  } else if (!s.themePicked) {
+    // Set up before themes were offered on first run: ask once.
+    where = '/welcome?only=theme';
+  } else {
     return;
   }
   WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (context.mounted) context.go('/welcome');
+    if (context.mounted) context.go(where);
   });
 }
 

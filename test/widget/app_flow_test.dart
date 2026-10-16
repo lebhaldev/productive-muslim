@@ -537,7 +537,7 @@ void main() {
   testWidgets('every colour theme can be picked', (tester) async {
     final db = await pumpApp(tester);
     await openSettings(tester, 'appearance');
-    for (final t in [ColorTheme.lavender, ColorTheme.mono]) {
+    for (final t in [ColorTheme.mint, ColorTheme.peach, ColorTheme.mono]) {
       await scrollTo(tester, find.byKey(Key('color-theme-${t.name}')));
       await tester.tap(find.byKey(Key('color-theme-${t.name}')));
       await settle(tester);
@@ -893,6 +893,21 @@ void main() {
 
   testWidgets('a fresh install opens the first-run steps once', (tester) async {
     final db = await pumpApp(tester, firstRun: true);
+    expect(find.text('Pick your colours'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('color-theme-mint')));
+    await settle(tester);
+    expect(
+      (await tester.runAsync(() => db.watchSettings().first))!['colorTheme'],
+      'mint',
+    );
+    expect(AppColors.current, Palette.mintLight, reason: 'live preview');
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('welcome-next')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const Key('welcome-next')));
+    await settle(tester);
     expect(find.text('Where are you?'), findsOneWidget);
     await tester.tap(find.byKey(const Key('welcome-skip')));
     await settle(tester);
@@ -910,19 +925,32 @@ void main() {
     expect(habits!.map((h) => h.name), ["Read Qur'an", 'Walk']);
     final settings = await tester.runAsync(() => db.watchSettings().first);
     expect(settings!['onboarded'], 'true');
+    expect(settings['themePicked'], 'true');
     expect(find.text('Where are you?'), findsNothing);
+    AppColors.current = Palette.light;
     await scrollTo(tester, find.text('Walk'));
     expect(find.text('Walk'), findsOneWidget);
     await closeApp(tester, db);
   });
 
-  testWidgets('first run is skipped once set up, and Skip all ends it', (
+  testWidgets('set-up phones only get the colour step, and Skip all ends it', (
     tester,
   ) async {
     final db = memoryDb();
     await tester.runAsync(() => db.putSetting('city', 'London'));
     await pumpApp(tester, db: db, firstRun: true);
+    // Set up before the colour step existed: only that step, once.
+    expect(find.text('Pick your colours'), findsOneWidget);
     expect(find.text('Where are you?'), findsNothing);
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('welcome-next')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.tap(find.byKey(const Key('welcome-next')));
+    await settle(tester);
+    expect(find.text('Pick your colours'), findsNothing);
+    expect(find.byKey(const Key('tab-Today')), findsOneWidget);
     await closeApp(tester, db);
 
     final fresh = await pumpApp(tester, firstRun: true);

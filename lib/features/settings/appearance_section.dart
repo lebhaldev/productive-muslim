@@ -28,32 +28,7 @@ class AppearanceSection extends ConsumerWidget {
           },
           onChanged: (v) => ref.putSetting('language', v.name),
         ),
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: [
-            for (final t in ColorTheme.values)
-              _ThemeSwatch(
-                theme: t,
-                selected: s.colorTheme == t,
-                onTap: () => ref.putSetting('colorTheme', t.name),
-              ),
-          ],
-        ),
-        SettingChoice<ThemeMode>(
-          key: const Key('theme-mode'),
-          value: s.themeMode,
-          options: const {
-            ThemeMode.system: 'System',
-            ThemeMode.light: 'Light',
-            ThemeMode.dark: 'Dark',
-          },
-          onChanged: s.colorTheme.alwaysDark
-              ? null
-              : (m) => ref.putSetting('themeMode', m.name),
-        ),
-        if (s.colorTheme.alwaysDark)
-          const Note('Night is always dark, for OLED screens.'),
+        const ThemePicker(),
         const SizedBox(height: 4),
         SettingPicker<AppFont>(
           key: const Key('app-font'),
@@ -75,8 +50,54 @@ class AppearanceSection extends ConsumerWidget {
   }
 }
 
-class _ThemeSwatch extends StatelessWidget {
-  const _ThemeSwatch({
+/// Colour swatches plus System / Light / Dark; used in Settings and on
+/// first run. Picking one recolours the whole app at once.
+class ThemePicker extends ConsumerWidget {
+  const ThemePicker({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final s = settingsOf(ref);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            for (final t in ColorTheme.values)
+              ThemeSwatch(
+                theme: t,
+                selected: s.colorTheme == t,
+                onTap: () => ref.putSetting('colorTheme', t.name),
+              ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        SettingChoice<ThemeMode>(
+          key: const Key('theme-mode'),
+          value: s.themeMode,
+          options: const {
+            ThemeMode.system: 'System',
+            ThemeMode.light: 'Light',
+            ThemeMode.dark: 'Dark',
+          },
+          onChanged: s.colorTheme.alwaysDark
+              ? null
+              : (m) => ref.putSetting('themeMode', m.name),
+        ),
+        if (s.colorTheme.alwaysDark) ...[
+          const SizedBox(height: 8),
+          const Note('Night is always dark, for OLED screens.'),
+        ],
+      ],
+    );
+  }
+}
+
+class ThemeSwatch extends StatelessWidget {
+  const ThemeSwatch({
+    super.key,
     required this.theme,
     required this.selected,
     required this.onTap,
