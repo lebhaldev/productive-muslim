@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:drift/drift.dart' hide isNull;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nurday/data/backup.dart';
 import 'package:nurday/data/db/database.dart';
@@ -114,6 +115,56 @@ void main() {
         ),
       ),
     );
+  });
+
+  test('format 2 round-trips prayer logs, excused days, duas, saved items and gratitude', () async {
+    await seed(db);
+    await db.togglePrayer('2026-10-07', 'fajr', now);
+    await db.togglePrayer('2026-10-07', 'dhuhr', now);
+    await db.setExcused('2026-10-05', true, now);
+    final id = await db.addDua('Ease for my family', 'every night', now);
+    await db.setDuaAnswered(id, DateTime(2026, 10, 8));
+    await db.addDua('Good health', null, now);
+    await db.toggleBookmark('hadith', 'bukhari:6465', now);
+    await (db.update(db.journals)..where((j) => j.dayKey.equals('2026-10-07')))
+        .write(const JournalsCompanion(gratitude: Value('["Sun","Tea"]')));
+    final json = await db.exportJson(now);
+    expect(jsonDecode(json)['format'], 2);
+
+    final other = memoryDb();
+    addTearDown(other.close);
+    final s = await other.importJson(json, ImportMode.replace);
+    expect(s.prayers, 2);
+    expect(s.duas, 2);
+    expect(await other.select(other.prayerLogs).get(), hasLength(2));
+    expect(await other.watchExcusedDays().first, {'2026-10-05'});
+    final duas = await other.select(other.duas).get();
+    final answered = duas.singleWhere((d) => d.body == 'Ease for my family');
+    expect(answered.note, 'every night');
+    expect(answered.answeredAt, DateTime(2026, 10, 8));
+    expect((await other.watchBookmarks().first).single.ref, 'bukhari:6465');
+    final j = (await other.watchJournals().first).single;
+    expect(jsonDecode(j.gratitude!), ['Sun', 'Tea']);
+
+    // Merging the same file again adds nothing.
+    final again = await other.importJson(json, ImportMode.merge);
+    expect(again.prayers, 0);
+    expect(again.duas, 0);
+    expect(await other.select(other.duas).get(), hasLength(2));
+  });
+
+  test('a format 1 backup still imports', () async {
+    const v1 =
+        '''{"app":"nurday","format":1,"exportedAt":"2026-10-07T08:00:00.000Z",
+      "habits":[{"id":1,"name":"Walk","archived":false,"sortOrder":0,"reminderTime":null,"createdAt":"2026-10-01T08:00:00.000Z"}],
+      "completions":[{"habitId":1,"dayKey":"2026-10-06"}],"activities":[],
+      "moods":[{"dayKey":"2026-10-06","value":3,"note":null,"updatedAt":"2026-10-06T08:00:00.000Z"}],
+      "journals":[{"dayKey":"2026-10-06","title":"","body":"Old entry","createdAt":"2026-10-06T08:00:00.000Z","updatedAt":"2026-10-06T08:00:00.000Z"}],
+      "settings":{"city":"Rabat"}}''';
+    final s = await db.importJson(v1, ImportMode.replace);
+    expect(s.habits, 1);
+    expect(s.journals, 1);
+    expect((await db.watchJournals().first).single.gratitude, isNull);
   });
 
   test('file name uses the date', () {

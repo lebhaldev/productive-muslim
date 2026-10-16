@@ -7,7 +7,9 @@ import 'db/database.dart';
 /// Nurday backup file: everything the user wrote, as one JSON document.
 ///
 /// Caches (daily content, weather) are left out; they are refetched.
-const backupFormat = 1;
+/// Format 2 adds the prayer log, excused days, duas, saved items and journal
+/// gratitude lines. Format 1 files still import.
+const backupFormat = 2;
 
 class BackupException implements Exception {
   const BackupException(this.message);
@@ -25,14 +27,20 @@ class ImportSummary {
     required this.activities,
     required this.moods,
     required this.journals,
+    this.prayers = 0,
+    this.duas = 0,
   });
   final int habits;
   final int completions;
   final int activities;
   final int moods;
   final int journals;
+  final int prayers;
+  final int duas;
 
-  bool get isEmpty => habits + completions + activities + moods + journals == 0;
+  bool get isEmpty =>
+      habits + completions + activities + moods + journals + prayers + duas ==
+      0;
 
   @override
   String toString() {
@@ -43,6 +51,8 @@ class ImportSummary {
       n(activities, 'activity', 'activities'),
       n(moods, 'mood', 'moods'),
       n(journals, 'journal entry', 'journal entries'),
+      if (prayers > 0) n(prayers, 'logged prayer', 'logged prayers'),
+      if (duas > 0) n(duas, 'dua', 'duas'),
     ].join(', ');
   }
 }
@@ -101,6 +111,40 @@ extension Backup on AppDatabase {
             'body': j.body,
             'createdAt': j.createdAt.toUtc().toIso8601String(),
             'updatedAt': j.updatedAt.toUtc().toIso8601String(),
+            'gratitude': j.gratitude == null ? null : jsonDecode(j.gratitude!),
+          },
+      ],
+      'prayerLogs': [
+        for (final l in await select(prayerLogs).get())
+          {
+            'dayKey': l.dayKey,
+            'prayer': l.prayer,
+            'loggedAt': l.loggedAt.toUtc().toIso8601String(),
+          },
+      ],
+      'excusedDays': [
+        for (final e in await select(excusedDays).get())
+          {
+            'dayKey': e.dayKey,
+            'createdAt': e.createdAt.toUtc().toIso8601String(),
+          },
+      ],
+      'duas': [
+        for (final d in await select(duas).get())
+          {
+            'text': d.body,
+            'note': d.note,
+            'createdAt': d.createdAt.toUtc().toIso8601String(),
+            'answeredAt': d.answeredAt?.toUtc().toIso8601String(),
+            'sortOrder': d.sortOrder,
+          },
+      ],
+      'bookmarks': [
+        for (final b in await select(bookmarks).get())
+          {
+            'kind': b.kind,
+            'ref': b.ref,
+            'createdAt': b.createdAt.toUtc().toIso8601String(),
           },
       ],
       'settings': {
@@ -126,6 +170,10 @@ extension Backup on AppDatabase {
         await delete(activities).go();
         await delete(moods).go();
         await delete(journals).go();
+        await delete(prayerLogs).go();
+        await delete(excusedDays).go();
+        await delete(duas).go();
+        await delete(bookmarks).go();
         await delete(settings).go();
       }
 
@@ -219,6 +267,40 @@ extension Backup on AppDatabase {
         newJournals++;
       }
 
+      // Logs, excused days and saved items: union, the phone's copy wins.
+      final logged = {
+        for (final l in await select(prayerLogs).get())
+          '${l.dayKey}|${l.prayer}',
+      };
+      var newPrayers = 0;
+      for (final l in b.prayerLogs) {
+        if (!logged.add('${l.dayKey}|${l.prayer}')) continue;
+        await into(prayerLogs).insert(l);
+        newPrayers++;
+      }
+      for (final e in b.excusedDays) {
+        await into(excusedDays).insert(e, mode: InsertMode.insertOrIgnore);
+      }
+      for (final k in b.bookmarks) {
+        await into(bookmarks).insert(k, mode: InsertMode.insertOrIgnore);
+      }
+
+      // Duas: the same text written at the same moment is the same dua.
+      final haveDuas = {
+        for (final d in await select(duas).get())
+          '${d.createdAt.toUtc().toIso8601String()}|${d.body}',
+      };
+      var newDuas = 0;
+      for (final d in b.duas) {
+        if (!haveDuas.add(
+          '${d.createdAt.value.toUtc().toIso8601String()}|${d.body.value}',
+        )) {
+          continue;
+        }
+        await into(duas).insert(d);
+        newDuas++;
+      }
+
       for (final e in b.settings.entries) {
         await into(settings).insert(
           SettingsCompanion.insert(key: e.key, value: e.value),
@@ -232,6 +314,8 @@ extension Backup on AppDatabase {
         activities: newActivities,
         moods: newMoods,
         journals: newJournals,
+        prayers: newPrayers,
+        duas: newDuas,
       );
     });
   }
@@ -264,8 +348,14 @@ class _Parsed {
       >[];
   final moods = <Mood>[];
   final journals = <Journal>[];
+  final prayerLogs = <PrayerLog>[];
+  final excusedDays = <ExcusedDay>[];
+  final duas = <DuasCompanion>[];
+  final bookmarks = <Bookmark>[];
   final settings = <String, String>{};
 }
+
+const _prayers = {'fajr', 'dhuhr', 'asr', 'maghrib', 'isha'};
 
 final _dayKey = RegExp(r'^\d{4}-\d{2}-\d{2}$');
 
@@ -311,6 +401,16 @@ _Parsed _parse(String source) {
       throw _damaged;
     }
     return d.toLocal();
+  }
+
+  /// Gratitude lines stored as JSON text, or null when there are none.
+  String? gratitude(Map m) {
+    final g = m['gratitude'];
+    if (g == null) return null;
+    if (g is! List || g.length > 3 || g.any((e) => e is! String)) {
+      throw _damaged;
+    }
+    return jsonEncode(g);
   }
 
   String day(Map m) {
@@ -362,6 +462,42 @@ _Parsed _parse(String source) {
         body: field<String>(j, 'body'),
         createdAt: date(j, 'createdAt'),
         updatedAt: date(j, 'updatedAt'),
+        gratitude: gratitude(j),
+      ),
+    );
+  }
+  for (final l in list('prayerLogs')) {
+    final prayer = field<String>(l, 'prayer');
+    if (!_prayers.contains(prayer)) throw _damaged;
+    p.prayerLogs.add(
+      PrayerLog(dayKey: day(l), prayer: prayer, loggedAt: date(l, 'loggedAt')),
+    );
+  }
+  for (final e in list('excusedDays')) {
+    p.excusedDays.add(
+      ExcusedDay(dayKey: day(e), createdAt: date(e, 'createdAt')),
+    );
+  }
+  for (final d in list('duas')) {
+    final answered = field<String?>(d, 'answeredAt');
+    p.duas.add(
+      DuasCompanion.insert(
+        body: field<String>(d, 'text'),
+        note: Value(field<String?>(d, 'note')),
+        createdAt: date(d, 'createdAt'),
+        answeredAt: Value(answered == null ? null : date(d, 'answeredAt')),
+        sortOrder: Value(field<int?>(d, 'sortOrder') ?? 0),
+      ),
+    );
+  }
+  for (final k in list('bookmarks')) {
+    final kind = field<String>(k, 'kind');
+    if (kind != 'ayah' && kind != 'hadith') throw _damaged;
+    p.bookmarks.add(
+      Bookmark(
+        kind: kind,
+        ref: field<String>(k, 'ref'),
+        createdAt: date(k, 'createdAt'),
       ),
     );
   }

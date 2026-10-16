@@ -1381,6 +1381,17 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _gratitudeMeta = const VerificationMeta(
+    'gratitude',
+  );
+  @override
+  late final GeneratedColumn<String> gratitude = GeneratedColumn<String>(
+    'gratitude',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     dayKey,
@@ -1388,6 +1399,7 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
     body,
     createdAt,
     updatedAt,
+    gratitude,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1439,6 +1451,12 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
     } else if (isInserting) {
       context.missing(_updatedAtMeta);
     }
+    if (data.containsKey('gratitude')) {
+      context.handle(
+        _gratitudeMeta,
+        gratitude.isAcceptableOrUnknown(data['gratitude']!, _gratitudeMeta),
+      );
+    }
     return context;
   }
 
@@ -1468,6 +1486,10 @@ class $JournalsTable extends Journals with TableInfo<$JournalsTable, Journal> {
         DriftSqlType.dateTime,
         data['${effectivePrefix}updated_at'],
       )!,
+      gratitude: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}gratitude'],
+      ),
     );
   }
 
@@ -1483,12 +1505,16 @@ class Journal extends DataClass implements Insertable<Journal> {
   final String body;
   final DateTime createdAt;
   final DateTime updatedAt;
+
+  /// Up to three gratitude lines as a JSON list (schema 2).
+  final String? gratitude;
   const Journal({
     required this.dayKey,
     required this.title,
     required this.body,
     required this.createdAt,
     required this.updatedAt,
+    this.gratitude,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1498,6 +1524,9 @@ class Journal extends DataClass implements Insertable<Journal> {
     map['body'] = Variable<String>(body);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || gratitude != null) {
+      map['gratitude'] = Variable<String>(gratitude);
+    }
     return map;
   }
 
@@ -1508,6 +1537,9 @@ class Journal extends DataClass implements Insertable<Journal> {
       body: Value(body),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
+      gratitude: gratitude == null && nullToAbsent
+          ? const Value.absent()
+          : Value(gratitude),
     );
   }
 
@@ -1522,6 +1554,7 @@ class Journal extends DataClass implements Insertable<Journal> {
       body: serializer.fromJson<String>(json['body']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      gratitude: serializer.fromJson<String?>(json['gratitude']),
     );
   }
   @override
@@ -1533,6 +1566,7 @@ class Journal extends DataClass implements Insertable<Journal> {
       'body': serializer.toJson<String>(body),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'gratitude': serializer.toJson<String?>(gratitude),
     };
   }
 
@@ -1542,12 +1576,14 @@ class Journal extends DataClass implements Insertable<Journal> {
     String? body,
     DateTime? createdAt,
     DateTime? updatedAt,
+    Value<String?> gratitude = const Value.absent(),
   }) => Journal(
     dayKey: dayKey ?? this.dayKey,
     title: title ?? this.title,
     body: body ?? this.body,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
+    gratitude: gratitude.present ? gratitude.value : this.gratitude,
   );
   Journal copyWithCompanion(JournalsCompanion data) {
     return Journal(
@@ -1556,6 +1592,7 @@ class Journal extends DataClass implements Insertable<Journal> {
       body: data.body.present ? data.body.value : this.body,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      gratitude: data.gratitude.present ? data.gratitude.value : this.gratitude,
     );
   }
 
@@ -1566,13 +1603,15 @@ class Journal extends DataClass implements Insertable<Journal> {
           ..write('title: $title, ')
           ..write('body: $body, ')
           ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('gratitude: $gratitude')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(dayKey, title, body, createdAt, updatedAt);
+  int get hashCode =>
+      Object.hash(dayKey, title, body, createdAt, updatedAt, gratitude);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1581,7 +1620,8 @@ class Journal extends DataClass implements Insertable<Journal> {
           other.title == this.title &&
           other.body == this.body &&
           other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt);
+          other.updatedAt == this.updatedAt &&
+          other.gratitude == this.gratitude);
 }
 
 class JournalsCompanion extends UpdateCompanion<Journal> {
@@ -1590,6 +1630,7 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
   final Value<String> body;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
+  final Value<String?> gratitude;
   final Value<int> rowid;
   const JournalsCompanion({
     this.dayKey = const Value.absent(),
@@ -1597,6 +1638,7 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
     this.body = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
+    this.gratitude = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   JournalsCompanion.insert({
@@ -1605,6 +1647,7 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
     required String body,
     required DateTime createdAt,
     required DateTime updatedAt,
+    this.gratitude = const Value.absent(),
     this.rowid = const Value.absent(),
   }) : dayKey = Value(dayKey),
        body = Value(body),
@@ -1616,6 +1659,7 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
     Expression<String>? body,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
+    Expression<String>? gratitude,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -1624,6 +1668,7 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
       if (body != null) 'body': body,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
+      if (gratitude != null) 'gratitude': gratitude,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1634,6 +1679,7 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
     Value<String>? body,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
+    Value<String?>? gratitude,
     Value<int>? rowid,
   }) {
     return JournalsCompanion(
@@ -1642,6 +1688,7 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
       body: body ?? this.body,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      gratitude: gratitude ?? this.gratitude,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1664,6 +1711,9 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
     if (updatedAt.present) {
       map['updated_at'] = Variable<DateTime>(updatedAt.value);
     }
+    if (gratitude.present) {
+      map['gratitude'] = Variable<String>(gratitude.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1678,6 +1728,7 @@ class JournalsCompanion extends UpdateCompanion<Journal> {
           ..write('body: $body, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
+          ..write('gratitude: $gratitude, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -2503,6 +2554,1140 @@ class SettingsCompanion extends UpdateCompanion<Setting> {
   }
 }
 
+class $PrayerLogsTable extends PrayerLogs
+    with TableInfo<$PrayerLogsTable, PrayerLog> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PrayerLogsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _dayKeyMeta = const VerificationMeta('dayKey');
+  @override
+  late final GeneratedColumn<String> dayKey = GeneratedColumn<String>(
+    'day_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _prayerMeta = const VerificationMeta('prayer');
+  @override
+  late final GeneratedColumn<String> prayer = GeneratedColumn<String>(
+    'prayer',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _loggedAtMeta = const VerificationMeta(
+    'loggedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> loggedAt = GeneratedColumn<DateTime>(
+    'logged_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [dayKey, prayer, loggedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'prayer_logs';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PrayerLog> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('day_key')) {
+      context.handle(
+        _dayKeyMeta,
+        dayKey.isAcceptableOrUnknown(data['day_key']!, _dayKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dayKeyMeta);
+    }
+    if (data.containsKey('prayer')) {
+      context.handle(
+        _prayerMeta,
+        prayer.isAcceptableOrUnknown(data['prayer']!, _prayerMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_prayerMeta);
+    }
+    if (data.containsKey('logged_at')) {
+      context.handle(
+        _loggedAtMeta,
+        loggedAt.isAcceptableOrUnknown(data['logged_at']!, _loggedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_loggedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {dayKey, prayer};
+  @override
+  PrayerLog map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PrayerLog(
+      dayKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}day_key'],
+      )!,
+      prayer: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}prayer'],
+      )!,
+      loggedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}logged_at'],
+      )!,
+    );
+  }
+
+  @override
+  $PrayerLogsTable createAlias(String alias) {
+    return $PrayerLogsTable(attachedDatabase, alias);
+  }
+}
+
+class PrayerLog extends DataClass implements Insertable<PrayerLog> {
+  final String dayKey;
+  final String prayer;
+  final DateTime loggedAt;
+  const PrayerLog({
+    required this.dayKey,
+    required this.prayer,
+    required this.loggedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['day_key'] = Variable<String>(dayKey);
+    map['prayer'] = Variable<String>(prayer);
+    map['logged_at'] = Variable<DateTime>(loggedAt);
+    return map;
+  }
+
+  PrayerLogsCompanion toCompanion(bool nullToAbsent) {
+    return PrayerLogsCompanion(
+      dayKey: Value(dayKey),
+      prayer: Value(prayer),
+      loggedAt: Value(loggedAt),
+    );
+  }
+
+  factory PrayerLog.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PrayerLog(
+      dayKey: serializer.fromJson<String>(json['dayKey']),
+      prayer: serializer.fromJson<String>(json['prayer']),
+      loggedAt: serializer.fromJson<DateTime>(json['loggedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'dayKey': serializer.toJson<String>(dayKey),
+      'prayer': serializer.toJson<String>(prayer),
+      'loggedAt': serializer.toJson<DateTime>(loggedAt),
+    };
+  }
+
+  PrayerLog copyWith({String? dayKey, String? prayer, DateTime? loggedAt}) =>
+      PrayerLog(
+        dayKey: dayKey ?? this.dayKey,
+        prayer: prayer ?? this.prayer,
+        loggedAt: loggedAt ?? this.loggedAt,
+      );
+  PrayerLog copyWithCompanion(PrayerLogsCompanion data) {
+    return PrayerLog(
+      dayKey: data.dayKey.present ? data.dayKey.value : this.dayKey,
+      prayer: data.prayer.present ? data.prayer.value : this.prayer,
+      loggedAt: data.loggedAt.present ? data.loggedAt.value : this.loggedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrayerLog(')
+          ..write('dayKey: $dayKey, ')
+          ..write('prayer: $prayer, ')
+          ..write('loggedAt: $loggedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(dayKey, prayer, loggedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PrayerLog &&
+          other.dayKey == this.dayKey &&
+          other.prayer == this.prayer &&
+          other.loggedAt == this.loggedAt);
+}
+
+class PrayerLogsCompanion extends UpdateCompanion<PrayerLog> {
+  final Value<String> dayKey;
+  final Value<String> prayer;
+  final Value<DateTime> loggedAt;
+  final Value<int> rowid;
+  const PrayerLogsCompanion({
+    this.dayKey = const Value.absent(),
+    this.prayer = const Value.absent(),
+    this.loggedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PrayerLogsCompanion.insert({
+    required String dayKey,
+    required String prayer,
+    required DateTime loggedAt,
+    this.rowid = const Value.absent(),
+  }) : dayKey = Value(dayKey),
+       prayer = Value(prayer),
+       loggedAt = Value(loggedAt);
+  static Insertable<PrayerLog> custom({
+    Expression<String>? dayKey,
+    Expression<String>? prayer,
+    Expression<DateTime>? loggedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (dayKey != null) 'day_key': dayKey,
+      if (prayer != null) 'prayer': prayer,
+      if (loggedAt != null) 'logged_at': loggedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PrayerLogsCompanion copyWith({
+    Value<String>? dayKey,
+    Value<String>? prayer,
+    Value<DateTime>? loggedAt,
+    Value<int>? rowid,
+  }) {
+    return PrayerLogsCompanion(
+      dayKey: dayKey ?? this.dayKey,
+      prayer: prayer ?? this.prayer,
+      loggedAt: loggedAt ?? this.loggedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (dayKey.present) {
+      map['day_key'] = Variable<String>(dayKey.value);
+    }
+    if (prayer.present) {
+      map['prayer'] = Variable<String>(prayer.value);
+    }
+    if (loggedAt.present) {
+      map['logged_at'] = Variable<DateTime>(loggedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PrayerLogsCompanion(')
+          ..write('dayKey: $dayKey, ')
+          ..write('prayer: $prayer, ')
+          ..write('loggedAt: $loggedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExcusedDaysTable extends ExcusedDays
+    with TableInfo<$ExcusedDaysTable, ExcusedDay> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExcusedDaysTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _dayKeyMeta = const VerificationMeta('dayKey');
+  @override
+  late final GeneratedColumn<String> dayKey = GeneratedColumn<String>(
+    'day_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [dayKey, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'excused_days';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExcusedDay> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('day_key')) {
+      context.handle(
+        _dayKeyMeta,
+        dayKey.isAcceptableOrUnknown(data['day_key']!, _dayKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dayKeyMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {dayKey};
+  @override
+  ExcusedDay map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExcusedDay(
+      dayKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}day_key'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $ExcusedDaysTable createAlias(String alias) {
+    return $ExcusedDaysTable(attachedDatabase, alias);
+  }
+}
+
+class ExcusedDay extends DataClass implements Insertable<ExcusedDay> {
+  final String dayKey;
+  final DateTime createdAt;
+  const ExcusedDay({required this.dayKey, required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['day_key'] = Variable<String>(dayKey);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  ExcusedDaysCompanion toCompanion(bool nullToAbsent) {
+    return ExcusedDaysCompanion(
+      dayKey: Value(dayKey),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory ExcusedDay.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExcusedDay(
+      dayKey: serializer.fromJson<String>(json['dayKey']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'dayKey': serializer.toJson<String>(dayKey),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  ExcusedDay copyWith({String? dayKey, DateTime? createdAt}) => ExcusedDay(
+    dayKey: dayKey ?? this.dayKey,
+    createdAt: createdAt ?? this.createdAt,
+  );
+  ExcusedDay copyWithCompanion(ExcusedDaysCompanion data) {
+    return ExcusedDay(
+      dayKey: data.dayKey.present ? data.dayKey.value : this.dayKey,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExcusedDay(')
+          ..write('dayKey: $dayKey, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(dayKey, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExcusedDay &&
+          other.dayKey == this.dayKey &&
+          other.createdAt == this.createdAt);
+}
+
+class ExcusedDaysCompanion extends UpdateCompanion<ExcusedDay> {
+  final Value<String> dayKey;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const ExcusedDaysCompanion({
+    this.dayKey = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExcusedDaysCompanion.insert({
+    required String dayKey,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : dayKey = Value(dayKey),
+       createdAt = Value(createdAt);
+  static Insertable<ExcusedDay> custom({
+    Expression<String>? dayKey,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (dayKey != null) 'day_key': dayKey,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExcusedDaysCompanion copyWith({
+    Value<String>? dayKey,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return ExcusedDaysCompanion(
+      dayKey: dayKey ?? this.dayKey,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (dayKey.present) {
+      map['day_key'] = Variable<String>(dayKey.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExcusedDaysCompanion(')
+          ..write('dayKey: $dayKey, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DuasTable extends Duas with TableInfo<$DuasTable, Dua> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DuasTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _bodyMeta = const VerificationMeta('body');
+  @override
+  late final GeneratedColumn<String> body = GeneratedColumn<String>(
+    'text',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _answeredAtMeta = const VerificationMeta(
+    'answeredAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> answeredAt = GeneratedColumn<DateTime>(
+    'answered_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _sortOrderMeta = const VerificationMeta(
+    'sortOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+    'sort_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    body,
+    note,
+    createdAt,
+    answeredAt,
+    sortOrder,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'duas';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Dua> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('text')) {
+      context.handle(
+        _bodyMeta,
+        body.isAcceptableOrUnknown(data['text']!, _bodyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_bodyMeta);
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('answered_at')) {
+      context.handle(
+        _answeredAtMeta,
+        answeredAt.isAcceptableOrUnknown(data['answered_at']!, _answeredAtMeta),
+      );
+    }
+    if (data.containsKey('sort_order')) {
+      context.handle(
+        _sortOrderMeta,
+        sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Dua map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Dua(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      body: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}text'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      answeredAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}answered_at'],
+      ),
+      sortOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sort_order'],
+      )!,
+    );
+  }
+
+  @override
+  $DuasTable createAlias(String alias) {
+    return $DuasTable(attachedDatabase, alias);
+  }
+}
+
+class Dua extends DataClass implements Insertable<Dua> {
+  final int id;
+  final String body;
+  final String? note;
+  final DateTime createdAt;
+  final DateTime? answeredAt;
+  final int sortOrder;
+  const Dua({
+    required this.id,
+    required this.body,
+    this.note,
+    required this.createdAt,
+    this.answeredAt,
+    required this.sortOrder,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['text'] = Variable<String>(body);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || answeredAt != null) {
+      map['answered_at'] = Variable<DateTime>(answeredAt);
+    }
+    map['sort_order'] = Variable<int>(sortOrder);
+    return map;
+  }
+
+  DuasCompanion toCompanion(bool nullToAbsent) {
+    return DuasCompanion(
+      id: Value(id),
+      body: Value(body),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+      createdAt: Value(createdAt),
+      answeredAt: answeredAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(answeredAt),
+      sortOrder: Value(sortOrder),
+    );
+  }
+
+  factory Dua.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Dua(
+      id: serializer.fromJson<int>(json['id']),
+      body: serializer.fromJson<String>(json['body']),
+      note: serializer.fromJson<String?>(json['note']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      answeredAt: serializer.fromJson<DateTime?>(json['answeredAt']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'body': serializer.toJson<String>(body),
+      'note': serializer.toJson<String?>(note),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'answeredAt': serializer.toJson<DateTime?>(answeredAt),
+      'sortOrder': serializer.toJson<int>(sortOrder),
+    };
+  }
+
+  Dua copyWith({
+    int? id,
+    String? body,
+    Value<String?> note = const Value.absent(),
+    DateTime? createdAt,
+    Value<DateTime?> answeredAt = const Value.absent(),
+    int? sortOrder,
+  }) => Dua(
+    id: id ?? this.id,
+    body: body ?? this.body,
+    note: note.present ? note.value : this.note,
+    createdAt: createdAt ?? this.createdAt,
+    answeredAt: answeredAt.present ? answeredAt.value : this.answeredAt,
+    sortOrder: sortOrder ?? this.sortOrder,
+  );
+  Dua copyWithCompanion(DuasCompanion data) {
+    return Dua(
+      id: data.id.present ? data.id.value : this.id,
+      body: data.body.present ? data.body.value : this.body,
+      note: data.note.present ? data.note.value : this.note,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      answeredAt: data.answeredAt.present
+          ? data.answeredAt.value
+          : this.answeredAt,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Dua(')
+          ..write('id: $id, ')
+          ..write('body: $body, ')
+          ..write('note: $note, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('answeredAt: $answeredAt, ')
+          ..write('sortOrder: $sortOrder')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, body, note, createdAt, answeredAt, sortOrder);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Dua &&
+          other.id == this.id &&
+          other.body == this.body &&
+          other.note == this.note &&
+          other.createdAt == this.createdAt &&
+          other.answeredAt == this.answeredAt &&
+          other.sortOrder == this.sortOrder);
+}
+
+class DuasCompanion extends UpdateCompanion<Dua> {
+  final Value<int> id;
+  final Value<String> body;
+  final Value<String?> note;
+  final Value<DateTime> createdAt;
+  final Value<DateTime?> answeredAt;
+  final Value<int> sortOrder;
+  const DuasCompanion({
+    this.id = const Value.absent(),
+    this.body = const Value.absent(),
+    this.note = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.answeredAt = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+  });
+  DuasCompanion.insert({
+    this.id = const Value.absent(),
+    required String body,
+    this.note = const Value.absent(),
+    required DateTime createdAt,
+    this.answeredAt = const Value.absent(),
+    this.sortOrder = const Value.absent(),
+  }) : body = Value(body),
+       createdAt = Value(createdAt);
+  static Insertable<Dua> custom({
+    Expression<int>? id,
+    Expression<String>? body,
+    Expression<String>? note,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? answeredAt,
+    Expression<int>? sortOrder,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (body != null) 'text': body,
+      if (note != null) 'note': note,
+      if (createdAt != null) 'created_at': createdAt,
+      if (answeredAt != null) 'answered_at': answeredAt,
+      if (sortOrder != null) 'sort_order': sortOrder,
+    });
+  }
+
+  DuasCompanion copyWith({
+    Value<int>? id,
+    Value<String>? body,
+    Value<String?>? note,
+    Value<DateTime>? createdAt,
+    Value<DateTime?>? answeredAt,
+    Value<int>? sortOrder,
+  }) {
+    return DuasCompanion(
+      id: id ?? this.id,
+      body: body ?? this.body,
+      note: note ?? this.note,
+      createdAt: createdAt ?? this.createdAt,
+      answeredAt: answeredAt ?? this.answeredAt,
+      sortOrder: sortOrder ?? this.sortOrder,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (body.present) {
+      map['text'] = Variable<String>(body.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (answeredAt.present) {
+      map['answered_at'] = Variable<DateTime>(answeredAt.value);
+    }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DuasCompanion(')
+          ..write('id: $id, ')
+          ..write('body: $body, ')
+          ..write('note: $note, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('answeredAt: $answeredAt, ')
+          ..write('sortOrder: $sortOrder')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $BookmarksTable extends Bookmarks
+    with TableInfo<$BookmarksTable, Bookmark> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BookmarksTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _refMeta = const VerificationMeta('ref');
+  @override
+  late final GeneratedColumn<String> ref = GeneratedColumn<String>(
+    'ref',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [kind, ref, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'bookmarks';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Bookmark> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('ref')) {
+      context.handle(
+        _refMeta,
+        ref.isAcceptableOrUnknown(data['ref']!, _refMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_refMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {kind, ref};
+  @override
+  Bookmark map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Bookmark(
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      ref: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ref'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+    );
+  }
+
+  @override
+  $BookmarksTable createAlias(String alias) {
+    return $BookmarksTable(attachedDatabase, alias);
+  }
+}
+
+class Bookmark extends DataClass implements Insertable<Bookmark> {
+  final String kind;
+  final String ref;
+  final DateTime createdAt;
+  const Bookmark({
+    required this.kind,
+    required this.ref,
+    required this.createdAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['kind'] = Variable<String>(kind);
+    map['ref'] = Variable<String>(ref);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  BookmarksCompanion toCompanion(bool nullToAbsent) {
+    return BookmarksCompanion(
+      kind: Value(kind),
+      ref: Value(ref),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory Bookmark.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Bookmark(
+      kind: serializer.fromJson<String>(json['kind']),
+      ref: serializer.fromJson<String>(json['ref']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'kind': serializer.toJson<String>(kind),
+      'ref': serializer.toJson<String>(ref),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  Bookmark copyWith({String? kind, String? ref, DateTime? createdAt}) =>
+      Bookmark(
+        kind: kind ?? this.kind,
+        ref: ref ?? this.ref,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  Bookmark copyWithCompanion(BookmarksCompanion data) {
+    return Bookmark(
+      kind: data.kind.present ? data.kind.value : this.kind,
+      ref: data.ref.present ? data.ref.value : this.ref,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Bookmark(')
+          ..write('kind: $kind, ')
+          ..write('ref: $ref, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(kind, ref, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Bookmark &&
+          other.kind == this.kind &&
+          other.ref == this.ref &&
+          other.createdAt == this.createdAt);
+}
+
+class BookmarksCompanion extends UpdateCompanion<Bookmark> {
+  final Value<String> kind;
+  final Value<String> ref;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const BookmarksCompanion({
+    this.kind = const Value.absent(),
+    this.ref = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BookmarksCompanion.insert({
+    required String kind,
+    required String ref,
+    required DateTime createdAt,
+    this.rowid = const Value.absent(),
+  }) : kind = Value(kind),
+       ref = Value(ref),
+       createdAt = Value(createdAt);
+  static Insertable<Bookmark> custom({
+    Expression<String>? kind,
+    Expression<String>? ref,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (kind != null) 'kind': kind,
+      if (ref != null) 'ref': ref,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BookmarksCompanion copyWith({
+    Value<String>? kind,
+    Value<String>? ref,
+    Value<DateTime>? createdAt,
+    Value<int>? rowid,
+  }) {
+    return BookmarksCompanion(
+      kind: kind ?? this.kind,
+      ref: ref ?? this.ref,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (ref.present) {
+      map['ref'] = Variable<String>(ref.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BookmarksCompanion(')
+          ..write('kind: $kind, ')
+          ..write('ref: $ref, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -2516,6 +3701,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ContentCacheTable contentCache = $ContentCacheTable(this);
   late final $WeatherCacheTable weatherCache = $WeatherCacheTable(this);
   late final $SettingsTable settings = $SettingsTable(this);
+  late final $PrayerLogsTable prayerLogs = $PrayerLogsTable(this);
+  late final $ExcusedDaysTable excusedDays = $ExcusedDaysTable(this);
+  late final $DuasTable duas = $DuasTable(this);
+  late final $BookmarksTable bookmarks = $BookmarksTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -2529,6 +3718,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     contentCache,
     weatherCache,
     settings,
+    prayerLogs,
+    excusedDays,
+    duas,
+    bookmarks,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -3527,6 +4720,7 @@ typedef $$JournalsTableCreateCompanionBuilder = JournalsCompanion Function({
   required String body,
   required DateTime createdAt,
   required DateTime updatedAt,
+  Value<String?> gratitude,
   Value<int> rowid,
 });
 typedef $$JournalsTableUpdateCompanionBuilder = JournalsCompanion Function({
@@ -3535,6 +4729,7 @@ typedef $$JournalsTableUpdateCompanionBuilder = JournalsCompanion Function({
   Value<String> body,
   Value<DateTime> createdAt,
   Value<DateTime> updatedAt,
+  Value<String?> gratitude,
   Value<int> rowid,
 });
 
@@ -3569,6 +4764,11 @@ class $$JournalsTableFilterComposer
 
   ColumnFilters<DateTime> get updatedAt => $composableBuilder(
     column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get gratitude => $composableBuilder(
+    column: $table.gratitude,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -3606,6 +4806,11 @@ class $$JournalsTableOrderingComposer
     column: $table.updatedAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get gratitude => $composableBuilder(
+    column: $table.gratitude,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$JournalsTableAnnotationComposer
@@ -3631,6 +4836,9 @@ class $$JournalsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get updatedAt =>
       $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get gratitude =>
+      $composableBuilder(column: $table.gratitude, builder: (column) => column);
 }
 
 class $$JournalsTableTableManager
@@ -3666,6 +4874,7 @@ class $$JournalsTableTableManager
                 Value<String> body = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
+                Value<String?> gratitude = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => JournalsCompanion(
                 dayKey: dayKey,
@@ -3673,6 +4882,7 @@ class $$JournalsTableTableManager
                 body: body,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
+                gratitude: gratitude,
                 rowid: rowid,
               ),
           createCompanionCallback:
@@ -3682,6 +4892,7 @@ class $$JournalsTableTableManager
                 required String body,
                 required DateTime createdAt,
                 required DateTime updatedAt,
+                Value<String?> gratitude = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => JournalsCompanion.insert(
                 dayKey: dayKey,
@@ -3689,6 +4900,7 @@ class $$JournalsTableTableManager
                 body: body,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
+                gratitude: gratitude,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -4232,6 +5444,697 @@ typedef $$SettingsTableProcessedTableManager =
       Setting,
       PrefetchHooks Function()
     >;
+typedef $$PrayerLogsTableCreateCompanionBuilder = PrayerLogsCompanion Function({
+  required String dayKey,
+  required String prayer,
+  required DateTime loggedAt,
+  Value<int> rowid,
+});
+typedef $$PrayerLogsTableUpdateCompanionBuilder = PrayerLogsCompanion Function({
+  Value<String> dayKey,
+  Value<String> prayer,
+  Value<DateTime> loggedAt,
+  Value<int> rowid,
+});
+
+class $$PrayerLogsTableFilterComposer
+    extends Composer<_$AppDatabase, $PrayerLogsTable> {
+  $$PrayerLogsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get dayKey => $composableBuilder(
+    column: $table.dayKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get prayer => $composableBuilder(
+    column: $table.prayer,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get loggedAt => $composableBuilder(
+    column: $table.loggedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$PrayerLogsTableOrderingComposer
+    extends Composer<_$AppDatabase, $PrayerLogsTable> {
+  $$PrayerLogsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get dayKey => $composableBuilder(
+    column: $table.dayKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get prayer => $composableBuilder(
+    column: $table.prayer,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get loggedAt => $composableBuilder(
+    column: $table.loggedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PrayerLogsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PrayerLogsTable> {
+  $$PrayerLogsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get dayKey =>
+      $composableBuilder(column: $table.dayKey, builder: (column) => column);
+
+  GeneratedColumn<String> get prayer =>
+      $composableBuilder(column: $table.prayer, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get loggedAt =>
+      $composableBuilder(column: $table.loggedAt, builder: (column) => column);
+}
+
+class $$PrayerLogsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PrayerLogsTable,
+          PrayerLog,
+          $$PrayerLogsTableFilterComposer,
+          $$PrayerLogsTableOrderingComposer,
+          $$PrayerLogsTableAnnotationComposer,
+          $$PrayerLogsTableCreateCompanionBuilder,
+          $$PrayerLogsTableUpdateCompanionBuilder,
+          (
+            PrayerLog,
+            BaseReferences<_$AppDatabase, $PrayerLogsTable, PrayerLog>,
+          ),
+          PrayerLog,
+          PrefetchHooks Function()
+        > {
+  $$PrayerLogsTableTableManager(_$AppDatabase db, $PrayerLogsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PrayerLogsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PrayerLogsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PrayerLogsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> dayKey = const Value.absent(),
+                Value<String> prayer = const Value.absent(),
+                Value<DateTime> loggedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PrayerLogsCompanion(
+                dayKey: dayKey,
+                prayer: prayer,
+                loggedAt: loggedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String dayKey,
+                required String prayer,
+                required DateTime loggedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => PrayerLogsCompanion.insert(
+                dayKey: dayKey,
+                prayer: prayer,
+                loggedAt: loggedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PrayerLogsTable, PrayerLog>(table),
+                  BaseReferences<_$AppDatabase, $PrayerLogsTable, PrayerLog>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$PrayerLogsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PrayerLogsTable,
+      PrayerLog,
+      $$PrayerLogsTableFilterComposer,
+      $$PrayerLogsTableOrderingComposer,
+      $$PrayerLogsTableAnnotationComposer,
+      $$PrayerLogsTableCreateCompanionBuilder,
+      $$PrayerLogsTableUpdateCompanionBuilder,
+      (PrayerLog, BaseReferences<_$AppDatabase, $PrayerLogsTable, PrayerLog>),
+      PrayerLog,
+      PrefetchHooks Function()
+    >;
+typedef $$ExcusedDaysTableCreateCompanionBuilder =
+    ExcusedDaysCompanion Function({
+      required String dayKey,
+      required DateTime createdAt,
+      Value<int> rowid,
+    });
+typedef $$ExcusedDaysTableUpdateCompanionBuilder =
+    ExcusedDaysCompanion Function({
+      Value<String> dayKey,
+      Value<DateTime> createdAt,
+      Value<int> rowid,
+    });
+
+class $$ExcusedDaysTableFilterComposer
+    extends Composer<_$AppDatabase, $ExcusedDaysTable> {
+  $$ExcusedDaysTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get dayKey => $composableBuilder(
+    column: $table.dayKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExcusedDaysTableOrderingComposer
+    extends Composer<_$AppDatabase, $ExcusedDaysTable> {
+  $$ExcusedDaysTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get dayKey => $composableBuilder(
+    column: $table.dayKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExcusedDaysTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ExcusedDaysTable> {
+  $$ExcusedDaysTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get dayKey =>
+      $composableBuilder(column: $table.dayKey, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$ExcusedDaysTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ExcusedDaysTable,
+          ExcusedDay,
+          $$ExcusedDaysTableFilterComposer,
+          $$ExcusedDaysTableOrderingComposer,
+          $$ExcusedDaysTableAnnotationComposer,
+          $$ExcusedDaysTableCreateCompanionBuilder,
+          $$ExcusedDaysTableUpdateCompanionBuilder,
+          (
+            ExcusedDay,
+            BaseReferences<_$AppDatabase, $ExcusedDaysTable, ExcusedDay>,
+          ),
+          ExcusedDay,
+          PrefetchHooks Function()
+        > {
+  $$ExcusedDaysTableTableManager(_$AppDatabase db, $ExcusedDaysTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExcusedDaysTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ExcusedDaysTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ExcusedDaysTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> dayKey = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExcusedDaysCompanion(
+                dayKey: dayKey,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String dayKey,
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => ExcusedDaysCompanion.insert(
+                dayKey: dayKey,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$ExcusedDaysTable, ExcusedDay>(table),
+                  BaseReferences<_$AppDatabase, $ExcusedDaysTable, ExcusedDay>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExcusedDaysTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ExcusedDaysTable,
+      ExcusedDay,
+      $$ExcusedDaysTableFilterComposer,
+      $$ExcusedDaysTableOrderingComposer,
+      $$ExcusedDaysTableAnnotationComposer,
+      $$ExcusedDaysTableCreateCompanionBuilder,
+      $$ExcusedDaysTableUpdateCompanionBuilder,
+      (
+        ExcusedDay,
+        BaseReferences<_$AppDatabase, $ExcusedDaysTable, ExcusedDay>,
+      ),
+      ExcusedDay,
+      PrefetchHooks Function()
+    >;
+typedef $$DuasTableCreateCompanionBuilder = DuasCompanion Function({
+  Value<int> id,
+  required String body,
+  Value<String?> note,
+  required DateTime createdAt,
+  Value<DateTime?> answeredAt,
+  Value<int> sortOrder,
+});
+typedef $$DuasTableUpdateCompanionBuilder = DuasCompanion Function({
+  Value<int> id,
+  Value<String> body,
+  Value<String?> note,
+  Value<DateTime> createdAt,
+  Value<DateTime?> answeredAt,
+  Value<int> sortOrder,
+});
+
+class $$DuasTableFilterComposer extends Composer<_$AppDatabase, $DuasTable> {
+  $$DuasTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get answeredAt => $composableBuilder(
+    column: $table.answeredAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$DuasTableOrderingComposer extends Composer<_$AppDatabase, $DuasTable> {
+  $$DuasTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get body => $composableBuilder(
+    column: $table.body,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get answeredAt => $composableBuilder(
+    column: $table.answeredAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+    column: $table.sortOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$DuasTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DuasTable> {
+  $$DuasTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get body =>
+      $composableBuilder(column: $table.body, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get answeredAt => $composableBuilder(
+    column: $table.answeredAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
+}
+
+class $$DuasTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DuasTable,
+          Dua,
+          $$DuasTableFilterComposer,
+          $$DuasTableOrderingComposer,
+          $$DuasTableAnnotationComposer,
+          $$DuasTableCreateCompanionBuilder,
+          $$DuasTableUpdateCompanionBuilder,
+          (Dua, BaseReferences<_$AppDatabase, $DuasTable, Dua>),
+          Dua,
+          PrefetchHooks Function()
+        > {
+  $$DuasTableTableManager(_$AppDatabase db, $DuasTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DuasTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DuasTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DuasTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> body = const Value.absent(),
+                Value<String?> note = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime?> answeredAt = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+              }) => DuasCompanion(
+                id: id,
+                body: body,
+                note: note,
+                createdAt: createdAt,
+                answeredAt: answeredAt,
+                sortOrder: sortOrder,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String body,
+                Value<String?> note = const Value.absent(),
+                required DateTime createdAt,
+                Value<DateTime?> answeredAt = const Value.absent(),
+                Value<int> sortOrder = const Value.absent(),
+              }) => DuasCompanion.insert(
+                id: id,
+                body: body,
+                note: note,
+                createdAt: createdAt,
+                answeredAt: answeredAt,
+                sortOrder: sortOrder,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$DuasTable, Dua>(table),
+                  BaseReferences<_$AppDatabase, $DuasTable, Dua>(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$DuasTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DuasTable,
+      Dua,
+      $$DuasTableFilterComposer,
+      $$DuasTableOrderingComposer,
+      $$DuasTableAnnotationComposer,
+      $$DuasTableCreateCompanionBuilder,
+      $$DuasTableUpdateCompanionBuilder,
+      (Dua, BaseReferences<_$AppDatabase, $DuasTable, Dua>),
+      Dua,
+      PrefetchHooks Function()
+    >;
+typedef $$BookmarksTableCreateCompanionBuilder = BookmarksCompanion Function({
+  required String kind,
+  required String ref,
+  required DateTime createdAt,
+  Value<int> rowid,
+});
+typedef $$BookmarksTableUpdateCompanionBuilder = BookmarksCompanion Function({
+  Value<String> kind,
+  Value<String> ref,
+  Value<DateTime> createdAt,
+  Value<int> rowid,
+});
+
+class $$BookmarksTableFilterComposer
+    extends Composer<_$AppDatabase, $BookmarksTable> {
+  $$BookmarksTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ref => $composableBuilder(
+    column: $table.ref,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$BookmarksTableOrderingComposer
+    extends Composer<_$AppDatabase, $BookmarksTable> {
+  $$BookmarksTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ref => $composableBuilder(
+    column: $table.ref,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$BookmarksTableAnnotationComposer
+    extends Composer<_$AppDatabase, $BookmarksTable> {
+  $$BookmarksTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<String> get ref =>
+      $composableBuilder(column: $table.ref, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$BookmarksTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $BookmarksTable,
+          Bookmark,
+          $$BookmarksTableFilterComposer,
+          $$BookmarksTableOrderingComposer,
+          $$BookmarksTableAnnotationComposer,
+          $$BookmarksTableCreateCompanionBuilder,
+          $$BookmarksTableUpdateCompanionBuilder,
+          (Bookmark, BaseReferences<_$AppDatabase, $BookmarksTable, Bookmark>),
+          Bookmark,
+          PrefetchHooks Function()
+        > {
+  $$BookmarksTableTableManager(_$AppDatabase db, $BookmarksTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BookmarksTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$BookmarksTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$BookmarksTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> kind = const Value.absent(),
+                Value<String> ref = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BookmarksCompanion(
+                kind: kind,
+                ref: ref,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String kind,
+                required String ref,
+                required DateTime createdAt,
+                Value<int> rowid = const Value.absent(),
+              }) => BookmarksCompanion.insert(
+                kind: kind,
+                ref: ref,
+                createdAt: createdAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$BookmarksTable, Bookmark>(table),
+                  BaseReferences<_$AppDatabase, $BookmarksTable, Bookmark>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$BookmarksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $BookmarksTable,
+      Bookmark,
+      $$BookmarksTableFilterComposer,
+      $$BookmarksTableOrderingComposer,
+      $$BookmarksTableAnnotationComposer,
+      $$BookmarksTableCreateCompanionBuilder,
+      $$BookmarksTableUpdateCompanionBuilder,
+      (Bookmark, BaseReferences<_$AppDatabase, $BookmarksTable, Bookmark>),
+      Bookmark,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -4252,4 +6155,11 @@ class $AppDatabaseManager {
       $$WeatherCacheTableTableManager(_db, _db.weatherCache);
   $$SettingsTableTableManager get settings =>
       $$SettingsTableTableManager(_db, _db.settings);
+  $$PrayerLogsTableTableManager get prayerLogs =>
+      $$PrayerLogsTableTableManager(_db, _db.prayerLogs);
+  $$ExcusedDaysTableTableManager get excusedDays =>
+      $$ExcusedDaysTableTableManager(_db, _db.excusedDays);
+  $$DuasTableTableManager get duas => $$DuasTableTableManager(_db, _db.duas);
+  $$BookmarksTableTableManager get bookmarks =>
+      $$BookmarksTableTableManager(_db, _db.bookmarks);
 }

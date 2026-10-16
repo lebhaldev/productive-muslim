@@ -44,8 +44,48 @@ class Journals extends Table {
   TextColumn get body => text()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get updatedAt => dateTime()();
+
+  /// Up to three gratitude lines as a JSON list (schema 2).
+  TextColumn get gratitude => text().nullable()();
   @override
   Set<Column> get primaryKey => {dayKey};
+}
+
+/// One done mark per prayer per day (FR-16). [prayer] is a PrayerName name.
+class PrayerLogs extends Table {
+  TextColumn get dayKey => text()();
+  TextColumn get prayer => text()();
+  DateTimeColumn get loggedAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {dayKey, prayer};
+}
+
+/// A day that never counts against habits, prayers or consistency (FR-18).
+/// No reason is stored.
+class ExcusedDays extends Table {
+  TextColumn get dayKey => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {dayKey};
+}
+
+/// The user's own duas (FR-20). Null [answeredAt] means still asking.
+class Duas extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get body => text().named('text')();
+  TextColumn get note => text().nullable()();
+  DateTimeColumn get createdAt => dateTime()();
+  DateTimeColumn get answeredAt => dateTime().nullable()();
+  IntColumn get sortOrder => integer().withDefault(const Constant(0))();
+}
+
+/// Saved ayah or hadith by reference only (`2:255`, `bukhari:6465`).
+class Bookmarks extends Table {
+  TextColumn get kind => text()();
+  TextColumn get ref => text()();
+  DateTimeColumn get createdAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {kind, ref};
 }
 
 class ContentCache extends Table {
@@ -83,6 +123,10 @@ class Settings extends Table {
     ContentCache,
     WeatherCache,
     Settings,
+    PrayerLogs,
+    ExcusedDays,
+    Duas,
+    Bookmarks,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -90,10 +134,21 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? driftDatabase(name: 'nurday'));
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
+    onCreate: (m) => m.createAll(),
+    onUpgrade: (m, from, to) async {
+      // Each step only adds; user data from older versions is kept as is.
+      if (from < 2) {
+        await m.addColumn(journals, journals.gratitude);
+        await m.createTable(prayerLogs);
+        await m.createTable(excusedDays);
+        await m.createTable(duas);
+        await m.createTable(bookmarks);
+      }
+    },
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');
     },
@@ -221,6 +276,89 @@ class AppDatabase extends _$AppDatabase {
     );
   }
 
+  // Prayer log (FR-16)
+
+  Stream<List<PrayerLog>> watchPrayerLogs() => select(prayerLogs).watch();
+
+  /// Logs [prayer] on [day], or removes the log if it is already there.
+  Future<void> togglePrayer(String day, String prayer, DateTime now) =>
+      transaction(() async {
+        final q = delete(prayerLogs)
+          ..where((p) => p.dayKey.equals(day) & p.prayer.equals(prayer));
+        if (await q.go() == 0) {
+          await into(prayerLogs).insert(
+            PrayerLogsCompanion.insert(
+              dayKey: day,
+              prayer: prayer,
+              loggedAt: now,
+            ),
+          );
+        }
+      });
+
+  // Excused days (FR-18)
+
+  Stream<Set<String>> watchExcusedDays() =>
+      select(excusedDays).watch().map((r) => {for (final e in r) e.dayKey});
+
+  Future<void> setExcused(String day, bool excused, DateTime now) => excused
+      ? into(excusedDays).insert(
+          ExcusedDaysCompanion.insert(dayKey: day, createdAt: now),
+          mode: InsertMode.insertOrIgnore,
+        )
+      : (delete(excusedDays)..where((e) => e.dayKey.equals(day))).go();
+
+  // Duas (FR-20)
+
+  Stream<List<Dua>> watchDuas() =>
+      (select(duas)..orderBy([
+            (d) => OrderingTerm.asc(d.sortOrder),
+            (d) => OrderingTerm.desc(d.createdAt),
+          ]))
+          .watch();
+
+  Future<int> addDua(String body, String? note, DateTime now) =>
+      into(duas).insert(
+        DuasCompanion.insert(
+          body: body.trim(),
+          note: Value(_blankToNull(note)),
+          createdAt: now,
+        ),
+      );
+
+  Future<void> editDua(int id, String body, String? note) =>
+      (update(duas)..where((d) => d.id.equals(id))).write(
+        DuasCompanion(
+          body: Value(body.trim()),
+          note: Value(_blankToNull(note)),
+        ),
+      );
+
+  /// [at] null moves the dua back to Asking.
+  Future<void> setDuaAnswered(int id, DateTime? at) => (update(
+    duas,
+  )..where((d) => d.id.equals(id))).write(DuasCompanion(answeredAt: Value(at)));
+
+  Future<void> deleteDua(int id) =>
+      (delete(duas)..where((d) => d.id.equals(id))).go();
+
+  // Bookmarks
+
+  Stream<List<Bookmark>> watchBookmarks() => (select(
+    bookmarks,
+  )..orderBy([(b) => OrderingTerm.desc(b.createdAt)])).watch();
+
+  Future<void> toggleBookmark(String kind, String ref, DateTime now) =>
+      transaction(() async {
+        final q = delete(bookmarks)
+          ..where((b) => b.kind.equals(kind) & b.ref.equals(ref));
+        if (await q.go() == 0) {
+          await into(bookmarks).insert(
+            BookmarksCompanion.insert(kind: kind, ref: ref, createdAt: now),
+          );
+        }
+      });
+
   // Caches
 
   Future<ContentCacheData?> cachedContent(String day, String kind) =>
@@ -272,3 +410,6 @@ class AppDatabase extends _$AppDatabase {
   Future<void> putSetting(String key, String value) => into(settings)
       .insertOnConflictUpdate(SettingsCompanion.insert(key: key, value: value));
 }
+
+String? _blankToNull(String? s) =>
+    s == null || s.trim().isEmpty ? null : s.trim();
