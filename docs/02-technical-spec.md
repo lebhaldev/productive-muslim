@@ -55,6 +55,18 @@ Layering: widgets → Riverpod providers → repositories → Drift DAOs / HTTP 
 | `weather_cache` | id PK=1, locationLabel, payload JSON, fetchedAt |
 | `settings` | key PK, value JSON |
 
+Planned for v1.1 (01 §7b, not built yet):
+
+| Table | Columns |
+|---|---|
+| `prayer_logs` | dayKey, prayer (`fajr`/`dhuhr`/`asr`/`maghrib`/`isha`), loggedAt, PK(dayKey, prayer) |
+| `excused_days` | dayKey PK, createdAt (no reason column, FR-18) |
+| `duas` | id PK, text, note?, createdAt, answeredAt? (null = Asking), sortOrder |
+| `journals` + | gratitude JSON? (list of up to 3 strings) |
+| `bookmarks` | kind (`ayah`/`hadith`), ref (`2:255`, `bukhari:6465`), createdAt, PK(kind, ref) |
+
+Backup format 2 adds these tables; import still reads format 1. Mood replies and journal prompts live in `lib/core/copy.dart` as fixed strings (FR-19); TR-1 still applies, so nothing there quotes scripture.
+
 `dayKey` is `YYYY-MM-DD` from local time. Primary keys on `dayKey` enforce one mood and one journal per day at the database level.
 
 Content payload must include: `text`, `arabic` (ayah), `translator`/`edition`, `surah`/`verse` or `collection`/`book`/`number`, `sourceUrl`, optional `explanation` with `explanationSource` (`null` ⇒ rendered as "App summary").
@@ -79,7 +91,7 @@ Content payload must include: `text`, `arabic` (ayah), `translator`/`edition`, `
 - TR-8 Location is requested only when the user taps "Use my location"; coordinates are only sent to Open-Meteo.
 - TR-9 Only network hosts allowed: AlQuran Cloud (or Quran.com), Open-Meteo, and Google (sign-in + `www.googleapis.com` Drive v3) only after the user connects Drive backup. No analytics SDKs.
 - TR-10 Drive backup uses the `drive.appdata` scope only, one file `nurday-backup.json` in `appDataFolder`, the same JSON as Export (`lib/data/backup.dart`, format 1). Automatic backup runs on app start/resume when the last one is over 20 h old and never shows a dialog.
-- TR-10 `flutter analyze` clean and all tests green before each phase is closed.
+- TR-11 `flutter analyze` clean and all tests green before each phase is closed.
 - TR-A1 Accessibility: semantic labels on every icon button, nav tab and mood dot; text scales to 200% without clipping; contrast ≥ 4.5:1 for body text.
 
 ## 6. Testing

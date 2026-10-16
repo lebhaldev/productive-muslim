@@ -45,6 +45,19 @@ Status (v0.3.0): agent side done — upload-key signing (`key.properties` / CI s
 
 An agent never buys the Play Console account, uploads a release, or stores a keystore password.
 
+## Phase 6 — v1.1 (planned 2026-10-16, from the Balum review)
+Scope and reasons: [research/balum-review.md](research/balum-review.md); screens in 01 §7b; design brief `design/2026-10-16-design-brief.md`. Order, each shipped as its own internal-testing build:
+1. Prayer log + prayer day arc on Today and the Prayer screen (FR-16), calendar dots, Reflect count.
+2. Gentle consistency, `N of M today` bar, excused day, consistency hadith card (FR-17, FR-18).
+3. Mood reply line and mood week strip (FR-19).
+4. Duas screen, lock and backup (FR-20; backup format 2, reads format 1).
+5. Journal prompts and gratitude block.
+6. First-run steps with starter habits.
+7. Weekly review card, Saved list.
+8. Arabic UI with RTL (FR-21), moved up from "After V1".
+
+Each step: Drift migration test when the schema changes, backup round-trip test, widget test of the new screen, `flutter analyze` clean, CHANGELOG entry, versionCode bump. Screens built before the design lands use existing components and are marked pending design in 05. Not in scope: lessons, points, levels, guided sessions, app-written explanations.
+
 ## Done when
 - Fresh install, offline after first run: habit, activity, mood, journal logged and visible on that Calendar day after restart.
 - With network: Today shows weather plus ayah and hadith with source metadata.

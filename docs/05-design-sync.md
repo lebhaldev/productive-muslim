@@ -23,6 +23,7 @@ The design is made in Claude Design (`Nurday.dc.html`) by a separate agent that 
 | 2026-10-05 | Reviewer thread findings (review/01, review/02) | No grading line (source has none); no "App summary" until a person reviews notes; offline ayah labelled "Last saved ayah"; The Clear Quran hidden until licence and endpoint confirmed (spec rule wins over design, DS-2); 120 hadith incl. Sahih Muslim without links. |
 | 2026-10-05 | Full export `design/2026-10-05-Nurday.dc.html` (all tabs) | 01 rewritten to v0.2 with every screen; 03 tokens mapped to Organic DS names; OQ-1–8, 13, 14 closed. |
 | 2026-10-06 | User request (no design yet) | v0.3: Arabic hadith/quotes, dark theme (provisional tokens), prayer times card + screen, Hijri date, Qibla. These screens need a design pass in Claude Design; built with existing components until then. |
+| 2026-10-16 | Balum screenshots (owner, inspiration only) + builder and reviewer input | v1.1 scope in 01 §7b and 04 Phase 6; FR-16–22; design brief `design/2026-10-16-design-brief.md` sent via the owner; OQ-27 opened. Copycat guard: no navy/gold, night sky, moon, points or Balum wording. |
 
 ## Conflicts between brief and design (resolved)
 - Palette: brief said deep green + gold; design uses sage + terracotta, no gold → **design wins**.
@@ -54,3 +55,4 @@ Closed by the 2026-10-05 export: OQ-1 (header + weather chip + ayah card), OQ-2 
 | OQ-24 | Calmer Today (v0.3): one content card with Ayah/Hadith/Quote tabs and ↻, compact next-prayer card, Journal and Activity as two tiles, settings gear in the header | Built as described; needs a design pass |
 | OQ-25 | Settings as its own menu (gear on Today) with one page per section | List of sections with icon, title and subtitle |
 | OQ-26 | Colour themes Emerald, Rose, Dusk, Slate | Provisional palettes, AA contrast checked |
+| OQ-27 | v1.1 screens: prayer arc and log, consistency bar, excused day, mood reply and week strip, Duas, gratitude block, first run, weekly card, Arabic UI | Built with existing components until the design from the 2026-10-16 brief lands |

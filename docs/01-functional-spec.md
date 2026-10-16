@@ -8,6 +8,7 @@ Status: v0.2, synced to design export `design/2026-10-05-Nurday.dc.html`. Tags: 
 - **Primary user:** a Muslim who wants faith content and a simple daily log in one place.
 - **Secondary user:** wants habits, journal, mood and weather and hides the faith cards.
 - **Platform:** Android first, Google Play. English UI, Arabic for ayah text.
+- **Out of scope v1.1:** lessons, points, levels, app-written explanations or guided sessions (see research/balum-review.md).
 - **Out of scope v1:** prayer times, qibla, adhan, full Quran reader, hadith search, social, accounts (Google is used only to reach the user's own Drive), payments, iOS, AI-written religious commentary.
 
 ## 2. Navigation [D]
@@ -92,6 +93,22 @@ List of large rows: `Prayer times — Today's times and Qibla`, `Activities — 
 - **Privacy card** (sage): `Your data stays on this phone` / `Journal, mood, habits and activities are never uploaded. No account needed.`
 - **Sources & licenses** card.
 
+## 7b. v1.1 features (planned 2026-10-16, from the Balum review) [OQ-27]
+
+Decided in [research/balum-review.md](research/balum-review.md). Not built yet; screens wait for the design brief `design/2026-10-16-design-brief.md`.
+
+- **Prayer log and day line** [FR-16]: the next-prayer card and the Prayer screen show a gentle arc from Fajr to Isha with the five prayers on it and sunrise and sunset marked. Logged prayers are filled sage, the next has a ring, others are empty. Tapping a prayer logs or unlogs it (snackbar `Dhuhr logged` · Undo). Prayer screen rows show `Done`, `Next · in 1 h 12 min`, or nothing. Countdown in minutes only. A `Qibla` button opens the Prayer screen's Qibla card. Logged prayers appear as dots on Calendar and as a count in Reflect.
+- **Gentle consistency** [FR-17]: habits show `N of the last 7 days` instead of a streak; Settings → Habits `Show consistency numbers` (on by default). Under the Habits heading: `N of M today` with a segmented bar over habits and logged prayers. A one-time dismissible card on Habits shows hadith `bukhari:6465` verbatim from the bundled dataset with its reference.
+- **Excused day** [FR-18]: a neutral `Excused today` link under Today's habits marks the day excused; it never counts against habits, prayers or consistency. No reason is stored.
+- **Mood reply** [FR-19]: after a mood is picked, the mood card shows one fixed line and one suggestion for that mood (gratitude note, open journal, an unchecked habit) and `Not now`, which hides it for the day. Lines come from a fixed reviewed list in the app, never generated, never religious claims.
+- **Mood week strip**: 7 dots (Mon–Sun) under the mood picker and at the top of Reflect; tapping a day opens it in Calendar.
+- **Journal prompts and gratitude**: the body placeholder rotates daily through a fixed list (`What are you grateful for today?`, `What went well?`, `What weighed on you?`). A `Gratitude` block holds three optional short lines, stored with the day's entry; an entry with gratitude lines and an empty body counts as an entry (amends FR-3). Shown on the Calendar day.
+- **Duas** [FR-20]: More → `Duas · Your own duas, private to this phone`. Add a dua (text, optional note); sections `Asking` and `Answered` with counts; `Mark answered` stores the date; Edit, Move back to Asking, Delete (confirm). Locked with the journal lock. Included in Export / Drive backup. The app never adds scripture to this list.
+- **First run**: three skippable steps: location (city search or use location once), starter habits from six chips (Read Qur'an, Morning adhkar, Evening adhkar, Gratitude note, Call family, Walk), privacy promise.
+- **Weekly review**: a Friday card on Reflect with plain counts (habits kept, prayers logged, mostly mood, journal days) and `Write a note to next week`, which opens the journal.
+- **Arabic UI** [FR-21]: Settings → Appearance → Language `System | English | العربية`; mirrored RTL layout; only UI strings are translated, content stays verbatim.
+- **Saved**: a bookmark on the ayah and hadith cards; More → `Saved` lists them with their references.
+
 ## 8. Functional rules
 - FR-1 **Local day key** `YYYY-MM-DD` in device time zone for every record.
 - FR-2 **Stable daily content**: seeded by the day key, changes at local midnight.
@@ -108,6 +125,13 @@ List of large rows: `Prayer times — Today's times and Qibla`, `Activities — 
 - FR-13 **Hijri date** uses the Umm al-Qura calendar (hijri library). It can differ by a day from local moon sighting; the app does not claim otherwise.
 - FR-14 **Qibla** is the great-circle bearing to the Kaaba from the weather location.
 - FR-15 **Theme**: System follows the phone; Light/Dark override it. All colours come from tokens (03).
+- FR-16 **Prayer log**: one done/not-done mark per prayer per day key; no late, missed or congregation states; logging a future prayer of today is allowed only once its time has started.
+- FR-17 **Consistency** = done days among the last 7 day keys, excused days removed from both counts.
+- FR-18 **Excused day**: one boolean per day key, no reason field.
+- FR-19 **No generated text**: mood replies, journal prompts and weekly card lines are fixed strings in the app, reviewed once; none quote or paraphrase scripture.
+- FR-20 **Duas** are personal data: on device only, inside backups, behind the journal lock.
+- FR-21 **Translation scope**: UI strings only. Ayah, hadith, tafsir and quote text are never machine-translated.
+- FR-22 **Own identity**: no screen, label, illustration or store asset reuses another app's name, wording or visual identity (see research/balum-review.md §3).
 
 ## 9. Content rules (non-negotiable)
 - CR-1 Never invent an ayah, translation, tafsir, hadith, grading or chain. The design shows placeholders only, by intent.

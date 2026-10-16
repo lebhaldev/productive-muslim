@@ -2,6 +2,8 @@
 
 Lead strategist synthesis of [benchmark](benchmark.md), [audience](audience.md) and [brainstorm](brainstorm.md). Owner decides what to keep.
 
+> Update 2026-10-16: the [Balum review](balum-review.md) moved Arabic UI up to v1.1 and added Duas, mood reply, gratitude block and first-run starter habits. The v1.1 order lives in 04-dev-plan.md Phase 6.
+
 ## Verdict
 
 Nurday is in a gap that no competitor owns: a private, calm, Muslim-centred companion for the inner life (journal, mood, reflection) that is also built around the day's worship, with every religious word cited. Pillars and Mawaqit match it on privacy, but they are prayer-time tools. Muslim Pro and Athan have the breadth, but users distrust them over ads and the 2020-2022 data scandals. Daylio and Stoic own mood and journalling but have no faith layer. Two prayer-time basics are weak today. Prayer notifications use inexact alarms (lib/data/reminders.dart uses inexactAllowWhileIdle), and there is no Hijri offset (prayer.dart has a fixed Umm al-Qura label). These are the reasons users uninstall prayer apps, so they must be fixed before launch. The winning move is not to match Muslim Pro feature for feature. Ship a small, reliable V1 that does "prayer + habits + journal" without guilt, and say loudly that there are no ads, no account, no data collected and no AI-written religious text.
