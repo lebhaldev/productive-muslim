@@ -63,6 +63,10 @@ void main() {
       expect(j.body, 'Kept');
       expect(j.gratitude, isNull);
       expect(await db.select(db.moods).get(), hasLength(1));
+      final settings = await db.watchSettings().first;
+      expect(settings['city'], 'London');
+      expect(settings['onboarded'], 'true', reason: 'no first run on upgrade');
+      expect((await fresh.watchSettings().first)['onboarded'], isNull);
       // New tables work after the upgrade.
       await db.togglePrayer('2026-10-01', 'fajr', DateTime(2026, 10, 1, 6));
       await db.addDua('A dua', null, DateTime(2026, 10, 1));

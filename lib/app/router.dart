@@ -13,6 +13,7 @@ import '../features/more/reflect_screen.dart';
 import '../features/settings/settings_screen.dart';
 import '../features/prayer/prayer_screen.dart';
 import '../features/today/today_screen.dart';
+import '../features/welcome/welcome_screen.dart';
 import 'providers.dart';
 import 'theme.dart';
 import '../widgets/motion.dart';
@@ -32,6 +33,7 @@ GoRouter buildRouter() => GoRouter(
         ),
       ],
     ),
+    GoRoute(path: '/welcome', builder: (_, _) => const WelcomeScreen()),
     StatefulShellRoute.indexedStack(
       builder: (context, state, shell) => AppShell(shell: shell),
       branches: [
@@ -106,12 +108,27 @@ const _tabs = [
   _Tab('More', Icons.more_horiz),
 ];
 
+/// A fresh install (no flag, no habits, no place) opens the first-run steps.
+void _maybeFirstRun(BuildContext context, WidgetRef ref) {
+  if (!ref.watch(firstRunEnabledProvider)) return;
+  final s = ref.watch(settingsProvider).value;
+  final habits = ref.watch(habitsProvider).value;
+  if (s == null || habits == null) return;
+  if (s.onboarded || habits.isNotEmpty || s.city.isNotEmpty || s.lat != null) {
+    return;
+  }
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (context.mounted) context.go('/welcome');
+  });
+}
+
 class AppShell extends ConsumerWidget {
   const AppShell({super.key, required this.shell});
   final StatefulNavigationShell shell;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    _maybeFirstRun(context, ref);
     return Scaffold(
       body: SafeArea(
         bottom: false,

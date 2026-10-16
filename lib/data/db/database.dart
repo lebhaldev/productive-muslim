@@ -159,6 +159,8 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(excusedDays);
         await m.createTable(duas);
         await m.createTable(bookmarks);
+        // People upgrading from 1.0 already set the app up: no first run.
+        await putSetting('onboarded', 'true');
       }
     },
     beforeOpen: (details) async {

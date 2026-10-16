@@ -59,7 +59,9 @@ List<Override> testOverrides(
   GoogleAuth? google,
   Future<String> Function(String path)? assets,
   http.Client? client,
+  bool firstRun = false,
 }) => [
+  firstRunEnabledProvider.overrideWithValue(firstRun),
   googleAuthProvider.overrideWithValue(google ?? FakeAuth(granted: false)),
   appLockProvider.overrideWithValue(lock ?? FakeLock()),
   databaseProvider.overrideWithValue(db),

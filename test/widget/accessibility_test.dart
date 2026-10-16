@@ -83,6 +83,39 @@ void main() {
     await tester.runAsync(db.close);
   });
 
+  testWidgets('first-run steps fit at 200% text size', (tester) async {
+    tester.view.physicalSize = const Size(1080, 2340);
+    tester.view.devicePixelRatio = 2.625;
+    addTearDown(tester.view.reset);
+    final db = memoryDb();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: testOverrides(db, now, firstRun: true),
+        child: MediaQuery(
+          data: const MediaQueryData(textScaler: TextScaler.linear(2)),
+          child: const NurdayApp(),
+        ),
+      ),
+    );
+    await settle(tester);
+    for (var step = 0; step < 3; step++) {
+      expect(tester.takeException(), isNull, reason: 'step $step');
+      final next = find.byKey(const Key('welcome-next'));
+      await tester.scrollUntilVisible(
+        next,
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await settle(tester);
+      await tester.tap(next);
+      await settle(tester);
+    }
+    expect(tester.takeException(), isNull);
+    await tester.pumpWidget(const SizedBox());
+    await settle(tester);
+    await tester.runAsync(db.close);
+  });
+
   testWidgets('icon-only and colour-only controls have spoken labels', (
     tester,
   ) async {

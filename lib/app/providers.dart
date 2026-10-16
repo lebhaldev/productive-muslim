@@ -43,6 +43,10 @@ final driveSyncProvider = Provider<DriveSync>(
   ),
 );
 
+/// Whether a fresh install opens on the first-run steps (off in tests that
+/// don't exercise them).
+final firstRunEnabledProvider = Provider<bool>((ref) => true);
+
 final appLockProvider = Provider<AppLock>((ref) => AppLock());
 
 /// True once the user has unlocked the journal; cleared when the app goes to

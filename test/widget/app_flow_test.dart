@@ -36,6 +36,7 @@ void main() {
     FakeAuth? google,
     FakeScheduler? scheduler,
     Future<String> Function(String path)? assets,
+    bool firstRun = false,
   }) async {
     final database = db ?? memoryDb();
     tester.view.physicalSize = const Size(1080, 2340);
@@ -52,6 +53,7 @@ void main() {
             google: google,
             scheduler: scheduler,
             assets: assets,
+            firstRun: firstRun,
           ),
           if (files != null) backupFilesProvider.overrideWithValue(files),
         ],
@@ -886,6 +888,51 @@ void main() {
     expect(find.text('Private dua'), findsOneWidget);
     expect(lock.asked, 1);
     await closeApp(tester, db);
+  });
+
+  testWidgets('a fresh install opens the first-run steps once', (tester) async {
+    final db = await pumpApp(tester, firstRun: true);
+    expect(find.text('Where are you?'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('welcome-skip')));
+    await settle(tester);
+    expect(find.text('Pick a few habits'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('starter-Walk')));
+    await tester.tap(find.byKey(const Key("starter-Read Qur'an")));
+    await settle(tester);
+    await tester.tap(find.byKey(const Key('welcome-next')));
+    await settle(tester);
+    expect(find.text('Your data stays on this phone'), findsOneWidget);
+    await tester.tap(find.text('Start'));
+    await settle(tester);
+
+    final habits = await tester.runAsync(() => db.watchHabits().first);
+    expect(habits!.map((h) => h.name), ["Read Qur'an", 'Walk']);
+    final settings = await tester.runAsync(() => db.watchSettings().first);
+    expect(settings!['onboarded'], 'true');
+    expect(find.text('Where are you?'), findsNothing);
+    await scrollTo(tester, find.text('Walk'));
+    expect(find.text('Walk'), findsOneWidget);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('first run is skipped once set up, and Skip all ends it', (
+    tester,
+  ) async {
+    final db = memoryDb();
+    await tester.runAsync(() => db.putSetting('city', 'London'));
+    await pumpApp(tester, db: db, firstRun: true);
+    expect(find.text('Where are you?'), findsNothing);
+    await closeApp(tester, db);
+
+    final fresh = await pumpApp(tester, firstRun: true);
+    await tester.tap(find.byKey(const Key('welcome-skip-all')));
+    await settle(tester);
+    expect(find.text('Where are you?'), findsNothing);
+    expect(
+      (await tester.runAsync(() => fresh.watchSettings().first))!['onboarded'],
+      'true',
+    );
+    await closeApp(tester, fresh);
   });
 }
 

@@ -20,6 +20,9 @@ class AppSettings {
 
   /// Day key on which `Not now` hid the mood reply (FR-19).
   String? get moodReplyHiddenOn => raw['moodReplyHidden'];
+
+  /// The first-run steps were finished or skipped.
+  bool get onboarded => raw['onboarded'] == 'true';
   bool get journalLock => raw['journalLock'] == 'true';
   bool get driveBackup => raw['driveBackup'] == 'true';
   DateTime? get driveLastBackup =>
