@@ -31,12 +31,22 @@ void main() {
       expect(streak({'2026-10-05', '2026-10-03'}, today), 1);
       expect(streak({'2026-10-03'}, today), 0);
     });
+    test('consistency counts the last 7 days without excused days', () {
+      final c = consistency(
+        {'2026-10-05', '2026-10-03', '2026-09-28'},
+        today,
+        {'2026-10-04'},
+      );
+      expect(c, (done: 2, of: 6));
+      expect(consistency({}, today), (done: 0, of: 7));
+    });
     test('labels match the design', () {
-      expect(streakLabel(0), '');
-      expect(streakLabel(1), '1 day');
-      expect(streakLabel(3), '3 days');
-      expect(streakTag(0), 'Start today');
-      expect(streakTag(3), '3-day streak');
+      expect(consistencyTag((done: 0, of: 7)), 'Start today');
+      expect(consistencyTag((done: 3, of: 7)), '3 of the last 7 days');
+      expect(consistencyTag((done: 2, of: 6)), '2 of the last 6 days');
+      expect(consistencyLabel((done: 0, of: 7)), '');
+      expect(consistencyLabel((done: 1, of: 7)), '1 of 7 days');
+      expect(consistencyLabel((done: 1, of: 1)), '1 of 1 day');
     });
   });
 

@@ -6,6 +6,7 @@ import 'about_section.dart';
 import 'appearance_section.dart';
 import 'backup_section.dart';
 import 'content_section.dart';
+import 'habits_section.dart';
 import 'location_section.dart';
 import 'prayer_section.dart';
 import 'privacy_section.dart';
@@ -41,6 +42,13 @@ final List<SettingsSectionInfo> settingsSections = [
     sub: 'Calculation method, Asr, notifications',
     icon: Icons.access_time,
     build: () => const PrayerSection(),
+  ),
+  (
+    id: 'habits',
+    title: 'Habits',
+    sub: 'Consistency numbers',
+    icon: Icons.check_circle_outline,
+    build: () => const HabitsSettingsSection(),
   ),
   (
     id: 'content',

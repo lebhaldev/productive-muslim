@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart' show Geocoding;
@@ -183,6 +184,20 @@ final dailyContentProvider = FutureProvider<DailyContent>((ref) async {
         settings.translation,
         offsets: offsets.day == day ? offsets.n : const {},
       );
+});
+
+/// Bukhari 6465 for the one-time card on Habits (FR-17), read verbatim
+/// from the bundled dataset; null if the dataset lacks it.
+final consistencyHadithProvider = FutureProvider<Hadith?>((ref) async {
+  final raw = await ref.watch(assetLoaderProvider)(
+    DailyContentService.hadithAsset,
+  );
+  for (final j in (jsonDecode(raw) as Map)['hadiths'] as List) {
+    if ((j as Map)['id'] == 'bukhari:6465') {
+      return Hadith.fromJson(j.cast<String, dynamic>());
+    }
+  }
+  return null;
 });
 
 final tafsirProvider = FutureProvider.family<Tafsir?, String>(

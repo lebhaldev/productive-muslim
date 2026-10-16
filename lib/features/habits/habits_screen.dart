@@ -40,10 +40,14 @@ class _HabitsScreenState extends ConsumerState<HabitsScreen> {
     final active = all.where((h) => !h.archived).toList();
     final archived = all.where((h) => h.archived).toList();
     final done = ref.watch(completionsProvider).value ?? const {};
+    final excused = ref.watch(excusedDaysProvider).value ?? const <String>{};
+    final settings = settingsOf(ref);
 
     return ScreenBody(
       children: [
         const ScreenTitle('Habits'),
+        if (settings.showFaith && !settings.consistencyCardClosed)
+          const _ConsistencyHadithCard(),
         Row(
           children: [
             Expanded(
@@ -64,7 +68,13 @@ class _HabitsScreenState extends ConsumerState<HabitsScreen> {
             style: meta(size: 13),
           ),
         for (final h in active)
-          _HabitCard(habit: h, days: done[h.id] ?? const {}, today: today),
+          _HabitCard(
+            habit: h,
+            days: done[h.id] ?? const {},
+            today: today,
+            excused: excused,
+            showConsistency: settings.showConsistency,
+          ),
         if (archived.isNotEmpty) ...[
           Text('Archived', style: meta(size: 13)),
           for (final h in archived)
@@ -104,23 +114,31 @@ class _HabitCard extends ConsumerWidget {
     required this.habit,
     required this.days,
     required this.today,
+    required this.excused,
+    required this.showConsistency,
   });
   final Habit habit;
   final Set<String> days;
   final String today;
+  final Set<String> excused;
+  final bool showConsistency;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final db = ref.read(databaseProvider);
-    final n = streak(days, today);
     return NCard(
       gap: 10,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        // A Wrap, so the tag drops under a long name at large text sizes.
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 8,
+          runSpacing: 6,
           children: [
-            Expanded(child: CardTitle(habit.name)),
-            Tag(streakTag(n)),
+            CardTitle(habit.name),
+            if (showConsistency)
+              Tag(consistencyTag(consistency(days, today, excused))),
           ],
         ),
         Row(
@@ -224,6 +242,41 @@ class _HabitCard extends ConsumerWidget {
       ),
     );
     if (ok == true) await ref.read(databaseProvider).deleteHabit(habit.id);
+  }
+}
+
+/// Shown once, until closed (FR-17): the hadith exactly as in the bundled
+/// dataset, with its reference and no app sentence about the user's numbers.
+class _ConsistencyHadithCard extends ConsumerWidget {
+  const _ConsistencyHadithCard();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final h = ref.watch(consistencyHadithProvider).value;
+    if (h == null) return const SizedBox.shrink();
+    return NCard(
+      key: const Key('consistency-hadith'),
+      gap: 10,
+      children: [
+        Row(
+          children: [
+            const Expanded(child: Kicker('Hadith')),
+            IconButton(
+              key: const Key('consistency-hadith-close'),
+              tooltip: 'Close',
+              visualDensity: VisualDensity.compact,
+              onPressed: () => ref
+                  .read(databaseProvider)
+                  .putSetting('consistencyCard', 'closed'),
+              icon: const Icon(Icons.close, size: 18),
+            ),
+          ],
+        ),
+        if (h.arabic != null) ArabicBlock(h.arabic!, size: 19),
+        Text(h.text, style: const TextStyle(fontSize: 15, height: 1.5)),
+        Text('${h.source} · ${h.translator}', style: meta()),
+      ],
+    );
   }
 }
 

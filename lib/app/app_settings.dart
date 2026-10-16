@@ -11,6 +11,12 @@ class AppSettings {
 
   bool get showFaith => raw['faith'] != 'false';
   bool get fahrenheit => raw['unit'] == 'F';
+
+  /// FR-17: `N of the last 7 days` on habits (on by default).
+  bool get showConsistency => raw['showConsistency'] != 'false';
+
+  /// The one-time consistency hadith card on Habits was closed.
+  bool get consistencyCardClosed => raw['consistencyCard'] == 'closed';
   bool get journalLock => raw['journalLock'] == 'true';
   bool get driveBackup => raw['driveBackup'] == 'true';
   DateTime? get driveLastBackup =>

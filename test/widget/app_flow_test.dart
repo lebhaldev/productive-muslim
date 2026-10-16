@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nurday/app/app.dart';
 import 'package:nurday/app/providers.dart';
 import 'package:nurday/app/theme.dart';
+import 'package:nurday/core/day_key.dart';
 import 'package:nurday/data/backup_files.dart';
 import 'package:nurday/data/db/database.dart';
 
@@ -32,6 +33,7 @@ void main() {
     FakeLock? lock,
     FakeAuth? google,
     FakeScheduler? scheduler,
+    Future<String> Function(String path)? assets,
   }) async {
     final database = db ?? memoryDb();
     tester.view.physicalSize = const Size(1080, 2340);
@@ -47,6 +49,7 @@ void main() {
             lock: lock,
             google: google,
             scheduler: scheduler,
+            assets: assets,
           ),
           if (files != null) backupFilesProvider.overrideWithValue(files),
         ],
@@ -163,11 +166,12 @@ void main() {
       await scrollTo(tester, find.text('Morning walk'));
       await tester.drag(find.byType(Scrollable).first, const Offset(0, -250));
       await settle(tester);
-      expect(find.text('0 of 1'), findsOneWidget);
+      // One segment for the habit and five for the prayers (FR-17).
+      expect(find.text('0 of 6 today'), findsOneWidget);
       await tester.tap(find.text('Morning walk'));
       await settle(tester);
-      expect(find.text('All done today'), findsOneWidget);
-      expect(find.text('1 day'), findsOneWidget);
+      expect(find.text('1 of 6 today'), findsOneWidget);
+      expect(find.text('1 of 7 days'), findsOneWidget);
 
       // Mood
       await scrollTo(tester, find.text('good'));
@@ -654,8 +658,7 @@ void main() {
 
     await tester.tap(find.byKey(const Key('arc-fajr')));
     await settle(tester);
-    GoRouter.of(tester.element(find.byType(Scaffold).last))
-        .go('/more/prayer');
+    GoRouter.of(tester.element(find.byType(Scaffold).last)).go('/more/prayer');
     await settle(tester);
     expect(
       find.descendant(
@@ -671,6 +674,73 @@ void main() {
       ),
       findsOneWidget,
     );
+    await closeApp(tester, db);
+  });
+
+  testWidgets('an excused day leaves consistency counts and can be undone', (
+    tester,
+  ) async {
+    final db = memoryDb();
+    final today = dayKey(now);
+    await tester.runAsync(() async {
+      final id = await db.addHabit('Read Quran');
+      await db.toggleCompletion(id, shiftDay(today, -1));
+      await db.toggleCompletion(id, shiftDay(today, -2));
+    });
+    await pumpApp(tester, db: db);
+    await scrollTo(tester, find.byKey(const Key('excused-today')));
+    expect(find.text('2 of 7 days'), findsOneWidget);
+    expect(find.byKey(const Key('today-bar')), findsOneWidget);
+
+    await tester.ensureVisible(find.byKey(const Key('excused-today')));
+    await settle(tester);
+    await tester.tap(find.byKey(const Key('excused-today')));
+    await settle(tester);
+    expect(find.text('Count today again'), findsOneWidget);
+    expect(find.text('Excused today'), findsOneWidget, reason: 'header');
+    expect(find.text('2 of 6 days'), findsOneWidget);
+    expect(find.byKey(const Key('today-bar')), findsNothing);
+    expect(await tester.runAsync(() => db.watchExcusedDays().first), {today});
+
+    await tester.tap(find.text('Count today again'));
+    await settle(tester);
+    expect(find.text('2 of 7 days'), findsOneWidget);
+
+    // Settings → Habits turns the numbers off.
+    GoRouter.of(tester.element(find.byType(Scaffold).last))
+        .go('/settings/habits');
+    await settle(tester);
+    await tester.tap(find.byKey(const Key('show-consistency')));
+    await settle(tester);
+    GoRouter.of(tester.element(find.byType(Scaffold).last)).go('/habits');
+    await settle(tester);
+    expect(find.text('Read Quran'), findsOneWidget);
+    expect(find.text('2 of the last 7 days'), findsNothing);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('the consistency hadith shows once on Habits until closed', (
+    tester,
+  ) async {
+    Future<String> assets(String path) async => path.endsWith('hadith.json')
+        ? '{"hadiths":[{"id":"bukhari:6465","collection":"Sahih al-Bukhari",'
+              '"book":81,"bookName":"Riqaq","number":"6465",'
+              '"text":"[ fixture 6465 text ]","arabic":"[ fixture 6465 arabic ]",'
+              '"translator":"Fixture Translator"}]}'
+        : fixtureAssets(path);
+    final db = await pumpApp(tester, assets: assets);
+    await tapTab(tester, 'Habits');
+    expect(find.text('[ fixture 6465 text ]'), findsOneWidget);
+    expect(find.text('[ fixture 6465 arabic ]'), findsOneWidget);
+    expect(
+      find.text('Sahih al-Bukhari · Book 81 · No. 6465 · Fixture Translator'),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const Key('consistency-hadith-close')));
+    await settle(tester);
+    expect(find.byKey(const Key('consistency-hadith')), findsNothing);
+    final settings = await tester.runAsync(() => db.watchSettings().first);
+    expect(settings!['consistencyCard'], 'closed');
     await closeApp(tester, db);
   });
 }

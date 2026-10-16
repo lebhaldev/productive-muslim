@@ -185,10 +185,23 @@ class _HabitsSection extends ConsumerWidget {
         .where((h) => !h.archived)
         .toList();
     final done = ref.watch(completionsProvider).value ?? const {};
-    final doneCount = habits
-        .where((h) => done[h.id]?.contains(today) ?? false)
-        .length;
+    final excused = ref.watch(excusedDaysProvider).value ?? const <String>{};
+    final settings = settingsOf(ref);
+    final logged = settings.showFaith
+        ? (ref.watch(prayerLogsProvider).value?[today] ?? const <String>{})
+        : const <String>{};
+    final isExcused = excused.contains(today);
     final db = ref.read(databaseProvider);
+
+    // One segment per habit, then one per prayer when faith cards are on
+    // (FR-17): habits first, prayers after, done segments filled.
+    final segments = [
+      for (final h in habits) done[h.id]?.contains(today) ?? false,
+      if (settings.showFaith)
+        for (final p in fivePrayers) logged.contains(p.name),
+    ];
+    final doneCount = segments.where((d) => d).length;
+    final all = segments.isNotEmpty && doneCount == segments.length;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -196,7 +209,13 @@ class _HabitsSection extends ConsumerWidget {
         _SectionHeader(
           'Habits',
           trailing: PopSwitcher(
-            child: habits.isNotEmpty && doneCount == habits.length
+            child: isExcused
+                ? Text(
+                    'Excused today',
+                    key: const ValueKey('excused'),
+                    style: meta(),
+                  )
+                : all
                 ? Text(
                     'All done today',
                     key: const ValueKey('all-done'),
@@ -204,12 +223,16 @@ class _HabitsSection extends ConsumerWidget {
                         .copyWith(fontWeight: FontWeight.w600),
                   )
                 : Text(
-                    '$doneCount of ${habits.length}',
+                    '$doneCount of ${segments.length} today',
                     key: ValueKey(doneCount),
                     style: meta(),
                   ),
           ),
         ),
+        if (segments.isNotEmpty && !isExcused) ...[
+          const SizedBox(height: 8),
+          TodayBar(segments: segments),
+        ],
         const SizedBox(height: 8),
         if (habits.isEmpty)
           TextButton(
@@ -221,12 +244,60 @@ class _HabitsSection extends ConsumerWidget {
           _HabitRow(
             name: h.name,
             done: done[h.id]?.contains(today) ?? false,
-            streak: streak(done[h.id] ?? const {}, today),
+            label: settings.showConsistency
+                ? consistencyLabel(
+                    consistency(done[h.id] ?? const {}, today, excused),
+                  )
+                : '',
             onTap: () => db.toggleCompletion(h.id, today),
           ),
           const SizedBox(height: 8),
         ],
+        // FR-18: a neutral link, no reason asked or stored.
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: TextButton(
+            key: const Key('excused-today'),
+            style: TextButton.styleFrom(foregroundColor: AppColors.neutral700),
+            onPressed: () =>
+                db.setExcused(today, !isExcused, ref.read(clockProvider).now()),
+            child: Text(isExcused ? 'Count today again' : 'Excused today'),
+          ),
+        ),
       ],
+    );
+  }
+}
+
+/// `N of M today`: one rounded segment per habit and logged prayer.
+class TodayBar extends StatelessWidget {
+  const TodayBar({super.key, required this.segments});
+  final List<bool> segments;
+
+  @override
+  Widget build(BuildContext context) {
+    final n = segments.where((d) => d).length;
+    return Semantics(
+      label: '$n of ${segments.length} done today',
+      excludeSemantics: true,
+      child: Row(
+        key: const Key('today-bar'),
+        children: [
+          for (var i = 0; i < segments.length; i++) ...[
+            if (i > 0) const SizedBox(width: 3),
+            Expanded(
+              child: AnimatedContainer(
+                duration: motion(context, Motion.medium),
+                height: 6,
+                decoration: BoxDecoration(
+                  color: segments[i] ? AppColors.sage600 : AppColors.divider,
+                  borderRadius: BorderRadius.circular(AppRadii.pill),
+                ),
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 }
@@ -235,12 +306,12 @@ class _HabitRow extends StatelessWidget {
   const _HabitRow({
     required this.name,
     required this.done,
-    required this.streak,
+    required this.label,
     required this.onTap,
   });
   final String name;
   final bool done;
-  final int streak;
+  final String label;
   final VoidCallback onTap;
 
   @override
@@ -302,8 +373,8 @@ class _HabitRow extends StatelessWidget {
                   ),
                   PopSwitcher(
                     child: Text(
-                      streakLabel(streak),
-                      key: ValueKey(streak),
+                      label,
+                      key: ValueKey(label),
                       style: meta(color: AppColors.accent700),
                     ),
                   ),

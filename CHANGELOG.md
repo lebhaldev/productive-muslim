@@ -2,6 +2,8 @@
 
 ## 1.1.0 (unreleased)
 - Prayer log (FR-16): the next-prayer card and the Prayer screen show the day as an arc from Fajr to Isha with sunrise and sunset marked; tap a prayer that has started to log it (snackbar with Undo). Prayer rows show `Done` or `Next · in …`, never "missed". A Qibla button on the card. Logged prayers show on Calendar (a small sage bar and a "Prayers logged" line on the day) and as a monthly count in Reflect.
+- Gentle consistency (FR-17): habits show `N of the last 7 days` instead of a streak (Settings → Habits → Show consistency numbers, on by default). Today's Habits heading shows `N of M today` with a segmented bar over habits and logged prayers. A one-time card on Habits shows Sahih al-Bukhari 6465 from the bundled dataset, Arabic and English as in the dataset, with its reference; close it and it stays closed.
+- Excused day (FR-18): an `Excused today` link under Today's habits marks the day excused, with no reason asked; it is left out of consistency counts and the bar, and `Count today again` undoes it.
 - Database schema 2 (prayer logs, excused days, duas, saved items, journal gratitude) with an add-only upgrade and a migration test from the released schema 1.
 - Backup format 2 includes the new data; format 1 files still import.
 

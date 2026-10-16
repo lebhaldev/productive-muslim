@@ -1,7 +1,8 @@
 import 'day_key.dart';
 
 /// Consecutive days with a hit, ending today, or ending yesterday when today
-/// has no hit yet (FR-5, FR-7).
+/// has no hit yet (FR-5, FR-7). Used for the journal on Reflect; habits use
+/// [consistency] instead (FR-17).
 int streak(Set<String> days, String today) {
   var d = today;
   if (!days.contains(d)) d = shiftDay(d, -1);
@@ -13,8 +14,35 @@ int streak(Set<String> days, String today) {
   return n;
 }
 
-/// `1 day`, `3 days`, or empty at zero (Today habit rows).
-String streakLabel(int n) => n == 0 ? '' : '$n day${n == 1 ? '' : 's'}';
+typedef Consistency = ({int done, int of});
 
-/// `3-day streak` or `Start today` (Habits cards).
-String streakTag(int n) => n == 0 ? 'Start today' : '$n-day streak';
+/// Done days among the last 7 day keys ending today, with excused days
+/// removed from both counts (FR-17, FR-18).
+Consistency consistency(
+  Set<String> days,
+  String today, [
+  Set<String> excused = const {},
+]) {
+  var done = 0, of = 0;
+  for (var back = 0; back < 7; back++) {
+    final d = shiftDay(today, -back);
+    if (excused.contains(d)) continue;
+    of++;
+    if (days.contains(d)) done++;
+  }
+  return (done: done, of: of);
+}
+
+String _days(int n) => n == 1 ? '1 day' : '$n days';
+
+/// `3 of the last 7 days`, or `Start today` with nothing done (Habits cards).
+String consistencyTag(Consistency c) {
+  if (c.done == 0) return 'Start today';
+  return c.of == 7
+      ? '${c.done} of the last 7 days'
+      : '${c.done} of the last ${_days(c.of)}';
+}
+
+/// `3 of 7 days`, or empty with nothing done (Today habit rows).
+String consistencyLabel(Consistency c) =>
+    c.done == 0 ? '' : '${c.done} of ${_days(c.of)}';
