@@ -29,7 +29,7 @@ Reviewed by the spec thread (proposal), the builder thread (cost and fit with th
 |---|---|---|---|
 | B1 | Mood check-in that answers back with one small next step | Adapt | After a mood is picked, Today shows one calm line and one suggestion (write a gratitude note, open the journal, a habit not done yet). Lines are fixed app copy written once and reviewed, never generated, with no religious promises and no mental-health advice (Play Health declaration is "no health features"). Rough and low moods get a neutral action only. "Not now" hides it for the day. |
 | B2 | Ayah matched to mood | Adapt, later | Only through tags set by a person (the owner or someone knowledgeable), never by an agent, on the existing 120-ayah pool (e.g. `hope`, `patience`, `gratitude`). The reviewer checks format and that each tag maps to a real ref. The card stays "Ayah of the day" and never shows the tag. No tags, no matching. |
-| B3 | Prayer arc with done ticks | Take | Already planned as the prayer log (v1-plan "Must"). The arc becomes the visual of the next-prayer card and the Prayer screen: sunrise to sunset, five points, done ones filled sage. Tapping a point logs that prayer. Qibla shortcut on the card. Countdown in minutes, no seconds. |
+| B3 | Prayer arc with done ticks | Take | Already planned as the prayer log (v1-plan "Must"). The arc becomes the visual of the next-prayer card and the Prayer screen: Fajr to Isha with sunrise and sunset marked, done ones filled sage. Tapping a point logs that prayer. Qibla shortcut on the card. Countdown in minutes, no seconds. |
 | B4 | Prayer list states | Take | Prayer screen rows show `Done`, `Next · in 1 h 12 min`, or nothing. Never "Missed" in red. |
 | B5 | Day progress bar | Adapt | One line under the habits header: `5 of 7 today` with a thin segmented bar (habits + logged prayers). No points. |
 | B6 | Starter habits and habit rotation | Adapt | First run offers 6 suggested habits to tick (Read Qur'an, Morning adhkar, Evening adhkar, Gratitude note, Call family, Walk). Rotation is left out: it adds rules for little value. |
@@ -44,7 +44,7 @@ Reviewed by the spec thread (proposal), the builder thread (cost and fit with th
 | B15 | Guided sessions with app-written "Context" | Leave | Breaks CR-4: Nurday never writes explanations of scripture. Nurday's ayah card already shows published tafsir verbatim. |
 | B16 | Lessons, stories, Islamic history library | Leave for now | Needs a licensed, reviewed source per text. Revisit only with a named source. |
 | B17 | Library links (Quran, hadith collections) | Later | A "Sources" list linking out to Quran.com and sunnah.com fits the "link out, no reader" rule. Low priority. |
-| B18 | EN/AR switch | Take, earlier | Arabic UI with RTL moves from "After V1" up to v1.1, first after the prayer log: Balum shows Arabic speakers are a primary audience. |
+| B18 | EN/AR switch | Take, earlier | Arabic UI with RTL moves from "After V1" up to v1.1, with string extraction started early (04 Phase 6): Balum shows Arabic speakers are a primary audience. |
 | B19 | Bookmark and share ayah | Take | Bookmark (local "Saved" list under More) and the share card already planned in "After V1". |
 | B20 | Notification bell / inbox | Leave | No server, nothing to put there. |
 | B21 | Headline-style store screenshots | Adapt | Re-caption Nurday's 8 store screenshots with a short headline and one subline each, in Nurday's own words and palette (list in design brief). |
