@@ -447,8 +447,8 @@ void main() {
     await tapTab(tester, 'More');
     await tester.tap(find.text('Prayer times'));
     await settle(tester);
-    for (final p in ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha']) {
-      expect(find.text(p), findsOneWidget);
+    for (final p in ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha']) {
+      expect(find.byKey(Key('prayer-row-$p')), findsOneWidget);
     }
     expect(find.textContaining('Muslim World League'), findsOneWidget);
     await scrollTo(tester, find.text('QIBLA'));
@@ -623,6 +623,54 @@ void main() {
     expect(m['hijriOffset'], '1');
     expect(m['adjust_maghrib'], '2');
     expect(m['adjust_fajr'], '-1');
+    await closeApp(tester, db);
+  });
+
+  testWidgets('prayers are logged from the arc, with Undo, and shown as Done', (
+    tester,
+  ) async {
+    final db = memoryDb();
+    await tester.runAsync(() => db.putSetting('city', 'London'));
+    await pumpApp(tester, db: db);
+    // 07:12 in London: Fajr has started, Dhuhr has not.
+    await scrollTo(tester, find.byKey(const Key('arc-fajr')));
+    await tester.tap(find.byKey(const Key('arc-fajr')));
+    await settle(tester);
+    expect(find.text('Fajr logged'), findsOneWidget);
+    var logs = await tester.runAsync(() => db.select(db.prayerLogs).get());
+    expect(logs!.single.prayer, 'fajr');
+    await tester.tap(find.text('Undo'));
+    await settle(tester);
+    logs = await tester.runAsync(() => db.select(db.prayerLogs).get());
+    expect(logs, isEmpty);
+    await tester.tap(find.byKey(const Key('arc-dhuhr')));
+    await settle(tester);
+    logs = await tester.runAsync(() => db.select(db.prayerLogs).get());
+    expect(
+      logs,
+      isEmpty,
+      reason: 'a prayer that has not started cannot be logged',
+    );
+
+    await tester.tap(find.byKey(const Key('arc-fajr')));
+    await settle(tester);
+    GoRouter.of(tester.element(find.byType(Scaffold).last))
+        .go('/more/prayer');
+    await settle(tester);
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('prayer-row-fajr')),
+        matching: find.text('Done'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('prayer-row-dhuhr')),
+        matching: find.textContaining('Next · in'),
+      ),
+      findsOneWidget,
+    );
     await closeApp(tester, db);
   });
 }

@@ -116,6 +116,22 @@ final moodsProvider = StreamProvider<Map<String, int>>(
       .map((rows) => {for (final r in rows) r.dayKey: r.value}),
 );
 
+/// dayKey → names of the prayers logged that day (FR-16).
+final prayerLogsProvider = StreamProvider<Map<String, Set<String>>>(
+  (ref) => ref.watch(databaseProvider).watchPrayerLogs().map((rows) {
+    final m = <String, Set<String>>{};
+    for (final r in rows) {
+      (m[r.dayKey] ??= <String>{}).add(r.prayer);
+    }
+    return m;
+  }),
+);
+
+/// Day keys marked excused (FR-18).
+final excusedDaysProvider = StreamProvider<Set<String>>(
+  (ref) => ref.watch(databaseProvider).watchExcusedDays(),
+);
+
 final journalsProvider = StreamProvider<Map<String, Journal>>(
   (ref) => ref
       .watch(databaseProvider)

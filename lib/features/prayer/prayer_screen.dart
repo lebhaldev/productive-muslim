@@ -11,6 +11,7 @@ import '../../core/day_key.dart';
 import '../../data/prayer/prayer.dart';
 import '../../widgets/common.dart';
 import '../more/more_screen.dart';
+import 'prayer_arc.dart';
 
 String _t(DateTime t) => DateFormat('HH:mm').format(t);
 
@@ -38,6 +39,7 @@ class PrayerCard extends ConsumerWidget {
     }
     final next = nextPrayer(day, tomorrow, now);
     final label = prayerLabels[next.name]!;
+    final nextToday = isSameDay(next.at, day[next.name]) ? next.name : null;
     return NCard(
       onTap: () => context.go('/more/prayer'),
       children: [
@@ -69,6 +71,16 @@ class PrayerCard extends ConsumerWidget {
                 ),
               ],
             ),
+          ),
+        ),
+        PrayerArc(day: today, times: day, now: now, next: nextToday),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton.icon(
+            key: const Key('qibla-button'),
+            onPressed: () => context.go('/more/prayer'),
+            icon: const Icon(Icons.explore_outlined, size: 18),
+            label: const Text('Qibla'),
           ),
         ),
       ],
@@ -115,6 +127,8 @@ class PrayerScreen extends ConsumerWidget {
       );
     }
     final next = nextPrayer(day, tomorrow, now);
+    final nextToday = isSameDay(next.at, day[next.name]) ? next.name : null;
+    final logged = ref.watch(prayerLogsProvider).value?[today] ?? const {};
     final bearing = qiblaBearing(loc.lat, loc.lon);
     return ScreenBody(
       children: [
@@ -130,36 +144,28 @@ class PrayerScreen extends ConsumerWidget {
           style: meta(size: 13),
         ),
         NCard(
+          children: [
+            PrayerArc(day: today, times: day, now: now, next: nextToday),
+            Text(
+              'Tap a prayer that has started to log it. Logs stay on this phone.',
+              style: meta(),
+            ),
+          ],
+        ),
+        NCard(
           gap: 0,
           children: [
             for (final p in PrayerName.values)
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: next.name == p && isSameDay(next.at, day[p])
-                      ? AppColors.sage200
-                      : null,
-                  borderRadius: BorderRadius.circular(AppRadii.md),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        prayerLabels[p]!,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: p == PrayerName.sunrise
-                              ? AppColors.neutral700
-                              : AppColors.text,
-                        ),
-                      ),
-                    ),
-                    Text(_t(day[p]), style: heading(18)),
-                  ],
-                ),
+              _PrayerRow(
+                key: Key('prayer-row-${p.name}'),
+                p: p,
+                at: day[p],
+                isNext: p == nextToday,
+                done: logged.contains(p.name),
+                until: untilLabel(next.at.difference(now)),
+                onTap: p == PrayerName.sunrise || day[p].isAfter(now)
+                    ? null
+                    : () => togglePrayerLog(context, ref, today, p),
               ),
           ],
         ),
@@ -192,6 +198,81 @@ class PrayerScreen extends ConsumerWidget {
           style: meta(),
         ),
       ],
+    );
+  }
+}
+
+/// One row of today's times: `Done`, `Next · in 1 h 12 min`, or nothing.
+/// Never a "missed" state (FR-16).
+class _PrayerRow extends StatelessWidget {
+  const _PrayerRow({
+    super.key,
+    required this.p,
+    required this.at,
+    required this.isNext,
+    required this.done,
+    required this.until,
+    this.onTap,
+  });
+  final PrayerName p;
+  final DateTime at;
+  final bool isNext;
+  final bool done;
+  final String until;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final status = done
+        ? 'Done'
+        : isNext
+        ? 'Next · $until'
+        : null;
+    return Semantics(
+      button: onTap != null,
+      checked: onTap != null ? done : null,
+      label: '${prayerLabels[p]} ${_t(at)}${status == null ? '' : ', $status'}',
+      excludeSemantics: true,
+      child: Material(
+        color: isNext ? AppColors.sage200 : Colors.transparent,
+        borderRadius: BorderRadius.circular(AppRadii.md),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(AppRadii.md),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    prayerLabels[p]!,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: p == PrayerName.sunrise
+                          ? AppColors.neutral700
+                          : AppColors.text,
+                    ),
+                  ),
+                ),
+                if (status != null)
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: Text(
+                        status,
+                        style: meta(
+                          size: 12,
+                          color: done ? AppColors.sage900 : AppColors.accent700,
+                        ),
+                      ),
+                    ),
+                  ),
+                Text(_t(at), style: heading(18)),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

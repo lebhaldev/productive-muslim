@@ -96,6 +96,7 @@ void main() {
       await db.toggleCompletion(ids[0], key(now));
       await db.toggleCompletion(ids[1], key(now));
       await db.setMood(key(now), 4, now);
+      await db.togglePrayer(key(now), 'fajr', now);
       await db.saveJournal(
         key(now),
         'A quiet morning',

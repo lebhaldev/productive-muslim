@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
 import '../../app/providers.dart';
+import '../../data/prayer/prayer.dart';
 import '../../app/router.dart';
 import '../../app/theme.dart';
 import '../../core/day_key.dart';
@@ -27,6 +28,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     final sel = ref.watch(selectedDayProvider);
     final moods = ref.watch(moodsProvider).value ?? const {};
     final journals = ref.watch(journalsProvider).value ?? const {};
+    final prayers = ref.watch(prayerLogsProvider).value ?? const {};
     final habits = ref.watch(habitsProvider).value ?? const [];
     final done = ref.watch(completionsProvider).value ?? const {};
     final acts =
@@ -39,6 +41,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
     final daysInMonth = DateTime(month.year, month.month + 1, 0).day;
     final selMood = moods[sel];
     final selJournal = journals[sel];
+    final selPrayers = prayers[sel] ?? const <String>{};
     final selHabits = habits
         .where((h) => done[h.id]?.contains(sel) ?? false)
         .map((h) => h.name)
@@ -90,6 +93,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                 hasJournal: journals.containsKey(
                   dayKey(DateTime(month.year, month.month, d, 12)),
                 ),
+                prayers:
+                    prayers[dayKey(DateTime(month.year, month.month, d, 12))]
+                        ?.length ??
+                    0,
               ),
           ],
         ),
@@ -98,6 +105,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
           children: [
             Text('● mood', style: meta(size: 11)),
             Text('• journal', style: meta(size: 11)),
+            Text('▪ prayers logged', style: meta(size: 11)),
           ],
         ),
         NCard(
@@ -132,6 +140,17 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                 child: const Text('Open journal'),
               ),
             ),
+            Text('Prayers logged', style: meta()),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: [
+                if (selPrayers.isEmpty) Tag('None', sage: true),
+                for (final p in fivePrayers)
+                  if (selPrayers.contains(p.name))
+                    Tag(prayerLabels[p]!, sage: true),
+              ],
+            ),
             Text('Habits completed', style: meta()),
             Wrap(
               spacing: 6,
@@ -164,6 +183,7 @@ class _DayCell extends ConsumerWidget {
     required this.selected,
     required this.mood,
     required this.hasJournal,
+    required this.prayers,
   });
 
   final String day;
@@ -172,6 +192,7 @@ class _DayCell extends ConsumerWidget {
   final String selected;
   final int? mood;
   final bool hasJournal;
+  final int prayers;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -181,6 +202,7 @@ class _DayCell extends ConsumerWidget {
       DateFormat('EEEE d MMMM').format(parseDayKey(day)),
       if (mood != null) 'mood ${moodLabel(mood!)}',
       if (hasJournal) 'has journal',
+      if (prayers > 0) '$prayers of 5 prayers logged',
     ].join(', ');
     return Semantics(
       container: true,
@@ -232,6 +254,16 @@ class _DayCell extends ConsumerWidget {
                         _dot(
                           4,
                           hasJournal ? AppColors.text : Colors.transparent,
+                        ),
+                        const SizedBox(width: 3),
+                        // A small sage bar that grows with prayers logged.
+                        Container(
+                          width: prayers == 0 ? 0 : 2.0 + prayers * 1.6,
+                          height: 4,
+                          decoration: BoxDecoration(
+                            color: AppColors.sage600,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
                         ),
                       ],
                     ),

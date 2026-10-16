@@ -24,6 +24,10 @@ class ReflectScreen extends ConsumerWidget {
     final done = ref.watch(completionsProvider).value ?? const {};
     final last30 = [for (var n = 29; n >= 0; n--) shiftDay(today, -n)];
     final month = today.substring(0, 7);
+    final prayers = ref.watch(prayerLogsProvider).value ?? const {};
+    final prayersThisMonth = prayers.entries
+        .where((e) => e.key.startsWith(month))
+        .fold(0, (n, e) => n + e.value.length);
 
     return ScreenBody(
       gap: 16,
@@ -82,6 +86,7 @@ class ReflectScreen extends ConsumerWidget {
             ),
           ],
         ),
+        _Stat(value: prayersThisMonth, label: 'prayers logged this month'),
         Row(
           children: [
             Expanded(

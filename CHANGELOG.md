@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.0 (unreleased)
+- Prayer log (FR-16): the next-prayer card and the Prayer screen show the day as an arc from Fajr to Isha with sunrise and sunset marked; tap a prayer that has started to log it (snackbar with Undo). Prayer rows show `Done` or `Next · in …`, never "missed". A Qibla button on the card. Logged prayers show on Calendar (a small sage bar and a "Prayers logged" line on the day) and as a monthly count in Reflect.
+- Database schema 2 (prayer logs, excused days, duas, saved items, journal gratitude) with an add-only upgrade and a migration test from the released schema 1.
+- Backup format 2 includes the new data; format 1 files still import.
+
 ## 1.0.1 (11 October 2026)
 - Removes the advertising ID permission (`AD_ID`) in case a library adds it, matching Play's "No" Advertising ID declaration; a test and a CI check on the release APK keep it out.
 - docs/play-console.md records what was set up in Play Console (internal testing track, declarations, Data safety, listing).
