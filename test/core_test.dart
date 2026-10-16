@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nurday/core/content_seed.dart';
 import 'package:nurday/core/day_key.dart';
 import 'package:nurday/core/streak.dart';
+import 'package:nurday/features/today/mood_week.dart';
 
 void main() {
   group('day keys', () {
@@ -17,6 +18,19 @@ void main() {
       expect(shiftDay('2026-10-25', 1), '2026-10-26');
       expect(shiftDay('2024-02-28', 1), '2024-02-29');
     });
+  });
+
+  test('the mood week runs Monday to Sunday', () {
+    expect(weekOf('2026-10-08'), [
+      '2026-10-05',
+      '2026-10-06',
+      '2026-10-07',
+      '2026-10-08',
+      '2026-10-09',
+      '2026-10-10',
+      '2026-10-11',
+    ]);
+    expect(weekOf('2026-11-01').first, '2026-10-26');
   });
 
   group('streaks', () {

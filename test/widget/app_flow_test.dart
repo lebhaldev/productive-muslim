@@ -6,6 +6,7 @@ import 'package:nurday/app/app.dart';
 import 'package:nurday/app/providers.dart';
 import 'package:nurday/app/theme.dart';
 import 'package:nurday/core/day_key.dart';
+import 'package:nurday/features/today/mood_week.dart';
 import 'package:nurday/data/backup_files.dart';
 import 'package:nurday/data/db/database.dart';
 
@@ -647,7 +648,9 @@ void main() {
     await settle(tester);
     logs = await tester.runAsync(() => db.select(db.prayerLogs).get());
     expect(logs, isEmpty);
-    await tester.tap(find.byKey(const Key('arc-dhuhr')));
+    await tester.ensureVisible(find.byKey(const Key('arc-dhuhr')));
+    await settle(tester);
+    await tester.tap(find.byKey(const Key('arc-dhuhr')), warnIfMissed: false);
     await settle(tester);
     logs = await tester.runAsync(() => db.select(db.prayerLogs).get());
     expect(
@@ -741,6 +744,61 @@ void main() {
     expect(find.byKey(const Key('consistency-hadith')), findsNothing);
     final settings = await tester.runAsync(() => db.watchSettings().first);
     expect(settings!['consistencyCard'], 'closed');
+    await closeApp(tester, db);
+  });
+
+  testWidgets('a picked mood answers with a fixed line, Not now hides it', (
+    tester,
+  ) async {
+    final db = memoryDb();
+    await tester.runAsync(() => db.addHabit('Walk'));
+    final today = dayKey(now);
+    await pumpApp(tester, db: db);
+    await scrollTo(tester, find.text('okay'));
+    await tester.ensureVisible(find.text('okay'));
+    await settle(tester);
+    await tester.tap(find.text('okay'));
+    await settle(tester);
+    expect(find.text('Noted for today.'), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const Key('mood-suggestion')));
+    await settle(tester);
+    expect(find.text('Mark “Walk” done'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('mood-suggestion')));
+    await settle(tester);
+    final done = await tester.runAsync(() => db.watchCompletions().first);
+    expect(done!.single.dayKey, today);
+
+    await tester.ensureVisible(find.text('good'));
+    await settle(tester);
+    await tester.tap(find.text('good'));
+    await settle(tester);
+    expect(find.text('Glad to hear it.'), findsOneWidget);
+    expect(find.text("Write one thing you're grateful for"), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const Key('mood-not-now')));
+    await settle(tester);
+    await tester.tap(find.byKey(const Key('mood-not-now')));
+    await settle(tester);
+    expect(find.byKey(const Key('mood-reply')), findsNothing);
+    await closeApp(tester, db);
+  });
+
+  testWidgets('the mood week strip opens a day in Calendar', (tester) async {
+    final db = memoryDb();
+    final today = dayKey(now); // a Monday, so the rest of the week is ahead
+    final week = weekOf(today);
+    expect(week.first, today);
+    await tester.runAsync(() => db.setMood(today, 3, now));
+    await pumpApp(tester, db: db);
+    await scrollTo(tester, find.byKey(const Key('mood-week')));
+    await tester.ensureVisible(find.byKey(Key('mood-week-${week[1]}')));
+    await settle(tester);
+    // Days still ahead do nothing.
+    await tester.tap(find.byKey(Key('mood-week-${week[1]}')));
+    await settle(tester);
+    expect(find.byKey(const Key('mood-week')), findsOneWidget);
+    await tester.tap(find.byKey(Key('mood-week-$today')));
+    await settle(tester);
+    expect(find.text('Mon 5 October'), findsOneWidget);
     await closeApp(tester, db);
   });
 }

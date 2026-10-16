@@ -21,6 +21,16 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
   int monthOffset = 0;
 
   @override
+  void initState() {
+    super.initState();
+    // Opened on a day from another month (e.g. the mood week strip early in
+    // a month): show that day's month.
+    final t = parseDayKey(dayKey(ref.read(clockProvider).now()));
+    final s = parseDayKey(ref.read(selectedDayProvider));
+    monthOffset = (s.year - t.year) * 12 + s.month - t.month;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final today = watchToday(ref);
     final t = parseDayKey(today);

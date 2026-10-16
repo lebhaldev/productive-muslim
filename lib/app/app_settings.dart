@@ -17,6 +17,9 @@ class AppSettings {
 
   /// The one-time consistency hadith card on Habits was closed.
   bool get consistencyCardClosed => raw['consistencyCard'] == 'closed';
+
+  /// Day key on which `Not now` hid the mood reply (FR-19).
+  String? get moodReplyHiddenOn => raw['moodReplyHidden'];
   bool get journalLock => raw['journalLock'] == 'true';
   bool get driveBackup => raw['driveBackup'] == 'true';
   DateTime? get driveLastBackup =>

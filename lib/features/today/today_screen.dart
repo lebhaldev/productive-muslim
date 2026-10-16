@@ -6,6 +6,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../app/providers.dart';
 import '../../app/router.dart';
 import '../../app/theme.dart';
+import '../../core/copy.dart';
 import '../../core/day_key.dart';
 import '../../core/moods.dart';
 import '../../core/streak.dart';
@@ -15,6 +16,7 @@ import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
 import '../prayer/prayer_screen.dart';
 import 'content_cards.dart';
+import 'mood_week.dart';
 
 class TodayScreen extends ConsumerWidget {
   const TodayScreen({super.key});
@@ -395,6 +397,7 @@ class _MoodSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final current = ref.watch(moodsProvider).value?[today];
+    final hidden = settingsOf(ref).moodReplyHiddenOn == today;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -414,7 +417,77 @@ class _MoodSection extends ConsumerWidget {
               ),
           ],
         ),
+        AnimatedSize(
+          duration: motion(context, Motion.medium),
+          alignment: Alignment.topCenter,
+          child: current == null || hidden
+              ? const SizedBox(width: double.infinity)
+              : _MoodReply(today: today, mood: MoodLevel.values[current]),
+        ),
+        const SizedBox(height: 6),
+        const MoodWeekStrip(),
       ],
+    );
+  }
+}
+
+/// FR-19: one fixed line and one suggestion for the picked mood.
+class _MoodReply extends ConsumerWidget {
+  const _MoodReply({required this.today, required this.mood});
+  final String today;
+  final MoodLevel mood;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final reply = moodReplies[mood]!;
+    final habits = (ref.watch(habitsProvider).value ?? const []).where(
+      (h) => !h.archived,
+    );
+    final done = ref.watch(completionsProvider).value ?? const {};
+    final open = habits
+        .where((h) => !(done[h.id]?.contains(today) ?? false))
+        .firstOrNull;
+    final journal = (openJournalLabel, () => openJournal(context, ref, today));
+    final (label, onPressed) = switch (reply.suggestion) {
+      MoodSuggestion.journal => journal,
+      MoodSuggestion.gratitude => (
+        gratitudeLabel,
+        () => openJournal(context, ref, today),
+      ),
+      // With no habit left open, fall back to the journal.
+      MoodSuggestion.habit when open != null => (
+        habitSuggestionLabel(open.name),
+        () => ref.read(databaseProvider).toggleCompletion(open.id, today),
+      ),
+      MoodSuggestion.habit => journal,
+    };
+    return Padding(
+      key: const Key('mood-reply'),
+      padding: const EdgeInsets.only(top: 8),
+      child: NCard(
+        gap: 8,
+        children: [
+          Text(reply.line, style: const TextStyle(fontSize: 15)),
+          Wrap(
+            spacing: 8,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              FilledButton.tonal(
+                key: const Key('mood-suggestion'),
+                onPressed: onPressed,
+                child: Text(label),
+              ),
+              TextButton(
+                key: const Key('mood-not-now'),
+                onPressed: () => ref
+                    .read(databaseProvider)
+                    .putSetting('moodReplyHidden', today),
+                child: const Text('Not now'),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
