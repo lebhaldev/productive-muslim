@@ -1,0 +1,23 @@
+{
+  "@@locale": "ar",
+  "@@x-reviewed": "false: drafted by the build team, waiting for a native speaker's review (FR-21). UI strings only; no religious text.",
+  "tabToday": "اليوم",
+  "tabHabits": "العادات",
+  "tabCalendar": "التقويم",
+  "tabJournal": "اليوميات",
+  "tabMore": "المزيد",
+  "greetingMorning": "صباح الخير",
+  "greetingAfternoon": "مساء الخير",
+  "greetingEvening": "مساء الخير",
+  "sectionHabits": "العادات",
+  "sectionMood": "كيف تشعر؟",
+  "allDoneToday": "أنجزت كل شيء اليوم",
+  "excusedToday": "معذور اليوم",
+  "countTodayAgain": "احتسب اليوم مجددًا",
+  "nOfMToday": "{done} من {total} اليوم",
+  "addFirstHabit": "أضف أول عادة",
+  "language": "اللغة",
+  "languageSystem": "لغة النظام",
+  "languageEnglish": "English",
+  "languageArabic": "العربية (تجريبي)"
+}

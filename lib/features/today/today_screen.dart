@@ -11,6 +11,7 @@ import '../../core/day_key.dart';
 import '../../core/moods.dart';
 import '../../core/streak.dart';
 import '../../data/prayer/prayer.dart';
+import '../../l10n/app_localizations.dart';
 import '../../data/weather/weather.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
@@ -55,10 +56,10 @@ class TodayScreen extends ConsumerWidget {
   }
 }
 
-String greetingFor(int hour) {
-  if (hour < 12) return 'Good morning';
-  if (hour < 18) return 'Good afternoon';
-  return 'Good evening';
+String greetingFor(int hour, [AppLocalizations? l]) {
+  if (hour < 12) return l?.greetingMorning ?? 'Good morning';
+  if (hour < 18) return l?.greetingAfternoon ?? 'Good afternoon';
+  return l?.greetingEvening ?? 'Good evening';
 }
 
 class _Header extends ConsumerWidget {
@@ -83,7 +84,10 @@ class _Header extends ConsumerWidget {
               Semantics(
                 container: true,
                 header: true,
-                child: Text(greetingFor(hour), style: heading(28)),
+                child: Text(
+                  greetingFor(hour, AppLocalizations.of(context)),
+                  style: heading(28),
+                ),
               ),
             ],
           ),
@@ -193,6 +197,7 @@ class _HabitsSection extends ConsumerWidget {
         ? (ref.watch(prayerLogsProvider).value?[today] ?? const <String>{})
         : const <String>{};
     final isExcused = excused.contains(today);
+    final l = AppLocalizations.of(context);
     final db = ref.read(databaseProvider);
 
     // One segment per habit, then one per prayer when faith cards are on
@@ -209,23 +214,23 @@ class _HabitsSection extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _SectionHeader(
-          'Habits',
+          l.sectionHabits,
           trailing: PopSwitcher(
             child: isExcused
                 ? Text(
-                    'Excused today',
+                    l.excusedToday,
                     key: const ValueKey('excused'),
                     style: meta(),
                   )
                 : all
                 ? Text(
-                    'All done today',
+                    l.allDoneToday,
                     key: const ValueKey('all-done'),
                     style: meta(color: AppColors.sage900)
                         .copyWith(fontWeight: FontWeight.w600),
                   )
                 : Text(
-                    '$doneCount of ${segments.length} today',
+                    l.nOfMToday(doneCount, segments.length),
                     key: ValueKey(doneCount),
                     style: meta(),
                   ),
@@ -240,7 +245,7 @@ class _HabitsSection extends ConsumerWidget {
           TextButton(
             style: TextButton.styleFrom(alignment: Alignment.centerLeft),
             onPressed: () => context.go('/habits'),
-            child: const Text('Add your first habit'),
+            child: Text(l.addFirstHabit),
           ),
         for (final h in habits) ...[
           _HabitRow(
@@ -263,7 +268,7 @@ class _HabitsSection extends ConsumerWidget {
             style: TextButton.styleFrom(foregroundColor: AppColors.neutral700),
             onPressed: () =>
                 db.setExcused(today, !isExcused, ref.read(clockProvider).now()),
-            child: Text(isExcused ? 'Count today again' : 'Excused today'),
+            child: Text(isExcused ? l.countTodayAgain : l.excusedToday),
           ),
         ),
       ],
@@ -401,7 +406,7 @@ class _MoodSection extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const _SectionHeader('How do you feel?'),
+        _SectionHeader(AppLocalizations.of(context).sectionMood),
         const SizedBox(height: 8),
         Row(
           children: [

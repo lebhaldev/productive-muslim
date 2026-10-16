@@ -11,6 +11,7 @@
 - First run: a fresh install opens three skippable steps (your place for prayer times and weather; starter habits from six chips: Read Qur'an, Morning adhkar, Evening adhkar, Gratitude note, Call family, Walk; and the privacy promise). `Skip all` ends it. Phones upgrading from 1.0 never see it.
 - Weekly review: on Fridays, Reflect opens with a card of plain counts for the last 7 days (habits kept, prayers logged, mostly mood, journal days) and `Write a note to next week`, which opens today's journal. No scores and no religious wording.
 - Saved: a bookmark on the ayah and hadith cards; More → Saved lists them with their references (saved hadith show their bundled text, offline).
+- Arabic UI, first part (FR-21): Settings → Appearance → Language (System, English, العربية). Picking Arabic mirrors the layout right to left. Strings now come from `lib/l10n/app_en.arb` and `app_ar.arb` (tab bar, Today headings, the habits bar, the language picker so far; the rest still to move). The Arabic strings are a draft waiting for a native speaker's review, so "System" stays English on Arabic phones until `arabicUiReviewed` is set. Content text is never translated.
 - Database schema 2 (prayer logs, excused days, duas, saved items, journal gratitude) with an add-only upgrade and a migration test from the released schema 1.
 - Backup format 2 includes the new data; format 1 files still import.
 

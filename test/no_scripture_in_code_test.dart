@@ -9,12 +9,23 @@ void main() {
   final sources = Directory('lib')
       .listSync(recursive: true)
       .whereType<File>()
-      .where((f) => f.path.endsWith('.dart') && !f.path.endsWith('.g.dart'));
+      .where((f) => f.path.endsWith('.dart') && !f.path.endsWith('.g.dart'))
+      // Generated from the ARB files, checked below.
+      .where((f) => !f.path.startsWith('lib/l10n/'));
 
   test('no Arabic script in lib/', () {
     final arabic = RegExp(r'[؀-ۿݐ-ݿﭐ-﷿ﹰ-﻿]');
     for (final f in sources) {
       expect(arabic.hasMatch(f.readAsStringSync()), isFalse, reason: f.path);
+    }
+  });
+
+  test('Arabic UI strings are short labels, not scripture', () {
+    final ar =
+        jsonDecode(File('lib/l10n/app_ar.arb').readAsStringSync()) as Map;
+    for (final MapEntry(:key, :value) in ar.entries) {
+      if (key.startsWith('@')) continue;
+      expect((value as String).length, lessThan(60), reason: key);
     }
   });
 

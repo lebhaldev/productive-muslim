@@ -23,6 +23,12 @@ class AppSettings {
 
   /// The first-run steps were finished or skipped.
   bool get onboarded => raw['onboarded'] == 'true';
+
+  /// UI language (FR-21): null follows the phone.
+  AppLanguage get language => AppLanguage.values.firstWhere(
+    (l) => l.name == raw['language'],
+    orElse: () => AppLanguage.system,
+  );
   bool get journalLock => raw['journalLock'] == 'true';
   bool get driveBackup => raw['driveBackup'] == 'true';
   DateTime? get driveLastBackup =>
@@ -79,3 +85,9 @@ class AppSettings {
   /// Content language: Arabic with the English translation, or Arabic only.
   bool get arabicOnly => raw['contentLanguage'] == 'ar';
 }
+
+enum AppLanguage { system, en, ar }
+
+/// Until a native speaker has reviewed the Arabic strings (FR-21), Arabic
+/// shows only when picked in Settings, never because the phone is Arabic.
+const arabicUiReviewed = false;

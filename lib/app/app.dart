@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../data/reminders.dart';
+import '../l10n/app_localizations.dart';
 import 'providers.dart';
 import 'router.dart';
 import 'theme.dart';
@@ -76,8 +78,29 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
     final arabic = ref.watch(
       settingsProvider.select((s) => s.value?.arabicFont ?? ArabicFont.amiri),
     );
+    final language = ref.watch(
+      settingsProvider.select((s) => s.value?.language ?? AppLanguage.system),
+    );
     return MaterialApp.router(
       title: 'Nurday',
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: switch (language) {
+        AppLanguage.en => const Locale('en'),
+        AppLanguage.ar => const Locale('ar'),
+        AppLanguage.system => null,
+      },
+      // Also called with the picked locale: only "System" is filtered.
+      localeResolutionCallback: (device, supported) =>
+          device?.languageCode == 'ar' &&
+              (language == AppLanguage.ar || arabicUiReviewed)
+          ? const Locale('ar')
+          : const Locale('en'),
       debugShowCheckedModeBanner: false,
       theme: buildTheme(colors.light, bodyFont: font.body),
       darkTheme: buildTheme(colors.dark, bodyFont: font.body),

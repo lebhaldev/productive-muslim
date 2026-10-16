@@ -991,6 +991,24 @@ void main() {
     expect(find.byKey(const Key('weekly-review')), findsNothing);
     await closeApp(tester, monday);
   });
+
+  testWidgets('Arabic UI is picked in Settings and mirrors the layout', (
+    tester,
+  ) async {
+    final db = await pumpApp(tester);
+    expect(find.text('Today'), findsWidgets);
+    await tester.runAsync(() => db.putSetting('language', 'ar'));
+    await settle(tester);
+    expect(find.text('اليوم'), findsOneWidget);
+    expect(
+      Directionality.of(tester.element(find.byKey(const Key('tab-Today')))),
+      TextDirection.rtl,
+    );
+    await tester.runAsync(() => db.putSetting('language', 'system'));
+    await settle(tester);
+    expect(find.text('اليوم'), findsNothing, reason: 'not reviewed yet');
+    await closeApp(tester, db);
+  });
 }
 
 class FakeBackupFiles implements BackupFiles {

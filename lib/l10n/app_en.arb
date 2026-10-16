@@ -1,0 +1,23 @@
+{
+  "@@locale": "en",
+  "tabToday": "Today",
+  "tabHabits": "Habits",
+  "tabCalendar": "Calendar",
+  "tabJournal": "Journal",
+  "tabMore": "More",
+  "greetingMorning": "Good morning",
+  "greetingAfternoon": "Good afternoon",
+  "greetingEvening": "Good evening",
+  "sectionHabits": "Habits",
+  "sectionMood": "How do you feel?",
+  "allDoneToday": "All done today",
+  "excusedToday": "Excused today",
+  "countTodayAgain": "Count today again",
+  "nOfMToday": "{done} of {total} today",
+  "@nOfMToday": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}},
+  "addFirstHabit": "Add your first habit",
+  "language": "Language",
+  "languageSystem": "System",
+  "languageEnglish": "English",
+  "languageArabic": "العربية (preview)"
+}

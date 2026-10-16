@@ -15,6 +15,7 @@ import '../features/settings/settings_screen.dart';
 import '../features/prayer/prayer_screen.dart';
 import '../features/today/today_screen.dart';
 import '../features/welcome/welcome_screen.dart';
+import '../l10n/app_localizations.dart';
 import 'providers.dart';
 import 'theme.dart';
 import '../widgets/motion.dart';
@@ -97,17 +98,20 @@ void openJournal(BuildContext context, WidgetRef ref, String day) {
 }
 
 class _Tab {
-  const _Tab(this.label, this.icon);
-  final String label;
+  const _Tab(this.id, this.icon, this.label);
+
+  /// English name, used for test keys whatever the UI language.
+  final String id;
   final IconData icon;
+  final String Function(AppLocalizations) label;
 }
 
-const _tabs = [
-  _Tab('Today', Icons.wb_sunny_outlined),
-  _Tab('Habits', Icons.check),
-  _Tab('Calendar', Icons.grid_view),
-  _Tab('Journal', Icons.edit_outlined),
-  _Tab('More', Icons.more_horiz),
+final _tabs = [
+  _Tab('Today', Icons.wb_sunny_outlined, (l) => l.tabToday),
+  _Tab('Habits', Icons.check, (l) => l.tabHabits),
+  _Tab('Calendar', Icons.grid_view, (l) => l.tabCalendar),
+  _Tab('Journal', Icons.edit_outlined, (l) => l.tabJournal),
+  _Tab('More', Icons.more_horiz, (l) => l.tabMore),
 ];
 
 /// A fresh install (no flag, no habits, no place) opens the first-run steps.
@@ -190,14 +194,15 @@ class _NavButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final label = tab.label(AppLocalizations.of(context));
     return Semantics(
       container: true,
       button: true,
       selected: selected,
-      label: tab.label,
+      label: label,
       excludeSemantics: true,
       child: InkWell(
-        key: Key('tab-${tab.label}'),
+        key: Key('tab-${tab.id}'),
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppRadii.lg),
         child: ConstrainedBox(
@@ -219,7 +224,7 @@ class _NavButton extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                tab.label,
+                label,
                 maxLines: 1,
                 overflow: TextOverflow.fade,
                 softWrap: false,

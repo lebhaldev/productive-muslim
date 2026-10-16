@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme.dart';
+import '../../l10n/app_localizations.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
 import 'settings_widgets.dart';
@@ -13,9 +14,20 @@ class AppearanceSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final s = settingsOf(ref);
+    final l = AppLocalizations.of(context);
     return NCard(
       gap: 10,
       children: [
+        SettingPicker<AppLanguage>(
+          label: l.language,
+          value: s.language,
+          options: {
+            AppLanguage.system: l.languageSystem,
+            AppLanguage.en: l.languageEnglish,
+            AppLanguage.ar: l.languageArabic,
+          },
+          onChanged: (v) => ref.putSetting('language', v.name),
+        ),
         Wrap(
           spacing: 12,
           runSpacing: 12,
