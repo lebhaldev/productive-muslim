@@ -61,6 +61,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
         Row(
           children: [
             Expanded(child: Kicker('${kind.label} of the day')),
+            if (_savedRef(kind, c) case final ref?) _SaveButton(kind.name, ref),
             IconButton(
               key: Key('content-next-${kind.name}'),
               tooltip: 'Show another ${kind.label.toLowerCase()}',
@@ -98,6 +99,14 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       ],
     );
   }
+
+  /// What Saved stores for this card: the ayah ref or the hadith id.
+  /// Quotes are not saved.
+  String? _savedRef(_Kind kind, DailyContent c) => switch (kind) {
+    _Kind.ayah => c.ayah.value?.ref,
+    _Kind.hadith => c.hadith.value?.id,
+    _Kind.quote => null,
+  };
 
   List<Widget> _ayah(ContentSlot<Ayah> slot, bool arabicOnly, bool open) {
     final a = slot.value;
@@ -219,4 +228,30 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
 
   Widget _error(String error) =>
       Text(error, style: meta(size: 13, color: AppColors.neutral800));
+}
+
+/// Adds the card's ayah or hadith to More → Saved, or removes it.
+class _SaveButton extends ConsumerWidget {
+  const _SaveButton(this.kind, this.ref_);
+  final String kind;
+  final String ref_;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final saved = (ref.watch(bookmarksProvider).value ?? const []).any(
+      (b) => b.kind == kind && b.ref == ref_,
+    );
+    return IconButton(
+      key: Key('save-$kind'),
+      tooltip: saved ? 'Remove from Saved' : 'Save',
+      visualDensity: VisualDensity.compact,
+      icon: Icon(
+        saved ? Icons.bookmark : Icons.bookmark_border,
+        color: saved ? AppColors.sage600 : AppColors.neutral700,
+      ),
+      onPressed: () => ref
+          .read(databaseProvider)
+          .toggleBookmark(kind, ref_, ref.read(clockProvider).now()),
+    );
+  }
 }

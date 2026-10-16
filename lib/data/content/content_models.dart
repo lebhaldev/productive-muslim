@@ -46,6 +46,7 @@ class Ayah {
 
 class Hadith {
   const Hadith({
+    this.id,
     required this.collection,
     required this.book,
     required this.bookName,
@@ -56,6 +57,8 @@ class Hadith {
     this.sourceUrl,
   });
 
+  /// Dataset id, e.g. `bukhari:6465` (used for Saved).
+  final String? id;
   final String collection;
   final int book;
   final String bookName;
@@ -74,6 +77,7 @@ class Hadith {
   String get source => '$collection · Book $book · No. $number';
 
   factory Hadith.fromJson(Map<String, dynamic> j) => Hadith(
+    id: j['id'] as String?,
     collection: j['collection'] as String,
     book: j['book'] as int,
     bookName: j['bookName'] as String,

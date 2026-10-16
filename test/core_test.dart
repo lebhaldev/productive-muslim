@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nurday/core/content_seed.dart';
 import 'package:nurday/core/day_key.dart';
 import 'package:nurday/core/streak.dart';
+import 'package:nurday/features/more/weekly_review.dart';
 import 'package:nurday/features/today/mood_week.dart';
 
 void main() {
@@ -31,6 +32,33 @@ void main() {
       '2026-10-11',
     ]);
     expect(weekOf('2026-11-01').first, '2026-10-26');
+  });
+
+  test('week counts: excused days, mood ties go to the later day', () {
+    final c = weekCounts(
+      today: '2026-10-09',
+      completions: {
+        1: {'2026-10-09', '2026-10-02'},
+        2: {'2026-10-09', '2026-10-05'},
+      },
+      excused: {'2026-10-04'},
+      prayers: {
+        '2026-10-09': {'fajr', 'dhuhr'},
+        '2026-10-01': {'fajr'},
+      },
+      moods: {
+        '2026-10-03': 1,
+        '2026-10-06': 4,
+        '2026-10-08': 1,
+        '2026-10-09': 4,
+      },
+      journalDays: {'2026-10-03', '2026-10-09', '2026-09-30'},
+    );
+    expect(c.habitDays, 2);
+    expect(c.habitOf, 6);
+    expect(c.prayers, 2);
+    expect(c.mostlyMood, 4);
+    expect(c.journalDays, 2);
   });
 
   group('streaks', () {

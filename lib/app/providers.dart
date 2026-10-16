@@ -194,19 +194,28 @@ final dailyContentProvider = FutureProvider<DailyContent>((ref) async {
       );
 });
 
-/// Bukhari 6465 for the one-time card on Habits (FR-17), read verbatim
-/// from the bundled dataset; null if the dataset lacks it.
-final consistencyHadithProvider = FutureProvider<Hadith?>((ref) async {
+/// The bundled hadith dataset by id, read verbatim (Saved, FR-17 card).
+final hadithByIdProvider = FutureProvider<Map<String, Hadith>>((ref) async {
   final raw = await ref.watch(assetLoaderProvider)(
     DailyContentService.hadithAsset,
   );
-  for (final j in (jsonDecode(raw) as Map)['hadiths'] as List) {
-    if ((j as Map)['id'] == 'bukhari:6465') {
-      return Hadith.fromJson(j.cast<String, dynamic>());
-    }
-  }
-  return null;
+  return {
+    for (final j
+        in ((jsonDecode(raw) as Map)['hadiths'] as List)
+            .cast<Map<String, dynamic>>())
+      j['id'] as String: Hadith.fromJson(j),
+  };
 });
+
+/// Bukhari 6465 for the one-time card on Habits (FR-17); null if the
+/// dataset lacks it.
+final consistencyHadithProvider = FutureProvider<Hadith?>(
+  (ref) async => (await ref.watch(hadithByIdProvider.future))['bukhari:6465'],
+);
+
+final bookmarksProvider = StreamProvider<List<Bookmark>>(
+  (ref) => ref.watch(databaseProvider).watchBookmarks(),
+);
 
 final tafsirProvider = FutureProvider.family<Tafsir?, String>(
   (ref, ayahRef) => ref.watch(contentServiceProvider).tafsirFor(ayahRef),

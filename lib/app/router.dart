@@ -10,6 +10,7 @@ import '../features/journal/journal_screen.dart';
 import '../features/more/activities_screen.dart';
 import '../features/more/more_screen.dart';
 import '../features/more/reflect_screen.dart';
+import '../features/more/saved_screen.dart';
 import '../features/settings/settings_screen.dart';
 import '../features/prayer/prayer_screen.dart';
 import '../features/today/today_screen.dart';
@@ -75,6 +76,7 @@ GoRouter buildRouter() => GoRouter(
                   builder: (_, _) => const ActivitiesScreen(),
                 ),
                 GoRoute(path: 'duas', builder: (_, _) => const DuasScreen()),
+                GoRoute(path: 'saved', builder: (_, _) => const SavedScreen()),
                 GoRoute(
                   path: 'reflect',
                   builder: (_, _) => const ReflectScreen(),

@@ -9,6 +9,7 @@ import '../../core/streak.dart';
 import '../../widgets/common.dart';
 import '../today/mood_week.dart';
 import 'more_screen.dart';
+import 'weekly_review.dart';
 
 /// Last-30-days summary, computed on device (no network).
 class ReflectScreen extends ConsumerWidget {
@@ -34,6 +35,8 @@ class ReflectScreen extends ConsumerWidget {
       gap: 16,
       children: [
         const MoreTitle('Reflect'),
+        if (parseDayKey(today).weekday == DateTime.friday)
+          const WeeklyReviewCard(),
         const NCard(
           gap: 10,
           children: [Kicker('Mood · this week'), MoodWeekStrip()],

@@ -20,6 +20,7 @@ class MoreScreen extends StatelessWidget {
       'Your own duas, private to this phone',
       Icons.spa_outlined,
     ),
+    ('saved', 'Saved', 'Ayat and hadith you bookmarked', Icons.bookmark_border),
     ('reflect', 'Reflect', 'Your last 30 days', Icons.insights_outlined),
   ];
 

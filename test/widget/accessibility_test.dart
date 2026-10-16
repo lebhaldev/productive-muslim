@@ -45,8 +45,21 @@ void main() {
       await settle(tester);
       expect(tester.takeException(), isNull, reason: tab);
     }
-    for (final sub in ['Prayer times', 'Activities', 'Duas', 'Reflect']) {
+    for (final sub in [
+      'Prayer times',
+      'Activities',
+      'Duas',
+      'Saved',
+      'Reflect',
+    ]) {
       await tester.tap(find.byKey(const Key('tab-More')));
+      await settle(tester);
+      await tester.scrollUntilVisible(
+        find.text(sub),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.ensureVisible(find.text(sub));
       await settle(tester);
       await tester.tap(find.text(sub));
       await settle(tester);

@@ -37,6 +37,7 @@ void main() {
     FakeScheduler? scheduler,
     Future<String> Function(String path)? assets,
     bool firstRun = false,
+    DateTime? at,
   }) async {
     final database = db ?? memoryDb();
     tester.view.physicalSize = const Size(1080, 2340);
@@ -47,7 +48,7 @@ void main() {
         overrides: [
           ...testOverrides(
             database,
-            now,
+            at ?? now,
             online: online,
             lock: lock,
             google: google,
@@ -933,6 +934,62 @@ void main() {
       'true',
     );
     await closeApp(tester, fresh);
+  });
+
+  testWidgets('a hadith saved from Today is listed under More, Saved', (
+    tester,
+  ) async {
+    final db = await pumpApp(tester);
+    await scrollTo(tester, find.byKey(const Key('save-hadith')));
+    await tester.ensureVisible(find.byKey(const Key('save-hadith')));
+    await settle(tester);
+    await tester.tap(find.byKey(const Key('save-hadith')));
+    await settle(tester);
+    expect(find.byTooltip('Remove from Saved'), findsOneWidget);
+
+    GoRouter.of(tester.element(find.byType(Scaffold).last)).go('/more/saved');
+    await settle(tester);
+    expect(find.byKey(const Key('saved-hadith-bukhari:13')), findsOneWidget);
+    expect(find.text('[ fixture hadith text ]'), findsOneWidget);
+    await tester.tap(find.byTooltip('Remove from Saved'));
+    await settle(tester);
+    expect(
+      find.text('Tap the bookmark on an ayah or hadith card to keep it here.'),
+      findsOneWidget,
+    );
+    await closeApp(tester, db);
+  });
+
+  testWidgets('Reflect shows the weekly review on Fridays only', (
+    tester,
+  ) async {
+    final friday = DateTime(2026, 10, 9, 18);
+    final db = memoryDb();
+    await tester.runAsync(() async {
+      final id = await db.addHabit('Walk');
+      await db.toggleCompletion(id, '2026-10-08');
+      await db.toggleCompletion(id, '2026-10-09');
+      await db.togglePrayer('2026-10-09', 'fajr', friday);
+      await db.setMood('2026-10-08', 3, friday);
+      await db.saveJournal('2026-10-07', '', 'Note', friday);
+    });
+    await pumpApp(tester, db: db, at: friday);
+    GoRouter.of(tester.element(find.byType(Scaffold).last)).go('/more/reflect');
+    await settle(tester);
+    expect(find.text('Habits kept 2 of 7 days'), findsOneWidget);
+    expect(find.text('Prayers logged 1'), findsOneWidget);
+    expect(find.text('Mood mostly good'), findsOneWidget);
+    expect(find.text('Journal 1 of 7 days'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('weekly-note')));
+    await settle(tester);
+    expect(find.byKey(const Key('journal-body')), findsOneWidget);
+    await closeApp(tester, db);
+
+    final monday = await pumpApp(tester);
+    GoRouter.of(tester.element(find.byType(Scaffold).last)).go('/more/reflect');
+    await settle(tester);
+    expect(find.byKey(const Key('weekly-review')), findsNothing);
+    await closeApp(tester, monday);
   });
 }
 
