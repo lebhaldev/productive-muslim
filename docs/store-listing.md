@@ -40,7 +40,7 @@ Private by design
 • No ads, no analytics, no tracking
 
 Made with care
-• Twelve colour themes, light and dark, including true black for OLED
+• Seventeen colour themes, bright or calm, light and dark, including true black for OLED
 • Choose the app font and the Arabic font (Amiri Quran, Scheherazade New, Noto Naskh Arabic)
 • Works offline after the first day
 • Every ayah, hadith, tafsir and quote is copied from a named source and never written or changed by the app

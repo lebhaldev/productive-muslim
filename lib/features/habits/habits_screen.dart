@@ -312,15 +312,19 @@ class _DayRing extends ConsumerWidget {
               style: meta(size: 10),
             ),
             const SizedBox(height: 3),
-            AnimatedContainer(
-              duration: motion(context, Motion.medium),
-              curve: Curves.easeOut,
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: done ? AppColors.sage600 : Colors.transparent,
-                border: Border.all(color: AppColors.sage600, width: 2),
+            TickBurst(
+              on: done,
+              color: AppColors.sage600,
+              child: AnimatedContainer(
+                duration: motion(context, Motion.medium),
+                curve: Curves.easeOutBack,
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: done ? AppColors.sage600 : Colors.transparent,
+                  border: Border.all(color: AppColors.sage600, width: 2),
+                ),
               ),
             ),
           ],

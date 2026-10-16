@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/prayer/prayer.dart';
+import '../../widgets/motion.dart';
 
 /// Logs or unlogs [p] on [day] and says so with an Undo (FR-16).
 Future<void> togglePrayerLog(
@@ -132,25 +133,30 @@ class PrayerArc extends ConsumerWidget {
                   width: _dot,
                   height: _dot,
                   alignment: Alignment.center,
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 180),
-                    width: isNext ? 22 : 16,
-                    height: isNext ? 22 : 16,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: done ? AppColors.sage600 : AppColors.surface,
-                      border: Border.all(
-                        color: isNext
-                            ? AppColors.accent700
-                            : done
-                            ? AppColors.sage600
-                            : AppColors.neutral700,
-                        width: isNext ? 3 : 1.5,
+                  child: TickBurst(
+                    on: done,
+                    color: AppColors.sage600,
+                    child: AnimatedContainer(
+                      duration: motion(context, Motion.medium),
+                      curve: Curves.easeOutBack,
+                      width: isNext ? 22 : 16,
+                      height: isNext ? 22 : 16,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: done ? AppColors.sage600 : AppColors.surface,
+                        border: Border.all(
+                          color: isNext
+                              ? AppColors.accent700
+                              : done
+                              ? AppColors.sage600
+                              : AppColors.neutral700,
+                          width: isNext ? 3 : 1.5,
+                        ),
                       ),
+                      child: done
+                          ? Icon(Icons.check, size: 11, color: AppColors.bg)
+                          : null,
                     ),
-                    child: done
-                        ? Icon(Icons.check, size: 11, color: AppColors.bg)
-                        : null,
                   ),
                 ),
                 // The name may be wider than the dot; let it spill sideways.

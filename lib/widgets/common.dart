@@ -3,20 +3,36 @@ import 'package:flutter/material.dart';
 import '../app/theme.dart';
 import 'motion.dart';
 
-/// Scrollable screen body with the design's 20px side padding.
-class ScreenBody extends StatelessWidget {
+/// Scrollable screen body with the design's 20px side padding. Children
+/// that are there when the screen opens fade up in turn; ones built later
+/// (scrolled into view) just appear.
+class ScreenBody extends StatefulWidget {
   const ScreenBody({super.key, required this.children, this.gap = 14});
   final List<Widget> children;
   final double gap;
 
   @override
+  State<ScreenBody> createState() => _ScreenBodyState();
+}
+
+class _ScreenBodyState extends State<ScreenBody> {
+  final _opened = DateTime.now();
+
+  @override
   Widget build(BuildContext context) {
+    final fresh =
+        DateTime.now().difference(_opened) < const Duration(milliseconds: 300);
+    final children = widget.children;
     return ListView(
       padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
       children: [
         for (var i = 0; i < children.length; i++) ...[
-          if (i > 0) SizedBox(height: gap),
-          children[i],
+          if (i > 0) SizedBox(height: widget.gap),
+          Entrance(
+            enabled: fresh && i < 8,
+            delay: Duration(milliseconds: 45 * i),
+            child: children[i],
+          ),
         ],
       ],
     );

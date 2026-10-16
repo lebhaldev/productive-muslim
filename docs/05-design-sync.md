@@ -49,7 +49,7 @@ Closed by the 2026-10-05 export: OQ-1 (header + weather chip + ayah card), OQ-2 
 | OQ-18 | Confirm before deleting a habit | Confirm dialog |
 | OQ-19 | Can an activity be logged for a past day? | Today only, as in design |
 | OQ-20 | "Use my location" button for weather | Small button next to City override |
-| OQ-21 | Colour themes beyond Sage (Ocean, Desert, Night) and the swatch picker | Built with provisional palettes, AA contrast checked |
+| OQ-21 | Colour themes beyond Sage (16 incl. the bright Mint, Sky, Blossom, Citrus, Peach), the swatch picker, first-run colour step, Today header wash, motion (entrances, check-off ring, day-complete burst) | Built with provisional palettes, AA contrast checked; in the 2026-10-16 brief §11 |
 | OQ-22 | Backup card (Export / Import) in Settings | Plain card with two outlined buttons |
 | OQ-23 | Journal lock: Privacy card switch and locked Journal screen | Lock icon, title, Unlock button |
 | OQ-24 | Calmer Today (v0.3): one content card with Ayah/Hadith/Quote tabs and ↻, compact next-prayer card, Journal and Activity as two tiles, settings gear in the header | Built as described; needs a design pass |

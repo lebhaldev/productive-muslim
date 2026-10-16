@@ -63,10 +63,19 @@ Not in the design yet [OQ-10]. Derived from the light tokens so the same names w
 Dark moods: rough `#D9774A`, low `#F6A06B`, okay `#8A8172`, good `#8FA374`, bright `#C3D4A5`.
 
 ## Colour themes (provisional) [OQ-21]
-Settings → Appearance offers Sage (the design), Ocean, Desert and Night. Each swaps the same token names, so no widget changes. Ocean and Desert have light and dark sets; Night is true black and always dark. All pass WCAG AA for text, meta, accent text and text on sage. Exact values are in `lib/app/theme.dart`.
+Settings → Appearance (and the first-run "Pick your colours" step, with a live preview) offers 17 themes: Sage (the design), five bright ones added on 16 Oct 2026 after the owner found the app too gloomy (Mint: mint with coral; Sky: sky blue with peach; Blossom: pink with teal; Citrus: lime with orange; Peach: peach with green), then Ocean, Desert, Emerald, Rose, Dusk, Slate, Lavender, Sunrise, Indigo, Mono and Night. Each swaps the same token names, so no widget changes. All have light and dark sets except Night (true black, always dark). All pass WCAG AA (`python3 tool/contrast_check.py`). Exact values are in `lib/app/theme.dart`. No navy-and-gold night-sky look (FR-22). Phones set up before the first-run colour step see it once.
+
+Today's header sits on a soft diagonal wash from `sage200` to `accent200`, so every theme opens on its two colours.
 
 ## Motion
-Durations: quick 150 ms, medium 250 ms, slow 400 ms; all become 0 when Android's "Remove animations" is on. Used for: habit check pop, streak and count changes, "All done today", content card expand, tab fade.
+Durations: quick 150 ms, medium 250 ms, slow 400 ms; all become 0 when Android's "Remove animations" is on (`motion()` in `lib/widgets/motion.dart`). Used for:
+- Screen open: cards fade up in turn (45 ms apart, first 8 only; cards scrolled into view later just appear).
+- Screen push: Android fade-forwards transition for More and Settings screens.
+- Check-offs (habit row, habit day ring, prayer arc dot): pop with a slight overshoot, a ring that spreads out, and a light haptic tick.
+- Day complete (every habit and prayer logged): a short burst of dots in the theme's colours above Habits, with a medium haptic; plays once when it turns complete, not on every visit.
+- Mood dot pick: grows with a slight overshoot.
+- Count changes, "All done today", content card expand, tab fade, as before.
+Keep motion calm: no looping animation, nothing over 1.4 s.
 
 ## Type
 - Heading font (`--font-heading`): soft heavy serif. Default: **Fraunces** (SemiBold/Bold) until the DS font is confirmed [OQ-9].

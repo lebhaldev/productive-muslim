@@ -1299,6 +1299,10 @@ ThemeData buildTheme(Palette p, {String? bodyFont}) {
     brightness: p.brightness,
     colorScheme: scheme,
     scaffoldBackgroundColor: p.bg,
+    // Screens under More and Settings fade and slide in.
+    pageTransitionsTheme: const PageTransitionsTheme(
+      builders: {TargetPlatform.android: FadeForwardsPageTransitionsBuilder()},
+    ),
     textTheme: TextTheme(
       bodyLarge: TextStyle(fontSize: 16, color: p.text),
       bodyMedium: TextStyle(fontSize: 15, color: p.text),

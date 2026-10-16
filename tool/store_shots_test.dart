@@ -82,6 +82,11 @@ void main() {
         'countryCode': 'GB',
         'lat': '51.5085',
         'lon': '-0.1257',
+        // --dart-define=THEME=mint to look at another theme.
+        'colorTheme': const String.fromEnvironment(
+          'THEME',
+          defaultValue: 'sage',
+        ),
       }.entries) {
         await db.putSetting(kv.key, kv.value);
       }

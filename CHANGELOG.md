@@ -2,6 +2,7 @@
 
 ## 1.1.0 (unreleased)
 - Five brighter themes: Mint, Sky, Blossom, Citrus and Peach, each light and dark (17 in all), all passing the contrast check.
+- More life: Today's header sits on a soft wash of the theme's two colours; cards fade up in turn when a screen opens; More and Settings screens slide in; checking a habit or prayer pops with a spreading ring and a light haptic tick; finishing every habit and prayer for the day plays a short burst of theme-coloured dots. All motion stops when Android's "Remove animations" is on.
 - First run starts with "Pick your colours": the swatches, System / Light / Dark and a live preview card. Phones set up before this see that one step once.
 - Prayer log (FR-16): the next-prayer card and the Prayer screen show the day as an arc from Fajr to Isha with sunrise and sunset marked; tap a prayer that has started to log it (snackbar with Undo). Prayer rows show `Done` or `Next · in …`, never "missed". A Qibla button on the card. Logged prayers show on Calendar (a small sage bar and a "Prayers logged" line on the day) and as a monthly count in Reflect.
 - Gentle consistency (FR-17): habits show `N of the last 7 days` instead of a streak (Settings → Habits → Show consistency numbers, on by default). Today's Habits heading shows `N of M today` with a segmented bar over habits and logged prayers. A one-time card on Habits shows Sahih al-Bukhari 6465 from the bundled dataset, Arabic and English as in the dataset, with its reference; close it and it stays closed.

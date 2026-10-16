@@ -69,38 +69,52 @@ class _Header extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${DateFormat('EEE d MMM').format(date)} · ${hijriLabel(date, offset: settingsOf(ref).hijriOffset)}',
-                style: meta(size: 13),
-              ),
-              const SizedBox(height: 2),
-              Semantics(
-                container: true,
-                header: true,
-                child: Text(
-                  greetingFor(hour, AppLocalizations.of(context)),
-                  style: heading(28),
-                ),
-              ),
-            ],
-          ),
+    // A soft wash of the theme's two colours, so the day opens brighter.
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadii.lg),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [AppColors.sage200, AppColors.accent200],
         ),
-        const SizedBox(width: 8),
-        const Flexible(child: _WeatherChip()),
-        IconButton(
-          key: const Key('open-settings'),
-          tooltip: 'Settings',
-          onPressed: () => context.push('/settings'),
-          icon: Icon(Icons.settings_outlined, color: AppColors.neutral800),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(16, 14, 4, 14),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${DateFormat('EEE d MMM').format(date)} · ${hijriLabel(date, offset: settingsOf(ref).hijriOffset)}',
+                    style: meta(size: 13),
+                  ),
+                  const SizedBox(height: 2),
+                  Semantics(
+                    container: true,
+                    header: true,
+                    child: Text(
+                      greetingFor(hour, AppLocalizations.of(context)),
+                      style: heading(28),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 8),
+            const Flexible(child: _WeatherChip()),
+            IconButton(
+              key: const Key('open-settings'),
+              tooltip: 'Settings',
+              onPressed: () => context.push('/settings'),
+              icon: Icon(Icons.settings_outlined, color: AppColors.neutral800),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -115,7 +129,7 @@ class _WeatherChip extends ConsumerWidget {
     final w = wx?.weather;
     final color = AppColors.sage900;
     return Material(
-      color: AppColors.sage200,
+      color: AppColors.neutral100,
       borderRadius: BorderRadius.circular(AppRadii.lg),
       child: InkWell(
         borderRadius: BorderRadius.circular(AppRadii.lg),
@@ -210,68 +224,82 @@ class _HabitsSection extends ConsumerWidget {
     final doneCount = segments.where((d) => d).length;
     final all = segments.isNotEmpty && doneCount == segments.length;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _SectionHeader(
-          l.sectionHabits,
-          trailing: PopSwitcher(
-            child: isExcused
-                ? Text(
-                    l.excusedToday,
-                    key: const ValueKey('excused'),
-                    style: meta(),
-                  )
-                : all
-                ? Text(
-                    l.allDoneToday,
-                    key: const ValueKey('all-done'),
-                    style: meta(color: AppColors.sage900)
-                        .copyWith(fontWeight: FontWeight.w600),
-                  )
-                : Text(
-                    l.nOfMToday(doneCount, segments.length),
-                    key: ValueKey(doneCount),
-                    style: meta(),
-                  ),
-          ),
-        ),
-        if (segments.isNotEmpty && !isExcused) ...[
-          const SizedBox(height: 8),
-          TodayBar(segments: segments),
-        ],
-        const SizedBox(height: 8),
-        if (habits.isEmpty)
-          TextButton(
-            style: TextButton.styleFrom(alignment: Alignment.centerLeft),
-            onPressed: () => context.go('/habits'),
-            child: Text(l.addFirstHabit),
-          ),
-        for (final h in habits) ...[
-          _HabitRow(
-            name: h.name,
-            done: done[h.id]?.contains(today) ?? false,
-            label: settings.showConsistency
-                ? consistencyLabel(
-                    consistency(done[h.id] ?? const {}, today, excused),
-                  )
-                : '',
-            onTap: () => db.toggleCompletion(h.id, today),
-          ),
-          const SizedBox(height: 8),
-        ],
-        // FR-18: a neutral link, no reason asked or stored.
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: TextButton(
-            key: const Key('excused-today'),
-            style: TextButton.styleFrom(foregroundColor: AppColors.neutral700),
-            onPressed: () =>
-                db.setExcused(today, !isExcused, ref.read(clockProvider).now()),
-            child: Text(isExcused ? l.countTodayAgain : l.excusedToday),
-          ),
-        ),
+    return Celebration(
+      play: all && !isExcused,
+      colors: [
+        AppColors.sage600,
+        AppColors.accent400,
+        AppColors.sage400,
+        AppColors.accent700,
       ],
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _SectionHeader(
+            l.sectionHabits,
+            trailing: PopSwitcher(
+              child: isExcused
+                  ? Text(
+                      l.excusedToday,
+                      key: const ValueKey('excused'),
+                      style: meta(),
+                    )
+                  : all
+                  ? Text(
+                      l.allDoneToday,
+                      key: const ValueKey('all-done'),
+                      style: meta(color: AppColors.sage900)
+                          .copyWith(fontWeight: FontWeight.w600),
+                    )
+                  : Text(
+                      l.nOfMToday(doneCount, segments.length),
+                      key: ValueKey(doneCount),
+                      style: meta(),
+                    ),
+            ),
+          ),
+          if (segments.isNotEmpty && !isExcused) ...[
+            const SizedBox(height: 8),
+            TodayBar(segments: segments),
+          ],
+          const SizedBox(height: 8),
+          if (habits.isEmpty)
+            TextButton(
+              style: TextButton.styleFrom(alignment: Alignment.centerLeft),
+              onPressed: () => context.go('/habits'),
+              child: Text(l.addFirstHabit),
+            ),
+          for (final h in habits) ...[
+            _HabitRow(
+              name: h.name,
+              done: done[h.id]?.contains(today) ?? false,
+              label: settings.showConsistency
+                  ? consistencyLabel(
+                      consistency(done[h.id] ?? const {}, today, excused),
+                    )
+                  : '',
+              onTap: () => db.toggleCompletion(h.id, today),
+            ),
+            const SizedBox(height: 8),
+          ],
+          // FR-18: a neutral link, no reason asked or stored.
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: TextButton(
+              key: const Key('excused-today'),
+              style: TextButton.styleFrom(
+                foregroundColor: AppColors.neutral700,
+              ),
+              onPressed: () => db.setExcused(
+                today,
+                !isExcused,
+                ref.read(clockProvider).now(),
+              ),
+              child: Text(isExcused ? l.countTodayAgain : l.excusedToday),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -341,37 +369,41 @@ class _HabitRow extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 28,
-                    height: 28,
-                    child: PopSwitcher(
-                      child: done
-                          ? Container(
-                              key: const ValueKey('done'),
-                              width: 28,
-                              height: 28,
-                              decoration: BoxDecoration(
-                                color: AppColors.sage600,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.check,
-                                size: 17,
-                                color: AppColors.bg,
-                              ),
-                            )
-                          : Container(
-                              key: const ValueKey('open'),
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: AppColors.neutral600,
-                                  width: 2,
+                  TickBurst(
+                    on: done,
+                    color: AppColors.sage600,
+                    child: SizedBox(
+                      width: 28,
+                      height: 28,
+                      child: PopSwitcher(
+                        child: done
+                            ? Container(
+                                key: const ValueKey('done'),
+                                width: 28,
+                                height: 28,
+                                decoration: BoxDecoration(
+                                  color: AppColors.sage600,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.check,
+                                  size: 17,
+                                  color: AppColors.bg,
+                                ),
+                              )
+                            : Container(
+                                key: const ValueKey('open'),
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: AppColors.neutral600,
+                                    width: 2,
+                                  ),
                                 ),
                               ),
-                            ),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -528,7 +560,8 @@ class MoodDot extends StatelessWidget {
                 height: 48,
                 child: Center(
                   child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 150),
+                    duration: motion(context, Motion.medium),
+                    curve: Curves.easeOutBack,
                     width: size,
                     height: size,
                     decoration: BoxDecoration(

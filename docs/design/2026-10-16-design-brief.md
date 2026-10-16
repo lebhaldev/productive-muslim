@@ -49,6 +49,9 @@ Plain counts: "Habits kept 5 of 7 days", "Prayers logged 28", "Mood mostly good"
 Please show Today, Habits and Duas in Arabic, mirrored right to left, with a language switch in Settings → Appearance (System, English, العربية).
 
 **10. Store screenshots**
-New captions for our 8 store screenshots, two short lines each, in our palette: (1) "Your day, calmly. / Prayer, habits and journal in one place." (2) "Every verse cited. / Ayah, hadith and tafsir with sources." (3) "Small deeds, kept. / Gentle habits without guilt." (4) "See your month. / Mood, habits and journal by day." (5) "Write it down. / A private, lockable journal." (6) "Prayer times, on your phone. / Calculated offline, with Qibla." (7) "Your colours. / Twelve calm themes, light and dark." (8) "No ads. No account. / Your data stays on your phone."
+New captions for our 8 store screenshots, two short lines each, in our palette: (1) "Your day, calmly. / Prayer, habits and journal in one place." (2) "Every verse cited. / Ayah, hadith and tafsir with sources." (3) "Small deeds, kept. / Gentle habits without guilt." (4) "See your month. / Mood, habits and journal by day." (5) "Write it down. / A private, lockable journal." (6) "Prayer times, on your phone. / Calculated offline, with Qibla." (7) "Your colours. / Seventeen themes, bright or calm, light and dark." (8) "No ads. No account. / Your data stays on your phone."
+
+**11. Brighter look and colour choice (added 16 Oct)**
+The owner finds the current look gloomy. Please show the five new bright themes (Mint, Sky, Blossom, Citrus, Peach; tokens in lib/app/theme.dart) on Today and Habits, a first-run "Pick your colours" step with swatches, System / Light / Dark and a live preview card, and Today's header on a soft wash of the theme's two colours. Motion to show as notes: cards fade up on open, check-offs pop with a spreading ring, and a short burst of theme-coloured dots when the whole day is done. No navy and gold, no stars or night sky.
 
 When you're done, please export `Nurday.dc.html` and screenshots of every changed screen so the owner can drop them in the project.
