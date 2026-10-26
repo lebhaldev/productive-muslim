@@ -434,7 +434,9 @@ class _MoodSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final current = ref.watch(moodsProvider).value?[today];
-    final hidden = settingsOf(ref).moodReplyHiddenOn == today;
+    final hidden =
+        current != null &&
+        settingsOf(ref).moodReplyHiddenOn == '$today:$current';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -457,8 +459,17 @@ class _MoodSection extends ConsumerWidget {
         AnimatedSize(
           duration: motion(context, Motion.medium),
           alignment: Alignment.topCenter,
-          child: current == null || hidden
+          child: current == null
               ? const SizedBox(width: double.infinity)
+              : hidden
+              ? Padding(
+                  key: const Key('mood-saved'),
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(
+                    moodSaved(moodLabel(current)),
+                    style: TextStyle(fontSize: 13, color: AppColors.neutral500),
+                  ),
+                )
               : _MoodReply(today: today, mood: MoodLevel.values[current]),
         ),
         const SizedBox(height: 6),
@@ -477,49 +488,38 @@ class _MoodReply extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reply = moodReplies[mood]!;
-    final habits = (ref.watch(habitsProvider).value ?? const []).where(
-      (h) => !h.archived,
-    );
-    final done = ref.watch(completionsProvider).value ?? const {};
-    final open = habits
-        .where((h) => !(done[h.id]?.contains(today) ?? false))
-        .firstOrNull;
-    final journal = (openJournalLabel, () => openJournal(context, ref, today));
-    final (label, onPressed) = switch (reply.suggestion) {
-      MoodSuggestion.journal => journal,
-      MoodSuggestion.gratitude => (
-        gratitudeLabel,
-        () => openJournal(context, ref, today),
-      ),
-      // With no habit left open, fall back to the journal.
-      MoodSuggestion.habit when open != null => (
-        habitSuggestionLabel(open.name),
-        () => ref.read(databaseProvider).toggleCompletion(open.id, today),
-      ),
-      MoodSuggestion.habit => journal,
-    };
+    void hide() => ref
+        .read(databaseProvider)
+        .putSetting('moodReplyHidden', '$today:${mood.index}');
+    final onPressed = reply.suggestion == MoodSuggestion.walk
+        ? hide
+        : () => openJournal(context, ref, today);
+    final heavy = mood.index <= MoodLevel.low.index;
     return Padding(
       key: const Key('mood-reply'),
       padding: const EdgeInsets.only(top: 8),
       child: NCard(
-        gap: 8,
+        color: heavy ? AppColors.accent200 : AppColors.sage200,
+        gap: 10,
         children: [
           Text(reply.line, style: const TextStyle(fontSize: 15)),
           Wrap(
-            spacing: 8,
+            spacing: 12,
+            runSpacing: 4,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
-              FilledButton.tonal(
+              FilledButton(
                 key: const Key('mood-suggestion'),
                 onPressed: onPressed,
-                child: Text(label),
+                child: Text(moodSuggestionLabels[reply.suggestion]!),
               ),
               TextButton(
                 key: const Key('mood-not-now'),
-                onPressed: () => ref
-                    .read(databaseProvider)
-                    .putSetting('moodReplyHidden', today),
-                child: const Text('Not now'),
+                onPressed: hide,
+                child: const Text(
+                  'Not now',
+                  style: TextStyle(decoration: TextDecoration.underline),
+                ),
               ),
             ],
           ),

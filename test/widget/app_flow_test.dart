@@ -751,26 +751,18 @@ void main() {
     await closeApp(tester, db);
   });
 
-  testWidgets('a picked mood answers with a fixed line, Not now hides it', (
+  testWidgets('a picked mood answers with a fixed line, Not now hides it for that mood', (
     tester,
   ) async {
     final db = memoryDb();
-    await tester.runAsync(() => db.addHabit('Walk'));
-    final today = dayKey(now);
     await pumpApp(tester, db: db);
     await scrollTo(tester, find.text('okay'));
     await tester.ensureVisible(find.text('okay'));
     await settle(tester);
     await tester.tap(find.text('okay'));
     await settle(tester);
-    expect(find.text('Noted for today.'), findsOneWidget);
-    await tester.ensureVisible(find.byKey(const Key('mood-suggestion')));
-    await settle(tester);
-    expect(find.text('Mark “Walk” done'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('mood-suggestion')));
-    await settle(tester);
-    final done = await tester.runAsync(() => db.watchCompletions().first);
-    expect(done!.single.dayKey, today);
+    expect(find.text('An ordinary day is fine.'), findsOneWidget);
+    expect(find.text('Log one small thing you did'), findsOneWidget);
 
     await tester.ensureVisible(find.text('good'));
     await settle(tester);
@@ -783,6 +775,11 @@ void main() {
     await tester.tap(find.byKey(const Key('mood-not-now')));
     await settle(tester);
     expect(find.byKey(const Key('mood-reply')), findsNothing);
+    expect(find.byKey(const Key('mood-saved')), findsOneWidget);
+    // A different mood brings a suggestion back.
+    await tester.tap(find.text('bright'));
+    await settle(tester);
+    expect(find.text('Lovely. Hold on to it.'), findsOneWidget);
     await closeApp(tester, db);
   });
 
@@ -893,6 +890,17 @@ void main() {
 
   testWidgets('a fresh install opens the first-run steps once', (tester) async {
     final db = await pumpApp(tester, firstRun: true);
+    expect(find.text('Where are you?'), findsOneWidget);
+    expect(find.text('Step 1 of 4'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('welcome-skip')));
+    await settle(tester);
+    expect(find.text('Pick a few habits'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('starter-Walk')));
+    await tester.tap(find.byKey(const Key("starter-Read Qur'an")));
+    await settle(tester);
+    expect(find.text('Add 2 habits'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('welcome-next')));
+    await settle(tester);
     expect(find.text('Pick your colours'), findsOneWidget);
     await tester.tap(find.byKey(const Key('color-theme-mint')));
     await settle(tester);
@@ -901,24 +909,10 @@ void main() {
       'mint',
     );
     expect(AppColors.current, Palette.mintLight, reason: 'live preview');
-    await tester.scrollUntilVisible(
-      find.byKey(const Key('welcome-next')),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
     await tester.tap(find.byKey(const Key('welcome-next')));
     await settle(tester);
-    expect(find.text('Where are you?'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('welcome-skip')));
-    await settle(tester);
-    expect(find.text('Pick a few habits'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('starter-Walk')));
-    await tester.tap(find.byKey(const Key("starter-Read Qur'an")));
-    await settle(tester);
-    await tester.tap(find.byKey(const Key('welcome-next')));
-    await settle(tester);
-    expect(find.text('Your data stays on this phone'), findsOneWidget);
-    await tester.tap(find.text('Start'));
+    expect(find.text('Your data stays on this phone.'), findsOneWidget);
+    await tester.tap(find.text('Start my day'));
     await settle(tester);
 
     final habits = await tester.runAsync(() => db.watchHabits().first);
@@ -933,7 +927,7 @@ void main() {
     await closeApp(tester, db);
   });
 
-  testWidgets('set-up phones only get the colour step, and Skip all ends it', (
+  testWidgets('set-up phones only get the colour step, and Skip moves past each step', (
     tester,
   ) async {
     final db = memoryDb();
@@ -942,11 +936,7 @@ void main() {
     // Set up before the colour step existed: only that step, once.
     expect(find.text('Pick your colours'), findsOneWidget);
     expect(find.text('Where are you?'), findsNothing);
-    await tester.scrollUntilVisible(
-      find.byKey(const Key('welcome-next')),
-      200,
-      scrollable: find.byType(Scrollable).first,
-    );
+    expect(find.text('Step 1 of 1'), findsNothing);
     await tester.tap(find.byKey(const Key('welcome-next')));
     await settle(tester);
     expect(find.text('Pick your colours'), findsNothing);
@@ -954,8 +944,10 @@ void main() {
     await closeApp(tester, db);
 
     final fresh = await pumpApp(tester, firstRun: true);
-    await tester.tap(find.byKey(const Key('welcome-skip-all')));
-    await settle(tester);
+    for (var i = 0; i < 4; i++) {
+      await tester.tap(find.byKey(const Key('welcome-skip')));
+      await settle(tester);
+    }
     expect(find.text('Where are you?'), findsNothing);
     expect(
       (await tester.runAsync(() => fresh.watchSettings().first))!['onboarded'],

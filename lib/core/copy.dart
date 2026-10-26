@@ -4,36 +4,47 @@ import 'moods.dart';
 /// Nothing here quotes or paraphrases scripture (TR-1), makes a religious
 /// promise or gives mental-health advice.
 
-/// What the mood card suggests after a mood is picked.
-enum MoodSuggestion { journal, gratitude, habit }
+/// What the mood card suggests after a mood is picked. [walk] is advice only:
+/// its button just closes the reply.
+enum MoodSuggestion { walk, journal, smallThing, gratitude, goodThing }
 
 typedef MoodReply = ({String line, MoodSuggestion suggestion});
 
-/// One line and one suggestion per mood. Rough and low get a neutral
-/// action only.
+/// One line and one suggestion per mood (design 2026-10-26, section 1).
 const Map<MoodLevel, MoodReply> moodReplies = {
   MoodLevel.rough: (
-    line: 'Thank you for checking in.',
-    suggestion: MoodSuggestion.journal,
+    line: 'That sounds heavy. Go gently today.',
+    suggestion: MoodSuggestion.walk,
   ),
   MoodLevel.low: (
     line: 'Thanks for noticing it.',
     suggestion: MoodSuggestion.journal,
   ),
-  MoodLevel.okay: (line: 'Noted for today.', suggestion: MoodSuggestion.habit),
+  MoodLevel.okay: (
+    line: 'An ordinary day is fine.',
+    suggestion: MoodSuggestion.smallThing,
+  ),
   MoodLevel.good: (
     line: 'Glad to hear it.',
     suggestion: MoodSuggestion.gratitude,
   ),
   MoodLevel.bright: (
-    line: 'Lovely to hear.',
-    suggestion: MoodSuggestion.gratitude,
+    line: 'Lovely. Hold on to it.',
+    suggestion: MoodSuggestion.goodThing,
   ),
 };
 
-const openJournalLabel = "Open today's journal";
-const gratitudeLabel = "Write one thing you're grateful for";
-String habitSuggestionLabel(String habit) => 'Mark “$habit” done';
+const moodSuggestionLabels = {
+  MoodSuggestion.walk: 'Take a slow walk',
+  MoodSuggestion.journal: "Open today's journal",
+  MoodSuggestion.smallThing: 'Log one small thing you did',
+  MoodSuggestion.gratitude: "Write one thing you're grateful for",
+  MoodSuggestion.goodThing: 'Note what made today good',
+};
+
+String moodSaved(String mood) =>
+    'Saved · $mood. The suggestion stays away until tomorrow or until the '
+    'mood changes.';
 
 /// Journal body placeholders, one per day in turn.
 const journalPrompts = [
