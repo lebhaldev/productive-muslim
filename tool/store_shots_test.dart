@@ -47,6 +47,7 @@ void main() {
       await loadFont('Roboto', '$mf/Roboto-Regular.ttf');
       await loadFont('Roboto', '$mf/Roboto-Medium.ttf');
       await loadFont('Fraunces', 'assets/fonts/Fraunces.ttf');
+      await loadFont('Caprasimo', 'assets/fonts/Caprasimo.ttf');
       await loadFont('AmiriQuran', 'assets/fonts/AmiriQuran.ttf');
       await loadFont('NotoNaskhArabic', 'assets/fonts/NotoNaskhArabic.ttf');
     });

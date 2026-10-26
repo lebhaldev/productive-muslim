@@ -26,6 +26,7 @@ void main() {
     Directory(out).createSync(recursive: true);
     await tester.runAsync(() async {
       await loadFont('Fraunces', 'assets/fonts/Fraunces.ttf');
+      await loadFont('Caprasimo', 'assets/fonts/Caprasimo.ttf');
       await loadFont('AmiriQuran', 'assets/fonts/AmiriQuran.ttf');
       await loadFont('ScheherazadeNew', 'assets/fonts/ScheherazadeNew.ttf');
       await loadFont('NotoNaskhArabic', 'assets/fonts/NotoNaskhArabic.ttf');

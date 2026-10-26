@@ -74,6 +74,9 @@ flutter:
   assets:
     - assets/content/
   fonts:
+    - family: Caprasimo
+      fonts:
+        - asset: assets/fonts/Caprasimo.ttf
     - family: Fraunces
       fonts:
         - asset: assets/fonts/Fraunces.ttf

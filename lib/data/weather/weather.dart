@@ -12,6 +12,7 @@ class Weather {
     required this.loC,
     required this.code,
     required this.place,
+    this.windKmh,
     this.lat,
     this.lon,
     this.countryCode,
@@ -22,6 +23,9 @@ class Weather {
   final double loC;
   final int code;
   final String place;
+
+  /// Wind speed at 10 m; null in snapshots saved before 1.1.
+  final double? windKmh;
 
   /// Where the forecast is for; also used for prayer times and Qibla.
   final double? lat;
@@ -38,6 +42,7 @@ class Weather {
     'loC': loC,
     'code': code,
     'place': place,
+    'windKmh': windKmh,
     'lat': lat,
     'lon': lon,
     'countryCode': countryCode,
@@ -49,6 +54,7 @@ class Weather {
     loC: (j['loC'] as num).toDouble(),
     code: j['code'] as int,
     place: j['place'] as String,
+    windKmh: (j['windKmh'] as num?)?.toDouble(),
     lat: (j['lat'] as num?)?.toDouble(),
     lon: (j['lon'] as num?)?.toDouble(),
     countryCode: j['countryCode'] as String?,
@@ -67,6 +73,39 @@ String conditionLabel(int code) {
   if (code <= 82) return 'Showers';
   if (code <= 86) return 'Snow showers';
   return 'Thunderstorm';
+}
+
+/// The design's eight icon groups (design 2026-10-26, section 12).
+enum WeatherKind {
+  clear,
+  partlyCloudy,
+  cloudy,
+  fog,
+  rain,
+  snow,
+  thunder,
+  windy,
+}
+
+/// Open-Meteo weather_code to icon group; wind of 40 km/h or more shows
+/// as windy unless there is rain, snow or thunder.
+WeatherKind weatherKind(int code, {double? windKmh}) {
+  final kind = switch (code) {
+    0 => WeatherKind.clear,
+    1 || 2 => WeatherKind.partlyCloudy,
+    3 => WeatherKind.cloudy,
+    45 || 48 => WeatherKind.fog,
+    >= 51 && <= 67 || >= 80 && <= 82 => WeatherKind.rain,
+    >= 71 && <= 77 || 85 || 86 => WeatherKind.snow,
+    >= 95 && <= 99 => WeatherKind.thunder,
+    _ => WeatherKind.cloudy,
+  };
+  final wet = const {
+    WeatherKind.rain,
+    WeatherKind.snow,
+    WeatherKind.thunder,
+  }.contains(kind);
+  return (windKmh ?? 0) >= 40 && !wet ? WeatherKind.windy : kind;
 }
 
 /// One geocoding result, e.g. London, England, United Kingdom.
@@ -156,7 +195,7 @@ class WeatherService {
         Uri.https('api.open-meteo.com', '/v1/forecast', {
           'latitude': '$la',
           'longitude': '$lo',
-          'current': 'temperature_2m,weather_code',
+          'current': 'temperature_2m,weather_code,wind_speed_10m',
           'daily': 'temperature_2m_max,temperature_2m_min',
           'timezone': 'auto',
           'forecast_days': '1',
@@ -223,6 +262,7 @@ class WeatherService {
       loC: ((daily['temperature_2m_min'] as List).first as num).toDouble(),
       code: current['weather_code'] as int,
       place: place,
+      windKmh: (current['wind_speed_10m'] as num?)?.toDouble(),
       lat: lat,
       lon: lon,
       countryCode: countryCode,

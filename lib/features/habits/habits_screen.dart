@@ -156,15 +156,18 @@ class _HabitCard extends ConsumerWidget {
       children: [
         Row(
           children: [
-            Expanded(child: CardTitle(habit.name)),
-            if (showConsistency)
+            Expanded(flex: 3, child: CardTitle(habit.name)),
+            if (showConsistency) ...[
+              const SizedBox(width: 8),
               Flexible(
+                flex: 2,
                 child: Text(
                   consistencyTag(consistency(days, today, excused)),
                   style: meta(size: 12, color: AppColors.neutral800),
                   textAlign: TextAlign.end,
                 ),
               ),
+            ],
             PopupMenuButton<String>(
               key: Key('habit-menu-${habit.id}'),
               tooltip: 'More for ${habit.name}',

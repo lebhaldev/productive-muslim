@@ -15,6 +15,7 @@ import '../../l10n/app_localizations.dart';
 import '../../data/weather/weather.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
+import '../../widgets/weather_icon.dart';
 import '../prayer/prayer_screen.dart';
 import 'content_cards.dart';
 import 'mood_week.dart';
@@ -129,7 +130,7 @@ class _WeatherChip extends ConsumerWidget {
     final w = wx?.weather;
     final color = AppColors.sage900;
     return Material(
-      color: AppColors.neutral100,
+      color: AppColors.surface,
       borderRadius: BorderRadius.circular(AppRadii.lg),
       child: InkWell(
         borderRadius: BorderRadius.circular(AppRadii.lg),
@@ -153,17 +154,34 @@ class _WeatherChip extends ConsumerWidget {
                   label:
                       'Weather ${w.place}: ${formatTemp(w.nowC, fahrenheit: s.fahrenheit)}, '
                       '${w.condition}',
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        formatTemp(w.nowC, fahrenheit: s.fahrenheit),
-                        style: heading(24, color: color),
+                      WeatherIcon(
+                        kind: weatherKind(w.code, windKmh: w.windKmh),
+                        size: 38,
                       ),
-                      Text(
-                        '${w.condition} · ${w.place}',
-                        style: TextStyle(fontSize: 11, color: color),
-                        textAlign: TextAlign.right,
+                      const SizedBox(width: 8),
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              formatTemp(w.nowC, fahrenheit: s.fahrenheit),
+                              style: heading(24, color: color),
+                            ),
+                            Text(
+                              'H ${formatTemp(w.hiC, fahrenheit: s.fahrenheit)} · '
+                              'L ${formatTemp(w.loC, fahrenheit: s.fahrenheit)}',
+                              style: TextStyle(fontSize: 11, color: color),
+                            ),
+                            Text(
+                              '${w.condition} · ${w.place}',
+                              style: TextStyle(fontSize: 11, color: color),
+                              textAlign: TextAlign.right,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

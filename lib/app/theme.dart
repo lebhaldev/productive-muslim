@@ -1150,7 +1150,7 @@ class Palette {
 /// Colour themes the user can pick (Settings → Appearance). Sage is the
 /// design; the others are provisional until designed (DS-1).
 enum ColorTheme {
-  sage('Sage', Palette.light, Palette.dark),
+  sage('Organic', Palette.light, Palette.dark),
   mint('Mint', Palette.mintLight, Palette.mintDark),
   sky('Sky', Palette.skyLight, Palette.skyDark),
   blossom('Blossom', Palette.blossomLight, Palette.blossomDark),
@@ -1217,7 +1217,9 @@ abstract final class AppRadii {
 
 /// Font sets for Latin text, chosen in Settings → Appearance.
 enum AppFont {
-  classic('Classic', heading: 'Fraunces'),
+  // Caprasimo is the design system's heading face (design 2026-10-26).
+  classic('Classic', heading: 'Caprasimo'),
+  soft('Soft serif', heading: 'Fraunces'),
   modern('Modern'),
   rounded('Rounded', heading: 'Nunito', body: 'Nunito'),
   serif('Serif', heading: 'Lora', body: 'Lora');
@@ -1258,10 +1260,16 @@ TextStyle heading(double size, {Color? color}) {
   final family = AppFonts.current.heading;
   return TextStyle(
     fontFamily: family,
-    fontVariations: family == 'Fraunces'
-        ? const [FontVariation('wght', 640), FontVariation('SOFT', 100)]
-        : const [FontVariation('wght', 700)],
-    fontWeight: FontWeight.w700,
+    fontVariations: switch (family) {
+      'Fraunces' => const [
+        FontVariation('wght', 640),
+        FontVariation('SOFT', 100),
+      ],
+      'Caprasimo' => null,
+      _ => const [FontVariation('wght', 700)],
+    },
+    // Caprasimo has one heavy weight; asking for bold would smear it.
+    fontWeight: family == 'Caprasimo' ? FontWeight.w400 : FontWeight.w700,
     fontSize: size,
     height: 1.15,
     color: color ?? AppColors.text,

@@ -47,7 +47,9 @@ class PrayerCard extends ConsumerWidget {
         Row(
           children: [
             const Expanded(child: Kicker('Prayer today')),
-            Flexible(
+            const SizedBox(width: 8),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 160),
               child: Text(
                 ref.watch(prayerLocationProvider)?.place ?? '',
                 overflow: TextOverflow.ellipsis,
