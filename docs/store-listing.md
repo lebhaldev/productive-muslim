@@ -48,7 +48,7 @@ Made with care
 ## Screenshots (phone, 1080×2340)
 Made by `tool/store_shots_test.dart`; CI publishes them with the icon and feature graphic to the `store-assets` release. The icon (512×512) and feature graphic (1024×500) are in `docs/store/`.
 
-1. Today, Sage theme, morning: greeting, next prayer, ayah, hadith and quote cards
+1. Today, Organic theme, morning: greeting, next prayer, ayah, hadith and quote cards
 2. Ayah opened with tafsir
 3. Habits with streaks
 4. Calendar month with mood colours, a day selected
@@ -58,4 +58,4 @@ Made by `tool/store_shots_test.dart`; CI publishes them with the icon and featur
 8. Today in Night theme
 
 ## Feature graphic (1024×500)
-App name "Nurday" in Fraunces on the Sage background (`#F5EAD8`) with the terracotta (`#8C491A`) and sage (`#728157`) accents; no text beyond the name and "a calm daily rhythm".
+App name "Nurday" in Fraunces on the Organic background (`#F5EAD8`) with the terracotta (`#8C491A`) and sage (`#728157`) accents; no text beyond the name and "a calm daily rhythm".

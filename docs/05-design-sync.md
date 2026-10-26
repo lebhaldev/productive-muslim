@@ -24,35 +24,33 @@ The design is made in Claude Design (`Nurday.dc.html`) by a separate agent that 
 | 2026-10-05 | Full export `design/2026-10-05-Nurday.dc.html` (all tabs) | 01 rewritten to v0.2 with every screen; 03 tokens mapped to Organic DS names; OQ-1–8, 13, 14 closed. |
 | 2026-10-06 | User request (no design yet) | v0.3: Arabic hadith/quotes, dark theme (provisional tokens), prayer times card + screen, Hijri date, Qibla. These screens need a design pass in Claude Design; built with existing components until then. |
 | 2026-10-16 | Balum screenshots (owner, inspiration only) + builder and reviewer input | v1.1 scope in 01 §7b and 04 Phase 6; FR-16–22; design brief `design/2026-10-16-design-brief.md` sent via the owner; OQ-27 opened. Copycat guard: no navy/gold, night sky, moon, points or Balum wording. |
+| 2026-10-26 | Full v1.1 export `design/2026-10-26-Nurday-v1.1.html` (sections 1–12, answering the 2026-10-16 brief) | 03: Caprasimo heading font, design dark tokens, bright theme formulas, weather icon groups and motion. App synced: mood reply lines and suggestions, dismiss per mood, first-run order (location, habits, colours, privacy) with Skip top right and one bottom button, Habits count bar and card layout with ⋯ menu, excused-day card with Undo, prayer card and pill list, weekly card from Friday to Thursday, week strip labels, gratitude card, Duas sprig and answered tint, animated weather icons with high/low. OQ-9, 10, 21 (both), 27 closed. Not built: the 3-hour forecast strip and other "Try next" ideas, which the design lists as options only. |
 
 ## Conflicts between brief and design (resolved)
 - Palette: brief said deep green + gold; design uses sage + terracotta, no gold → **design wins**.
 
 ## Open questions
 
+Closed by the 2026-10-26 export: OQ-9 (Caprasimo; hex values still sampled), OQ-10 (dark tokens), OQ-21 (prayer card and screen; bright themes, picker, header wash, motion), OQ-27 (all v1.1 screens).
+
 Closed by the 2026-10-05 export: OQ-1 (header + weather chip + ayah card), OQ-2 (Habits, Calendar, Journal), OQ-3 (More → Activities, Reflect, Settings), OQ-4 (labels shown), OQ-5 (expanded card), OQ-6 (selected mood), OQ-7 (activity form), OQ-14 (weather chip on Today).
 
 | ID | Question | Default used in build |
 |---|---|---|
 | OQ-8 | First-install empty states beyond "Nothing logged yet." | Plain text prompts in the same style |
-| OQ-9 | Organic DS exact hex values and heading font | Sampled hex, Fraunces |
-| OQ-10 | Dark theme | Provisional dark tokens in 03; needs design review |
-| OQ-21 | Prayer card and Prayer times screen look | Existing card components, sage highlight for the next prayer |
 | OQ-22 | Default prayer method | Usual method for the weather city's country (e.g. ISNA for US/CA, Karachi for PK/IN/BD, Umm al-Qura for SA, Diyanet for TR), else Muslim World League; Asr standard |
 | OQ-23 | Hadith in Arabic: full isnad or matn only? | Full text as in the dataset (includes the chain) |
 | OQ-11 | Default translation | Saheeh International (`en.sahih`); The Clear Quran selectable |
 | OQ-12 | Hadith dataset and licence | Bundled subset with sunnah.com references |
 | OQ-13 | Daily ayah pool | Curated list of ayah references, text fetched from AlQuran Cloud |
-| OQ-15 | How a per-habit reminder time is set | Tap the "No reminder" line to pick a time |
+| OQ-15 | How a per-habit reminder time is set | ⋯ menu on the habit card → Add a reminder |
 | OQ-16 | Greeting by time of day | Good morning / afternoon / evening |
 | OQ-17 | Does hiding faith cards also hide the quote? (in design: yes) | Follow design: hides all three |
 | OQ-18 | Confirm before deleting a habit | Confirm dialog |
 | OQ-19 | Can an activity be logged for a past day? | Today only, as in design |
 | OQ-20 | "Use my location" button for weather | Small button next to City override |
-| OQ-21 | Colour themes beyond Sage (16 incl. the bright Mint, Sky, Blossom, Citrus, Peach), the swatch picker, first-run colour step, Today header wash, motion (entrances, check-off ring, day-complete burst) | Built with provisional palettes, AA contrast checked; in the 2026-10-16 brief §11 |
 | OQ-22 | Backup card (Export / Import) in Settings | Plain card with two outlined buttons |
 | OQ-23 | Journal lock: Privacy card switch and locked Journal screen | Lock icon, title, Unlock button |
 | OQ-24 | Calmer Today (v0.3): one content card with Ayah/Hadith/Quote tabs and ↻, compact next-prayer card, Journal and Activity as two tiles, settings gear in the header | Built as described; needs a design pass |
 | OQ-25 | Settings as its own menu (gear on Today) with one page per section | List of sections with icon, title and subtitle |
 | OQ-26 | Colour themes Emerald, Rose, Dusk, Slate | Provisional palettes, AA contrast checked |
-| OQ-27 | v1.1 screens: prayer arc and log, consistency bar, excused day, mood reply and week strip, Duas, gratitude block, first run, weekly card, Arabic UI | Built with existing components until the design from the 2026-10-16 brief lands |
