@@ -67,4 +67,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get languageArabic => 'العربية (preview)';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String get excusedNote =>
+      'Today won\'t count for habits or prayers. You can still check things off.';
 }

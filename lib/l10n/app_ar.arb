@@ -19,5 +19,7 @@
   "language": "اللغة",
   "languageSystem": "لغة النظام",
   "languageEnglish": "English",
-  "languageArabic": "العربية (تجريبي)"
+  "languageArabic": "العربية (تجريبي)",
+  "undo": "تراجع",
+  "excusedNote": "لن يُحتسب اليوم. يمكنك وضع العلامات كالمعتاد."
 }

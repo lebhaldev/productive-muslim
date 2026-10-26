@@ -14,10 +14,21 @@
   "excusedToday": "Excused today",
   "countTodayAgain": "Count today again",
   "nOfMToday": "{done} of {total} today",
-  "@nOfMToday": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}}},
+  "@nOfMToday": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "addFirstHabit": "Add your first habit",
   "language": "Language",
   "languageSystem": "System",
   "languageEnglish": "English",
-  "languageArabic": "العربية (preview)"
+  "languageArabic": "العربية (preview)",
+  "undo": "Undo",
+  "excusedNote": "Today won't count for habits or prayers. You can still check things off."
 }

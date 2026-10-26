@@ -16,7 +16,7 @@ class HabitsSettingsSection extends ConsumerWidget {
       children: [
         SettingSwitch(
           switchKey: const Key('show-consistency'),
-          title: 'Show consistency numbers',
+          title: 'Show counts',
           subtitle: 'Like “4 of the last 7 days” on each habit',
           value: s.showConsistency,
           onChanged: (v) => ref.putSetting('showConsistency', '$v'),

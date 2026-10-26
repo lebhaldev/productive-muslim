@@ -207,20 +207,10 @@ class _HabitsSection extends ConsumerWidget {
     final done = ref.watch(completionsProvider).value ?? const {};
     final excused = ref.watch(excusedDaysProvider).value ?? const <String>{};
     final settings = settingsOf(ref);
-    final logged = settings.showFaith
-        ? (ref.watch(prayerLogsProvider).value?[today] ?? const <String>{})
-        : const <String>{};
     final isExcused = excused.contains(today);
     final l = AppLocalizations.of(context);
     final db = ref.read(databaseProvider);
-
-    // One segment per habit, then one per prayer when faith cards are on
-    // (FR-17): habits first, prayers after, done segments filled.
-    final segments = [
-      for (final h in habits) done[h.id]?.contains(today) ?? false,
-      if (settings.showFaith)
-        for (final p in fivePrayers) logged.contains(p.name),
-    ];
+    final segments = todaySegments(ref, today);
     final doneCount = segments.where((d) => d).length;
     final all = segments.isNotEmpty && doneCount == segments.length;
 
@@ -239,11 +229,7 @@ class _HabitsSection extends ConsumerWidget {
             l.sectionHabits,
             trailing: PopSwitcher(
               child: isExcused
-                  ? Text(
-                      l.excusedToday,
-                      key: const ValueKey('excused'),
-                      style: meta(),
-                    )
+                  ? const SizedBox.shrink(key: ValueKey('excused'))
                   : all
                   ? Text(
                       l.allDoneToday,
@@ -283,28 +269,72 @@ class _HabitsSection extends ConsumerWidget {
             const SizedBox(height: 8),
           ],
           // FR-18: a neutral link, no reason asked or stored.
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: TextButton(
-              key: const Key('excused-today'),
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.neutral700,
+          if (isExcused)
+            NCard(
+              key: const Key('excused-card'),
+              color: AppColors.neutral100,
+              gap: 8,
+              children: [
+                Row(
+                  children: [
+                    Flexible(child: Tag(l.excusedToday)),
+                    const Spacer(),
+                    TextButton(
+                      key: const Key('excused-today'),
+                      onPressed: () => db.setExcused(
+                        today,
+                        false,
+                        ref.read(clockProvider).now(),
+                      ),
+                      child: Text(l.undo),
+                    ),
+                  ],
+                ),
+                Text(l.excusedNote, style: meta(size: 13)),
+              ],
+            )
+          else
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: TextButton(
+                key: const Key('excused-today'),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.neutral700,
+                  textStyle: const TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+                onPressed: () => db.setExcused(
+                  today,
+                  true,
+                  ref.read(clockProvider).now(),
+                ),
+                child: Text(l.excusedToday),
               ),
-              onPressed: () => db.setExcused(
-                today,
-                !isExcused,
-                ref.read(clockProvider).now(),
-              ),
-              child: Text(isExcused ? l.countTodayAgain : l.excusedToday),
             ),
-          ),
         ],
       ),
     );
   }
 }
 
-/// `N of M today`: one rounded segment per habit and logged prayer.
+/// One segment per habit, then one per prayer when faith cards are on
+/// (FR-17): habits first, prayers after, done segments filled.
+List<bool> todaySegments(WidgetRef ref, String today) {
+  final habits = (ref.watch(habitsProvider).value ?? const [])
+      .where((h) => !h.archived);
+  final done = ref.watch(completionsProvider).value ?? const {};
+  final showFaith = settingsOf(ref).showFaith;
+  final logged = showFaith
+      ? (ref.watch(prayerLogsProvider).value?[today] ?? const <String>{})
+      : const <String>{};
+  return [
+    for (final h in habits) done[h.id]?.contains(today) ?? false,
+    if (showFaith)
+      for (final p in fivePrayers) logged.contains(p.name),
+  ];
+}
+
 class TodayBar extends StatelessWidget {
   const TodayBar({super.key, required this.segments});
   final List<bool> segments;

@@ -703,13 +703,13 @@ void main() {
     await settle(tester);
     await tester.tap(find.byKey(const Key('excused-today')));
     await settle(tester);
-    expect(find.text('Count today again'), findsOneWidget);
-    expect(find.text('Excused today'), findsOneWidget, reason: 'header');
+    expect(find.byKey(const Key('excused-card')), findsOneWidget);
+    expect(find.text('Excused today'), findsOneWidget, reason: 'tag');
     expect(find.text('2 of 6 days'), findsOneWidget);
     expect(find.byKey(const Key('today-bar')), findsNothing);
     expect(await tester.runAsync(() => db.watchExcusedDays().first), {today});
 
-    await tester.tap(find.text('Count today again'));
+    await tester.tap(find.text('Undo'));
     await settle(tester);
     expect(find.text('2 of 7 days'), findsOneWidget);
 

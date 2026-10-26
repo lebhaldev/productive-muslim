@@ -67,4 +67,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get languageArabic => 'العربية (تجريبي)';
+
+  @override
+  String get undo => 'تراجع';
+
+  @override
+  String get excusedNote => 'لن يُحتسب اليوم. يمكنك وضع العلامات كالمعتاد.';
 }

@@ -211,6 +211,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'العربية (preview)'**
   String get languageArabic;
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// No description provided for @excusedNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Today won\'t count for habits or prayers. You can still check things off.'**
+  String get excusedNote;
 }
 
 class _AppLocalizationsDelegate

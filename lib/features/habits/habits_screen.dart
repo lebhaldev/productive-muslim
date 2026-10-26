@@ -9,6 +9,8 @@ import '../../core/streak.dart';
 import '../../data/db/database.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
+import '../../l10n/app_localizations.dart';
+import '../today/today_screen.dart' show TodayBar, todaySegments;
 
 class HabitsScreen extends ConsumerStatefulWidget {
   const HabitsScreen({super.key});
@@ -43,9 +45,33 @@ class _HabitsScreenState extends ConsumerState<HabitsScreen> {
     final excused = ref.watch(excusedDaysProvider).value ?? const <String>{};
     final settings = settingsOf(ref);
 
+    final segments = todaySegments(ref, today);
+    final doneToday = segments.where((d) => d).length;
+    final isExcused = excused.contains(today);
+
     return ScreenBody(
       children: [
-        const ScreenTitle('Habits'),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const ScreenTitle('Habits'),
+            if (segments.isNotEmpty) ...[
+              Text(
+                isExcused
+                    ? AppLocalizations.of(context).excusedToday
+                    : AppLocalizations.of(
+                        context,
+                      ).nOfMToday(doneToday, segments.length),
+                key: const Key('habits-today-count'),
+                style: meta(size: 14),
+              ),
+              if (!isExcused) ...[
+                const SizedBox(height: 10),
+                TodayBar(segments: segments),
+              ],
+            ],
+          ],
+        ),
         if (settings.showFaith && !settings.consistencyCardClosed)
           const _ConsistencyHadithCard(),
         Row(
@@ -127,23 +153,50 @@ class _HabitCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final db = ref.read(databaseProvider);
     return NCard(
+      color: AppColors.sage200,
       gap: 10,
       children: [
-        // A Wrap, so the tag drops under a long name at large text sizes.
-        Wrap(
-          alignment: WrapAlignment.spaceBetween,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 8,
-          runSpacing: 6,
+        Row(
           children: [
-            CardTitle(habit.name),
+            Expanded(child: CardTitle(habit.name)),
             if (showConsistency)
-              Tag(consistencyTag(consistency(days, today, excused))),
+              Flexible(
+                child: Text(
+                  consistencyTag(consistency(days, today, excused)),
+                  style: meta(size: 12, color: AppColors.neutral800),
+                  textAlign: TextAlign.end,
+                ),
+              ),
+            PopupMenuButton<String>(
+              key: Key('habit-menu-${habit.id}'),
+              tooltip: 'More for ${habit.name}',
+              icon: const Icon(Icons.more_horiz, size: 20),
+              onSelected: (v) => switch (v) {
+                'reminder' => _pickReminder(context, ref),
+                'up' => db.moveUp(habit.id),
+                'archive' => db.setArchived(habit.id, true),
+                _ => _confirmDelete(context, ref),
+              },
+              itemBuilder: (_) => [
+                PopupMenuItem(
+                  value: 'reminder',
+                  child: Text(
+                    habit.reminderTime == null
+                        ? 'Add a reminder'
+                        : 'Reminder ${habit.reminderTime}',
+                  ),
+                ),
+                const PopupMenuItem(value: 'up', child: Text('Move up')),
+                const PopupMenuItem(value: 'archive', child: Text('Archive')),
+                const PopupMenuItem(value: 'delete', child: Text('Delete')),
+              ],
+            ),
           ],
         ),
         Row(
           children: [
-            for (var back = 6; back >= 0; back--)
+            for (var back = 6; back >= 0; back--) ...[
+              if (back < 6) const SizedBox(width: 6),
               Expanded(
                 child: _DayRing(
                   habit: habit,
@@ -152,37 +205,7 @@ class _HabitCard extends ConsumerWidget {
                   done: days.contains(shiftDay(today, -back)),
                 ),
               ),
-          ],
-        ),
-        Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.neutral700,
-                padding: EdgeInsets.zero,
-              ),
-              onPressed: () => _pickReminder(context, ref),
-              child: Text(
-                habit.reminderTime == null
-                    ? 'No reminder'
-                    : 'Reminder ${habit.reminderTime}',
-              ),
-            ),
-            const SizedBox(width: 8),
-            IconButton(
-              tooltip: 'Move up',
-              onPressed: () => db.moveUp(habit.id),
-              icon: const Icon(Icons.arrow_upward, size: 18),
-            ),
-            TextButton(
-              onPressed: () => db.setArchived(habit.id, true),
-              child: const Text('Archive'),
-            ),
-            TextButton(
-              onPressed: () => _confirmDelete(context, ref),
-              child: const Text('Delete'),
-            ),
+            ],
           ],
         ),
       ],
@@ -256,11 +279,12 @@ class _ConsistencyHadithCard extends ConsumerWidget {
     if (h == null) return const SizedBox.shrink();
     return NCard(
       key: const Key('consistency-hadith'),
+      color: AppColors.sage200,
       gap: 10,
       children: [
         Row(
           children: [
-            const Expanded(child: Kicker('Hadith')),
+            const Expanded(child: Kicker('On small deeds')),
             IconButton(
               key: const Key('consistency-hadith-close'),
               tooltip: 'Close',
@@ -303,31 +327,24 @@ class _DayRing extends ConsumerWidget {
           '${habit.name} ${DateFormat('EEEE d MMMM').format(date)} ${done ? 'done' : 'not done'}',
       excludeSemantics: true,
       child: InkWell(
-        customBorder: const CircleBorder(),
+        borderRadius: BorderRadius.circular(AppRadii.pill),
         onTap: () => ref.read(databaseProvider).toggleCompletion(habit.id, day),
-        child: Column(
-          children: [
-            Text(
-              isToday ? 'Today' : DateFormat('EEEEE').format(date),
-              style: meta(size: 10),
-            ),
-            const SizedBox(height: 3),
-            TickBurst(
-              on: done,
-              color: AppColors.sage600,
-              child: AnimatedContainer(
-                duration: motion(context, Motion.medium),
-                curve: Curves.easeOutBack,
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: done ? AppColors.sage600 : Colors.transparent,
-                  border: Border.all(color: AppColors.sage600, width: 2),
-                ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: TickBurst(
+            on: done,
+            color: AppColors.sage600,
+            child: AnimatedContainer(
+              duration: motion(context, Motion.medium),
+              curve: Curves.easeOutBack,
+              height: 28,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppRadii.pill),
+                color: done ? AppColors.sage600 : Colors.transparent,
+                border: Border.all(color: AppColors.sage600, width: 2),
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
