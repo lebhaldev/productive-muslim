@@ -54,6 +54,8 @@ class PrayerArc extends ConsumerWidget {
   final PrayerName? next;
 
   static const _dot = 30.0;
+  static const _height = 124.0;
+  static const _ticks = 18.0;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -63,15 +65,39 @@ class PrayerArc extends ConsumerWidget {
     double at(DateTime t) =>
         (t.difference(start).inSeconds / span).clamp(0.0, 1.0);
 
+    final sunrise = times[PrayerName.sunrise],
+        sunset = times[PrayerName.maghrib];
+    final nowF = now.isBefore(start) ? 0.0 : at(now);
+    final showNow = isSameDate(now, start) && !now.isBefore(start);
+
     return SizedBox(
-      height: 96,
+      height: _height,
       child: LayoutBuilder(
         builder: (context, c) {
-          final w = c.maxWidth - _dot, h = 96 - _dot - 16;
+          final w = c.maxWidth - _dot, h = _height - _dot - 16 - _ticks;
           Offset point(double f) => Offset(
             _dot / 2 + f * w,
             _dot / 2 + h - math.sin(math.pi * f) * h,
           );
+          Widget tickLabel(String text, double f) {
+            final x = point(f).dx;
+            return Positioned(
+              left: (x - 40).clamp(0.0, math.max(0.0, c.maxWidth - 80)),
+              width: 80,
+              bottom: 0,
+              child: ExcludeSemantics(
+                child: Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.visible,
+                  softWrap: false,
+                  style: meta(size: 10),
+                ),
+              ),
+            );
+          }
+
           return Stack(
             clipBehavior: Clip.none,
             children: [
@@ -80,15 +106,25 @@ class PrayerArc extends ConsumerWidget {
                   child: CustomPaint(
                     painter: _ArcPainter(
                       point: point,
-                      marks: [
-                        at(times[PrayerName.sunrise]),
-                        at(times[PrayerName.maghrib]),
-                      ],
+                      marks: [at(sunrise), at(sunset)],
+                      floor: _height - 14,
+                      progress: nowF,
+                      showNow: showNow,
                       color: AppColors.divider,
-                      mark: AppColors.accent700,
+                      done: AppColors.sage400,
+                      tick: AppColors.neutral500,
+                      nowColor: AppColors.accent700,
                     ),
                   ),
                 ),
+              ),
+              tickLabel(
+                'sunrise ${DateFormat('HH:mm').format(sunrise)}',
+                at(sunrise),
+              ),
+              tickLabel(
+                'sunset ${DateFormat('HH:mm').format(sunset)}',
+                at(sunset),
               ),
               for (final p in fivePrayers)
                 _point(context, ref, p, point(at(times[p])), logged),
@@ -139,23 +175,18 @@ class PrayerArc extends ConsumerWidget {
                     child: AnimatedContainer(
                       duration: motion(context, Motion.medium),
                       curve: Curves.easeOutBack,
-                      width: isNext ? 22 : 16,
-                      height: isNext ? 22 : 16,
+                      width: isNext ? 20 : 18,
+                      height: isNext ? 20 : 18,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: done ? AppColors.sage600 : AppColors.surface,
                         border: Border.all(
-                          color: isNext
-                              ? AppColors.accent700
-                              : done
+                          color: done || isNext
                               ? AppColors.sage600
                               : AppColors.neutral700,
-                          width: isNext ? 3 : 1.5,
+                          width: isNext ? 3.5 : 2,
                         ),
                       ),
-                      child: done
-                          ? Icon(Icons.check, size: 11, color: AppColors.bg)
-                          : null,
                     ),
                   ),
                 ),
@@ -185,39 +216,66 @@ class _ArcPainter extends CustomPainter {
   _ArcPainter({
     required this.point,
     required this.marks,
+    required this.floor,
+    required this.progress,
+    required this.showNow,
     required this.color,
-    required this.mark,
+    required this.done,
+    required this.tick,
+    required this.nowColor,
   });
   final Offset Function(double) point;
   final List<double> marks;
-  final Color color;
-  final Color mark;
+  final double floor, progress;
+  final bool showNow;
+  final Color color, done, tick, nowColor;
+
+  Path _segment(double from, double to) {
+    final path = Path()..moveTo(point(from).dx, point(from).dy);
+    final steps = math.max(1, ((to - from) * 60).ceil());
+    for (var i = 1; i <= steps; i++) {
+      final o = point(from + (to - from) * i / steps);
+      path.lineTo(o.dx, o.dy);
+    }
+    return path;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
-    final path = Path()..moveTo(point(0).dx, point(0).dy);
-    for (var i = 1; i <= 60; i++) {
-      final o = point(i / 60);
-      path.lineTo(o.dx, o.dy);
-    }
-    canvas.drawPath(
-      path,
-      Paint()
-        ..color = color
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2
-        ..strokeCap = StrokeCap.round,
-    );
-    // Sunrise and sunset: small terracotta ticks on the line.
+    Paint stroke(Color c) => Paint()
+      ..color = c
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.5
+      ..strokeCap = StrokeCap.round;
+    canvas.drawPath(_segment(0, 1), stroke(color));
+    if (progress > 0) canvas.drawPath(_segment(0, progress), stroke(done));
+    // Sunrise and sunset: small dashed ticks from the line down to a label.
+    final dash = Paint()
+      ..color = tick
+      ..strokeWidth = 1.2;
     for (final f in marks) {
       final o = point(f);
-      canvas.drawCircle(o, 3, Paint()..color = mark);
+      for (var y = o.dy + 6; y < floor - 2; y += 6) {
+        canvas.drawLine(
+          Offset(o.dx, y),
+          Offset(o.dx, math.min(y + 3, floor)),
+          dash,
+        );
+      }
+    }
+    if (showNow) {
+      canvas.drawCircle(point(progress), 4.5, Paint()..color = nowColor);
     }
   }
 
   @override
   bool shouldRepaint(_ArcPainter old) =>
       old.marks.toString() != marks.toString() ||
+      old.progress != progress ||
+      old.showNow != showNow ||
       old.color != color ||
-      old.mark != mark;
+      old.done != done;
 }
+
+bool isSameDate(DateTime a, DateTime b) =>
+    a.year == b.year && a.month == b.month && a.day == b.day;

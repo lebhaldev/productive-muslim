@@ -83,7 +83,10 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
         'Pick your colours',
         'You can change them any time in Settings.',
       ),
-      _Step.privacy => ('Your data stays on this phone.', 'No account, no ads.'),
+      _Step.privacy => (
+        'Your data stays on this phone.',
+        'No account, no ads.',
+      ),
     };
     final action = switch (_step) {
       _ when widget.themeOnly => 'Done',

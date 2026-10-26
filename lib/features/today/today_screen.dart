@@ -304,11 +304,8 @@ class _HabitsSection extends ConsumerWidget {
                     decoration: TextDecoration.underline,
                   ),
                 ),
-                onPressed: () => db.setExcused(
-                  today,
-                  true,
-                  ref.read(clockProvider).now(),
-                ),
+                onPressed: () =>
+                    db.setExcused(today, true, ref.read(clockProvider).now()),
                 child: Text(l.excusedToday),
               ),
             ),
@@ -321,8 +318,9 @@ class _HabitsSection extends ConsumerWidget {
 /// One segment per habit, then one per prayer when faith cards are on
 /// (FR-17): habits first, prayers after, done segments filled.
 List<bool> todaySegments(WidgetRef ref, String today) {
-  final habits = (ref.watch(habitsProvider).value ?? const [])
-      .where((h) => !h.archived);
+  final habits = (ref.watch(habitsProvider).value ?? const []).where(
+    (h) => !h.archived,
+  );
   final done = ref.watch(completionsProvider).value ?? const {};
   final showFaith = settingsOf(ref).showFaith;
   final logged = showFaith

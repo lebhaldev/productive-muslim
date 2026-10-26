@@ -40,12 +40,13 @@ class PrayerCard extends ConsumerWidget {
     final next = nextPrayer(day, tomorrow, now);
     final label = prayerLabels[next.name]!;
     final nextToday = isSameDay(next.at, day[next.name]) ? next.name : null;
+    final until = untilLabel(next.at.difference(now));
     return NCard(
       onTap: () => context.go('/more/prayer'),
       children: [
         Row(
           children: [
-            const Expanded(child: Kicker('Next prayer')),
+            const Expanded(child: Kicker('Prayer today')),
             Flexible(
               child: Text(
                 ref.watch(prayerLocationProvider)?.place ?? '',
@@ -55,33 +56,40 @@ class PrayerCard extends ConsumerWidget {
             ),
           ],
         ),
-        Semantics(
-          container: true,
-          label:
-              '$label at ${_t(next.at)}, ${untilLabel(next.at.difference(now))}',
-          child: ExcludeSemantics(
-            child: Wrap(
-              spacing: 10,
-              crossAxisAlignment: WrapCrossAlignment.end,
-              children: [
-                Text('$label ${_t(next.at)}', style: heading(22)),
-                Text(
-                  untilLabel(next.at.difference(now)),
-                  style: meta(size: 13, color: AppColors.accent700),
-                ),
-              ],
-            ),
-          ),
-        ),
         PrayerArc(day: today, times: day, now: now, next: nextToday),
-        Align(
-          alignment: Alignment.centerRight,
-          child: TextButton.icon(
-            key: const Key('qibla-button'),
-            onPressed: () => context.go('/more/prayer'),
-            icon: const Icon(Icons.explore_outlined, size: 18),
-            label: const Text('Qibla'),
-          ),
+        Row(
+          children: [
+            Expanded(
+              child: Semantics(
+                container: true,
+                label: '$label at ${_t(next.at)}, $until',
+                child: ExcludeSemantics(
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: label,
+                          style: const TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                        TextSpan(text: ' · ${_t(next.at)} · $until'),
+                      ],
+                    ),
+                    style: TextStyle(fontSize: 16, color: AppColors.text),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            OutlinedButton(
+              key: const Key('qibla-button'),
+              style: OutlinedButton.styleFrom(
+                shape: const StadiumBorder(),
+                side: BorderSide(color: AppColors.neutral400),
+              ),
+              onPressed: () => context.go('/more/prayer'),
+              child: const Text('Qibla'),
+            ),
+          ],
         ),
       ],
     );
@@ -134,7 +142,7 @@ class PrayerScreen extends ConsumerWidget {
       children: [
         const MoreTitle('Prayer times'),
         Text(
-          '${loc.place} · ${ref.watch(prayerMethodProvider).label} · Asr ${s.madhab == AsrMadhab.hanafi ? 'Hanafi' : 'standard'}',
+          'Asr ${s.madhab == AsrMadhab.hanafi ? 'Hanafi' : 'standard'} · change in Settings',
           style: meta(size: 13),
         ),
         Text(
@@ -152,10 +160,10 @@ class PrayerScreen extends ConsumerWidget {
             ),
           ],
         ),
-        NCard(
-          gap: 0,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            for (final p in PrayerName.values)
+            for (final p in PrayerName.values) ...[
               _PrayerRow(
                 key: Key('prayer-row-${p.name}'),
                 p: p,
@@ -167,6 +175,13 @@ class PrayerScreen extends ConsumerWidget {
                     ? null
                     : () => togglePrayerLog(context, ref, today, p),
               ),
+              const SizedBox(height: 8),
+            ],
+            Text(
+              'Calculated on this phone · '
+              '${ref.watch(prayerMethodProvider).label} · ${loc.place}',
+              style: meta(size: 12),
+            ),
           ],
         ),
         NCard(
@@ -228,46 +243,72 @@ class _PrayerRow extends StatelessWidget {
         : isNext
         ? 'Next · $until'
         : null;
+    final sunrise = p == PrayerName.sunrise;
     return Semantics(
       button: onTap != null,
       checked: onTap != null ? done : null,
       label: '${prayerLabels[p]} ${_t(at)}${status == null ? '' : ', $status'}',
       excludeSemantics: true,
       child: Material(
-        color: isNext ? AppColors.sage200 : Colors.transparent,
-        borderRadius: BorderRadius.circular(AppRadii.md),
+        color: sunrise
+            ? Colors.transparent
+            : isNext
+            ? AppColors.sage200
+            : AppColors.neutral200,
+        borderRadius: BorderRadius.circular(AppRadii.pill),
         child: InkWell(
-          borderRadius: BorderRadius.circular(AppRadii.md),
+          borderRadius: BorderRadius.circular(AppRadii.pill),
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
             child: Row(
               children: [
+                SizedBox(
+                  width: 26,
+                  child: sunrise
+                      ? null
+                      : Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Container(
+                            width: 12,
+                            height: 12,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: done ? AppColors.sage600 : null,
+                              border: Border.all(
+                                color: done || isNext
+                                    ? AppColors.sage600
+                                    : AppColors.neutral700,
+                                width: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                ),
                 Expanded(
                   child: Text(
                     prayerLabels[p]!,
                     style: TextStyle(
                       fontSize: 16,
-                      color: p == PrayerName.sunrise
-                          ? AppColors.neutral700
-                          : AppColors.text,
+                      fontWeight: isNext ? FontWeight.w700 : null,
+                      color: AppColors.text,
                     ),
                   ),
                 ),
                 if (status != null)
                   Flexible(
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 12),
+                      padding: const EdgeInsetsDirectional.only(end: 16),
                       child: Text(
                         status,
-                        style: meta(
-                          size: 12,
-                          color: done ? AppColors.sage900 : AppColors.accent700,
-                        ),
+                        style: meta(size: 12, color: AppColors.neutral800),
                       ),
                     ),
                   ),
-                Text(_t(at), style: heading(18)),
+                Text(
+                  _t(at),
+                  style: TextStyle(fontSize: 16, color: AppColors.text),
+                ),
               ],
             ),
           ),

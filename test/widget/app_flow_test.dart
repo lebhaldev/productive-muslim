@@ -96,7 +96,7 @@ void main() {
       expect(find.text('Good morning'), findsOneWidget);
       expect(find.text('14°'), findsOneWidget);
       expect(find.text('Light cloud · London'), findsOneWidget);
-      expect(find.text('NEXT PRAYER'), findsOneWidget);
+      expect(find.text('PRAYER TODAY'), findsOneWidget);
       expect(find.text('London'), findsOneWidget);
 
       // Ayah, hadith and quote all show at once, no tabs.

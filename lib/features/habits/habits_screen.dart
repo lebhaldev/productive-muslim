@@ -59,9 +59,8 @@ class _HabitsScreenState extends ConsumerState<HabitsScreen> {
               Text(
                 isExcused
                     ? AppLocalizations.of(context).excusedToday
-                    : AppLocalizations.of(
-                        context,
-                      ).nOfMToday(doneToday, segments.length),
+                    : AppLocalizations.of(context)
+                          .nOfMToday(doneToday, segments.length),
                 key: const Key('habits-today-count'),
                 style: meta(size: 14),
               ),
@@ -153,7 +152,6 @@ class _HabitCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final db = ref.read(databaseProvider);
     return NCard(
-      color: AppColors.sage200,
       gap: 10,
       children: [
         Row(
