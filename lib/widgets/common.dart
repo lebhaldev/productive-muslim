@@ -217,16 +217,18 @@ class NavRow extends StatelessWidget {
     required this.sub,
     required this.onTap,
     this.icon,
+    this.color,
   });
   final String title;
   final String sub;
   final VoidCallback onTap;
   final IconData? icon;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.surface,
+      color: color ?? AppColors.surface,
       borderRadius: BorderRadius.circular(AppRadii.lg),
       child: InkWell(
         borderRadius: BorderRadius.circular(AppRadii.lg),
@@ -346,4 +348,26 @@ class Note extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       Text(text, style: meta(color: warn ? AppColors.accent700 : null));
+}
+
+/// A small numbered circle, for gratitude lines.
+class NumberBadge extends StatelessWidget {
+  const NumberBadge(this.n, {super.key});
+  final int n;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    width: 24,
+    height: 24,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(color: AppColors.sage600, shape: BoxShape.circle),
+    child: Text(
+      '$n',
+      style: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w700,
+        color: AppColors.bg,
+      ),
+    ),
+  );
 }

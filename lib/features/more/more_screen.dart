@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../app/theme.dart';
 import '../../widgets/common.dart';
 
 class MoreScreen extends StatelessWidget {
@@ -35,6 +36,7 @@ class MoreScreen extends StatelessWidget {
             title: label,
             sub: sub,
             icon: icon,
+            color: id == 'duas' ? AppColors.sage200 : null,
             onTap: () => context.go('/more/$id'),
           ),
       ],

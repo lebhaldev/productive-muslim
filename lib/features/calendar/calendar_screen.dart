@@ -144,14 +144,23 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   : '${selJournal.title.isEmpty ? '' : '${selJournal.title} — '}${selJournal.body}',
               style: const TextStyle(fontSize: 14),
             ),
-            if (selJournal != null && !ref.watch(journalLockedProvider))
+            if (selJournal != null &&
+                !ref.watch(journalLockedProvider) &&
+                gratitudeLines(selJournal).any((g) => g.isNotEmpty)) ...[
+              Text('Grateful for', style: meta()),
               for (final (i, g) in gratitudeLines(selJournal).indexed)
                 if (g.isNotEmpty)
-                  Text(
-                    'Grateful ${i + 1}. $g',
+                  Row(
                     key: Key('calendar-gratitude-$i'),
-                    style: const TextStyle(fontSize: 14),
+                    children: [
+                      NumberBadge(i + 1),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(g, style: const TextStyle(fontSize: 14)),
+                      ),
+                    ],
                   ),
+            ],
             Align(
               alignment: Alignment.centerLeft,
               child: OutlinedButton(

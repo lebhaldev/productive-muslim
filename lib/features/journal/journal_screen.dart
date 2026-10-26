@@ -160,21 +160,43 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
           decoration: const InputDecoration(hintText: 'Title (optional)'),
         ),
         const SizedBox(height: 16),
-        const Kicker('Gratitude'),
-        const SizedBox(height: 4),
-        for (var i = 0; i < 3; i++)
-          TextField(
-            key: Key('gratitude-$i'),
-            controller: _gratitude[i],
-            onChanged: (_) => _changed(),
-            textCapitalization: TextCapitalization.sentences,
-            maxLength: 120,
-            decoration: InputDecoration(
-              prefixText: '${i + 1}.  ',
-              hintText: 'Optional',
-              counterText: '',
-            ),
+        Container(
+          padding: const EdgeInsets.fromLTRB(16, 14, 16, 8),
+          decoration: BoxDecoration(
+            color: AppColors.sage200,
+            borderRadius: BorderRadius.circular(AppRadii.lg),
           ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Kicker('Gratitude'),
+              for (var i = 0; i < 3; i++)
+                Row(
+                  children: [
+                    NumberBadge(i + 1),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: TextField(
+                        key: Key('gratitude-$i'),
+                        controller: _gratitude[i],
+                        onChanged: (_) => _changed(),
+                        textCapitalization: TextCapitalization.sentences,
+                        maxLength: 120,
+                        decoration: const InputDecoration(
+                          hintText: 'Optional',
+                          counterText: '',
+                          filled: false,
+                          border: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+            ],
+          ),
+        ),
         const SizedBox(height: 16),
         TextField(
           key: const Key('journal-body'),

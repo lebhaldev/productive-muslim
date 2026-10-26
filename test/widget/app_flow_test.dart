@@ -819,8 +819,15 @@ void main() {
 
     await tapTab(tester, 'Calendar');
     await scrollTo(tester, find.byKey(const Key('calendar-gratitude-0')));
-    expect(find.text('Grateful 1. Sunshine'), findsOneWidget);
-    expect(find.text('Grateful 3. Tea'), findsOneWidget);
+    expect(find.text('Grateful for'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byKey(const Key('calendar-gratitude-0')),
+        matching: find.text('Sunshine'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.byKey(const Key('calendar-gratitude-2')), findsOneWidget);
     await closeApp(tester, db);
   });
 
@@ -839,11 +846,9 @@ void main() {
       find.byKey(const Key('dua-text')),
       'Ease for my family',
     );
-    await tester.enterText(find.byKey(const Key('dua-note')), 'every night');
     await tester.tap(find.byKey(const Key('dua-add')));
     await settle(tester);
     expect(find.text('Asking · 1'), findsOneWidget);
-    expect(find.text('every night'), findsOneWidget);
     expect(find.text('Added 5 Oct'), findsOneWidget);
 
     final id = (await tester.runAsync(() => db.watchDuas().first))!.single.id;
@@ -851,10 +856,9 @@ void main() {
     await settle(tester);
     expect(find.text('Answered · 1'), findsOneWidget);
     expect(find.text('Answered 5 Oct'), findsOneWidget);
+    expect(find.bySemanticsLabel('Sprig with 1 leaf'), findsOneWidget);
 
-    await tester.tap(find.byKey(Key('dua-menu-$id')));
-    await settle(tester);
-    await tester.tap(find.text('Move back to Asking'));
+    await tester.tap(find.byKey(Key('dua-unanswer-$id')));
     await settle(tester);
     expect(find.text('Asking · 1'), findsOneWidget);
 
@@ -879,7 +883,7 @@ void main() {
     await tapTab(tester, 'More');
     await tester.tap(find.text('Duas'));
     await settle(tester);
-    expect(find.text('Your duas are locked'), findsOneWidget);
+    expect(find.text('Duas are locked'), findsOneWidget);
     expect(find.text('Private dua'), findsNothing);
     lock.accept = true;
     await tester.tap(find.byKey(const Key('unlock-duas')));

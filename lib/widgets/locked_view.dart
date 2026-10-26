@@ -11,8 +11,10 @@ class LockedView extends ConsumerStatefulWidget {
     required this.title,
     required this.reason,
     this.unlockKey,
+    this.subtitle = 'Use your fingerprint, face or screen lock to open it.',
   });
   final String title;
+  final String subtitle;
 
   /// What Android's unlock prompt says.
   final String reason;
@@ -43,12 +45,24 @@ class _LockedViewState extends ConsumerState<LockedView> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.lock_outline, size: 40, color: AppColors.sage600),
+            Container(
+              width: 76,
+              height: 76,
+              decoration: BoxDecoration(
+                color: AppColors.sage200,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.lock_outline,
+                size: 34,
+                color: AppColors.sage900,
+              ),
+            ),
             const SizedBox(height: 12),
             Text(widget.title, textAlign: TextAlign.center, style: heading(22)),
             const SizedBox(height: 6),
             Text(
-              'Use your fingerprint, face or screen lock to open it.',
+              widget.subtitle,
               textAlign: TextAlign.center,
               style: meta(size: 13),
             ),
