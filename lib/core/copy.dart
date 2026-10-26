@@ -53,12 +53,14 @@ const journalPrompts = [
   'What weighed on you?',
 ];
 
-/// Weekly review card on Reflect (Fridays). Plain counts only: no scores and
-/// no religious wording.
+/// Weekly review card on Reflect (from Friday until Thursday night). Plain
+/// counts only: no scores and no religious wording.
 const weeklyTitle = 'Your week';
-String weeklyHabits(int kept, int of) => 'Habits kept $kept of $of days';
-String weeklyPrayers(int n) => 'Prayers logged $n';
+const weeklyHabitsLabel = 'Habits kept';
+String weeklyDays(int n, int of) => '$n of $of days';
+const weeklyPrayersLabel = 'Prayers logged';
+const weeklyMoodLabel = 'Mood';
 String weeklyMood(String? mostly) =>
-    mostly == null ? 'Mood not logged' : 'Mood mostly $mostly';
-String weeklyJournal(int days) => 'Journal $days of 7 days';
+    mostly == null ? 'not logged' : 'mostly $mostly';
+const weeklyJournalLabel = 'Journal';
 const weeklyNoteLabel = 'Write a note to next week';

@@ -35,12 +35,8 @@ class ReflectScreen extends ConsumerWidget {
       gap: 16,
       children: [
         const MoreTitle('Reflect'),
-        if (parseDayKey(today).weekday == DateTime.friday)
-          const WeeklyReviewCard(),
-        const NCard(
-          gap: 10,
-          children: [Kicker('Mood · this week'), MoodWeekStrip()],
-        ),
+        const WeeklyReviewCard(),
+        const NCard(gap: 10, children: [Kicker('This week'), MoodWeekStrip()]),
         NCard(
           gap: 10,
           children: [

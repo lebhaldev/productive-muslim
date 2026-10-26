@@ -92,9 +92,20 @@ class _WeekDot extends ConsumerWidget {
               ),
               const SizedBox(height: 3),
               Text(
-                DateFormat('EEEEE').format(date),
-                style: meta(size: 10).copyWith(
+                DateFormat('EEE').format(date),
+                maxLines: 1,
+                overflow: TextOverflow.clip,
+                style: meta(size: 11).copyWith(
                   fontWeight: isToday ? FontWeight.w700 : FontWeight.w400,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Container(
+                width: 18,
+                height: 2,
+                decoration: BoxDecoration(
+                  color: isToday ? AppColors.sage600 : Colors.transparent,
+                  borderRadius: BorderRadius.circular(AppRadii.pill),
                 ),
               ),
             ],

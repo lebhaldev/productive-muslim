@@ -751,37 +751,38 @@ void main() {
     await closeApp(tester, db);
   });
 
-  testWidgets('a picked mood answers with a fixed line, Not now hides it for that mood', (
-    tester,
-  ) async {
-    final db = memoryDb();
-    await pumpApp(tester, db: db);
-    await scrollTo(tester, find.text('okay'));
-    await tester.ensureVisible(find.text('okay'));
-    await settle(tester);
-    await tester.tap(find.text('okay'));
-    await settle(tester);
-    expect(find.text('An ordinary day is fine.'), findsOneWidget);
-    expect(find.text('Log one small thing you did'), findsOneWidget);
+  testWidgets(
+    'a picked mood answers with a fixed line, Not now hides it for that mood',
+    (tester) async {
+      final db = memoryDb();
+      await pumpApp(tester, db: db);
+      await scrollTo(tester, find.text('okay'));
+      await tester.ensureVisible(find.text('okay'));
+      await settle(tester);
+      await tester.tap(find.text('okay'));
+      await settle(tester);
+      expect(find.text('An ordinary day is fine.'), findsOneWidget);
+      expect(find.text('Log one small thing you did'), findsOneWidget);
 
-    await tester.ensureVisible(find.text('good'));
-    await settle(tester);
-    await tester.tap(find.text('good'));
-    await settle(tester);
-    expect(find.text('Glad to hear it.'), findsOneWidget);
-    expect(find.text("Write one thing you're grateful for"), findsOneWidget);
-    await tester.ensureVisible(find.byKey(const Key('mood-not-now')));
-    await settle(tester);
-    await tester.tap(find.byKey(const Key('mood-not-now')));
-    await settle(tester);
-    expect(find.byKey(const Key('mood-reply')), findsNothing);
-    expect(find.byKey(const Key('mood-saved')), findsOneWidget);
-    // A different mood brings a suggestion back.
-    await tester.tap(find.text('bright'));
-    await settle(tester);
-    expect(find.text('Lovely. Hold on to it.'), findsOneWidget);
-    await closeApp(tester, db);
-  });
+      await tester.ensureVisible(find.text('good'));
+      await settle(tester);
+      await tester.tap(find.text('good'));
+      await settle(tester);
+      expect(find.text('Glad to hear it.'), findsOneWidget);
+      expect(find.text("Write one thing you're grateful for"), findsOneWidget);
+      await tester.ensureVisible(find.byKey(const Key('mood-not-now')));
+      await settle(tester);
+      await tester.tap(find.byKey(const Key('mood-not-now')));
+      await settle(tester);
+      expect(find.byKey(const Key('mood-reply')), findsNothing);
+      expect(find.byKey(const Key('mood-saved')), findsOneWidget);
+      // A different mood brings a suggestion back.
+      await tester.tap(find.text('bright'));
+      await settle(tester);
+      expect(find.text('Lovely. Hold on to it.'), findsOneWidget);
+      await closeApp(tester, db);
+    },
+  );
 
   testWidgets('the mood week strip opens a day in Calendar', (tester) async {
     final db = memoryDb();
@@ -927,34 +928,37 @@ void main() {
     await closeApp(tester, db);
   });
 
-  testWidgets('set-up phones only get the colour step, and Skip moves past each step', (
-    tester,
-  ) async {
-    final db = memoryDb();
-    await tester.runAsync(() => db.putSetting('city', 'London'));
-    await pumpApp(tester, db: db, firstRun: true);
-    // Set up before the colour step existed: only that step, once.
-    expect(find.text('Pick your colours'), findsOneWidget);
-    expect(find.text('Where are you?'), findsNothing);
-    expect(find.text('Step 1 of 1'), findsNothing);
-    await tester.tap(find.byKey(const Key('welcome-next')));
-    await settle(tester);
-    expect(find.text('Pick your colours'), findsNothing);
-    expect(find.byKey(const Key('tab-Today')), findsOneWidget);
-    await closeApp(tester, db);
-
-    final fresh = await pumpApp(tester, firstRun: true);
-    for (var i = 0; i < 4; i++) {
-      await tester.tap(find.byKey(const Key('welcome-skip')));
+  testWidgets(
+    'set-up phones only get the colour step, and Skip moves past each step',
+    (tester) async {
+      final db = memoryDb();
+      await tester.runAsync(() => db.putSetting('city', 'London'));
+      await pumpApp(tester, db: db, firstRun: true);
+      // Set up before the colour step existed: only that step, once.
+      expect(find.text('Pick your colours'), findsOneWidget);
+      expect(find.text('Where are you?'), findsNothing);
+      expect(find.text('Step 1 of 1'), findsNothing);
+      await tester.tap(find.byKey(const Key('welcome-next')));
       await settle(tester);
-    }
-    expect(find.text('Where are you?'), findsNothing);
-    expect(
-      (await tester.runAsync(() => fresh.watchSettings().first))!['onboarded'],
-      'true',
-    );
-    await closeApp(tester, fresh);
-  });
+      expect(find.text('Pick your colours'), findsNothing);
+      expect(find.byKey(const Key('tab-Today')), findsOneWidget);
+      await closeApp(tester, db);
+
+      final fresh = await pumpApp(tester, firstRun: true);
+      for (var i = 0; i < 4; i++) {
+        await tester.tap(find.byKey(const Key('welcome-skip')));
+        await settle(tester);
+      }
+      expect(find.text('Where are you?'), findsNothing);
+      expect(
+        (await tester.runAsync(
+          () => fresh.watchSettings().first,
+        ))!['onboarded'],
+        'true',
+      );
+      await closeApp(tester, fresh);
+    },
+  );
 
   testWidgets('a hadith saved from Today is listed under More, Saved', (
     tester,
@@ -980,9 +984,7 @@ void main() {
     await closeApp(tester, db);
   });
 
-  testWidgets('Reflect shows the weekly review on Fridays only', (
-    tester,
-  ) async {
+  testWidgets('Reflect shows the week ending last Friday', (tester) async {
     final friday = DateTime(2026, 10, 9, 18);
     final db = memoryDb();
     await tester.runAsync(() async {
@@ -996,19 +998,22 @@ void main() {
     await pumpApp(tester, db: db, at: friday);
     GoRouter.of(tester.element(find.byType(Scaffold).last)).go('/more/reflect');
     await settle(tester);
-    expect(find.text('Habits kept 2 of 7 days'), findsOneWidget);
-    expect(find.text('Prayers logged 1'), findsOneWidget);
-    expect(find.text('Mood mostly good'), findsOneWidget);
-    expect(find.text('Journal 1 of 7 days'), findsOneWidget);
+    expect(find.text('YOUR WEEK · 3–9 OCT'), findsOneWidget);
+    expect(find.text('Habits kept'), findsOneWidget);
+    expect(find.text('2 of 7 days'), findsOneWidget);
+    expect(find.text('Prayers logged'), findsOneWidget);
+    expect(find.text('mostly good'), findsOneWidget);
+    expect(find.text('1 of 7 days'), findsOneWidget);
     await tester.tap(find.byKey(const Key('weekly-note')));
     await settle(tester);
     expect(find.byKey(const Key('journal-body')), findsOneWidget);
     await closeApp(tester, db);
 
+    // Monday 5 Oct still shows the week that ended on Friday 2 Oct.
     final monday = await pumpApp(tester);
     GoRouter.of(tester.element(find.byType(Scaffold).last)).go('/more/reflect');
     await settle(tester);
-    expect(find.byKey(const Key('weekly-review')), findsNothing);
+    expect(find.text('YOUR WEEK · 26 SEP – 2 OCT'), findsOneWidget);
     await closeApp(tester, monday);
   });
 

@@ -61,6 +61,14 @@ void main() {
     expect(c.journalDays, 2);
   });
 
+  test('the weekly card covers the week ending on the last Friday', () {
+    expect(lastFriday('2026-10-09'), '2026-10-09');
+    expect(lastFriday('2026-10-15'), '2026-10-09');
+    expect(lastFriday('2026-10-10'), '2026-10-09');
+    expect(weekRangeLabel('2026-10-09'), '3–9 Oct');
+    expect(weekRangeLabel('2026-10-02'), '26 Sep – 2 Oct');
+  });
+
   group('streaks', () {
     const today = '2026-10-05';
     test('count back from today when done today', () {
