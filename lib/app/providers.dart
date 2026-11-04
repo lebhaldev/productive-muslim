@@ -207,6 +207,42 @@ final hadithByIdProvider = FutureProvider<Map<String, Hadith>>((ref) async {
   };
 });
 
+/// Pages of Qur'an read per day.
+final quranReadsProvider = StreamProvider<Map<String, int>>(
+  (ref) => ref.watch(databaseProvider).watchQuranReads(),
+);
+
+/// Fasts kept per day: `fast` or `makeup`.
+final fastsProvider = StreamProvider<Map<String, String>>(
+  (ref) => ref.watch(databaseProvider).watchFasts(),
+);
+
+/// Today's tasbih counts per phrase id.
+final dhikrTodayProvider = StreamProvider<Map<String, int>>(
+  (ref) => ref.watch(databaseProvider).watchDhikr(todayKey(ref)),
+);
+
+typedef DhikrPhrase = ({
+  String id,
+  String arabic,
+  String translit,
+  String? hadith,
+});
+
+/// Tasbih phrases from `assets/content/dhikr.json` (Arabic stays in assets).
+final dhikrPhrasesProvider = FutureProvider<List<DhikrPhrase>>((ref) async {
+  final raw = await ref.watch(assetLoaderProvider)('assets/content/dhikr.json');
+  return [
+    for (final p in ((jsonDecode(raw) as Map)['phrases'] as List).cast<Map>())
+      (
+        id: p['id'] as String,
+        arabic: p['arabic'] as String,
+        translit: p['translit'] as String,
+        hadith: p['hadith'] as String?,
+      ),
+  ];
+});
+
 /// Bukhari 6465 for the one-time card on Habits (FR-17); null if the
 /// dataset lacks it.
 final consistencyHadithProvider = FutureProvider<Hadith?>(

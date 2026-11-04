@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../core/day_key.dart';
 import '../features/calendar/calendar_screen.dart';
 import '../features/duas/duas_screen.dart';
+import '../features/fasting/fasting_screen.dart';
 import '../features/habits/habits_screen.dart';
 import '../features/journal/journal_screen.dart';
 import '../features/more/activities_screen.dart';
@@ -13,6 +14,8 @@ import '../features/more/reflect_screen.dart';
 import '../features/more/saved_screen.dart';
 import '../features/settings/settings_screen.dart';
 import '../features/prayer/prayer_screen.dart';
+import '../features/quran/quran_reading_screen.dart';
+import '../features/tasbih/tasbih_screen.dart';
 import '../features/today/today_screen.dart';
 import '../features/welcome/welcome_screen.dart';
 import '../l10n/app_localizations.dart';
@@ -83,6 +86,18 @@ GoRouter buildRouter() => GoRouter(
                 ),
                 GoRoute(path: 'duas', builder: (_, _) => const DuasScreen()),
                 GoRoute(path: 'saved', builder: (_, _) => const SavedScreen()),
+                GoRoute(
+                  path: 'tasbih',
+                  builder: (_, _) => const TasbihScreen(),
+                ),
+                GoRoute(
+                  path: 'quran',
+                  builder: (_, _) => const QuranReadingScreen(),
+                ),
+                GoRoute(
+                  path: 'fasting',
+                  builder: (_, _) => const FastingScreen(),
+                ),
                 GoRoute(
                   path: 'reflect',
                   builder: (_, _) => const ReflectScreen(),

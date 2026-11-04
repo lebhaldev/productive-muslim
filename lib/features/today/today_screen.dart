@@ -19,6 +19,7 @@ import '../../widgets/motion.dart';
 import '../../widgets/weather_icon.dart';
 import '../prayer/prayer_screen.dart';
 import 'content_cards.dart';
+import 'ramadan_card.dart';
 import 'mood_week.dart';
 
 class TodayScreen extends ConsumerWidget {
@@ -40,6 +41,9 @@ class TodayScreen extends ConsumerWidget {
         gap: 18,
         children: [
           _Header(date: parseDayKey(today), hour: now.hour),
+          if (settings.showFaith &&
+              hijriDate(now, offset: settings.hijriOffset).month == 9)
+            const RamadanCard(),
           if (settings.showFaith) const PrayerCard(),
           if (settings.showFaith) const ContentCards(),
           _HabitsSection(today: today),

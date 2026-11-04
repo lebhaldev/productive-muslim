@@ -166,6 +166,14 @@ String untilLabel(Duration d) {
 double qiblaBearing(double lat, double lon) =>
     adhan.Qibla(adhan.Coordinates(lat, lon)).direction;
 
+/// Umm al-Qura Hijri day and month (1–12) for [date], shifted by [offset].
+({int day, int month, int year}) hijriDate(DateTime date, {int offset = 0}) {
+  final h = HijriCalendar.fromDate(
+    DateTime(date.year, date.month, date.day + offset),
+  );
+  return (day: h.hDay, month: h.hMonth, year: h.hYear);
+}
+
 /// Umm al-Qura Hijri date, e.g. `23 Rabi' al-Thani 1448` (FR-13).
 ///
 /// [offset] shifts it by whole days (−2…+2) to match local moon sighting.

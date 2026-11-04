@@ -90,6 +90,36 @@ class Bookmarks extends Table {
   Set<Column> get primaryKey => {kind, ref};
 }
 
+/// Qur'an pages read on a day (Quran reading tracker). One row per day.
+class QuranReads extends Table {
+  TextColumn get dayKey => text()();
+  IntColumn get pages => integer()();
+  DateTimeColumn get updatedAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {dayKey};
+}
+
+/// A fast kept on a day: `fast` (any voluntary or Ramadan fast) or `makeup`
+/// (a missed fast made up). The app never decides what is owed; the user
+/// keeps that count (a tracking aid, not a fatwa).
+class Fasts extends Table {
+  TextColumn get dayKey => text()();
+  TextColumn get kind => text()();
+  DateTimeColumn get updatedAt => dateTime()();
+  @override
+  Set<Column> get primaryKey => {dayKey};
+}
+
+/// Tasbih counts per phrase per day. [phrase] is an id from
+/// `assets/content/dhikr.json`.
+class DhikrCounts extends Table {
+  TextColumn get dayKey => text()();
+  TextColumn get phrase => text()();
+  IntColumn get count => integer()();
+  @override
+  Set<Column> get primaryKey => {dayKey, phrase};
+}
+
 class ContentCache extends Table {
   TextColumn get dayKey => text()();
   TextColumn get kind => text()();
@@ -129,6 +159,9 @@ class Settings extends Table {
     ExcusedDays,
     Duas,
     Bookmarks,
+    QuranReads,
+    Fasts,
+    DhikrCounts,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -136,7 +169,7 @@ class AppDatabase extends _$AppDatabase {
     : super(executor ?? driftDatabase(name: 'nurday'));
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -151,6 +184,11 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(bookmarks);
         // People upgrading from 1.0 already set the app up: no first run.
         await putSetting('onboarded', 'true');
+      }
+      if (from < 3) {
+        await m.createTable(quranReads);
+        await m.createTable(fasts);
+        await m.createTable(dhikrCounts);
       }
     },
     beforeOpen: (details) async {
@@ -414,6 +452,70 @@ class AppDatabase extends _$AppDatabase {
           fetchedAt: now,
         ),
       );
+
+  // Quran reading
+
+  Stream<Map<String, int>> watchQuranReads() =>
+      select(quranReads)
+          .watch()
+          .map((rows) => {for (final r in rows) r.dayKey: r.pages});
+
+  /// Sets the pages read on [day]; 0 removes the day.
+  Future<void> setQuranPages(String day, int pages, DateTime now) async {
+    if (pages <= 0) {
+      await (delete(quranReads)..where((q) => q.dayKey.equals(day))).go();
+      return;
+    }
+    await into(quranReads).insertOnConflictUpdate(
+      QuranReadsCompanion.insert(dayKey: day, pages: pages, updatedAt: now),
+    );
+  }
+
+  // Fasting
+
+  Stream<Map<String, String>> watchFasts() =>
+      select(fasts)
+          .watch()
+          .map((rows) => {for (final r in rows) r.dayKey: r.kind});
+
+  /// Marks [day] as a `fast` or `makeup` fast; null clears it.
+  Future<void> setFast(String day, String? kind, DateTime now) async {
+    if (kind == null) {
+      await (delete(fasts)..where((f) => f.dayKey.equals(day))).go();
+      return;
+    }
+    await into(fasts).insertOnConflictUpdate(
+      FastsCompanion.insert(dayKey: day, kind: kind, updatedAt: now),
+    );
+  }
+
+  // Tasbih
+
+  /// Counts per phrase id for [day].
+  Stream<Map<String, int>> watchDhikr(String day) =>
+      (select(dhikrCounts)..where((d) => d.dayKey.equals(day))).watch().map(
+        (rows) => {for (final r in rows) r.phrase: r.count},
+      );
+
+  /// Adds [delta] to today's count for [phrase] (never below zero).
+  Future<int> addDhikr(String day, String phrase, int delta) => transaction(
+    () async {
+      final row =
+          await (select(dhikrCounts)
+                ..where((d) => d.dayKey.equals(day) & d.phrase.equals(phrase)))
+              .getSingleOrNull();
+      final next = ((row?.count ?? 0) + delta).clamp(0, 1 << 30);
+      await into(dhikrCounts).insertOnConflictUpdate(
+        DhikrCountsCompanion.insert(dayKey: day, phrase: phrase, count: next),
+      );
+      return next;
+    },
+  );
+
+  /// Resets today's count for [phrase].
+  Future<void> resetDhikr(String day, String phrase) => (delete(
+    dhikrCounts,
+  )..where((d) => d.dayKey.equals(day) & d.phrase.equals(phrase))).go();
 
   // Settings
 

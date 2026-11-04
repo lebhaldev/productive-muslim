@@ -1,0 +1,14 @@
+{
+ "note": "Common dhikr phrases for the tasbih counter. Arabic only, with a transliteration; no meaning, virtue or reward text is written by the app. Where the bundled hadith dataset has a hadith that names the phrase, its id is given so the app can show that hadith verbatim.",
+ "phrases": [
+  {"id": "subhanallah", "arabic": "سبحان الله", "translit": "SubhanAllah"},
+  {"id": "alhamdulillah", "arabic": "الحمد لله", "translit": "Alhamdulillah"},
+  {"id": "allahuakbar", "arabic": "الله أكبر", "translit": "Allahu Akbar"},
+  {"id": "tahlil", "arabic": "لا إله إلا الله", "translit": "La ilaha illa Allah"},
+  {"id": "istighfar", "arabic": "أستغفر الله", "translit": "Astaghfirullah", "hadith": "muslim:6859"},
+  {"id": "subhanallah_wabihamdihi", "arabic": "سبحان الله وبحمده", "translit": "SubhanAllahi wa bihamdihi", "hadith": "bukhari:6406"},
+  {"id": "subhanallah_azim", "arabic": "سبحان الله العظيم", "translit": "SubhanAllahil-Azim", "hadith": "bukhari:6406"},
+  {"id": "hawqala", "arabic": "لا حول ولا قوة إلا بالله", "translit": "La hawla wa la quwwata illa billah"},
+  {"id": "salawat", "arabic": "اللهم صل على محمد", "translit": "Allahumma salli ala Muhammad"}
+ ]
+}
