@@ -38,6 +38,8 @@ Asr
 Asr {0} · change in Settings
 Ayah
 Ayah of the day
+Ayah {0}
+Ayah {0} of {1}
 Ayat and hadith you bookmarked
 Back
 Back to More
@@ -62,6 +64,7 @@ Celsius
 Change date
 Check your habits and write a few lines.
 Choose a Nurday backup
+Choose a reciter and a surah
 Citrus
 City search and weather use Open-Meteo. "Use my location" asks your phone's built-in geocoder for the place name. Prayer times and Qibla are calculated on this phone.
 City, location, temperature unit
@@ -179,6 +182,8 @@ Lavender
 Light
 Light cloud
 Like “4 of the last 7 days” on each habit
+Listen
+Listen to the Quran
 Live Qibla
 Live compass
 Loading weather
@@ -215,6 +220,7 @@ Move up
 Muslim World League
 My location
 New habit
+Next ayah
 Next day
 Next month
 Next prayer
@@ -263,10 +269,12 @@ Optional
 Organic
 Overcast
 Pages read and your khatm
+Pause
 Peach
 Per-habit reminders are set on each habit.
 Pick a few habits
 Pick your colours
+Play
 Plum
 Prayer
 Prayer time notifications
@@ -275,6 +283,7 @@ Prayer today
 Prayers logged
 Prayers to make up
 Preview
+Previous ayah
 Previous day
 Previous month
 Privacy
@@ -294,6 +303,8 @@ Quran.com
 Rain
 Ramadan · day {0}
 Read Qur'an
+Recitation streams from AlQuran Cloud (cdn.islamic.network) while you listen. Only the surah number and the reciter are sent. Playback stops when Nurday is closed.
+Reciter
 Reem Kufi
 Reflect
 Related hadith
@@ -357,9 +368,12 @@ Start today
 Start {0}
 Started {0}
 Step {0} of {1}
+Stop
 Suhoor ends
 Suhoor ends {0}
 Sunrise
+Surah
+Surah {0} · ayah {1} of {2}
 System
 Tafsir
 Tajawal
@@ -379,6 +393,9 @@ The backup could not be saved.
 The bundled hadith dataset could not be read.
 The bundled quote list could not be read.
 The file could not be read.
+The list of reciters needs a connection once. Mishary Alafasy is used until then.
+The list of surahs could not load.
+The recitation could not be played.
 They leave it only if you export a backup or turn on Google Drive backup in Settings.
 This Hijri month: {0} · this Hijri year: {1}
 This backup is damaged and was not imported.
@@ -455,6 +472,7 @@ logged prayers
 modifiedTime desc
 mostly {0}
 no connection
+no recording for this ayah
 not logged
 now
 prayer alerts
@@ -465,10 +483,12 @@ right
 s hidden folder in the user
 s next prayer, ringed; null when it is tomorrow
 s wall-clock time, so DST changes don
+unexpected response
 {0}  {1} · {2} min
 {0} at {1} · {2}
 {0} at {1}, {2}
 {0} colours
+{0} could not be reached
 {0} logged
 {0} made up this Hijri year
 {0} of {1} days

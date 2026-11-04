@@ -26,6 +26,7 @@ Location is optional. It is only requested when you tap "Use my location" in Set
 Nurday contacts only these services:
 - **AlQuran Cloud** (api.alquran.cloud) and **Quran.com** (api.quran.com) to fetch the day's ayah. The request contains the ayah reference only.
 - **Open-Meteo** (api.open-meteo.com, geocoding-api.open-meteo.com) for weather. The request contains the city text you type in the search box (to suggest matching places) or rounded coordinates.
+- **AlQuran Cloud audio** (api.alquran.cloud and cdn.islamic.network) only when you tap Listen or play a surah: the request names the reciter and the ayah or surah number. Recitation is streamed, not stored.
 - **Google** (Google sign-in and www.googleapis.com) only if you connect Google Drive backup, to save and read the backup file.
 
 Hadith and quotes are bundled inside the app and need no network.

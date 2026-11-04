@@ -85,6 +85,10 @@ class AppSettings {
   // Off by default, like the daily reminder.
   bool get prayerAlerts => raw['prayerAlerts'] == 'true';
 
+  /// AlQuran Cloud audio edition used for recitation.
+  String get reciter =>
+      (raw['reciter'] ?? '').isEmpty ? 'ar.alafasy' : raw['reciter']!;
+
   /// Content language: Arabic with the English translation, or Arabic only.
   bool get arabicOnly => raw['contentLanguage'] == 'ar';
 }

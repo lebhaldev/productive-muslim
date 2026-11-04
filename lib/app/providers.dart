@@ -14,6 +14,7 @@ import '../data/home_widget_sync.dart';
 import '../data/content/content_models.dart';
 import '../data/content/daily_content_service.dart';
 import '../data/content/quran_client.dart';
+import '../data/content/recitation.dart';
 import '../data/db/database.dart';
 import '../data/drive_backup.dart';
 import '../data/prayer/prayer.dart';
@@ -247,6 +248,89 @@ final declinationProvider = FutureProvider.autoDispose<double>((ref) async {
   if (loc == null) return 0;
   return ref.watch(compassProvider).declination(loc.lat, loc.lon);
 });
+
+final recitationClientProvider = Provider<RecitationClient>(
+  (ref) => RecitationClient(ref.watch(httpClientProvider)),
+);
+
+final recitationPlayerProvider = Provider<RecitationPlayer>(
+  (ref) => JustAudioPlayer(),
+);
+
+/// What the recitation player is doing now.
+final playbackProvider = StreamProvider<PlaybackState>((ref) async* {
+  final player = ref.watch(recitationPlayerProvider);
+  yield player.state;
+  yield* player.states;
+});
+
+/// Loads a list once from AlQuran Cloud and keeps it on the phone (in the
+/// content cache under day `static`), so it works offline afterwards.
+Future<List<T>> _cachedList<T>(
+  Ref ref,
+  String kind,
+  Future<List<T>> Function() fetch,
+  Object? Function(T) encode,
+  T Function(Map) decode,
+) async {
+  final db = ref.read(databaseProvider);
+  final cached = await db.cachedContent('static', kind);
+  final now = ref.read(clockProvider).now();
+  if (cached != null && now.difference(cached.fetchedAt).inDays < 30) {
+    return [for (final m in jsonDecode(cached.payload) as List) decode(m)];
+  }
+  try {
+    final fresh = await fetch();
+    await db.putContent(
+      'static',
+      kind,
+      jsonEncode([for (final x in fresh) encode(x)]),
+      now,
+    );
+    return fresh;
+  } on ContentSourceException {
+    if (cached != null) {
+      return [for (final m in jsonDecode(cached.payload) as List) decode(m)];
+    }
+    rethrow;
+  }
+}
+
+/// Arabic verse-by-verse reciters available for playback.
+final recitersProvider = FutureProvider<List<Reciter>>(
+  (ref) => _cachedList<Reciter>(
+    ref,
+    'reciters',
+    () => ref.read(recitationClientProvider).reciters(),
+    (r) => {'id': r.id, 'name': r.name, 'englishName': r.englishName},
+    (m) => (
+      id: m['id'] as String,
+      name: m['name'] as String,
+      englishName: m['englishName'] as String,
+    ),
+  ),
+);
+
+/// The 114 surahs with their names and ayah counts.
+final surahsProvider = FutureProvider<List<SurahInfo>>(
+  (ref) => _cachedList<SurahInfo>(
+    ref,
+    'surahs',
+    () => ref.read(recitationClientProvider).surahs(),
+    (x) => {
+      'number': x.number,
+      'name': x.name,
+      'englishName': x.englishName,
+      'ayahs': x.ayahs,
+    },
+    (m) => (
+      number: m['number'] as int,
+      name: m['name'] as String,
+      englishName: m['englishName'] as String,
+      ayahs: m['ayahs'] as int,
+    ),
+  ),
+);
 
 /// Pages of Qur'an read per day.
 final quranReadsProvider = StreamProvider<Map<String, int>>(

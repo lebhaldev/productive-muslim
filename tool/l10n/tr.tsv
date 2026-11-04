@@ -462,3 +462,21 @@ right	sağa
 {0}: {1} pages	{0}: {1} sayfa
 page	sayfa
 pages	sayfa
+Ayah {0}	Ayet {0}
+Ayah {0} of {1}	{1} ayetten {0}.
+Choose a reciter and a surah	Bir kâri ve sure seçin
+Listen	Dinle
+Listen to the Quran	Kur'an dinle
+Next ayah	Sonraki ayet
+Pause	Duraklat
+Play	Oynat
+Previous ayah	Önceki ayet
+Recitation streams from AlQuran Cloud (cdn.islamic.network) while you listen. Only the surah number and the reciter are sent. Playback stops when Nurday is closed.	Tilavet dinlerken AlQuran Cloud'dan (cdn.islamic.network) akış olarak gelir. Yalnızca sure numarası ve kâri gönderilir. Nurday kapatılınca oynatma durur.
+Reciter	Kâri
+Stop	Durdur
+Surah	Sure
+Surah {0} · ayah {1} of {2}	Sure {0} · {2} ayetten {1}.
+The list of reciters needs a connection once. Mishary Alafasy is used until then.	Kâri listesi için bir kez bağlantı gerekir. O zamana kadar Mishary Alafasy kullanılır.
+The list of surahs could not load.	Sure listesi yüklenemedi.
+The recitation could not be played.	Tilavet oynatılamadı.
+{0} could not be reached	{0} adresine ulaşılamadı
