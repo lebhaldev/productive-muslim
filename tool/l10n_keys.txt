@@ -1,0 +1,487 @@
++1 juz
+1 day
+1 day earlier
+1 day later
+2 days earlier
+2 days later
+30 days ago
+A calm rhythm for every day.
+A tracker only. Read in your own mushaf or Quran app.
+Activities
+Activity
+Add
+Add 1 habit
+Add a reminder
+Adjust times to match your mosque
+Al-Mukhtasar (Tafsir Center for Quranic Studies) and Tafsir Al-Muyassar (King Fahd Complex), copied verbatim from the spa5k/tafsir_api dataset (Quran.com / QUL)
+AlQuran Cloud
+AlQuran Cloud (Uthmani text, Saheeh International)
+Alarms & reminders
+Allow on-time alerts
+Amiri Quran
+Amiri Quran, Scheherazade New, Noto Naskh Arabic, Lateef, Cairo, Tajawal, Reem Kufi, Caprasimo, Fraunces, Nunito, Lora, Atkinson Hyperlegible and Playfair Display (SIL Open Font License)
+An ordinary day is fine.
+Andalus
+Android may delay alerts by a few minutes. Allow "Alarms & reminders" for alerts on the exact minute.
+Answered · {0}
+Appearance
+Arabic + English
+Arabic font
+Arabic only
+Arabic texts from the OpenITI corpus: Diwan al-Shafi'i, Diwan al-Mutanabbi, Ibn al-Jawzi's Sayd al-Khatir and Laftat al-Kabid, Ibn Hazm's al-Akhlaq wa al-Siyar and al-Mawardi's Adab al-Dunya wa al-Din
+Archive
+Archived
+As calculated
+Asking · {0}
+Asks for your fingerprint, face or screen lock to read it.
+Asr
+Asr {0} · change in Settings
+Ayah
+Ayah of the day
+Ayat and hadith you bookmarked
+Back
+Back to More
+Back to Settings
+Back up now
+Back up once a day to a hidden Nurday folder in your own Google Drive. Nurday cannot see your other files and has no server or account of its own.
+Backed up to Google Drive.
+Backs up once a day.
+Backup
+Backup saved.
+Blossom
+Cairo
+Calculated on this phone · {0} · {1}
+Calculation method
+Calculation method, Asr, notifications
+Calendar
+Call family
+Cancel
+Cancel edit
+Caprasimo
+Celsius
+Change date
+Check your habits and write a few lines.
+Choose a Nurday backup
+Citrus
+City search and weather use Open-Meteo. "Use my location" asks your phone's built-in geocoder for the place name. Prayer times and Qibla are calculated on this phone.
+City, location, temperature unit
+Classic
+Clear
+Close
+Colour theme, light or dark
+Connect Google Drive
+Consistency numbers
+Content language
+Continue
+Coral
+Could not reach Google Drive. Check your connection.
+Count dhikr, one total a day
+Count {0}, {1} today
+Counts stay on this phone, one total per phrase per day.
+Current place: {0}
+Daily content
+Daily content could not load: {0}
+Daily reminder
+Daily reminder time
+Dark
+Delete
+Delete this dua?
+Delete {0}
+Delete “{0}”?
+Desert
+Dhuhr
+Disconnect
+Diyanet, Turkey
+Done
+Dr. Mustafa Khattab, The Clear Quran
+Drizzle
+Duas
+Duas are locked
+Dubai
+Duration
+Dusk
+Easy to read
+Edit
+Edit dua
+Edition: {0} · fetched {1} · {2}
+Egyptian General Authority
+Elegant
+Emerald
+Encouragement, not scripture
+Entry written · journal is locked
+Evening adhkar
+Export
+Export, import, Google Drive
+Face North with your phone, then turn to the arrow. This is a fixed bearing; it does not use the compass sensor.
+Facing the Qibla
+Fahrenheit
+Faith cards, translation, language
+Fajr
+Fasting
+Fasting today
+Fasts and make-up counts
+Fasts to make up
+File
+Finding your location…
+Finish by {0}: about {1} pages a day
+Fog
+Font
+Fonts
+For prayer times and weather. Stays on this phone.
+Forest
+Fraunces
+Glad to hear it.
+Good afternoon
+Good evening
+Good morning
+Google Drive
+Google Drive access was refused. Connect again in Settings.
+Google Drive disconnected. Your backup stays in Drive.
+Google Drive is not available right now.
+Google sign-in is not available. Try again later.
+Grateful for
+Gratitude
+Gratitude note
+Gratitude written
+H {0} · L {1}
+HH:mm
+Habit check-offs · 30 days
+Habit reminders
+Habits
+Habits completed
+Habits kept
+Habits, moods, journal, duas and prayer logs are kept only on this phone.
+Hadith
+Hadith of the day
+Hanafi
+High latitude rule (far north or south)
+Hijri date
+Hold the phone flat, away from metal and magnets. If the needle seems off, move the phone in a figure 8 to calibrate. Sensor readings stay on this phone.
+Iftar
+Iftar {0}
+Import
+Import backup
+Imported
+Indigo
+Isha
+It's removed from this phone. This can't be undone.
+Its history is removed too. Archive keeps the history.
+Journal
+Journal lock, where your data lives
+Journal, mood, habits and activities are never uploaded. No account needed.
+Khatm
+Khatm complete. Start a new one when you are ready.
+Kuwait
+Last 7 days
+Last saved ayah · {0}
+Lateef
+Lavender
+Light
+Light cloud
+Like “4 of the last 7 days” on each habit
+Live Qibla
+Live compass
+Loading weather
+Location & weather
+Location is unavailable. Search for a city instead.
+Location permission was not granted. Search for a city instead.
+Lock journal
+Lock your Nurday journal
+Log activity
+Log one small thing you did
+Log what you did, grouped by day
+Lovely. Hold on to it.
+Maghrib
+Make-up counts
+Make-up fast
+Mark answered
+Merge
+Merge adds the backup to what is on this phone. Replace deletes everything on this phone first.
+Middle of the night
+Midnight
+Mint
+Modern
+Mono
+Mood
+Mood logged on {0} of the last 30 days
+Mood {0}
+Mood · last 30 days
+Moonsighting Committee
+More
+More for {0}
+Morning adhkar
+Move back to Asking
+Move up
+Muslim World League
+My location
+New habit
+Next day
+Next month
+Next prayer
+Night
+Night is always dark, for OLED screens.
+No account, no ads.
+No active habits.
+No backup found in your Google Drive.
+No entry for this day.
+No habits yet. Add one above, like “Read Quran 10 min”.
+No mood
+No reviewed explanation is available for this hadith yet.
+No tafsir is bundled for this ayah.
+None
+None logged
+North America (ISNA)
+Not fasting
+Not now
+Not unlocked. Try again.
+Note (optional)
+Note what made today good
+Nothing logged yet
+Nothing logged yet.
+Nothing new in this backup.
+Notifications are off for Nurday. Allow them in Android settings to get reminders.
+Notifications work. Prayer alerts will look like this.
+Noto Naskh Arabic
+Nurday
+Nurday has no server and no account. A daily backup goes only to your own Google Drive.
+Ocean
+Olive
+On small deeds
+On time
+One less
+One more
+One page less
+One page more
+Open Nurday to set your city
+Open Settings
+Open journal
+Open today's journal
+Open-Meteo (CC BY 4.0)
+Open-Meteo could not be reached
+OpenITI corpus
+Optional
+Organic
+Overcast
+Pages read and your khatm
+Peach
+Per-habit reminders are set on each habit.
+Pick a few habits
+Pick your colours
+Plum
+Prayer
+Prayer time notifications
+Prayer times
+Prayer today
+Prayers logged
+Prayers to make up
+Preview
+Previous day
+Previous month
+Privacy
+Private counters you keep yourself. Ask a scholar about what you owe.
+Progress counts from today. Your reading log is kept.
+Qatar
+Qibla
+Qibla arrow at {0} degrees from North
+Qibla {0}° from true North · you face {1}°
+Quote
+Quote of the day
+Quotes
+Qur'an {0}
+Quran
+Quran reading
+Quran.com
+Rain
+Ramadan · day {0}
+Read Qur'an
+Reem Kufi
+Reflect
+Related hadith
+Reminder for {0}
+Reminders
+Remove
+Remove animations
+Remove from Saved
+Replace
+Reset today
+Restore
+Restored
+Rose
+Rounded
+Saheeh International
+Sahih al-Bukhari and Sahih Muslim, Arabic and English from the fawazahmed0/hadith-api dataset (public domain); English by Muhammad Muhsin Khan and Abdul Hamid Siddiqui; Bukhari references to sunnah.com
+Same lock as your journal.
+Sand
+Save
+Save Nurday backup
+Save changes
+Saved
+Saved · {0}. The suggestion stays away until tomorrow or until the mood changes.
+Saves habits, moods, activities, journal and settings to a file you choose. The file is not encrypted, so keep it private.
+Scheherazade New
+Search for a city
+Send a test notification
+Serif
+Set a city in Settings
+Set a finish date
+Set up a screen lock in Android settings first, then try again.
+Set your city in Settings to see prayer times.
+Set your city in Settings to see suhoor and iftar times.
+Set your city in Settings to see the Qibla.
+Settings
+Seventh of the night
+Share
+Share as image
+Show another
+Show another {0}
+Show counts
+Show faith cards
+Showers
+Singapore
+Skip
+Sky
+Slate
+Snow
+Snow showers
+Soft serif
+Sources & licenses
+Sprig with 1 leaf
+Sprig, no leaves yet
+Standard (Shafi'i, Maliki, Hanbali)
+Start
+Start a new khatm
+Start a new khatm?
+Start my day
+Start small. You can change these anytime.
+Start today
+Start {0}
+Started {0}
+Step {0} of {1}
+Suhoor ends
+Suhoor ends {0}
+Sunrise
+System
+Tafsir
+Tajawal
+Take a slow walk
+Tap a prayer that has started to log it. Logs stay on this phone.
+Tap for source
+Tap for tafsir
+Tap the bookmark on an ayah or hadith card to keep it here.
+Tap to log
+Tap to unmark
+Tasbih
+Tehran
+Test notification sent.
+Thanks for noticing it.
+That sounds heavy. Go gently today.
+The backup could not be saved.
+The bundled hadith dataset could not be read.
+The bundled quote list could not be read.
+The file could not be read.
+They leave it only if you export a backup or turn on Google Drive backup in Settings.
+This Hijri month: {0} · this Hijri year: {1}
+This backup is damaged and was not imported.
+This backup was made by a newer version of Nurday. Update the app, then try again.
+This file is not a Nurday backup.
+This phone has no compass sensor. Use the fixed bearing on the Prayer screen.
+This week
+Thunderstorm
+Time for: {0}
+Times are calculated on this phone and shown in its time zone. Check with your local mosque, especially for Fajr and Isha.
+Times are calculated on this phone from your weather location.
+Title (optional)
+Today
+Today's times and Qibla
+Today: {0}
+Translation
+Turn off the journal lock
+Turn {0}° {1}
+Twilight angle
+Umm al-Qura calendar (hijri library)
+Umm al-Qura, Makkah
+Undo
+Undo one
+University of Islamic Sciences, Karachi
+Unknown
+Unlock
+Unlock your Nurday duas
+Unlock your Nurday journal
+Use my location
+Use your fingerprint, face or screen lock to open it.
+Using your location. The phone could not name the place.
+Walk
+Weather
+Weather {0}: {1}, {2}
+What are you grateful for today?
+What did you do?
+What weighed on you?
+What went well?
+Where are you?
+Where the ayah, hadith, tafsir and quotes come from
+Write a dua
+Write a few lines
+Write a note to next week
+Write one thing you're grateful for
+Write something to save this day’s entry.
+Write the duas you are making. Only you see them.
+Write today's journal
+Written today · locked
+Yesterday
+You can change them any time in Settings.
+Your data stays on this phone
+Your data stays on this phone.
+Your day in Nurday
+Your journal is locked
+Your last 30 days
+Your own duas, private to this phone
+Your week
+adhan library (MIT), calculated on this phone
+d MMM HH:mm
+day journal streak
+entries this month
+files(id, modifiedTime)
+habit check
+habit checks
+has journal
+in {0} h
+in {0} h {1} min
+in {0} min
+journal entries
+journal entry
+left
+logged prayer
+logged prayers
+modifiedTime desc
+mostly {0}
+no connection
+not logged
+now
+prayer alerts
+prayers logged this month
+quran-uthmani + en.sahih
+quran-uthmani + quran.com translation 131
+right
+s hidden folder in the user
+s next prayer, ringed; null when it is tomorrow
+s wall-clock time, so DST changes don
+{0}  {1} · {2} min
+{0} at {1} · {2}
+{0} at {1}, {2}
+{0} colours
+{0} logged
+{0} made up this Hijri year
+{0} of {1} days
+{0} of {1} done today
+{0} of {1} pages · about juz {2}
+{0} one minute earlier
+{0} one minute later
+{0} rounds
+{0} unmarked
+{0} · calculated (Umm al-Qura{1}); local moon sighting can differ by a day
+{0}: {1} of 30 days
+{0}: {1} pages
+{0}° from true North
+• journal
+▪ prayers logged
+● mood

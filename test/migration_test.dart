@@ -76,4 +76,29 @@ void main() {
       await fresh.close();
     },
   );
+
+  test(
+    'a schema 2 database upgrades to schema 3 and keeps prayer logs and duas',
+    () async {
+      final db = oldDb(2, [
+        "INSERT INTO habits (name) VALUES ('Read Quran')",
+        "INSERT INTO prayer_logs VALUES ('2026-10-01', 'fajr', 1)",
+        "INSERT INTO duas (text, created_at) VALUES ('Kept dua', 1)",
+        "INSERT INTO settings VALUES ('onboarded', 'true')",
+      ]);
+      final fresh = memoryDb();
+      expect(await columns(db), await columns(fresh));
+      expect(await db.select(db.prayerLogs).get(), hasLength(1));
+      expect((await db.select(db.duas).getSingle()).body, 'Kept dua');
+      // The new tables work after the upgrade.
+      final now = DateTime(2026, 11, 4, 8);
+      await db.setQuranPages('2026-11-04', 6, now);
+      await db.setFast('2026-11-04', 'fast', now);
+      expect(await db.addDhikr('2026-11-04', 'subhanallah', 33), 33);
+      expect((await db.watchQuranReads().first)['2026-11-04'], 6);
+      expect((await db.watchFasts().first)['2026-11-04'], 'fast');
+      await db.close();
+      await fresh.close();
+    },
+  );
 }

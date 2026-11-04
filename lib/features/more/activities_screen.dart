@@ -7,6 +7,7 @@ import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../core/day_key.dart';
 import '../../data/db/database.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import 'more_screen.dart';
 
@@ -97,11 +98,11 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
               controller: _title,
               onChanged: (_) => setState(() {}),
               textCapitalization: TextCapitalization.sentences,
-              decoration: const InputDecoration(hintText: 'What did you do?'),
+              decoration: InputDecoration(hintText: tr('What did you do?')),
             ),
             TextField(
               controller: _note,
-              decoration: const InputDecoration(hintText: 'Note (optional)'),
+              decoration: InputDecoration(hintText: tr('Note (optional)')),
             ),
             Row(
               children: [
@@ -115,7 +116,7 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
                       if (t != null) setState(() => _time = t);
                     },
                     icon: const Icon(Icons.schedule, size: 18),
-                    label: Text('Start ${hhmm(_time)}'),
+                    label: Tr('Start {0}', args: [hhmm(_time)]),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -124,7 +125,7 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
                   child: TextField(
                     controller: _duration,
                     keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(labelText: 'Duration'),
+                    decoration: InputDecoration(labelText: tr('Duration')),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -136,10 +137,10 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
               child: Text(_editing == null ? 'Log activity' : 'Save changes'),
             ),
             if (_editing != null)
-              TextButton(onPressed: _reset, child: const Text('Cancel edit')),
+              TextButton(onPressed: _reset, child: const Tr('Cancel edit')),
           ],
         ),
-        if (days.isEmpty) Text('Nothing logged yet.', style: meta(size: 13)),
+        if (days.isEmpty) Tr('Nothing logged yet.', style: meta(size: 13)),
         for (final d in days)
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -179,10 +180,10 @@ class _ActivitiesScreenState extends ConsumerState<ActivitiesScreen> {
                         Text('${a.durationMinutes} min', style: meta()),
                         TextButton(
                           onPressed: () => _edit(a),
-                          child: const Text('Edit'),
+                          child: const Tr('Edit'),
                         ),
                         IconButton(
-                          tooltip: 'Delete ${a.title}',
+                          tooltip: tr('Delete {0}', [a.title]),
                           onPressed: () =>
                               ref.read(databaseProvider).deleteActivity(a.id),
                           icon: const Icon(Icons.close, size: 18),

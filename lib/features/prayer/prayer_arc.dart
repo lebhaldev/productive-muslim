@@ -7,6 +7,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/prayer/prayer.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/motion.dart';
 
 /// Logs or unlogs [p] on [day] and says so with an Undo (FR-16).
@@ -25,9 +26,13 @@ Future<void> togglePrayerLog(
   final messenger = ScaffoldMessenger.of(context)..hideCurrentSnackBar();
   messenger.showSnackBar(
     SnackBar(
-      content: Text('${prayerLabels[p]} ${wasLogged ? 'unmarked' : 'logged'}'),
+      content: Text(
+        wasLogged
+            ? tr('{0} unmarked', [prayerLabels[p]])
+            : tr('{0} logged', [prayerLabels[p]]),
+      ),
       action: SnackBarAction(
-        label: 'Undo',
+        label: tr('Undo'),
         onPressed: () => db.togglePrayer(day, p.name, now),
       ),
     ),

@@ -3,6 +3,8 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../l10n/strings.dart';
+
 /// One repeating daily notification.
 class Reminder {
   const Reminder({
@@ -53,8 +55,8 @@ List<Reminder> planReminders({
     Reminder(
       id: dailyReminderId,
       time: dailyTime,
-      title: 'Your day in Nurday',
-      body: 'Check your habits and write a few lines.',
+      title: tr('Your day in Nurday'),
+      body: tr('Check your habits and write a few lines.'),
     ),
   for (final h in habits)
     if (!h.archived && h.time != null)
@@ -62,14 +64,14 @@ List<Reminder> planReminders({
         id: 1000 + h.id,
         time: h.time!,
         title: h.name,
-        body: 'Time for: ${h.name}',
+        body: tr('Time for: {0}', [h.name]),
       ),
   for (final (i, p) in prayers.indexed)
     Reminder(
       id: prayerReminderBase + i,
       time: _hhmm(p.at),
       title: p.name,
-      body: '${p.name} at ${_hhmm(p.at)} · ${p.place}',
+      body: tr('{0} at {1} · {2}', [p.name, _hhmm(p.at), p.place]),
       at: p.at,
     ),
 ];
@@ -151,11 +153,11 @@ class LocalReminderScheduler implements ReminderScheduler {
     await _plugin.show(
       id: 1,
       title: 'Nurday',
-      body: 'Notifications work. Prayer alerts will look like this.',
-      notificationDetails: const NotificationDetails(
+      body: tr('Notifications work. Prayer alerts will look like this.'),
+      notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
           'prayer',
-          'Prayer times',
+          tr('Prayer times'),
           importance: Importance.high,
         ),
       ),
@@ -176,10 +178,10 @@ class LocalReminderScheduler implements ReminderScheduler {
           scheduledDate: tz.TZDateTime.from(r.at!, tz.local),
           title: r.title,
           body: r.body,
-          notificationDetails: const NotificationDetails(
+          notificationDetails: NotificationDetails(
             android: AndroidNotificationDetails(
               'prayer',
-              'Prayer times',
+              tr('Prayer times'),
               importance: Importance.high,
             ),
           ),
@@ -218,7 +220,9 @@ class LocalReminderScheduler implements ReminderScheduler {
         notificationDetails: NotificationDetails(
           android: AndroidNotificationDetails(
             r.id == dailyReminderId ? 'daily' : 'habits',
-            r.id == dailyReminderId ? 'Daily reminder' : 'Habit reminders',
+            r.id == dailyReminderId
+                ? tr('Daily reminder')
+                : tr('Habit reminders'),
             importance: Importance.defaultImportance,
           ),
         ),

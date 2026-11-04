@@ -5,6 +5,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/db/database.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/locked_view.dart';
 import '../more/more_screen.dart';
@@ -38,7 +39,7 @@ class _DuasScreenState extends ConsumerState<DuasScreen> {
   @override
   Widget build(BuildContext context) {
     if (ref.watch(journalLockedProvider)) {
-      return const Column(
+      return Column(
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(20, 8, 20, 0),
@@ -46,8 +47,8 @@ class _DuasScreenState extends ConsumerState<DuasScreen> {
           ),
           Expanded(
             child: LockedView(
-              title: 'Duas are locked',
-              subtitle: 'Same lock as your journal.',
+              title: tr('Duas are locked'),
+              subtitle: tr('Same lock as your journal.'),
               reason: 'Unlock your Nurday duas',
               unlockKey: Key('unlock-duas'),
             ),
@@ -74,7 +75,7 @@ class _DuasScreenState extends ConsumerState<DuasScreen> {
                 minLines: 1,
                 maxLines: 4,
                 textCapitalization: TextCapitalization.sentences,
-                decoration: const InputDecoration(hintText: 'Write a dua'),
+                decoration: InputDecoration(hintText: tr('Write a dua')),
                 onSubmitted: (_) => _add(),
               ),
             ),
@@ -82,21 +83,21 @@ class _DuasScreenState extends ConsumerState<DuasScreen> {
             FilledButton(
               key: const Key('dua-add'),
               onPressed: _add,
-              child: const Text('Add'),
+              child: const Tr('Add'),
             ),
           ],
         ),
         if (all.isEmpty)
-          Text(
+          Tr(
             'Write the duas you are making. Only you see them.',
             style: meta(size: 13),
           ),
         if (asking.isNotEmpty) ...[
-          Text('Asking · ${asking.length}', style: heading(17)),
+          Tr('Asking · {0}', args: [asking.length], style: heading(17)),
           for (final d in asking) _DuaRow(dua: d),
         ],
         if (answered.isNotEmpty) ...[
-          Text('Answered · ${answered.length}', style: heading(17)),
+          Tr('Answered · {0}', args: [answered.length], style: heading(17)),
           for (final d in answered) _DuaRow(dua: d),
         ],
       ],
@@ -149,7 +150,7 @@ class _DuaRow extends ConsumerWidget {
           if (!isAnswered)
             IconButton(
               key: Key('dua-answer-${dua.id}'),
-              tooltip: 'Mark answered',
+              tooltip: tr('Mark answered'),
               onPressed: () =>
                   db.setDuaAnswered(dua.id, ref.read(clockProvider).now()),
               icon: Icon(Icons.check_circle_outline, color: AppColors.sage600),
@@ -157,13 +158,13 @@ class _DuaRow extends ConsumerWidget {
           else
             IconButton(
               key: Key('dua-unanswer-${dua.id}'),
-              tooltip: 'Move back to Asking',
+              tooltip: tr('Move back to Asking'),
               onPressed: () => db.setDuaAnswered(dua.id, null),
               icon: Icon(Icons.replay, color: AppColors.sage900),
             ),
           PopupMenuButton<_DuaAction>(
             key: Key('dua-menu-${dua.id}'),
-            tooltip: 'More',
+            tooltip: tr('More'),
             icon: const Icon(Icons.more_horiz),
             onSelected: (a) => switch (a) {
               _DuaAction.edit => _edit(context, ref),
@@ -171,15 +172,15 @@ class _DuaRow extends ConsumerWidget {
               _DuaAction.delete => _confirmDelete(context, ref),
             },
             itemBuilder: (_) => [
-              const PopupMenuItem(value: _DuaAction.edit, child: Text('Edit')),
+              const PopupMenuItem(value: _DuaAction.edit, child: Tr('Edit')),
               if (isAnswered)
                 const PopupMenuItem(
                   value: _DuaAction.unanswer,
-                  child: Text('Move back to Asking'),
+                  child: Tr('Move back to Asking'),
                 ),
               const PopupMenuItem(
                 value: _DuaAction.delete,
-                child: Text('Delete'),
+                child: Tr('Delete'),
               ),
             ],
           ),
@@ -194,7 +195,7 @@ class _DuaRow extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (c) => AlertDialog(
-        title: const Text('Edit dua'),
+        title: const Tr('Edit dua'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -207,18 +208,18 @@ class _DuaRow extends ConsumerWidget {
             TextField(
               key: const Key('dua-edit-note'),
               controller: note,
-              decoration: const InputDecoration(hintText: 'Note (optional)'),
+              decoration: InputDecoration(hintText: tr('Note (optional)')),
             ),
           ],
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(c, false),
-            child: const Text('Cancel'),
+            child: const Tr('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(c, true),
-            child: const Text('Save'),
+            child: const Tr('Save'),
           ),
         ],
       ),
@@ -234,18 +235,18 @@ class _DuaRow extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (c) => AlertDialog(
-        title: const Text('Delete this dua?'),
-        content: const Text(
+        title: const Tr('Delete this dua?'),
+        content: const Tr(
           "It's removed from this phone. This can't be undone.",
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(c, false),
-            child: const Text('Cancel'),
+            child: const Tr('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(c, true),
-            child: const Text('Delete'),
+            child: const Tr('Delete'),
           ),
         ],
       ),

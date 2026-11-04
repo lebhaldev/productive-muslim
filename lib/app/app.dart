@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart' show Intl;
 
 import '../data/reminders.dart';
 import '../l10n/app_localizations.dart';
+import '../l10n/strings.dart';
 import 'providers.dart';
 import 'router.dart';
 import 'theme.dart';
@@ -43,6 +45,11 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
     // Daily Drive backup, once settings have loaded.
     ref.listenManual(settingsProvider, (prev, next) {
       if (prev?.hasValue != true && next.hasValue) _backUpIfDue();
+    }, fireImmediately: true);
+    // Keep the next-prayer home-screen widget's times current.
+    ref.listenManual<Map<String, String>>(homeWidgetDataProvider, (prev, next) {
+      if (mapEquals(prev, next)) return;
+      ref.read(homeWidgetProvider).write(next).catchError((Object _) {});
     }, fireImmediately: true);
     // Keep scheduled notifications in step with settings and habits.
     ref.listenManual<List<Reminder>?>(reminderPlanProvider, (_, plan) {
@@ -90,17 +97,15 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: switch (language) {
-        AppLanguage.en => const Locale('en'),
-        AppLanguage.ar => const Locale('ar'),
-        AppLanguage.system => null,
-      },
-      // Also called with the picked locale: only "System" is filtered.
-      localeResolutionCallback: (device, supported) =>
-          device?.languageCode == 'ar' &&
-              (language == AppLanguage.ar || arabicUiReviewed)
-          ? const Locale('ar')
-          : const Locale('en'),
+      locale: language.code == null ? null : Locale(language.code!),
+      // Also called with the picked locale. "System" uses the phone's
+      // language only once a native speaker has reviewed it (FR-21).
+      localeResolutionCallback: (device, supported) => Locale(
+        language.code ??
+            (reviewedLanguages.contains(device?.languageCode)
+                ? device!.languageCode
+                : 'en'),
+      ),
       debugShowCheckedModeBanner: false,
       theme: buildTheme(colors.light, bodyFont: font.body),
       darkTheme: buildTheme(colors.dark, bodyFont: font.body),
@@ -112,10 +117,15 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
         AppColors.current = palette;
         AppFonts.current = font;
         AppFonts.arabic = arabic;
+        final lang = Localizations.localeOf(context).languageCode;
+        if (AppStrings.code != lang) {
+          AppStrings.use(lang);
+          Intl.defaultLocale = lang;
+        }
         // Widgets read AppColors and AppFonts directly, so rebuild them all
         // on a switch.
         return KeyedSubtree(
-          key: ValueKey((palette, font, arabic)),
+          key: ValueKey((palette, font, arabic, lang)),
           child: child!,
         );
       },

@@ -1,8 +1,12 @@
+import 'dart:io';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nurday/app/app.dart';
+import 'package:nurday/l10n/strings.dart';
 import 'package:nurday/app/providers.dart';
 import 'package:nurday/app/theme.dart';
 import 'package:nurday/core/day_key.dart';
@@ -21,8 +25,17 @@ Future<void> settle(WidgetTester tester) async {
   }
 }
 
-Future<void> scrollTo(WidgetTester tester, Finder finder) => tester
-    .scrollUntilVisible(finder, 200, scrollable: find.byType(Scrollable).first);
+/// Scrolls until [finder] is built, then fully on screen (a widget that only
+/// peeks in at the edge cannot be tapped).
+Future<void> scrollTo(WidgetTester tester, Finder finder) async {
+  await tester.scrollUntilVisible(
+    finder,
+    200,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.ensureVisible(finder.first);
+  await tester.pump(const Duration(milliseconds: 100));
+}
 
 void main() {
   final now = DateTime(2026, 10, 5, 7, 12);
@@ -237,13 +250,17 @@ void main() {
     });
 
     await pumpApp(tester, db: db, online: false);
-    await scrollTo(tester, find.text('Read Quran 10 min'));
-    expect(find.text('Read Quran 10 min'), findsOneWidget);
     // No cached ayah and no network: the failed source is named, nothing invented.
+    await scrollTo(
+      tester,
+      find.textContaining('AlQuran Cloud could not be reached'),
+    );
     expect(
       find.textContaining('AlQuran Cloud could not be reached'),
       findsOneWidget,
     );
+    await scrollTo(tester, find.text('Read Quran 10 min'));
+    expect(find.text('Read Quran 10 min'), findsOneWidget);
     await tapTab(tester, 'Calendar');
     await scrollTo(tester, find.text('Offline entry'));
     expect(find.text('Offline entry'), findsOneWidget);
@@ -518,12 +535,16 @@ void main() {
     final db = await pumpApp(tester);
     await openSettings(tester, 'appearance');
     await scrollTo(tester, find.byKey(const Key('app-font')));
+    await tester.ensureVisible(find.byKey(const Key('app-font')));
+    await settle(tester);
     await tester.tap(find.byKey(const Key('app-font')));
     await settle(tester);
     await tester.tap(find.text('Rounded').last);
     await settle(tester);
     expect(AppFonts.current, AppFont.rounded);
     await scrollTo(tester, find.byKey(const Key('arabic-font')));
+    await tester.ensureVisible(find.byKey(const Key('arabic-font')));
+    await settle(tester);
     await tester.tap(find.byKey(const Key('arabic-font')));
     await settle(tester);
     await tester.tap(find.text('Noto Naskh Arabic').last);
@@ -537,7 +558,13 @@ void main() {
   testWidgets('every colour theme can be picked', (tester) async {
     final db = await pumpApp(tester);
     await openSettings(tester, 'appearance');
-    for (final t in [ColorTheme.mint, ColorTheme.peach, ColorTheme.mono]) {
+    for (final t in [
+      ColorTheme.mint,
+      ColorTheme.peach,
+      ColorTheme.mono,
+      ColorTheme.andalus,
+      ColorTheme.plum,
+    ]) {
       await scrollTo(tester, find.byKey(Key('color-theme-${t.name}')));
       await tester.tap(find.byKey(Key('color-theme-${t.name}')));
       await settle(tester);
@@ -1038,6 +1065,34 @@ void main() {
     expect(find.text('اليوم'), findsNothing, reason: 'not reviewed yet');
     await closeApp(tester, db);
   });
+
+  testWidgets(
+    'French and Urdu translate the interface; Urdu is right to left',
+    (tester) async {
+      for (final code in ['fr', 'ur']) {
+        final m = jsonDecode(File('assets/l10n/$code.json').readAsStringSync());
+        AppStrings.setForTest(code, (m as Map).cast<String, String>());
+      }
+      AppStrings.use('en');
+      final db = memoryDb();
+      await tester.runAsync(() => db.putSetting('language', 'fr'));
+      await pumpApp(tester, db: db);
+      expect(find.text("Aujourd'hui"), findsWidgets);
+      expect(find.text('Bonjour'), findsOneWidget);
+      expect(find.text('Habitudes'), findsWidgets);
+      await tester.runAsync(() => db.putSetting('language', 'ur'));
+      await settle(tester);
+      expect(find.text('صبح بخیر'), findsOneWidget);
+      expect(
+        Directionality.of(tester.element(find.byKey(const Key('tab-Today')))),
+        TextDirection.rtl,
+      );
+      await tester.runAsync(() => db.putSetting('language', 'en'));
+      await settle(tester);
+      expect(find.text('Good morning'), findsOneWidget);
+      await closeApp(tester, db);
+    },
+  );
 }
 
 class FakeBackupFiles implements BackupFiles {

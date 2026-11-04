@@ -5,16 +5,19 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/content/content_models.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
+import 'share_card.dart';
 
 enum _Kind {
-  ayah('Ayah'),
-  hadith('Hadith'),
-  quote('Quote');
+  ayah('Ayah', 'Ayah of the day'),
+  hadith('Hadith', 'Hadith of the day'),
+  quote('Quote', 'Quote of the day');
 
-  const _Kind(this.label);
+  const _Kind(this.label, this.kicker);
   final String label;
+  final String kicker;
 }
 
 /// The day's ayah, hadith and quote, each in its own card so all three
@@ -37,8 +40,11 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     return content.when(
       skipLoadingOnReload: true,
       loading: () => const NCard(children: [LinearProgressIndicator()]),
-      error: (e, _) =>
-          NCard(children: [Text('Daily content could not load: $e')]),
+      error: (e, _) => NCard(
+        children: [
+          Tr('Daily content could not load: {0}', args: [e]),
+        ],
+      ),
       data: (c) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -60,11 +66,19 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       children: [
         Row(
           children: [
-            Expanded(child: Kicker('${kind.label} of the day')),
+            Expanded(child: Kicker(kind.kicker)),
+            if (_shareContent(kind, c, arabicOnly) case final share?)
+              IconButton(
+                key: Key('content-share-${kind.name}'),
+                tooltip: tr('Share as image'),
+                visualDensity: VisualDensity.compact,
+                icon: Icon(Icons.ios_share, color: AppColors.neutral700),
+                onPressed: () => showShareCard(context, share),
+              ),
             if (_savedRef(kind, c) case final ref?) _SaveButton(kind.name, ref),
             IconButton(
               key: Key('content-next-${kind.name}'),
-              tooltip: 'Show another ${kind.label.toLowerCase()}',
+              tooltip: tr('Show another {0}', [kind.label.toLowerCase()]),
               visualDensity: VisualDensity.compact,
               icon: Icon(Icons.autorenew, color: AppColors.neutral700),
               onPressed: () {
@@ -100,6 +114,38 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     );
   }
 
+  /// What the share image carries: always the full reference.
+  ShareContent? _shareContent(_Kind kind, DailyContent c, bool arabicOnly) =>
+      switch (kind) {
+        _Kind.ayah => switch (c.ayah.value) {
+          final a? => (
+            kicker: kind.kicker,
+            arabic: a.arabic,
+            text: arabicOnly ? null : a.translation,
+            reference: a.source,
+          ),
+          null => null,
+        },
+        _Kind.hadith => switch (c.hadith.value) {
+          final h? when h.arabic != null || !arabicOnly => (
+            kicker: kind.kicker,
+            arabic: h.arabic ?? '',
+            text: arabicOnly ? null : h.text,
+            reference: h.source,
+          ),
+          _ => null,
+        },
+        _Kind.quote => switch (c.quote.value) {
+          final q? => (
+            kicker: kind.kicker,
+            arabic: q.arabic,
+            text: null,
+            reference: '${q.attribution} · ${q.work}',
+          ),
+          null => null,
+        },
+      };
+
   /// What Saved stores for this card: the ayah ref or the hadith id.
   /// Quotes are not saved.
   String? _savedRef(_Kind kind, DailyContent c) => switch (kind) {
@@ -123,8 +169,9 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       // as today's (review R3).
       if (slot.stale && slot.fetchedAt != null)
         ..._gap(
-          Text(
-            'Last saved ayah · ${DateFormat('d MMM').format(slot.fetchedAt!)}',
+          Tr(
+            'Last saved ayah · {0}',
+            args: [DateFormat('d MMM').format(slot.fetchedAt!)],
             style: meta(color: AppColors.accent700),
           ),
         ),
@@ -147,10 +194,11 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
             ..._gap(Text(tafsir.englishSource, style: meta(size: 11))),
           ],
         ] else
-          ..._gap(Text('No tafsir is bundled for this ayah.', style: meta())),
+          ..._gap(Tr('No tafsir is bundled for this ayah.', style: meta())),
         ..._gap(
-          Text(
-            'Edition: ${a.edition} · fetched $fetched · ${a.sourceUrl}',
+          Tr(
+            'Edition: {0} · fetched {1} · {2}',
+            args: [a.edition, fetched, a.sourceUrl],
             style: meta(size: 11),
           ),
         ),
@@ -173,7 +221,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
         // No reviewed explanation exists for this dataset yet; none is
         // ever written by the app (CR-1, CR-4).
         ..._gap(
-          Text(
+          Tr(
             'No reviewed explanation is available for this hadith yet.',
             style: meta(),
           ),
@@ -224,7 +272,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     style: const TextStyle(fontSize: 15, height: 1.5),
   );
 
-  Widget _hint(String text) => Text(text, style: meta(size: 11));
+  Widget _hint(String text) => Text(tr(text), style: meta(size: 11));
 
   Widget _error(String error) =>
       Text(error, style: meta(size: 13, color: AppColors.neutral800));

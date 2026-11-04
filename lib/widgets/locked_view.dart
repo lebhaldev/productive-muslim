@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/providers.dart';
 import '../app/theme.dart';
+import '../l10n/strings.dart';
 
 /// Shown instead of the journal or duas while the journal lock is on.
 class LockedView extends ConsumerStatefulWidget {
@@ -71,11 +72,11 @@ class _LockedViewState extends ConsumerState<LockedView> {
               key: widget.unlockKey,
               onPressed: _unlock,
               icon: const Icon(Icons.fingerprint),
-              label: const Text('Unlock'),
+              label: const Tr('Unlock'),
             ),
             if (_failed) ...[
               const SizedBox(height: 8),
-              Text(
+              Tr(
                 'Not unlocked. Try again.',
                 style: meta(color: AppColors.accent700),
               ),

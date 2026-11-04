@@ -3688,6 +3688,788 @@ class BookmarksCompanion extends UpdateCompanion<Bookmark> {
   }
 }
 
+class $QuranReadsTable extends QuranReads
+    with TableInfo<$QuranReadsTable, QuranRead> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $QuranReadsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _dayKeyMeta = const VerificationMeta('dayKey');
+  @override
+  late final GeneratedColumn<String> dayKey = GeneratedColumn<String>(
+    'day_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _pagesMeta = const VerificationMeta('pages');
+  @override
+  late final GeneratedColumn<int> pages = GeneratedColumn<int>(
+    'pages',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [dayKey, pages, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'quran_reads';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<QuranRead> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('day_key')) {
+      context.handle(
+        _dayKeyMeta,
+        dayKey.isAcceptableOrUnknown(data['day_key']!, _dayKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dayKeyMeta);
+    }
+    if (data.containsKey('pages')) {
+      context.handle(
+        _pagesMeta,
+        pages.isAcceptableOrUnknown(data['pages']!, _pagesMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_pagesMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {dayKey};
+  @override
+  QuranRead map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return QuranRead(
+      dayKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}day_key'],
+      )!,
+      pages: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}pages'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $QuranReadsTable createAlias(String alias) {
+    return $QuranReadsTable(attachedDatabase, alias);
+  }
+}
+
+class QuranRead extends DataClass implements Insertable<QuranRead> {
+  final String dayKey;
+  final int pages;
+  final DateTime updatedAt;
+  const QuranRead({
+    required this.dayKey,
+    required this.pages,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['day_key'] = Variable<String>(dayKey);
+    map['pages'] = Variable<int>(pages);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  QuranReadsCompanion toCompanion(bool nullToAbsent) {
+    return QuranReadsCompanion(
+      dayKey: Value(dayKey),
+      pages: Value(pages),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory QuranRead.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return QuranRead(
+      dayKey: serializer.fromJson<String>(json['dayKey']),
+      pages: serializer.fromJson<int>(json['pages']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'dayKey': serializer.toJson<String>(dayKey),
+      'pages': serializer.toJson<int>(pages),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  QuranRead copyWith({String? dayKey, int? pages, DateTime? updatedAt}) =>
+      QuranRead(
+        dayKey: dayKey ?? this.dayKey,
+        pages: pages ?? this.pages,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+  QuranRead copyWithCompanion(QuranReadsCompanion data) {
+    return QuranRead(
+      dayKey: data.dayKey.present ? data.dayKey.value : this.dayKey,
+      pages: data.pages.present ? data.pages.value : this.pages,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuranRead(')
+          ..write('dayKey: $dayKey, ')
+          ..write('pages: $pages, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(dayKey, pages, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is QuranRead &&
+          other.dayKey == this.dayKey &&
+          other.pages == this.pages &&
+          other.updatedAt == this.updatedAt);
+}
+
+class QuranReadsCompanion extends UpdateCompanion<QuranRead> {
+  final Value<String> dayKey;
+  final Value<int> pages;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const QuranReadsCompanion({
+    this.dayKey = const Value.absent(),
+    this.pages = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  QuranReadsCompanion.insert({
+    required String dayKey,
+    required int pages,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : dayKey = Value(dayKey),
+       pages = Value(pages),
+       updatedAt = Value(updatedAt);
+  static Insertable<QuranRead> custom({
+    Expression<String>? dayKey,
+    Expression<int>? pages,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (dayKey != null) 'day_key': dayKey,
+      if (pages != null) 'pages': pages,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  QuranReadsCompanion copyWith({
+    Value<String>? dayKey,
+    Value<int>? pages,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return QuranReadsCompanion(
+      dayKey: dayKey ?? this.dayKey,
+      pages: pages ?? this.pages,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (dayKey.present) {
+      map['day_key'] = Variable<String>(dayKey.value);
+    }
+    if (pages.present) {
+      map['pages'] = Variable<int>(pages.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('QuranReadsCompanion(')
+          ..write('dayKey: $dayKey, ')
+          ..write('pages: $pages, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $FastsTable extends Fasts with TableInfo<$FastsTable, Fast> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FastsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _dayKeyMeta = const VerificationMeta('dayKey');
+  @override
+  late final GeneratedColumn<String> dayKey = GeneratedColumn<String>(
+    'day_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kindMeta = const VerificationMeta('kind');
+  @override
+  late final GeneratedColumn<String> kind = GeneratedColumn<String>(
+    'kind',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [dayKey, kind, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fasts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<Fast> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('day_key')) {
+      context.handle(
+        _dayKeyMeta,
+        dayKey.isAcceptableOrUnknown(data['day_key']!, _dayKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dayKeyMeta);
+    }
+    if (data.containsKey('kind')) {
+      context.handle(
+        _kindMeta,
+        kind.isAcceptableOrUnknown(data['kind']!, _kindMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kindMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {dayKey};
+  @override
+  Fast map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Fast(
+      dayKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}day_key'],
+      )!,
+      kind: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kind'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+    );
+  }
+
+  @override
+  $FastsTable createAlias(String alias) {
+    return $FastsTable(attachedDatabase, alias);
+  }
+}
+
+class Fast extends DataClass implements Insertable<Fast> {
+  final String dayKey;
+  final String kind;
+  final DateTime updatedAt;
+  const Fast({
+    required this.dayKey,
+    required this.kind,
+    required this.updatedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['day_key'] = Variable<String>(dayKey);
+    map['kind'] = Variable<String>(kind);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  FastsCompanion toCompanion(bool nullToAbsent) {
+    return FastsCompanion(
+      dayKey: Value(dayKey),
+      kind: Value(kind),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory Fast.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Fast(
+      dayKey: serializer.fromJson<String>(json['dayKey']),
+      kind: serializer.fromJson<String>(json['kind']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'dayKey': serializer.toJson<String>(dayKey),
+      'kind': serializer.toJson<String>(kind),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  Fast copyWith({String? dayKey, String? kind, DateTime? updatedAt}) => Fast(
+    dayKey: dayKey ?? this.dayKey,
+    kind: kind ?? this.kind,
+    updatedAt: updatedAt ?? this.updatedAt,
+  );
+  Fast copyWithCompanion(FastsCompanion data) {
+    return Fast(
+      dayKey: data.dayKey.present ? data.dayKey.value : this.dayKey,
+      kind: data.kind.present ? data.kind.value : this.kind,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Fast(')
+          ..write('dayKey: $dayKey, ')
+          ..write('kind: $kind, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(dayKey, kind, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Fast &&
+          other.dayKey == this.dayKey &&
+          other.kind == this.kind &&
+          other.updatedAt == this.updatedAt);
+}
+
+class FastsCompanion extends UpdateCompanion<Fast> {
+  final Value<String> dayKey;
+  final Value<String> kind;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const FastsCompanion({
+    this.dayKey = const Value.absent(),
+    this.kind = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FastsCompanion.insert({
+    required String dayKey,
+    required String kind,
+    required DateTime updatedAt,
+    this.rowid = const Value.absent(),
+  }) : dayKey = Value(dayKey),
+       kind = Value(kind),
+       updatedAt = Value(updatedAt);
+  static Insertable<Fast> custom({
+    Expression<String>? dayKey,
+    Expression<String>? kind,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (dayKey != null) 'day_key': dayKey,
+      if (kind != null) 'kind': kind,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FastsCompanion copyWith({
+    Value<String>? dayKey,
+    Value<String>? kind,
+    Value<DateTime>? updatedAt,
+    Value<int>? rowid,
+  }) {
+    return FastsCompanion(
+      dayKey: dayKey ?? this.dayKey,
+      kind: kind ?? this.kind,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (dayKey.present) {
+      map['day_key'] = Variable<String>(dayKey.value);
+    }
+    if (kind.present) {
+      map['kind'] = Variable<String>(kind.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FastsCompanion(')
+          ..write('dayKey: $dayKey, ')
+          ..write('kind: $kind, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DhikrCountsTable extends DhikrCounts
+    with TableInfo<$DhikrCountsTable, DhikrCount> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DhikrCountsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _dayKeyMeta = const VerificationMeta('dayKey');
+  @override
+  late final GeneratedColumn<String> dayKey = GeneratedColumn<String>(
+    'day_key',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _phraseMeta = const VerificationMeta('phrase');
+  @override
+  late final GeneratedColumn<String> phrase = GeneratedColumn<String>(
+    'phrase',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _countMeta = const VerificationMeta('count');
+  @override
+  late final GeneratedColumn<int> count = GeneratedColumn<int>(
+    'count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [dayKey, phrase, count];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'dhikr_counts';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DhikrCount> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('day_key')) {
+      context.handle(
+        _dayKeyMeta,
+        dayKey.isAcceptableOrUnknown(data['day_key']!, _dayKeyMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dayKeyMeta);
+    }
+    if (data.containsKey('phrase')) {
+      context.handle(
+        _phraseMeta,
+        phrase.isAcceptableOrUnknown(data['phrase']!, _phraseMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_phraseMeta);
+    }
+    if (data.containsKey('count')) {
+      context.handle(
+        _countMeta,
+        count.isAcceptableOrUnknown(data['count']!, _countMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_countMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {dayKey, phrase};
+  @override
+  DhikrCount map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DhikrCount(
+      dayKey: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}day_key'],
+      )!,
+      phrase: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}phrase'],
+      )!,
+      count: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}count'],
+      )!,
+    );
+  }
+
+  @override
+  $DhikrCountsTable createAlias(String alias) {
+    return $DhikrCountsTable(attachedDatabase, alias);
+  }
+}
+
+class DhikrCount extends DataClass implements Insertable<DhikrCount> {
+  final String dayKey;
+  final String phrase;
+  final int count;
+  const DhikrCount({
+    required this.dayKey,
+    required this.phrase,
+    required this.count,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['day_key'] = Variable<String>(dayKey);
+    map['phrase'] = Variable<String>(phrase);
+    map['count'] = Variable<int>(count);
+    return map;
+  }
+
+  DhikrCountsCompanion toCompanion(bool nullToAbsent) {
+    return DhikrCountsCompanion(
+      dayKey: Value(dayKey),
+      phrase: Value(phrase),
+      count: Value(count),
+    );
+  }
+
+  factory DhikrCount.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DhikrCount(
+      dayKey: serializer.fromJson<String>(json['dayKey']),
+      phrase: serializer.fromJson<String>(json['phrase']),
+      count: serializer.fromJson<int>(json['count']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'dayKey': serializer.toJson<String>(dayKey),
+      'phrase': serializer.toJson<String>(phrase),
+      'count': serializer.toJson<int>(count),
+    };
+  }
+
+  DhikrCount copyWith({String? dayKey, String? phrase, int? count}) =>
+      DhikrCount(
+        dayKey: dayKey ?? this.dayKey,
+        phrase: phrase ?? this.phrase,
+        count: count ?? this.count,
+      );
+  DhikrCount copyWithCompanion(DhikrCountsCompanion data) {
+    return DhikrCount(
+      dayKey: data.dayKey.present ? data.dayKey.value : this.dayKey,
+      phrase: data.phrase.present ? data.phrase.value : this.phrase,
+      count: data.count.present ? data.count.value : this.count,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DhikrCount(')
+          ..write('dayKey: $dayKey, ')
+          ..write('phrase: $phrase, ')
+          ..write('count: $count')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(dayKey, phrase, count);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DhikrCount &&
+          other.dayKey == this.dayKey &&
+          other.phrase == this.phrase &&
+          other.count == this.count);
+}
+
+class DhikrCountsCompanion extends UpdateCompanion<DhikrCount> {
+  final Value<String> dayKey;
+  final Value<String> phrase;
+  final Value<int> count;
+  final Value<int> rowid;
+  const DhikrCountsCompanion({
+    this.dayKey = const Value.absent(),
+    this.phrase = const Value.absent(),
+    this.count = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DhikrCountsCompanion.insert({
+    required String dayKey,
+    required String phrase,
+    required int count,
+    this.rowid = const Value.absent(),
+  }) : dayKey = Value(dayKey),
+       phrase = Value(phrase),
+       count = Value(count);
+  static Insertable<DhikrCount> custom({
+    Expression<String>? dayKey,
+    Expression<String>? phrase,
+    Expression<int>? count,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (dayKey != null) 'day_key': dayKey,
+      if (phrase != null) 'phrase': phrase,
+      if (count != null) 'count': count,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DhikrCountsCompanion copyWith({
+    Value<String>? dayKey,
+    Value<String>? phrase,
+    Value<int>? count,
+    Value<int>? rowid,
+  }) {
+    return DhikrCountsCompanion(
+      dayKey: dayKey ?? this.dayKey,
+      phrase: phrase ?? this.phrase,
+      count: count ?? this.count,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (dayKey.present) {
+      map['day_key'] = Variable<String>(dayKey.value);
+    }
+    if (phrase.present) {
+      map['phrase'] = Variable<String>(phrase.value);
+    }
+    if (count.present) {
+      map['count'] = Variable<int>(count.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DhikrCountsCompanion(')
+          ..write('dayKey: $dayKey, ')
+          ..write('phrase: $phrase, ')
+          ..write('count: $count, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3705,6 +4487,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ExcusedDaysTable excusedDays = $ExcusedDaysTable(this);
   late final $DuasTable duas = $DuasTable(this);
   late final $BookmarksTable bookmarks = $BookmarksTable(this);
+  late final $QuranReadsTable quranReads = $QuranReadsTable(this);
+  late final $FastsTable fasts = $FastsTable(this);
+  late final $DhikrCountsTable dhikrCounts = $DhikrCountsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3722,6 +4507,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     excusedDays,
     duas,
     bookmarks,
+    quranReads,
+    fasts,
+    dhikrCounts,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -6135,6 +6923,505 @@ typedef $$BookmarksTableProcessedTableManager =
       Bookmark,
       PrefetchHooks Function()
     >;
+typedef $$QuranReadsTableCreateCompanionBuilder = QuranReadsCompanion Function({
+  required String dayKey,
+  required int pages,
+  required DateTime updatedAt,
+  Value<int> rowid,
+});
+typedef $$QuranReadsTableUpdateCompanionBuilder = QuranReadsCompanion Function({
+  Value<String> dayKey,
+  Value<int> pages,
+  Value<DateTime> updatedAt,
+  Value<int> rowid,
+});
+
+class $$QuranReadsTableFilterComposer
+    extends Composer<_$AppDatabase, $QuranReadsTable> {
+  $$QuranReadsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get dayKey => $composableBuilder(
+    column: $table.dayKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get pages => $composableBuilder(
+    column: $table.pages,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$QuranReadsTableOrderingComposer
+    extends Composer<_$AppDatabase, $QuranReadsTable> {
+  $$QuranReadsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get dayKey => $composableBuilder(
+    column: $table.dayKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get pages => $composableBuilder(
+    column: $table.pages,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$QuranReadsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $QuranReadsTable> {
+  $$QuranReadsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get dayKey =>
+      $composableBuilder(column: $table.dayKey, builder: (column) => column);
+
+  GeneratedColumn<int> get pages =>
+      $composableBuilder(column: $table.pages, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$QuranReadsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $QuranReadsTable,
+          QuranRead,
+          $$QuranReadsTableFilterComposer,
+          $$QuranReadsTableOrderingComposer,
+          $$QuranReadsTableAnnotationComposer,
+          $$QuranReadsTableCreateCompanionBuilder,
+          $$QuranReadsTableUpdateCompanionBuilder,
+          (
+            QuranRead,
+            BaseReferences<_$AppDatabase, $QuranReadsTable, QuranRead>,
+          ),
+          QuranRead,
+          PrefetchHooks Function()
+        > {
+  $$QuranReadsTableTableManager(_$AppDatabase db, $QuranReadsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$QuranReadsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$QuranReadsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$QuranReadsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> dayKey = const Value.absent(),
+                Value<int> pages = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => QuranReadsCompanion(
+                dayKey: dayKey,
+                pages: pages,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String dayKey,
+                required int pages,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => QuranReadsCompanion.insert(
+                dayKey: dayKey,
+                pages: pages,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$QuranReadsTable, QuranRead>(table),
+                  BaseReferences<_$AppDatabase, $QuranReadsTable, QuranRead>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$QuranReadsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $QuranReadsTable,
+      QuranRead,
+      $$QuranReadsTableFilterComposer,
+      $$QuranReadsTableOrderingComposer,
+      $$QuranReadsTableAnnotationComposer,
+      $$QuranReadsTableCreateCompanionBuilder,
+      $$QuranReadsTableUpdateCompanionBuilder,
+      (QuranRead, BaseReferences<_$AppDatabase, $QuranReadsTable, QuranRead>),
+      QuranRead,
+      PrefetchHooks Function()
+    >;
+typedef $$FastsTableCreateCompanionBuilder = FastsCompanion Function({
+  required String dayKey,
+  required String kind,
+  required DateTime updatedAt,
+  Value<int> rowid,
+});
+typedef $$FastsTableUpdateCompanionBuilder = FastsCompanion Function({
+  Value<String> dayKey,
+  Value<String> kind,
+  Value<DateTime> updatedAt,
+  Value<int> rowid,
+});
+
+class $$FastsTableFilterComposer extends Composer<_$AppDatabase, $FastsTable> {
+  $$FastsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get dayKey => $composableBuilder(
+    column: $table.dayKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$FastsTableOrderingComposer
+    extends Composer<_$AppDatabase, $FastsTable> {
+  $$FastsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get dayKey => $composableBuilder(
+    column: $table.dayKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kind => $composableBuilder(
+    column: $table.kind,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$FastsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FastsTable> {
+  $$FastsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get dayKey =>
+      $composableBuilder(column: $table.dayKey, builder: (column) => column);
+
+  GeneratedColumn<String> get kind =>
+      $composableBuilder(column: $table.kind, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$FastsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $FastsTable,
+          Fast,
+          $$FastsTableFilterComposer,
+          $$FastsTableOrderingComposer,
+          $$FastsTableAnnotationComposer,
+          $$FastsTableCreateCompanionBuilder,
+          $$FastsTableUpdateCompanionBuilder,
+          (Fast, BaseReferences<_$AppDatabase, $FastsTable, Fast>),
+          Fast,
+          PrefetchHooks Function()
+        > {
+  $$FastsTableTableManager(_$AppDatabase db, $FastsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$FastsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FastsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FastsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> dayKey = const Value.absent(),
+                Value<String> kind = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FastsCompanion(
+                dayKey: dayKey,
+                kind: kind,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String dayKey,
+                required String kind,
+                required DateTime updatedAt,
+                Value<int> rowid = const Value.absent(),
+              }) => FastsCompanion.insert(
+                dayKey: dayKey,
+                kind: kind,
+                updatedAt: updatedAt,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$FastsTable, Fast>(table),
+                  BaseReferences<_$AppDatabase, $FastsTable, Fast>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$FastsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $FastsTable,
+      Fast,
+      $$FastsTableFilterComposer,
+      $$FastsTableOrderingComposer,
+      $$FastsTableAnnotationComposer,
+      $$FastsTableCreateCompanionBuilder,
+      $$FastsTableUpdateCompanionBuilder,
+      (Fast, BaseReferences<_$AppDatabase, $FastsTable, Fast>),
+      Fast,
+      PrefetchHooks Function()
+    >;
+typedef $$DhikrCountsTableCreateCompanionBuilder =
+    DhikrCountsCompanion Function({
+      required String dayKey,
+      required String phrase,
+      required int count,
+      Value<int> rowid,
+    });
+typedef $$DhikrCountsTableUpdateCompanionBuilder =
+    DhikrCountsCompanion Function({
+      Value<String> dayKey,
+      Value<String> phrase,
+      Value<int> count,
+      Value<int> rowid,
+    });
+
+class $$DhikrCountsTableFilterComposer
+    extends Composer<_$AppDatabase, $DhikrCountsTable> {
+  $$DhikrCountsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get dayKey => $composableBuilder(
+    column: $table.dayKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get phrase => $composableBuilder(
+    column: $table.phrase,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get count => $composableBuilder(
+    column: $table.count,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$DhikrCountsTableOrderingComposer
+    extends Composer<_$AppDatabase, $DhikrCountsTable> {
+  $$DhikrCountsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get dayKey => $composableBuilder(
+    column: $table.dayKey,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get phrase => $composableBuilder(
+    column: $table.phrase,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get count => $composableBuilder(
+    column: $table.count,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$DhikrCountsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DhikrCountsTable> {
+  $$DhikrCountsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get dayKey =>
+      $composableBuilder(column: $table.dayKey, builder: (column) => column);
+
+  GeneratedColumn<String> get phrase =>
+      $composableBuilder(column: $table.phrase, builder: (column) => column);
+
+  GeneratedColumn<int> get count =>
+      $composableBuilder(column: $table.count, builder: (column) => column);
+}
+
+class $$DhikrCountsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $DhikrCountsTable,
+          DhikrCount,
+          $$DhikrCountsTableFilterComposer,
+          $$DhikrCountsTableOrderingComposer,
+          $$DhikrCountsTableAnnotationComposer,
+          $$DhikrCountsTableCreateCompanionBuilder,
+          $$DhikrCountsTableUpdateCompanionBuilder,
+          (
+            DhikrCount,
+            BaseReferences<_$AppDatabase, $DhikrCountsTable, DhikrCount>,
+          ),
+          DhikrCount,
+          PrefetchHooks Function()
+        > {
+  $$DhikrCountsTableTableManager(_$AppDatabase db, $DhikrCountsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DhikrCountsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DhikrCountsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DhikrCountsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> dayKey = const Value.absent(),
+                Value<String> phrase = const Value.absent(),
+                Value<int> count = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => DhikrCountsCompanion(
+                dayKey: dayKey,
+                phrase: phrase,
+                count: count,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String dayKey,
+                required String phrase,
+                required int count,
+                Value<int> rowid = const Value.absent(),
+              }) => DhikrCountsCompanion.insert(
+                dayKey: dayKey,
+                phrase: phrase,
+                count: count,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$DhikrCountsTable, DhikrCount>(table),
+                  BaseReferences<_$AppDatabase, $DhikrCountsTable, DhikrCount>(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$DhikrCountsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $DhikrCountsTable,
+      DhikrCount,
+      $$DhikrCountsTableFilterComposer,
+      $$DhikrCountsTableOrderingComposer,
+      $$DhikrCountsTableAnnotationComposer,
+      $$DhikrCountsTableCreateCompanionBuilder,
+      $$DhikrCountsTableUpdateCompanionBuilder,
+      (
+        DhikrCount,
+        BaseReferences<_$AppDatabase, $DhikrCountsTable, DhikrCount>,
+      ),
+      DhikrCount,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -6162,4 +7449,10 @@ class $AppDatabaseManager {
   $$DuasTableTableManager get duas => $$DuasTableTableManager(_db, _db.duas);
   $$BookmarksTableTableManager get bookmarks =>
       $$BookmarksTableTableManager(_db, _db.bookmarks);
+  $$QuranReadsTableTableManager get quranReads =>
+      $$QuranReadsTableTableManager(_db, _db.quranReads);
+  $$FastsTableTableManager get fasts =>
+      $$FastsTableTableManager(_db, _db.fasts);
+  $$DhikrCountsTableTableManager get dhikrCounts =>
+      $$DhikrCountsTableTableManager(_db, _db.dhikrCounts);
 }

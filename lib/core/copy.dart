@@ -1,4 +1,5 @@
 import 'moods.dart';
+import '../l10n/strings.dart';
 
 /// Fixed app copy (FR-19): written once, reviewed once, never generated.
 /// Nothing here quotes or paraphrases scripture (TR-1), makes a religious
@@ -42,9 +43,10 @@ const moodSuggestionLabels = {
   MoodSuggestion.goodThing: 'Note what made today good',
 };
 
-String moodSaved(String mood) =>
-    'Saved · $mood. The suggestion stays away until tomorrow or until the '
-    'mood changes.';
+String moodSaved(String mood) => tr(
+  'Saved · {0}. The suggestion stays away until tomorrow or until the mood changes.',
+  [mood],
+);
 
 /// Journal body placeholders, one per day in turn.
 const journalPrompts = [
@@ -57,10 +59,10 @@ const journalPrompts = [
 /// counts only: no scores and no religious wording.
 const weeklyTitle = 'Your week';
 const weeklyHabitsLabel = 'Habits kept';
-String weeklyDays(int n, int of) => '$n of $of days';
+String weeklyDays(int n, int of) => tr('{0} of {1} days', [n, of]);
 const weeklyPrayersLabel = 'Prayers logged';
 const weeklyMoodLabel = 'Mood';
 String weeklyMood(String? mostly) =>
-    mostly == null ? 'not logged' : 'mostly $mostly';
+    mostly == null ? tr('not logged') : tr('mostly {0}', [mostly]);
 const weeklyJournalLabel = 'Journal';
 const weeklyNoteLabel = 'Write a note to next week';

@@ -5,6 +5,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../app/providers.dart';
 import '../../data/backup.dart';
 import '../../data/drive_backup.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 
 class BackupSection extends ConsumerStatefulWidget {
@@ -63,23 +64,22 @@ class _BackupSectionState extends ConsumerState<BackupSection> {
     return showDialog<ImportMode>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Import backup'),
-        content: const Text(
-          'Merge adds the backup to what is on this phone. '
-          'Replace deletes everything on this phone first.',
+        title: const Tr('Import backup'),
+        content: const Tr(
+          'Merge adds the backup to what is on this phone. Replace deletes everything on this phone first.',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: const Tr('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, ImportMode.replace),
-            child: const Text('Replace'),
+            child: const Tr('Replace'),
           ),
           FilledButton(
             onPressed: () => Navigator.pop(context, ImportMode.merge),
-            child: const Text('Merge'),
+            child: const Tr('Merge'),
           ),
         ],
       ),
@@ -146,13 +146,13 @@ class _BackupSectionState extends ConsumerState<BackupSection> {
                   key: const Key('export-backup'),
                   onPressed: _export,
                   icon: const Icon(Icons.upload_file, size: 18),
-                  label: const Text('Export'),
+                  label: const Tr('Export'),
                 ),
                 OutlinedButton.icon(
                   key: const Key('import-backup'),
                   onPressed: _import,
                   icon: const Icon(Icons.download, size: 18),
-                  label: const Text('Import'),
+                  label: const Tr('Import'),
                 ),
               ],
             ),
@@ -186,12 +186,12 @@ class _BackupSectionState extends ConsumerState<BackupSection> {
                               ? 'Backed up to Google Drive.'
                               : null,
                         ),
-                        child: const Text('Back up now'),
+                        child: const Tr('Back up now'),
                       ),
                       OutlinedButton(
                         key: const Key('drive-restore'),
                         onPressed: _driveBusy ? null : _driveRestore,
-                        child: const Text('Restore'),
+                        child: const Tr('Restore'),
                       ),
                       TextButton(
                         key: const Key('drive-disconnect'),
@@ -200,7 +200,7 @@ class _BackupSectionState extends ConsumerState<BackupSection> {
                           return 'Google Drive disconnected. '
                               'Your backup stays in Drive.';
                         }),
-                        child: const Text('Disconnect'),
+                        child: const Tr('Disconnect'),
                       ),
                     ]
                   : [
@@ -212,7 +212,7 @@ class _BackupSectionState extends ConsumerState<BackupSection> {
                               : null,
                         ),
                         icon: const Icon(Icons.cloud_upload_outlined, size: 18),
-                        label: const Text('Connect Google Drive'),
+                        label: const Tr('Connect Google Drive'),
                       ),
                     ],
             ),

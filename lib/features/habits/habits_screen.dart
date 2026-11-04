@@ -7,6 +7,7 @@ import '../../app/theme.dart';
 import '../../core/day_key.dart';
 import '../../core/streak.dart';
 import '../../data/db/database.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
 import '../../l10n/app_localizations.dart';
@@ -78,17 +79,17 @@ class _HabitsScreenState extends ConsumerState<HabitsScreen> {
             Expanded(
               child: TextField(
                 controller: _draft,
-                decoration: const InputDecoration(hintText: 'New habit'),
+                decoration: InputDecoration(hintText: tr('New habit')),
                 textCapitalization: TextCapitalization.sentences,
                 onSubmitted: (_) => _add(),
               ),
             ),
             const SizedBox(width: 8),
-            FilledButton(onPressed: _add, child: const Text('Add')),
+            FilledButton(onPressed: _add, child: const Tr('Add')),
           ],
         ),
         if (active.isEmpty)
-          Text(
+          Tr(
             'No habits yet. Add one above, like “Read Quran 10 min”.',
             style: meta(size: 13),
           ),
@@ -101,7 +102,7 @@ class _HabitsScreenState extends ConsumerState<HabitsScreen> {
             showConsistency: settings.showConsistency,
           ),
         if (archived.isNotEmpty) ...[
-          Text('Archived', style: meta(size: 13)),
+          Tr('Archived', style: meta(size: 13)),
           for (final h in archived)
             Container(
               padding: const EdgeInsets.fromLTRB(14, 4, 4, 4),
@@ -123,7 +124,7 @@ class _HabitsScreenState extends ConsumerState<HabitsScreen> {
                   TextButton(
                     onPressed: () =>
                         ref.read(databaseProvider).setArchived(h.id, false),
-                    child: const Text('Restore'),
+                    child: const Tr('Restore'),
                   ),
                 ],
               ),
@@ -170,7 +171,7 @@ class _HabitCard extends ConsumerWidget {
             ],
             PopupMenuButton<String>(
               key: Key('habit-menu-${habit.id}'),
-              tooltip: 'More for ${habit.name}',
+              tooltip: tr('More for {0}', [habit.name]),
               icon: const Icon(Icons.more_horiz, size: 20),
               onSelected: (v) => switch (v) {
                 'reminder' => _pickReminder(context, ref),
@@ -187,9 +188,9 @@ class _HabitCard extends ConsumerWidget {
                         : 'Reminder ${habit.reminderTime}',
                   ),
                 ),
-                const PopupMenuItem(value: 'up', child: Text('Move up')),
-                const PopupMenuItem(value: 'archive', child: Text('Archive')),
-                const PopupMenuItem(value: 'delete', child: Text('Delete')),
+                const PopupMenuItem(value: 'up', child: Tr('Move up')),
+                const PopupMenuItem(value: 'archive', child: Tr('Archive')),
+                const PopupMenuItem(value: 'delete', child: Tr('Delete')),
               ],
             ),
           ],
@@ -220,7 +221,7 @@ class _HabitCard extends ConsumerWidget {
       initialTime: habit.reminderTime == null
           ? const TimeOfDay(hour: 8, minute: 0)
           : parseHhmm(habit.reminderTime!),
-      helpText: 'Reminder for ${habit.name}',
+      helpText: tr('Reminder for {0}', [habit.name]),
       cancelText: habit.reminderTime == null ? 'Cancel' : 'Remove',
     );
     if (picked != null) {
@@ -231,7 +232,7 @@ class _HabitCard extends ConsumerWidget {
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text(
+              content: Tr(
                 'Notifications are off for Nurday. Allow them in Android settings to get reminders.',
               ),
             ),
@@ -249,18 +250,18 @@ class _HabitCard extends ConsumerWidget {
     final ok = await showDialog<bool>(
       context: context,
       builder: (c) => AlertDialog(
-        title: Text('Delete “${habit.name}”?'),
-        content: const Text(
+        title: Tr('Delete “{0}”?', args: [habit.name]),
+        content: const Tr(
           'Its history is removed too. Archive keeps the history.',
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(c, false),
-            child: const Text('Cancel'),
+            child: const Tr('Cancel'),
           ),
           TextButton(
             onPressed: () => Navigator.pop(c, true),
-            child: const Text('Delete'),
+            child: const Tr('Delete'),
           ),
         ],
       ),
@@ -288,7 +289,7 @@ class _ConsistencyHadithCard extends ConsumerWidget {
             const Expanded(child: Kicker('On small deeds')),
             IconButton(
               key: const Key('consistency-hadith-close'),
-              tooltip: 'Close',
+              tooltip: tr('Close'),
               visualDensity: VisualDensity.compact,
               onPressed: () => ref
                   .read(databaseProvider)

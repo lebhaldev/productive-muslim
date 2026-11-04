@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'app/app.dart';
 import 'app/providers.dart';
 import 'data/db/database.dart';
+import 'l10n/strings.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppStrings.load();
+  await initializeDateFormatting();
   runApp(
     ProviderScope(
       overrides: [databaseProvider.overrideWithValue(AppDatabase())],

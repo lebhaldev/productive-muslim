@@ -117,7 +117,7 @@ void main() {
     );
   });
 
-  test('format 2 round-trips prayer logs, excused days, duas, saved items and gratitude', () async {
+  test('current format round-trips prayer logs, excused days, duas, saved items and gratitude', () async {
     await seed(db);
     await db.togglePrayer('2026-10-07', 'fajr', now);
     await db.togglePrayer('2026-10-07', 'dhuhr', now);
@@ -129,7 +129,7 @@ void main() {
     await (db.update(db.journals)..where((j) => j.dayKey.equals('2026-10-07')))
         .write(const JournalsCompanion(gratitude: Value('["Sun","Tea"]')));
     final json = await db.exportJson(now);
-    expect(jsonDecode(json)['format'], 2);
+    expect(jsonDecode(json)['format'], backupFormat);
 
     final other = memoryDb();
     addTearDown(other.close);
@@ -165,6 +165,30 @@ void main() {
     expect(s.habits, 1);
     expect(s.journals, 1);
     expect((await db.watchJournals().first).single.gratitude, isNull);
+  });
+
+  test('Quran reading, fasts and tasbih counts round-trip', () async {
+    await db.setQuranPages('2026-10-06', 12, now);
+    await db.setFast('2026-10-06', 'fast', now);
+    await db.setFast('2026-10-07', 'makeup', now);
+    await db.addDhikr('2026-10-07', 'subhanallah', 33);
+    final json = await db.exportJson(now);
+    expect(jsonDecode(json)['format'], 3);
+
+    final other = memoryDb();
+    addTearDown(other.close);
+    await other.setQuranPages('2026-10-06', 3, now);
+    await other.importJson(json, ImportMode.merge);
+    // Merge keeps the phone's own day; new days are added.
+    expect(await other.watchQuranReads().first, {'2026-10-06': 3});
+    expect(await other.watchFasts().first, {
+      '2026-10-06': 'fast',
+      '2026-10-07': 'makeup',
+    });
+    expect(await other.watchDhikr('2026-10-07').first, {'subhanallah': 33});
+
+    await other.importJson(json, ImportMode.replace);
+    expect(await other.watchQuranReads().first, {'2026-10-06': 12});
   });
 
   test('file name uses the date', () {

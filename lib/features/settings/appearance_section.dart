@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../l10n/app_localizations.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
 import 'settings_widgets.dart';
@@ -22,9 +23,12 @@ class AppearanceSection extends ConsumerWidget {
           label: l.language,
           value: s.language,
           options: {
-            AppLanguage.system: l.languageSystem,
-            AppLanguage.en: l.languageEnglish,
-            AppLanguage.ar: l.languageArabic,
+            for (final lang in AppLanguage.values)
+              lang: lang == AppLanguage.system
+                  ? l.languageSystem
+                  : reviewedLanguages.contains(lang.code)
+                  ? lang.nativeName
+                  : '${lang.nativeName} (${tr('preview')})',
           },
           onChanged: (v) => ref.putSetting('language', v.name),
         ),
@@ -32,14 +36,14 @@ class AppearanceSection extends ConsumerWidget {
         const SizedBox(height: 4),
         SettingPicker<AppFont>(
           key: const Key('app-font'),
-          label: 'Font',
+          label: tr('Font'),
           value: s.appFont,
           options: {for (final f in AppFont.values) f: f.label},
           onChanged: (f) => ref.putSetting('appFont', f.name),
         ),
         SettingPicker<ArabicFont>(
           key: const Key('arabic-font'),
-          label: 'Arabic font',
+          label: tr('Arabic font'),
           value: s.arabicFont,
           options: {for (final f in ArabicFont.values) f: f.label},
           onChanged: (f) => ref.putSetting('arabicFont', f.name),
@@ -112,7 +116,7 @@ class ThemeSwatch extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: '${theme.label} colours',
+      label: tr('{0} colours', [tr(theme.label)]),
       excludeSemantics: true,
       child: InkWell(
         key: Key('color-theme-${theme.name}'),
@@ -148,7 +152,7 @@ class ThemeSwatch extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                theme.label,
+                tr(theme.label),
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: selected ? FontWeight.w700 : FontWeight.w400,
@@ -172,8 +176,8 @@ class _FontPreview extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      Text('Good morning', style: heading(20)),
-      Text(
+      Tr('Good morning', style: heading(20)),
+      Tr(
         'A calm rhythm for every day.',
         style: TextStyle(fontFamily: font.body, fontSize: 15),
       ),

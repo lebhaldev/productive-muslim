@@ -9,6 +9,7 @@ import '../../app/theme.dart';
 import '../../core/copy.dart';
 import '../../core/day_key.dart';
 import '../../data/db/database.dart' show gratitudeLines;
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/locked_view.dart';
 
@@ -96,8 +97,8 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
   @override
   Widget build(BuildContext context) {
     if (ref.watch(journalLockedProvider)) {
-      return const LockedView(
-        title: 'Your journal is locked',
+      return LockedView(
+        title: tr('Your journal is locked'),
         reason: 'Unlock your Nurday journal',
         unlockKey: Key('unlock-journal'),
       );
@@ -119,7 +120,7 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
           children: [
             RoundIconButton(
               icon: Icons.chevron_left,
-              label: 'Previous day',
+              label: tr('Previous day'),
               onPressed: () =>
                   ref.read(selectedDayProvider.notifier).set(shiftDay(sel, -1)),
             ),
@@ -128,7 +129,7 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Journal', style: meta(size: 13)),
+                  Tr('Journal', style: meta(size: 13)),
                   Semantics(
                     container: true,
                     header: true,
@@ -142,7 +143,7 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
             ),
             RoundIconButton(
               icon: Icons.chevron_right,
-              label: 'Next day',
+              label: tr('Next day'),
               onPressed: sel.compareTo(today) < 0
                   ? () => ref
                         .read(selectedDayProvider.notifier)
@@ -157,7 +158,7 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
           controller: _title,
           onChanged: (_) => _changed(),
           style: heading(16),
-          decoration: const InputDecoration(hintText: 'Title (optional)'),
+          decoration: InputDecoration(hintText: tr('Title (optional)')),
         ),
         const SizedBox(height: 16),
         Container(
@@ -182,8 +183,8 @@ class _JournalScreenState extends ConsumerState<JournalScreen> {
                         onChanged: (_) => _changed(),
                         textCapitalization: TextCapitalization.sentences,
                         maxLength: 120,
-                        decoration: const InputDecoration(
-                          hintText: 'Optional',
+                        decoration: InputDecoration(
+                          hintText: tr('Optional'),
                           counterText: '',
                           filled: false,
                           border: InputBorder.none,
@@ -236,5 +237,5 @@ String journalPromptFor(String day) {
   final n =
       DateTime.utc(d.year, d.month, d.day).millisecondsSinceEpoch ~/
       Duration.millisecondsPerDay;
-  return journalPrompts[n % journalPrompts.length];
+  return tr(journalPrompts[n % journalPrompts.length]);
 }

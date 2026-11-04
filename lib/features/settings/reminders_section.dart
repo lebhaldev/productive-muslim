@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import 'settings_widgets.dart';
 
@@ -24,7 +25,7 @@ class _RemindersSectionState extends ConsumerState<RemindersSection> {
         Row(
           children: [
             const Expanded(
-              child: Text('Daily reminder', style: TextStyle(fontSize: 15)),
+              child: Tr('Daily reminder', style: TextStyle(fontSize: 15)),
             ),
             Switch(
               key: const Key('daily-reminder-switch'),

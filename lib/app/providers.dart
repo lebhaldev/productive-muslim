@@ -9,6 +9,8 @@ import '../core/clock.dart';
 import '../core/day_key.dart';
 import '../data/app_lock.dart';
 import '../data/backup_files.dart';
+import '../data/compass.dart';
+import '../data/home_widget_sync.dart';
 import '../data/content/content_models.dart';
 import '../data/content/daily_content_service.dart';
 import '../data/content/quran_client.dart';
@@ -17,6 +19,7 @@ import '../data/drive_backup.dart';
 import '../data/prayer/prayer.dart';
 import '../data/reminders.dart';
 import '../data/weather/weather.dart';
+import '../l10n/strings.dart';
 import 'app_settings.dart';
 
 export 'app_settings.dart';
@@ -205,6 +208,80 @@ final hadithByIdProvider = FutureProvider<Map<String, Hadith>>((ref) async {
             .cast<Map<String, dynamic>>())
       j['id'] as String: Hadith.fromJson(j),
   };
+});
+
+final compassProvider = Provider<Compass>((ref) => SensorCompass());
+
+final homeWidgetProvider = Provider<HomeWidgetSink>(
+  (ref) => AndroidHomeWidget(),
+);
+
+/// What the next-prayer home-screen widget should show, or null without a
+/// location. Recomputed when the day, place, settings or language change.
+final homeWidgetDataProvider = Provider<Map<String, String>>((ref) {
+  ref.watch(settingsProvider.select((s) => s.value?.language));
+  final today = todayKey(ref);
+  final loc = ref.watch(prayerLocationProvider);
+  final day = ref.watch(prayerDayProvider(today));
+  final tomorrow = ref.watch(prayerDayProvider(shiftDay(today, 1)));
+  return widgetData(
+    times: [
+      if (day != null && tomorrow != null)
+        for (final d in [day, tomorrow])
+          for (final p in fivePrayers) (name: prayerLabels[p]!, at: d[p]),
+    ],
+    title: tr('Next prayer'),
+    empty: tr('Open Nurday to set your city'),
+    place: loc?.place ?? '',
+  );
+});
+
+/// Live magnetic heading while a screen listens.
+final headingProvider = StreamProvider.autoDispose<double>(
+  (ref) => ref.watch(compassProvider).headings(),
+);
+
+/// Magnetic declination at the prayer location, degrees east.
+final declinationProvider = FutureProvider.autoDispose<double>((ref) async {
+  final loc = ref.watch(prayerLocationProvider);
+  if (loc == null) return 0;
+  return ref.watch(compassProvider).declination(loc.lat, loc.lon);
+});
+
+/// Pages of Qur'an read per day.
+final quranReadsProvider = StreamProvider<Map<String, int>>(
+  (ref) => ref.watch(databaseProvider).watchQuranReads(),
+);
+
+/// Fasts kept per day: `fast` or `makeup`.
+final fastsProvider = StreamProvider<Map<String, String>>(
+  (ref) => ref.watch(databaseProvider).watchFasts(),
+);
+
+/// Today's tasbih counts per phrase id.
+final dhikrTodayProvider = StreamProvider<Map<String, int>>(
+  (ref) => ref.watch(databaseProvider).watchDhikr(todayKey(ref)),
+);
+
+typedef DhikrPhrase = ({
+  String id,
+  String arabic,
+  String translit,
+  String? hadith,
+});
+
+/// Tasbih phrases from `assets/content/dhikr.json` (Arabic stays in assets).
+final dhikrPhrasesProvider = FutureProvider<List<DhikrPhrase>>((ref) async {
+  final raw = await ref.watch(assetLoaderProvider)('assets/content/dhikr.json');
+  return [
+    for (final p in ((jsonDecode(raw) as Map)['phrases'] as List).cast<Map>())
+      (
+        id: p['id'] as String,
+        arabic: p['arabic'] as String,
+        translit: p['translit'] as String,
+        hadith: p['hadith'] as String?,
+      ),
+  ];
 });
 
 /// Bukhari 6465 for the one-time card on Habits (FR-17); null if the

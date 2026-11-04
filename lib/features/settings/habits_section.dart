@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import 'settings_widgets.dart';
 
@@ -16,8 +17,8 @@ class HabitsSettingsSection extends ConsumerWidget {
       children: [
         SettingSwitch(
           switchKey: const Key('show-consistency'),
-          title: 'Show counts',
-          subtitle: 'Like “4 of the last 7 days” on each habit',
+          title: tr('Show counts'),
+          subtitle: tr('Like “4 of the last 7 days” on each habit'),
           value: s.showConsistency,
           onChanged: (v) => ref.putSetting('showConsistency', '$v'),
         ),

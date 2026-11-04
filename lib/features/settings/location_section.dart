@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/weather/weather.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import 'settings_widgets.dart';
 
@@ -143,12 +144,12 @@ class _LocationSectionState extends ConsumerState<LocationSection> {
       gap: 10,
       children: [
         if (current != null)
-          Text('Current place: $current', style: meta(size: 13)),
+          Tr('Current place: {0}', args: [current], style: meta(size: 13)),
         TextField(
           key: const Key('city-search'),
           controller: _city,
-          decoration: const InputDecoration(
-            labelText: 'Search for a city',
+          decoration: InputDecoration(
+            labelText: tr('Search for a city'),
             prefixIcon: Icon(Icons.search),
           ),
           textInputAction: TextInputAction.search,
@@ -191,7 +192,7 @@ class _LocationSectionState extends ConsumerState<LocationSection> {
           child: TextButton.icon(
             onPressed: _useLocation,
             icon: const Icon(Icons.my_location, size: 18),
-            label: const Text('Use my location'),
+            label: const Tr('Use my location'),
           ),
         ),
         if (_note != null) Note(_note!),

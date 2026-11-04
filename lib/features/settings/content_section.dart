@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
 import '../../data/content/quran_client.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import 'settings_widgets.dart';
 
@@ -16,12 +17,12 @@ class ContentSection extends ConsumerWidget {
       gap: 10,
       children: [
         SettingSwitch(
-          title: 'Show faith cards',
+          title: tr('Show faith cards'),
           value: s.showFaith,
           onChanged: (v) => ref.putSetting('faith', '$v'),
         ),
         SettingPicker<Translation>(
-          label: 'Translation',
+          label: tr('Translation'),
           value: s.translation,
           options: {
             for (final t in Translation.values.where((t) => t.offered))
@@ -30,7 +31,7 @@ class ContentSection extends ConsumerWidget {
           onChanged: (t) => ref.putSetting('translation', t.name),
         ),
         SettingPicker<bool>(
-          label: 'Content language',
+          label: tr('Content language'),
           value: s.arabicOnly,
           options: const {false: 'Arabic + English', true: 'Arabic only'},
           onChanged: (v) =>

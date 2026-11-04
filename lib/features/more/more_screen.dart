@@ -10,6 +10,24 @@ class MoreScreen extends StatelessWidget {
   static const _rows = [
     ('prayer', 'Prayer times', "Today's times and Qibla", Icons.access_time),
     (
+      'tasbih',
+      'Tasbih',
+      'Count dhikr, one total a day',
+      Icons.touch_app_outlined,
+    ),
+    (
+      'quran',
+      'Quran reading',
+      'Pages read and your khatm',
+      Icons.menu_book_outlined,
+    ),
+    (
+      'fasting',
+      'Fasting',
+      'Fasts and make-up counts',
+      Icons.nightlight_outlined,
+    ),
+    (
       'activities',
       'Activities',
       'Log what you did, grouped by day',

@@ -9,7 +9,7 @@ import 'db/database.dart';
 /// Caches (daily content, weather) are left out; they are refetched.
 /// Format 2 adds the prayer log, excused days, duas, saved items and journal
 /// gratitude lines. Format 1 files still import.
-const backupFormat = 2;
+const backupFormat = 3;
 
 class BackupException implements Exception {
   const BackupException(this.message);
@@ -147,6 +147,26 @@ extension Backup on AppDatabase {
             'createdAt': b.createdAt.toUtc().toIso8601String(),
           },
       ],
+      'quranReads': [
+        for (final q in await select(quranReads).get())
+          {
+            'dayKey': q.dayKey,
+            'pages': q.pages,
+            'updatedAt': q.updatedAt.toUtc().toIso8601String(),
+          },
+      ],
+      'fasts': [
+        for (final f in await select(fasts).get())
+          {
+            'dayKey': f.dayKey,
+            'kind': f.kind,
+            'updatedAt': f.updatedAt.toUtc().toIso8601String(),
+          },
+      ],
+      'dhikr': [
+        for (final d in await select(dhikrCounts).get())
+          {'dayKey': d.dayKey, 'phrase': d.phrase, 'count': d.count},
+      ],
       'settings': {
         for (final s in await select(settings).get()) s.key: s.value,
       },
@@ -174,6 +194,9 @@ extension Backup on AppDatabase {
         await delete(excusedDays).go();
         await delete(duas).go();
         await delete(bookmarks).go();
+        await delete(quranReads).go();
+        await delete(fasts).go();
+        await delete(dhikrCounts).go();
         await delete(settings).go();
       }
 
@@ -284,6 +307,15 @@ extension Backup on AppDatabase {
       for (final k in b.bookmarks) {
         await into(bookmarks).insert(k, mode: InsertMode.insertOrIgnore);
       }
+      for (final q in b.quranReads) {
+        await into(quranReads).insert(q, mode: InsertMode.insertOrIgnore);
+      }
+      for (final f in b.fasts) {
+        await into(fasts).insert(f, mode: InsertMode.insertOrIgnore);
+      }
+      for (final d in b.dhikr) {
+        await into(dhikrCounts).insert(d, mode: InsertMode.insertOrIgnore);
+      }
 
       // Duas: the same text written at the same moment is the same dua.
       final haveDuas = {
@@ -352,6 +384,9 @@ class _Parsed {
   final excusedDays = <ExcusedDay>[];
   final duas = <DuasCompanion>[];
   final bookmarks = <Bookmark>[];
+  final quranReads = <QuranRead>[];
+  final fasts = <Fast>[];
+  final dhikr = <DhikrCount>[];
   final settings = <String, String>{};
 }
 
@@ -487,6 +522,31 @@ _Parsed _parse(String source) {
         createdAt: date(d, 'createdAt'),
         answeredAt: Value(answered == null ? null : date(d, 'answeredAt')),
         sortOrder: Value(field<int?>(d, 'sortOrder') ?? 0),
+      ),
+    );
+  }
+  for (final q in list('quranReads')) {
+    final pages = field<int>(q, 'pages');
+    if (pages < 1 || pages > 604) throw _damaged;
+    p.quranReads.add(
+      QuranRead(dayKey: day(q), pages: pages, updatedAt: date(q, 'updatedAt')),
+    );
+  }
+  for (final f in list('fasts')) {
+    final kind = field<String>(f, 'kind');
+    if (kind != 'fast' && kind != 'makeup') throw _damaged;
+    p.fasts.add(
+      Fast(dayKey: day(f), kind: kind, updatedAt: date(f, 'updatedAt')),
+    );
+  }
+  for (final d in list('dhikr')) {
+    final count = field<int>(d, 'count');
+    if (count < 0) throw _damaged;
+    p.dhikr.add(
+      DhikrCount(
+        dayKey: day(d),
+        phrase: field<String>(d, 'phrase'),
+        count: count,
       ),
     );
   }

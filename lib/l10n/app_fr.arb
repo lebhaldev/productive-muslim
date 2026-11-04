@@ -1,0 +1,34 @@
+{
+  "@@locale": "fr",
+  "tabToday": "Aujourd'hui",
+  "tabHabits": "Habitudes",
+  "tabCalendar": "Calendrier",
+  "tabJournal": "Journal",
+  "tabMore": "Plus",
+  "greetingMorning": "Bonjour",
+  "greetingAfternoon": "Bon après-midi",
+  "greetingEvening": "Bonsoir",
+  "sectionHabits": "Habitudes",
+  "sectionMood": "Comment vous sentez-vous ?",
+  "allDoneToday": "Tout est fait aujourd'hui",
+  "excusedToday": "Excusé aujourd'hui",
+  "countTodayAgain": "Compter aujourd'hui à nouveau",
+  "nOfMToday": "{done} sur {total} aujourd'hui",
+  "@nOfMToday": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "addFirstHabit": "Ajoutez votre première habitude",
+  "language": "Langue",
+  "languageSystem": "Système",
+  "languageEnglish": "English",
+  "languageArabic": "العربية (aperçu)",
+  "undo": "Annuler",
+  "excusedNote": "Aujourd'hui ne comptera pas pour les habitudes ni les prières. Vous pouvez quand même cocher."
+}

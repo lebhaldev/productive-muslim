@@ -2,7 +2,10 @@ import 'package:flutter/material.dart' show ThemeMode;
 
 import '../data/content/quran_client.dart';
 import '../data/prayer/prayer.dart';
+import '../l10n/strings.dart';
 import 'theme.dart';
+
+export '../l10n/strings.dart' show AppLanguage;
 
 /// Typed view over the key/value settings table.
 class AppSettings {
@@ -25,10 +28,7 @@ class AppSettings {
   bool get onboarded => raw['onboarded'] == 'true';
 
   /// UI language (FR-21): null follows the phone.
-  AppLanguage get language => AppLanguage.values.firstWhere(
-    (l) => l.name == raw['language'],
-    orElse: () => AppLanguage.system,
-  );
+  AppLanguage get language => AppLanguage.parse(raw['language']);
 
   /// The colour theme was chosen on first run (or skipped there).
   bool get themePicked => raw['themePicked'] == 'true';
@@ -88,9 +88,3 @@ class AppSettings {
   /// Content language: Arabic with the English translation, or Arabic only.
   bool get arabicOnly => raw['contentLanguage'] == 'ar';
 }
-
-enum AppLanguage { system, en, ar }
-
-/// Until a native speaker has reviewed the Arabic strings (FR-21), Arabic
-/// shows only when picked in Settings, never because the phone is Arabic.
-const arabicUiReviewed = false;
