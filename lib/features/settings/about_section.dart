@@ -33,8 +33,9 @@ class AboutSection extends StatelessWidget {
     ),
     (
       'Fonts',
-      'Amiri Quran, Scheherazade New, Noto Naskh Arabic, Caprasimo, Fraunces, Nunito '
-          'and Lora (SIL Open Font License)',
+      'Amiri Quran, Scheherazade New, Noto Naskh Arabic, Lateef, Cairo, '
+          'Tajawal, Reem Kufi, Caprasimo, Fraunces, Nunito, Lora, Atkinson '
+          'Hyperlegible and Playfair Display (SIL Open Font License)',
     ),
   ];
 

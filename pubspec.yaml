@@ -95,6 +95,26 @@ flutter:
     - family: Lora
       fonts:
         - asset: assets/fonts/Lora.ttf
+    - family: AtkinsonHyperlegible
+      fonts:
+        - asset: assets/fonts/AtkinsonHyperlegible-Regular.ttf
+        - asset: assets/fonts/AtkinsonHyperlegible-Bold.ttf
+          weight: 700
+    - family: PlayfairDisplay
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay.ttf
+    - family: Cairo
+      fonts:
+        - asset: assets/fonts/Cairo.ttf
+    - family: Tajawal
+      fonts:
+        - asset: assets/fonts/Tajawal.ttf
+    - family: Lateef
+      fonts:
+        - asset: assets/fonts/Lateef.ttf
+    - family: ReemKufi
+      fonts:
+        - asset: assets/fonts/ReemKufi.ttf
 
 flutter_launcher_icons:
   android: true

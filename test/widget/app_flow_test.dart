@@ -21,8 +21,17 @@ Future<void> settle(WidgetTester tester) async {
   }
 }
 
-Future<void> scrollTo(WidgetTester tester, Finder finder) => tester
-    .scrollUntilVisible(finder, 200, scrollable: find.byType(Scrollable).first);
+/// Scrolls until [finder] is built, then fully on screen (a widget that only
+/// peeks in at the edge cannot be tapped).
+Future<void> scrollTo(WidgetTester tester, Finder finder) async {
+  await tester.scrollUntilVisible(
+    finder,
+    200,
+    scrollable: find.byType(Scrollable).first,
+  );
+  await tester.ensureVisible(finder.first);
+  await tester.pump(const Duration(milliseconds: 100));
+}
 
 void main() {
   final now = DateTime(2026, 10, 5, 7, 12);
@@ -237,13 +246,17 @@ void main() {
     });
 
     await pumpApp(tester, db: db, online: false);
-    await scrollTo(tester, find.text('Read Quran 10 min'));
-    expect(find.text('Read Quran 10 min'), findsOneWidget);
     // No cached ayah and no network: the failed source is named, nothing invented.
+    await scrollTo(
+      tester,
+      find.textContaining('AlQuran Cloud could not be reached'),
+    );
     expect(
       find.textContaining('AlQuran Cloud could not be reached'),
       findsOneWidget,
     );
+    await scrollTo(tester, find.text('Read Quran 10 min'));
+    expect(find.text('Read Quran 10 min'), findsOneWidget);
     await tapTab(tester, 'Calendar');
     await scrollTo(tester, find.text('Offline entry'));
     expect(find.text('Offline entry'), findsOneWidget);
@@ -518,12 +531,16 @@ void main() {
     final db = await pumpApp(tester);
     await openSettings(tester, 'appearance');
     await scrollTo(tester, find.byKey(const Key('app-font')));
+    await tester.ensureVisible(find.byKey(const Key('app-font')));
+    await settle(tester);
     await tester.tap(find.byKey(const Key('app-font')));
     await settle(tester);
     await tester.tap(find.text('Rounded').last);
     await settle(tester);
     expect(AppFonts.current, AppFont.rounded);
     await scrollTo(tester, find.byKey(const Key('arabic-font')));
+    await tester.ensureVisible(find.byKey(const Key('arabic-font')));
+    await settle(tester);
     await tester.tap(find.byKey(const Key('arabic-font')));
     await settle(tester);
     await tester.tap(find.text('Noto Naskh Arabic').last);
@@ -537,7 +554,13 @@ void main() {
   testWidgets('every colour theme can be picked', (tester) async {
     final db = await pumpApp(tester);
     await openSettings(tester, 'appearance');
-    for (final t in [ColorTheme.mint, ColorTheme.peach, ColorTheme.mono]) {
+    for (final t in [
+      ColorTheme.mint,
+      ColorTheme.peach,
+      ColorTheme.mono,
+      ColorTheme.andalus,
+      ColorTheme.plum,
+    ]) {
       await scrollTo(tester, find.byKey(Key('color-theme-${t.name}')));
       await tester.tap(find.byKey(Key('color-theme-${t.name}')));
       await settle(tester);
