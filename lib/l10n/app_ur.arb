@@ -1,0 +1,34 @@
+{
+  "@@locale": "ur",
+  "tabToday": "آج",
+  "tabHabits": "عادتیں",
+  "tabCalendar": "کیلنڈر",
+  "tabJournal": "ڈائری",
+  "tabMore": "مزید",
+  "greetingMorning": "صبح بخیر",
+  "greetingAfternoon": "سہ پہر بخیر",
+  "greetingEvening": "شام بخیر",
+  "sectionHabits": "عادتیں",
+  "sectionMood": "آپ کیسا محسوس کر رہے ہیں؟",
+  "allDoneToday": "آج سب مکمل",
+  "excusedToday": "آج معذور",
+  "countTodayAgain": "آج کو دوبارہ شمار کریں",
+  "nOfMToday": "آج {total} میں سے {done}",
+  "@nOfMToday": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "addFirstHabit": "اپنی پہلی عادت شامل کریں",
+  "language": "زبان",
+  "languageSystem": "سسٹم",
+  "languageEnglish": "English",
+  "languageArabic": "العربية (پیش منظر)",
+  "undo": "واپس کریں",
+  "excusedNote": "آج عادتوں یا نمازوں میں شمار نہیں ہوگا۔ آپ پھر بھی نشان لگا سکتے ہیں۔"
+}

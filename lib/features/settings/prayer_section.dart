@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/prayer/prayer.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import 'settings_widgets.dart';
 
@@ -57,13 +58,13 @@ class _PrayerSectionState extends ConsumerState<PrayerSection> {
         SettingPicker<PrayerMethod>(
           // The suggested method can change with the city.
           key: ValueKey(method),
-          label: 'Calculation method',
+          label: tr('Calculation method'),
           value: method,
           options: {for (final m in PrayerMethod.values) m: m.label},
           onChanged: (m) => ref.putSetting('prayerMethod', m.name),
         ),
         SettingPicker<AsrMadhab>(
-          label: 'Asr',
+          label: tr('Asr'),
           value: s.madhab,
           options: {for (final m in AsrMadhab.values) m: m.label},
           onChanged: (m) => ref.putSetting(
@@ -72,14 +73,14 @@ class _PrayerSectionState extends ConsumerState<PrayerSection> {
           ),
         ),
         SettingPicker<HighLatitude>(
-          label: 'High latitude rule (far north or south)',
+          label: tr('High latitude rule (far north or south)'),
           value: s.highLatitude,
           options: {for (final h in HighLatitude.values) h: h.label},
           onChanged: (h) => ref.putSetting('highLatitude', h.name),
         ),
         SettingSwitch(
           switchKey: const Key('prayer-alerts-switch'),
-          title: 'Prayer time notifications',
+          title: tr('Prayer time notifications'),
           value: s.prayerAlerts,
           onChanged: (on) async {
             final note = await ref.setNotifying(
@@ -103,7 +104,7 @@ class _PrayerSectionState extends ConsumerState<PrayerSection> {
               await ref.read(reminderSchedulerProvider).requestExact();
               await _checkExact();
             },
-            child: const Text('Allow on-time alerts'),
+            child: const Tr('Allow on-time alerts'),
           ),
         ],
         if (s.prayerAlerts)
@@ -115,11 +116,11 @@ class _PrayerSectionState extends ConsumerState<PrayerSection> {
                 setState(() => _note = 'Test notification sent.');
               }
             },
-            child: const Text('Send a test notification'),
+            child: const Tr('Send a test notification'),
           ),
         SettingPicker<int>(
           key: const Key('hijri-offset'),
-          label: 'Hijri date',
+          label: tr('Hijri date'),
           value: s.hijriOffset,
           options: const {
             -2: '2 days earlier',
@@ -136,7 +137,7 @@ class _PrayerSectionState extends ConsumerState<PrayerSection> {
             key: const Key('prayer-adjust'),
             tilePadding: EdgeInsets.zero,
             childrenPadding: EdgeInsets.zero,
-            title: Text('Adjust times to match your mosque'),
+            title: Tr('Adjust times to match your mosque'),
             children: [
               for (final p in PrayerName.values)
                 _AdjustRow(
@@ -176,7 +177,7 @@ class _AdjustRow extends StatelessWidget {
         RoundIconButton(
           key: Key('adjust-minus-${name.name}'),
           icon: Icons.remove,
-          label: '${prayerLabels[name]} one minute earlier',
+          label: tr('{0} one minute earlier', [prayerLabels[name]]),
           onPressed: minutes <= -30 ? null : () => onChange(-1),
         ),
         SizedBox(
@@ -191,7 +192,7 @@ class _AdjustRow extends StatelessWidget {
         RoundIconButton(
           key: Key('adjust-plus-${name.name}'),
           icon: Icons.add,
-          label: '${prayerLabels[name]} one minute later',
+          label: tr('{0} one minute later', [prayerLabels[name]]),
           onPressed: minutes >= 30 ? null : () => onChange(1),
         ),
       ],

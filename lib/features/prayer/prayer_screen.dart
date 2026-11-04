@@ -9,6 +9,7 @@ import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../core/day_key.dart';
 import '../../data/prayer/prayer.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../more/more_screen.dart';
 import 'prayer_arc.dart';
@@ -64,7 +65,7 @@ class PrayerCard extends ConsumerWidget {
             Expanded(
               child: Semantics(
                 container: true,
-                label: '$label at ${_t(next.at)}, $until',
+                label: tr('{0} at {1}, {2}', [label, _t(next.at), until]),
                 child: ExcludeSemantics(
                   child: Text.rich(
                     TextSpan(
@@ -89,7 +90,7 @@ class PrayerCard extends ConsumerWidget {
                 side: BorderSide(color: AppColors.neutral400),
               ),
               onPressed: () => context.go('/more/prayer'),
-              child: const Text('Qibla'),
+              child: const Tr('Qibla'),
             ),
           ],
         ),
@@ -128,7 +129,7 @@ class PrayerScreen extends ConsumerWidget {
                 alignment: Alignment.centerLeft,
                 child: FilledButton(
                   onPressed: () => context.push('/settings/location'),
-                  child: const Text('Open Settings'),
+                  child: const Tr('Open Settings'),
                 ),
               ),
             ],
@@ -143,20 +144,25 @@ class PrayerScreen extends ConsumerWidget {
     return ScreenBody(
       children: [
         const MoreTitle('Prayer times'),
-        Text(
-          'Asr ${s.madhab == AsrMadhab.hanafi ? 'Hanafi' : 'standard'} · change in Settings',
+        Tr(
+          'Asr {0} · change in Settings',
+          args: [s.madhab == AsrMadhab.hanafi ? 'Hanafi' : 'standard'],
           style: meta(size: 13),
         ),
-        Text(
-          '${hijriLabel(parseDayKey(today), offset: s.hijriOffset)} · '
-          'calculated (Umm al-Qura${s.hijriOffset == 0 ? '' : ', ${s.hijriOffset > 0 ? '+' : ''}${s.hijriOffset} days'}); '
-          'local moon sighting can differ by a day',
+        Tr(
+          '{0} · calculated (Umm al-Qura{1}); local moon sighting can differ by a day',
+          args: [
+            hijriLabel(parseDayKey(today), offset: s.hijriOffset),
+            s.hijriOffset == 0
+                ? ''
+                : ', ${s.hijriOffset > 0 ? '+' : ''}${s.hijriOffset} days',
+          ],
           style: meta(size: 13),
         ),
         NCard(
           children: [
             PrayerArc(day: today, times: day, now: now, next: nextToday),
-            Text(
+            Tr(
               'Tap a prayer that has started to log it. Logs stay on this phone.',
               style: meta(),
             ),
@@ -179,9 +185,9 @@ class PrayerScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
             ],
-            Text(
-              'Calculated on this phone · '
-              '${ref.watch(prayerMethodProvider).label} · ${loc.place}',
+            Tr(
+              'Calculated on this phone · {0} · {1}',
+              args: [ref.watch(prayerMethodProvider).label, loc.place],
               style: meta(size: 12),
             ),
           ],
@@ -189,29 +195,30 @@ class PrayerScreen extends ConsumerWidget {
         NCard(
           children: [
             const Kicker('Qibla'),
-            Text(
-              '${bearing.toStringAsFixed(0)}° from true North',
+            Tr(
+              '{0}° from true North',
+              args: [bearing.toStringAsFixed(0)],
               style: heading(22),
             ),
             Center(
               child: Semantics(
-                label: 'Qibla arrow at ${bearing.round()} degrees from North',
+                label: tr('Qibla arrow at {0} degrees from North', [
+                  bearing.round(),
+                ]),
                 child: SizedBox.square(
                   dimension: 180,
                   child: CustomPaint(painter: _CompassPainter(bearing)),
                 ),
               ),
             ),
-            Text(
-              'Face North with your phone, then turn to the arrow. '
-              'This is a fixed bearing; it does not use the compass sensor.',
+            Tr(
+              'Face North with your phone, then turn to the arrow. This is a fixed bearing; it does not use the compass sensor.',
               style: meta(),
             ),
           ],
         ),
-        Text(
-          'Times are calculated on this phone and shown in its time zone. '
-          'Check with your local mosque, especially for Fajr and Isha.',
+        Tr(
+          'Times are calculated on this phone and shown in its time zone. Check with your local mosque, especially for Fajr and Isha.',
           style: meta(),
         ),
       ],

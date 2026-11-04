@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/db/database.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import 'more_screen.dart';
 
@@ -20,7 +21,7 @@ class SavedScreen extends ConsumerWidget {
       children: [
         const MoreTitle('Saved'),
         if (saved.isEmpty)
-          Text(
+          Tr(
             'Tap the bookmark on an ayah or hadith card to keep it here.',
             style: meta(size: 13),
           ),
@@ -33,7 +34,7 @@ class SavedScreen extends ConsumerWidget {
                 children: [
                   Expanded(child: Kicker(b.kind == 'ayah' ? 'Ayah' : 'Hadith')),
                   IconButton(
-                    tooltip: 'Remove from Saved',
+                    tooltip: tr('Remove from Saved'),
                     visualDensity: VisualDensity.compact,
                     icon: Icon(Icons.bookmark, color: AppColors.sage600),
                     onPressed: () => ref
@@ -59,7 +60,9 @@ class SavedScreen extends ConsumerWidget {
                   ),
                   Text('${h.source} · ${h.translator}', style: meta()),
                 ],
-                ('ayah', _) => [Text("Qur'an ${b.ref}", style: heading(17))],
+                ('ayah', _) => [
+                  Tr("Qur'an {0}", args: [b.ref], style: heading(17)),
+                ],
                 _ => [Text(b.ref, style: meta())],
               },
             ],

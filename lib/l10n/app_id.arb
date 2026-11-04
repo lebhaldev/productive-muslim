@@ -1,0 +1,34 @@
+{
+  "@@locale": "id",
+  "tabToday": "Hari ini",
+  "tabHabits": "Kebiasaan",
+  "tabCalendar": "Kalender",
+  "tabJournal": "Jurnal",
+  "tabMore": "Lainnya",
+  "greetingMorning": "Selamat pagi",
+  "greetingAfternoon": "Selamat siang",
+  "greetingEvening": "Selamat malam",
+  "sectionHabits": "Kebiasaan",
+  "sectionMood": "Bagaimana perasaan Anda?",
+  "allDoneToday": "Semua selesai hari ini",
+  "excusedToday": "Berhalangan hari ini",
+  "countTodayAgain": "Hitung hari ini lagi",
+  "nOfMToday": "{done} dari {total} hari ini",
+  "@nOfMToday": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "addFirstHabit": "Tambahkan kebiasaan pertama Anda",
+  "language": "Bahasa",
+  "languageSystem": "Sistem",
+  "languageEnglish": "English",
+  "languageArabic": "العربية (pratinjau)",
+  "undo": "Urungkan",
+  "excusedNote": "Hari ini tidak dihitung untuk kebiasaan atau salat. Anda tetap bisa mencentang."
+}

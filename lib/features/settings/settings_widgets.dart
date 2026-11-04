@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme.dart';
+import '../../l10n/strings.dart';
 
 extension SettingsWrite on WidgetRef {
   /// Saves one setting; every screen watching settings updates.
@@ -45,8 +46,8 @@ class SettingSwitch extends StatelessWidget {
   Widget build(BuildContext context) => SwitchListTile(
     key: switchKey,
     contentPadding: EdgeInsets.zero,
-    title: Text(title, style: const TextStyle(fontSize: 15)),
-    subtitle: subtitle == null ? null : Text(subtitle!, style: meta()),
+    title: Text(tr(title), style: const TextStyle(fontSize: 15)),
+    subtitle: subtitle == null ? null : Text(tr(subtitle!), style: meta()),
     value: value,
     activeTrackColor: AppColors.sage600,
     onChanged: onChanged,
@@ -71,12 +72,12 @@ class SettingPicker<T> extends StatelessWidget {
   Widget build(BuildContext context) => DropdownButtonFormField<T>(
     initialValue: value,
     isExpanded: true,
-    decoration: InputDecoration(labelText: label),
+    decoration: InputDecoration(labelText: tr(label)),
     items: [
       for (final e in options.entries)
         DropdownMenuItem(
           value: e.key,
-          child: Text(e.value, overflow: TextOverflow.ellipsis),
+          child: Text(tr(e.value), overflow: TextOverflow.ellipsis),
         ),
     ],
     onChanged: (v) {
@@ -105,7 +106,7 @@ class SettingChoice<T> extends StatelessWidget {
     child: SegmentedButton<T>(
       segments: [
         for (final e in options.entries)
-          ButtonSegment(value: e.key, label: Text(e.value)),
+          ButtonSegment(value: e.key, label: Text(tr(e.value))),
       ],
       selected: {value},
       showSelectedIcon: false,

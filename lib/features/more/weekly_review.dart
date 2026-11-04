@@ -10,6 +10,7 @@ import '../../core/copy.dart';
 import '../../core/day_key.dart';
 import '../../core/moods.dart';
 import '../../widgets/common.dart';
+import '../../l10n/strings.dart';
 
 typedef WeekCounts = ({
   int habitDays,
@@ -97,21 +98,22 @@ class WeeklyReviewCard extends ConsumerWidget {
       color: AppColors.accent200,
       gap: 6,
       children: [
-        Kicker('$weeklyTitle · ${weekRangeLabel(friday)}'),
-        row(weeklyHabitsLabel, weeklyDays(c.habitDays, c.habitOf)),
-        if (settingsOf(ref).showFaith) row(weeklyPrayersLabel, '${c.prayers}'),
+        Kicker('${tr(weeklyTitle)} · ${weekRangeLabel(friday)}'),
+        row(tr(weeklyHabitsLabel), weeklyDays(c.habitDays, c.habitOf)),
+        if (settingsOf(ref).showFaith)
+          row(tr(weeklyPrayersLabel), '${c.prayers}'),
         row(
-          weeklyMoodLabel,
+          tr(weeklyMoodLabel),
           weeklyMood(c.mostlyMood == null ? null : moodLabel(c.mostlyMood!)),
         ),
-        row(weeklyJournalLabel, weeklyDays(c.journalDays, 7)),
+        row(tr(weeklyJournalLabel), weeklyDays(c.journalDays, 7)),
         const SizedBox(height: 4),
         Align(
           alignment: AlignmentDirectional.centerStart,
           child: FilledButton(
             key: const Key('weekly-note'),
             onPressed: () => openJournal(context, ref, today),
-            child: const Text(weeklyNoteLabel),
+            child: const Tr(weeklyNoteLabel),
           ),
         ),
       ],

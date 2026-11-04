@@ -1,8 +1,12 @@
+import 'dart:io';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nurday/app/app.dart';
+import 'package:nurday/l10n/strings.dart';
 import 'package:nurday/app/providers.dart';
 import 'package:nurday/app/theme.dart';
 import 'package:nurday/core/day_key.dart';
@@ -1061,6 +1065,34 @@ void main() {
     expect(find.text('اليوم'), findsNothing, reason: 'not reviewed yet');
     await closeApp(tester, db);
   });
+
+  testWidgets(
+    'French and Urdu translate the interface; Urdu is right to left',
+    (tester) async {
+      for (final code in ['fr', 'ur']) {
+        final m = jsonDecode(File('assets/l10n/$code.json').readAsStringSync());
+        AppStrings.setForTest(code, (m as Map).cast<String, String>());
+      }
+      AppStrings.use('en');
+      final db = memoryDb();
+      await tester.runAsync(() => db.putSetting('language', 'fr'));
+      await pumpApp(tester, db: db);
+      expect(find.text("Aujourd'hui"), findsWidgets);
+      expect(find.text('Bonjour'), findsOneWidget);
+      expect(find.text('Habitudes'), findsWidgets);
+      await tester.runAsync(() => db.putSetting('language', 'ur'));
+      await settle(tester);
+      expect(find.text('صبح بخیر'), findsOneWidget);
+      expect(
+        Directionality.of(tester.element(find.byKey(const Key('tab-Today')))),
+        TextDirection.rtl,
+      );
+      await tester.runAsync(() => db.putSetting('language', 'en'));
+      await settle(tester);
+      expect(find.text('Good morning'), findsOneWidget);
+      await closeApp(tester, db);
+    },
+  );
 }
 
 class FakeBackupFiles implements BackupFiles {

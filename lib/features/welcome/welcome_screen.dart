@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
 import '../settings/appearance_section.dart';
@@ -119,8 +120,9 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   const SizedBox(width: 4),
                   if (_steps.length > 1)
                     Flexible(
-                      child: Text(
-                        'Step ${_index + 1} of ${_steps.length}',
+                      child: Tr(
+                        'Step {0} of {1}',
+                        args: [_index + 1, _steps.length],
                         style: meta(size: 13),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -129,7 +131,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   TextButton(
                     key: const Key('welcome-skip'),
                     onPressed: _advance,
-                    child: const Text('Skip'),
+                    child: const Tr('Skip'),
                   ),
                 ],
               ),
@@ -186,14 +188,12 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                     const NCard(
                       gap: 8,
                       children: [
-                        Text(
-                          'Habits, moods, journal, duas and prayer logs are '
-                          'kept only on this phone.',
+                        Tr(
+                          'Habits, moods, journal, duas and prayer logs are kept only on this phone.',
                           style: TextStyle(fontSize: 15, height: 1.5),
                         ),
-                        Text(
-                          'They leave it only if you export a backup or turn '
-                          'on Google Drive backup in Settings.',
+                        Tr(
+                          'They leave it only if you export a backup or turn on Google Drive backup in Settings.',
                           style: TextStyle(fontSize: 15, height: 1.5),
                         ),
                       ],
@@ -233,7 +233,7 @@ class ThemePreview extends StatelessWidget {
       gap: 10,
       children: [
         const Kicker('Preview'),
-        Text('Good morning', style: heading(22)),
+        Tr('Good morning', style: heading(22)),
         Row(
           children: [
             Container(
@@ -246,7 +246,7 @@ class ThemePreview extends StatelessWidget {
               child: Icon(Icons.check, size: 16, color: AppColors.bg),
             ),
             const SizedBox(width: 10),
-            const Expanded(child: Text('Morning adhkar')),
+            const Expanded(child: Tr('Morning adhkar')),
           ],
         ),
         Row(
@@ -268,7 +268,7 @@ class ThemePreview extends StatelessWidget {
           alignment: AlignmentDirectional.centerStart,
           child: FilledButton(
             onPressed: () {},
-            child: const Text("Write today's journal"),
+            child: const Tr("Write today's journal"),
           ),
         ),
       ],

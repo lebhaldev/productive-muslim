@@ -9,6 +9,7 @@ import '../../app/theme.dart';
 import '../../core/day_key.dart';
 import '../../core/moods.dart';
 import '../../data/db/database.dart' show gratitudeLines;
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 
 class CalendarScreen extends ConsumerStatefulWidget {
@@ -67,13 +68,13 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             children: [
               RoundIconButton(
                 icon: Icons.chevron_left,
-                label: 'Previous month',
+                label: tr('Previous month'),
                 onPressed: () => setState(() => monthOffset--),
               ),
               const SizedBox(width: 8),
               RoundIconButton(
                 icon: Icons.chevron_right,
-                label: 'Next month',
+                label: tr('Next month'),
                 onPressed: monthOffset < 0
                     ? () => setState(() => monthOffset++)
                     : null,
@@ -114,9 +115,9 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         Wrap(
           spacing: 14,
           children: [
-            Text('● mood', style: meta(size: 11)),
-            Text('• journal', style: meta(size: 11)),
-            Text('▪ prayers logged', style: meta(size: 11)),
+            Tr('● mood', style: meta(size: 11)),
+            Tr('• journal', style: meta(size: 11)),
+            Tr('▪ prayers logged', style: meta(size: 11)),
           ],
         ),
         NCard(
@@ -130,12 +131,12 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   ),
                 ),
                 Tag(
-                  selMood == null ? 'No mood' : moodLabel(selMood),
+                  selMood == null ? tr('No mood') : moodLabel(selMood),
                   sage: true,
                 ),
               ],
             ),
-            Text('Journal', style: meta()),
+            Tr('Journal', style: meta()),
             Text(
               selJournal == null
                   ? 'No entry for this day.'
@@ -147,7 +148,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
             if (selJournal != null &&
                 !ref.watch(journalLockedProvider) &&
                 gratitudeLines(selJournal).any((g) => g.isNotEmpty)) ...[
-              Text('Grateful for', style: meta()),
+              Tr('Grateful for', style: meta()),
               for (final (i, g) in gratitudeLines(selJournal).indexed)
                 if (g.isNotEmpty)
                   Row(
@@ -165,10 +166,10 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
               alignment: Alignment.centerLeft,
               child: OutlinedButton(
                 onPressed: () => openJournal(context, ref, sel),
-                child: const Text('Open journal'),
+                child: const Tr('Open journal'),
               ),
             ),
-            Text('Prayers logged', style: meta()),
+            Tr('Prayers logged', style: meta()),
             Wrap(
               spacing: 6,
               runSpacing: 6,
@@ -179,7 +180,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                     Tag(prayerLabels[p]!, sage: true),
               ],
             ),
-            Text('Habits completed', style: meta()),
+            Tr('Habits completed', style: meta()),
             Wrap(
               spacing: 6,
               runSpacing: 6,
@@ -188,12 +189,13 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
                   Tag(h, sage: true),
               ],
             ),
-            Text('Activities', style: meta()),
+            Tr('Activities', style: meta()),
             if (acts.isEmpty)
-              const Text('None logged', style: TextStyle(fontSize: 14)),
+              const Tr('None logged', style: TextStyle(fontSize: 14)),
             for (final a in acts)
-              Text(
-                '${a.startTime}  ${a.title} · ${a.durationMinutes} min',
+              Tr(
+                '{0}  {1} · {2} min',
+                args: [a.startTime, a.title, a.durationMinutes],
                 style: const TextStyle(fontSize: 14),
               ),
           ],

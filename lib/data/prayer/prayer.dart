@@ -1,6 +1,8 @@
 import 'package:adhan/adhan.dart' as adhan;
 import 'package:hijri/hijri_calendar.dart';
 
+import '../../l10n/strings.dart';
+
 /// Calculation methods offered in Settings (FR-12), in display order.
 enum PrayerMethod {
   mwl('Muslim World League', adhan.CalculationMethod.muslim_world_league),
@@ -72,14 +74,21 @@ enum HighLatitude {
 
 enum PrayerName { fajr, sunrise, dhuhr, asr, maghrib, isha }
 
-const prayerLabels = {
-  PrayerName.fajr: 'Fajr',
-  PrayerName.sunrise: 'Sunrise',
-  PrayerName.dhuhr: 'Dhuhr',
-  PrayerName.asr: 'Asr',
-  PrayerName.maghrib: 'Maghrib',
-  PrayerName.isha: 'Isha',
-};
+/// Prayer names in the interface language, read as `prayerLabels[p]`.
+const prayerLabels = _PrayerLabels();
+
+class _PrayerLabels {
+  const _PrayerLabels();
+  static const _en = {
+    PrayerName.fajr: 'Fajr',
+    PrayerName.sunrise: 'Sunrise',
+    PrayerName.dhuhr: 'Dhuhr',
+    PrayerName.asr: 'Asr',
+    PrayerName.maghrib: 'Maghrib',
+    PrayerName.isha: 'Isha',
+  };
+  String? operator [](PrayerName p) => tr(_en[p]!);
+}
 
 /// The five daily prayers; sunrise is shown but is not a prayer.
 const fivePrayers = [
@@ -147,10 +156,10 @@ PrayerDay prayerDay({
 /// `in 1 h 20 min`, `in 5 min`, `now`.
 String untilLabel(Duration d) {
   final m = (d.inSeconds / 60).ceil();
-  if (m <= 0) return 'now';
+  if (m <= 0) return tr('now');
   final h = m ~/ 60, r = m % 60;
-  if (h == 0) return 'in $r min';
-  return r == 0 ? 'in $h h' : 'in $h h $r min';
+  if (h == 0) return tr('in {0} min', [r]);
+  return r == 0 ? tr('in {0} h', [h]) : tr('in {0} h {1} min', [h, r]);
 }
 
 /// Great-circle bearing to the Kaaba, degrees clockwise from true North (FR-14).

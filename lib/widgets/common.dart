@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app/theme.dart';
+import '../l10n/strings.dart';
 import 'motion.dart';
 
 /// Scrollable screen body with the design's 20px side padding. Children
@@ -52,7 +53,7 @@ class ScreenTitle extends StatelessWidget {
           child: Semantics(
             container: true,
             header: true,
-            child: Text(text, style: heading(28)),
+            child: Text(tr(text), style: heading(28)),
           ),
         ),
         ?trailing,
@@ -115,7 +116,7 @@ class Kicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Text(
-    text.toUpperCase(),
+    tr(text).toUpperCase(),
     style: TextStyle(
       fontSize: 11,
       letterSpacing: 1.2,
@@ -138,7 +139,7 @@ class Tag extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppRadii.pill),
     ),
     child: Text(
-      text,
+      tr(text),
       style: TextStyle(
         fontSize: 12,
         color: sage ? AppColors.sage900 : AppColors.accent900,
@@ -151,7 +152,7 @@ class CardTitle extends StatelessWidget {
   const CardTitle(this.text, {super.key});
   final String text;
   @override
-  Widget build(BuildContext context) => Text(text, style: heading(17));
+  Widget build(BuildContext context) => Text(tr(text), style: heading(17));
 }
 
 class RoundIconButton extends StatelessWidget {
@@ -167,7 +168,7 @@ class RoundIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => IconButton.outlined(
-    tooltip: label,
+    tooltip: tr(label),
     onPressed: onPressed,
     icon: Icon(icon),
     style: IconButton.styleFrom(side: BorderSide(color: AppColors.divider)),
@@ -199,7 +200,7 @@ class SubScreenTitle extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     children: [
       IconButton(
-        tooltip: backTooltip,
+        tooltip: tr(backTooltip),
         onPressed: onBack,
         icon: const Icon(Icons.arrow_back),
       ),
@@ -245,9 +246,9 @@ class NavRow extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: heading(17)),
+                    Text(tr(title), style: heading(17)),
                     const SizedBox(height: 2),
-                    Text(sub, style: meta(size: 13)),
+                    Text(tr(sub), style: meta(size: 13)),
                   ],
                 ),
               ),
@@ -295,10 +296,10 @@ class ActionTile extends StatelessWidget {
               children: [
                 Icon(icon, size: 20, color: ink),
                 const SizedBox(height: 6),
-                Text(title, style: heading(17, color: ink)),
+                Text(tr(title), style: heading(17, color: ink)),
                 const SizedBox(height: 2),
                 Text(
-                  sub,
+                  tr(sub),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(fontSize: 12, color: ink),
@@ -347,7 +348,7 @@ class Note extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>
-      Text(text, style: meta(color: warn ? AppColors.accent700 : null));
+      Text(tr(text), style: meta(color: warn ? AppColors.accent700 : null));
 }
 
 /// A small numbered circle, for gratitude lines.

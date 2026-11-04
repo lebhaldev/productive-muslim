@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nurday/app/app.dart';
+import 'package:nurday/l10n/strings.dart';
 
 import '../helpers.dart';
 import 'app_flow_test.dart' show settle;
@@ -164,6 +169,65 @@ void main() {
     }
 
     handle.dispose();
+    await tester.pumpWidget(const SizedBox());
+    await settle(tester);
+    await tester.runAsync(db.close);
+  });
+
+  testWidgets('every language renders the tabs and settings without overflow', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1080, 2340);
+    tester.view.devicePixelRatio = 2.625;
+    addTearDown(tester.view.reset);
+    for (final l in AppLanguage.values) {
+      final code = l.code;
+      if (code == null || code == 'en') continue;
+      final m = jsonDecode(File('assets/l10n/$code.json').readAsStringSync());
+      AppStrings.setForTest(code, (m as Map).cast<String, String>());
+    }
+    AppStrings.use('en');
+    final db = memoryDb();
+    await tester.runAsync(() async {
+      await db.addHabit('Read Quran 10 min');
+      await db.putSetting('city', 'London');
+    });
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: testOverrides(db, now),
+        child: const NurdayApp(),
+      ),
+    );
+    await settle(tester);
+    for (final l in AppLanguage.values.where((l) => l.code != null)) {
+      await tester.runAsync(() => db.putSetting('language', l.name));
+      await settle(tester);
+      for (final tab in ['Today', 'Habits', 'Calendar', 'Journal', 'More']) {
+        await tester.tap(find.byKey(Key('tab-$tab')));
+        await settle(tester);
+        expect(tester.takeException(), isNull, reason: '${l.name} $tab');
+      }
+      await tester.tap(find.byKey(const Key('tab-Today')));
+      await settle(tester);
+      await tester.tap(find.byKey(const Key('open-settings')));
+      await settle(tester);
+      for (final section in ['appearance', 'prayer', 'backup']) {
+        await tester.scrollUntilVisible(
+          find.byKey(Key('settings-$section')),
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.tap(find.byKey(Key('settings-$section')));
+        await settle(tester);
+        expect(tester.takeException(), isNull, reason: '${l.name} $section');
+        GoRouter.of(tester.element(find.byType(Scaffold).last)).go('/settings');
+        await settle(tester);
+      }
+      GoRouter.of(tester.element(find.byType(Scaffold).last)).go('/today');
+      await settle(tester);
+    }
+    await tester.runAsync(() => db.putSetting('language', 'en'));
+    await settle(tester);
     await tester.pumpWidget(const SizedBox());
     await settle(tester);
     await tester.runAsync(db.close);

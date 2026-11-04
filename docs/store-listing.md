@@ -42,6 +42,7 @@ Private by design
 Made with care
 • 24 colour themes, bright or calm, light and dark, including true black for OLED
 • Choose the app font (including an easy-to-read font for low vision) and one of seven Arabic fonts
+• Interface in English, Arabic, French, Indonesian, Malay, Turkish and Urdu
 • Works offline after the first day
 • Every ayah, hadith, tafsir and quote is copied from a named source and never written or changed by the app
 

@@ -13,6 +13,7 @@ import '../../core/streak.dart';
 import '../../data/prayer/prayer.dart';
 import '../../l10n/app_localizations.dart';
 import '../../data/weather/weather.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
 import '../../widgets/weather_icon.dart';
@@ -109,7 +110,7 @@ class _Header extends ConsumerWidget {
             const Flexible(child: _WeatherChip()),
             IconButton(
               key: const Key('open-settings'),
-              tooltip: 'Settings',
+              tooltip: tr('Settings'),
               onPressed: () => context.push('/settings'),
               icon: Icon(Icons.settings_outlined, color: AppColors.neutral800),
             ),
@@ -143,7 +144,7 @@ class _WeatherChip extends ConsumerWidget {
                   children: [
                     Text('—', style: heading(24, color: color)),
                     Text(
-                      wx?.error ?? 'Loading weather',
+                      tr(wx?.error ?? 'Loading weather'),
                       style: TextStyle(fontSize: 11, color: color),
                       textAlign: TextAlign.right,
                     ),
@@ -151,9 +152,11 @@ class _WeatherChip extends ConsumerWidget {
                 )
               : Semantics(
                   container: true,
-                  label:
-                      'Weather ${w.place}: ${formatTemp(w.nowC, fahrenheit: s.fahrenheit)}, '
-                      '${w.condition}',
+                  label: tr('Weather {0}: {1}, {2}', [
+                    w.place,
+                    formatTemp(w.nowC, fahrenheit: s.fahrenheit),
+                    tr(w.condition),
+                  ]),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -170,13 +173,16 @@ class _WeatherChip extends ConsumerWidget {
                               formatTemp(w.nowC, fahrenheit: s.fahrenheit),
                               style: heading(24, color: color),
                             ),
-                            Text(
-                              'H ${formatTemp(w.hiC, fahrenheit: s.fahrenheit)} · '
-                              'L ${formatTemp(w.loC, fahrenheit: s.fahrenheit)}',
+                            Tr(
+                              'H {0} · L {1}',
+                              args: [
+                                formatTemp(w.hiC, fahrenheit: s.fahrenheit),
+                                formatTemp(w.loC, fahrenheit: s.fahrenheit),
+                              ],
                               style: TextStyle(fontSize: 11, color: color),
                             ),
                             Text(
-                              '${w.condition} · ${w.place}',
+                              '${tr(w.condition)} · ${w.place}',
                               style: TextStyle(fontSize: 11, color: color),
                               textAlign: TextAlign.right,
                             ),
@@ -359,7 +365,7 @@ class TodayBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final n = segments.where((d) => d).length;
     return Semantics(
-      label: '$n of ${segments.length} done today',
+      label: tr('{0} of {1} done today', [n, segments.length]),
       excludeSemantics: true,
       child: Row(
         key: const Key('today-bar'),
@@ -401,7 +407,7 @@ class _HabitRow extends StatelessWidget {
       container: true,
       button: true,
       checked: done,
-      label: '${done ? 'Undo' : 'Mark done'} $name',
+      label: '${done ? tr('Undo') : tr('Mark done')} $name',
       excludeSemantics: true,
       child: Material(
         color: AppColors.surface,
@@ -548,7 +554,7 @@ class _MoodReply extends ConsumerWidget {
         color: heavy ? AppColors.accent200 : AppColors.sage200,
         gap: 10,
         children: [
-          Text(reply.line, style: const TextStyle(fontSize: 15)),
+          Text(tr(reply.line), style: const TextStyle(fontSize: 15)),
           Wrap(
             spacing: 12,
             runSpacing: 4,
@@ -557,12 +563,12 @@ class _MoodReply extends ConsumerWidget {
               FilledButton(
                 key: const Key('mood-suggestion'),
                 onPressed: onPressed,
-                child: Text(moodSuggestionLabels[reply.suggestion]!),
+                child: Text(tr(moodSuggestionLabels[reply.suggestion]!)),
               ),
               TextButton(
                 key: const Key('mood-not-now'),
                 onPressed: hide,
-                child: const Text(
+                child: const Tr(
                   'Not now',
                   style: TextStyle(decoration: TextDecoration.underline),
                 ),
@@ -593,7 +599,7 @@ class MoodDot extends StatelessWidget {
       container: true,
       button: true,
       selected: selected,
-      label: 'Mood ${moodLabel(value)}',
+      label: tr('Mood {0}', [moodLabel(value)]),
       excludeSemantics: true,
       child: InkWell(
         onTap: onTap,
@@ -653,7 +659,7 @@ class _ActivityTile extends ConsumerWidget {
       color: AppColors.sage200,
       ink: AppColors.sage900,
       icon: Icons.directions_walk,
-      title: 'Activity',
+      title: tr('Activity'),
       sub: acts.isEmpty
           ? 'Nothing logged yet'
           : '${acts.length} logged · $minutes min',
@@ -684,7 +690,7 @@ class _JournalShortcut extends ConsumerWidget {
       color: AppColors.accent200,
       ink: AppColors.accent900,
       icon: Icons.edit_outlined,
-      title: 'Journal',
+      title: tr('Journal'),
       sub: j == null ? 'Write a few lines' : sub,
       onTap: () => openJournal(context, ref, today),
     );

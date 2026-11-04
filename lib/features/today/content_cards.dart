@@ -5,6 +5,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../app/providers.dart';
 import '../../app/theme.dart';
 import '../../data/content/content_models.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
 
@@ -37,8 +38,11 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     return content.when(
       skipLoadingOnReload: true,
       loading: () => const NCard(children: [LinearProgressIndicator()]),
-      error: (e, _) =>
-          NCard(children: [Text('Daily content could not load: $e')]),
+      error: (e, _) => NCard(
+        children: [
+          Tr('Daily content could not load: {0}', args: [e]),
+        ],
+      ),
       data: (c) => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -64,7 +68,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
             if (_savedRef(kind, c) case final ref?) _SaveButton(kind.name, ref),
             IconButton(
               key: Key('content-next-${kind.name}'),
-              tooltip: 'Show another ${kind.label.toLowerCase()}',
+              tooltip: tr('Show another {0}', [kind.label.toLowerCase()]),
               visualDensity: VisualDensity.compact,
               icon: Icon(Icons.autorenew, color: AppColors.neutral700),
               onPressed: () {
@@ -123,8 +127,9 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       // as today's (review R3).
       if (slot.stale && slot.fetchedAt != null)
         ..._gap(
-          Text(
-            'Last saved ayah · ${DateFormat('d MMM').format(slot.fetchedAt!)}',
+          Tr(
+            'Last saved ayah · {0}',
+            args: [DateFormat('d MMM').format(slot.fetchedAt!)],
             style: meta(color: AppColors.accent700),
           ),
         ),
@@ -147,10 +152,11 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
             ..._gap(Text(tafsir.englishSource, style: meta(size: 11))),
           ],
         ] else
-          ..._gap(Text('No tafsir is bundled for this ayah.', style: meta())),
+          ..._gap(Tr('No tafsir is bundled for this ayah.', style: meta())),
         ..._gap(
-          Text(
-            'Edition: ${a.edition} · fetched $fetched · ${a.sourceUrl}',
+          Tr(
+            'Edition: {0} · fetched {1} · {2}',
+            args: [a.edition, fetched, a.sourceUrl],
             style: meta(size: 11),
           ),
         ),
@@ -173,7 +179,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
         // No reviewed explanation exists for this dataset yet; none is
         // ever written by the app (CR-1, CR-4).
         ..._gap(
-          Text(
+          Tr(
             'No reviewed explanation is available for this hadith yet.',
             style: meta(),
           ),

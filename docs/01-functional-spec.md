@@ -106,7 +106,7 @@ Decided in [research/balum-review.md](research/balum-review.md). Not built yet; 
 - **Duas** [FR-20]: More → `Duas · Your own duas, private to this phone`. Add a dua (text, optional note); sections `Asking` and `Answered` with counts; `Mark answered` stores the date; Edit, Move back to Asking, Delete (confirm). Locked with the journal lock. Included in Export / Drive backup. The app never adds scripture to this list.
 - **First run**: three skippable steps: location (city search or use location once), starter habits from six chips (Read Qur'an, Morning adhkar, Evening adhkar, Gratitude note, Call family, Walk), privacy promise.
 - **Weekly review**: a Friday card on Reflect with plain counts (habits kept, prayers logged, mostly mood, journal days) and `Write a note to next week`, which opens the journal.
-- **Arabic UI** [FR-21]: Settings → Appearance → Language `System | English | العربية`; mirrored RTL layout; only UI strings are translated, content stays verbatim.
+- **Interface languages** [FR-21]: Settings → Appearance → Language: System, English, العربية, Français, Bahasa Indonesia, Bahasa Melayu, Türkçe, اردو. Arabic and Urdu mirror the layout right to left; dates follow the language. Only interface strings are translated; ayah, hadith, tafsir and quotes stay verbatim. Languages not yet reviewed by a native speaker show `(preview)` and are used only when picked, never because the phone uses that language.
 - **Saved**: a bookmark on the ayah and hadith cards; More → `Saved` lists them with their references.
 
 ## 8. Functional rules
@@ -130,7 +130,7 @@ Decided in [research/balum-review.md](research/balum-review.md). Not built yet; 
 - FR-18 **Excused day**: one boolean per day key, no reason field.
 - FR-19 **No generated text**: mood replies, journal prompts and weekly card lines are fixed strings in the app, reviewed once; none quote or paraphrase scripture.
 - FR-20 **Duas** are personal data: on device only, inside backups, behind the journal lock.
-- FR-21 **Translation scope**: UI strings only. Ayah, hadith, tafsir and quote text are never machine-translated.
+- FR-21 **Translation scope**: UI strings only, keyed by their English text (`tr()` / `Tr`) in `assets/l10n/<code>.json`, built from `tool/l10n/<code>.txt`. Ayah, hadith, tafsir and quote text are never machine-translated. A language moves to `reviewedLanguages` only after a native speaker's review.
 - FR-22 **Own identity**: no screen, label, illustration or store asset reuses another app's name, wording or visual identity (see research/balum-review.md §3).
 
 ## 9. Content rules (non-negotiable)

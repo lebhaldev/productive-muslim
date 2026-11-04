@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/providers.dart';
 import '../../app/theme.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import 'settings_widgets.dart';
 
@@ -47,9 +48,10 @@ class _PrivacySectionState extends ConsumerState<PrivacySection> {
           children: [
             SettingSwitch(
               switchKey: const Key('journal-lock-switch'),
-              title: 'Lock journal',
-              subtitle:
-                  'Asks for your fingerprint, face or screen lock to read it.',
+              title: tr('Lock journal'),
+              subtitle: tr(
+                'Asks for your fingerprint, face or screen lock to read it.',
+              ),
               value: s.journalLock,
               onChanged: _setJournalLock,
             ),
@@ -61,7 +63,7 @@ class _PrivacySectionState extends ConsumerState<PrivacySection> {
           gap: 6,
           color: AppColors.sage200,
           children: [
-            Text(
+            Tr(
               'Your data stays on this phone',
               style: TextStyle(
                 fontWeight: FontWeight.w600,

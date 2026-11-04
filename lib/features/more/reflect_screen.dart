@@ -6,6 +6,7 @@ import '../../app/theme.dart';
 import '../../core/day_key.dart';
 import '../../core/moods.dart';
 import '../../core/streak.dart';
+import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../today/mood_week.dart';
 import 'more_screen.dart';
@@ -43,8 +44,9 @@ class ReflectScreen extends ConsumerWidget {
             const Kicker('Mood · last 30 days'),
             Semantics(
               container: true,
-              label:
-                  'Mood logged on ${last30.where(moods.containsKey).length} of the last 30 days',
+              label: tr('Mood logged on {0} of the last 30 days', [
+                last30.where(moods.containsKey).length,
+              ]),
               excludeSemantics: true,
               child: SizedBox(
                 height: 90,
@@ -84,26 +86,26 @@ class ReflectScreen extends ConsumerWidget {
             ),
             Row(
               children: [
-                Expanded(child: Text('30 days ago', style: meta(size: 11))),
-                Text('Today', style: meta(size: 11)),
+                Expanded(child: Tr('30 days ago', style: meta(size: 11))),
+                Tr('Today', style: meta(size: 11)),
               ],
             ),
           ],
         ),
-        _Stat(value: prayersThisMonth, label: 'prayers logged this month'),
+        _Stat(value: prayersThisMonth, label: tr('prayers logged this month')),
         Row(
           children: [
             Expanded(
               child: _Stat(
                 value: streak(journals.keys.toSet(), today),
-                label: 'day journal streak',
+                label: tr('day journal streak'),
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: _Stat(
                 value: journals.keys.where((k) => k.startsWith(month)).length,
-                label: 'entries this month',
+                label: tr('entries this month'),
               ),
             ),
           ],
@@ -111,8 +113,7 @@ class ReflectScreen extends ConsumerWidget {
         NCard(
           children: [
             const Kicker('Habit check-offs · 30 days'),
-            if (habits.isEmpty)
-              Text('No active habits.', style: meta(size: 13)),
+            if (habits.isEmpty) Tr('No active habits.', style: meta(size: 13)),
             for (final h in habits)
               Builder(
                 builder: (context) {
@@ -141,7 +142,10 @@ class ReflectScreen extends ConsumerWidget {
                           minHeight: 8,
                           backgroundColor: AppColors.neutral200,
                           color: AppColors.sage600,
-                          semanticsLabel: '${h.name}: $n of 30 days',
+                          semanticsLabel: tr('{0}: {1} of 30 days', [
+                            h.name,
+                            n,
+                          ]),
                         ),
                       ),
                     ],

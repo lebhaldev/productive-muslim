@@ -1,0 +1,34 @@
+{
+  "@@locale": "ms",
+  "tabToday": "Hari ini",
+  "tabHabits": "Tabiat",
+  "tabCalendar": "Kalender",
+  "tabJournal": "Jurnal",
+  "tabMore": "Lagi",
+  "greetingMorning": "Selamat pagi",
+  "greetingAfternoon": "Selamat petang",
+  "greetingEvening": "Selamat malam",
+  "sectionHabits": "Tabiat",
+  "sectionMood": "Apa perasaan anda?",
+  "allDoneToday": "Semua selesai hari ini",
+  "excusedToday": "Uzur hari ini",
+  "countTodayAgain": "Kira hari ini semula",
+  "nOfMToday": "{done} daripada {total} hari ini",
+  "@nOfMToday": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "addFirstHabit": "Tambah tabiat pertama anda",
+  "language": "Bahasa",
+  "languageSystem": "Sistem",
+  "languageEnglish": "English",
+  "languageArabic": "العربية (pratonton)",
+  "undo": "Buat asal",
+  "excusedNote": "Hari ini tidak dikira untuk tabiat atau solat. Anda masih boleh menanda."
+}

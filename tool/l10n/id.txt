@@ -1,0 +1,430 @@
+1 hari
+1 hari lebih awal
+1 hari lebih lambat
+2 hari lebih awal
+2 hari lebih lambat
+30 hari lalu
+Ritme yang tenang untuk setiap hari.
+Aktivitas
+Aktivitas
+Tambah
+Tambah 1 kebiasaan
+Tambah pengingat
+Sesuaikan waktu dengan masjid Anda
+=
+=
+AlQuran Cloud (teks Utsmani, Saheeh International)
+Alarm & pengingat
+Izinkan notifikasi tepat waktu
+=
+=
+Hari biasa juga tidak apa-apa.
+Andalusia
+Android dapat menunda notifikasi beberapa menit. Izinkan "Alarm & pengingat" agar notifikasi tepat pada menitnya.
+Terkabul · {0}
+Tampilan
+Arab + Indonesia
+Huruf Arab
+Hanya Arab
+=
+Arsipkan
+Diarsipkan
+Sesuai perhitungan
+Memohon · {0}
+Meminta sidik jari, wajah, atau kunci layar untuk membacanya.
+Asar
+Asar {0} · ubah di Pengaturan
+Ayat
+Ayat dan hadis yang Anda simpan
+Kembali
+Kembali ke Lainnya
+Kembali ke Pengaturan
+Cadangkan sekarang
+Cadangkan sekali sehari ke folder Nurday tersembunyi di Google Drive Anda sendiri. Nurday tidak dapat melihat file Anda yang lain dan tidak punya server atau akun sendiri.
+Dicadangkan ke Google Drive.
+Dicadangkan sekali sehari.
+Cadangan
+Cadangan disimpan.
+Bunga
+=
+Dihitung di ponsel ini · {0} · {1}
+Metode perhitungan
+Metode perhitungan, Asar, notifikasi
+Kalender
+Telepon keluarga
+Batal
+Batalkan edit
+=
+Celsius
+Periksa kebiasaan Anda dan tulis beberapa baris.
+Pilih cadangan Nurday
+Jeruk
+Pencarian kota dan cuaca memakai Open-Meteo. "Gunakan lokasi saya" meminta nama tempat dari geocoder ponsel. Waktu salat dan kiblat dihitung di ponsel ini.
+Kota, lokasi, satuan suhu
+Klasik
+Cerah
+Tutup
+Tema warna, terang atau gelap
+Hubungkan Google Drive
+Angka konsistensi
+Bahasa konten
+Lanjut
+Koral
+Tidak dapat menjangkau Google Drive. Periksa koneksi Anda.
+Tempat saat ini: {0}
+Konten harian
+Konten harian gagal dimuat: {0}
+Pengingat harian
+Waktu pengingat harian
+Gelap
+Hapus
+Hapus doa ini?
+Hapus {0}
+Hapus “{0}”?
+Gurun
+Zuhur
+Putuskan
+Diyanet, Turki
+Selesai
+=
+Gerimis
+Doa
+Doa terkunci
+Dubai
+Durasi
+Senja
+Mudah dibaca
+Edit
+Edit doa
+Edisi: {0} · diambil {1} · {2}
+Otoritas Umum Mesir
+Elegan
+Zamrud
+Penyemangat, bukan nas
+Catatan ditulis · jurnal terkunci
+Zikir petang
+Ekspor
+Ekspor, impor, Google Drive
+Hadapkan ponsel ke utara, lalu putar ke arah panah. Ini arah tetap; kompas tidak digunakan.
+Fahrenheit
+Kartu iman, terjemahan, bahasa
+Subuh
+File
+Mencari lokasi Anda…
+Kabut
+Huruf
+Huruf
+Untuk waktu salat dan cuaca. Tetap di ponsel ini.
+Hutan
+=
+Senang mendengarnya.
+Selamat siang
+Selamat malam
+Selamat pagi
+Google Drive
+Akses Google Drive ditolak. Hubungkan lagi di Pengaturan.
+Google Drive diputus. Cadangan Anda tetap di Drive.
+Google Drive tidak tersedia saat ini.
+Masuk dengan Google tidak tersedia. Coba lagi nanti.
+Bersyukur atas
+Syukur
+Catatan syukur
+Syukur ditulis
+T {0} · R {1}
+=
+Kebiasaan dicentang · 30 hari
+Pengingat kebiasaan
+Kebiasaan
+Kebiasaan selesai
+Kebiasaan terjaga
+Kebiasaan, suasana hati, jurnal, doa, dan catatan salat hanya disimpan di ponsel ini.
+Hadis
+Hanafi
+Aturan lintang tinggi (jauh di utara atau selatan)
+Tanggal Hijriah
+Impor
+Impor cadangan
+Diimpor
+Nila
+Isya
+Ini dihapus dari ponsel ini. Tidak bisa dibatalkan.
+Riwayatnya juga dihapus. Arsip menyimpan riwayat.
+Jurnal
+Kunci jurnal, tempat data Anda disimpan
+Jurnal, suasana hati, kebiasaan, dan aktivitas tidak pernah diunggah. Tanpa akun.
+Kuwait
+Ayat terakhir yang tersimpan · {0}
+=
+Lavender
+Terang
+Berawan tipis
+Seperti “4 dari 7 hari terakhir” pada setiap kebiasaan
+Memuat cuaca
+Lokasi & cuaca
+Lokasi tidak tersedia. Cari kota saja.
+Izin lokasi tidak diberikan. Cari kota saja.
+Kunci jurnal
+Kunci jurnal Nurday Anda
+Catat aktivitas
+Catat satu hal kecil yang Anda lakukan
+Catat apa yang Anda lakukan, per hari
+Indah. Pertahankan.
+Magrib
+Tandai terkabul
+Gabung
+Gabung menambahkan cadangan ke isi ponsel ini. Ganti menghapus semua isi ponsel ini terlebih dahulu.
+Tengah malam
+Larut malam
+Mint
+Modern
+Mono
+Suasana hati
+Suasana hati dicatat {0} dari 30 hari terakhir
+Suasana hati {0}
+Suasana hati · 30 hari terakhir
+Komite Rukyat Hilal
+Lainnya
+Lainnya untuk {0}
+Zikir pagi
+Kembalikan ke Memohon
+Naikkan
+Liga Muslim Dunia
+Lokasi saya
+Kebiasaan baru
+Hari berikutnya
+Bulan berikutnya
+Malam
+Malam selalu gelap, untuk layar OLED.
+Tanpa akun, tanpa iklan.
+Tidak ada kebiasaan aktif.
+Tidak ada cadangan di Google Drive Anda.
+Tidak ada catatan untuk hari ini.
+Belum ada kebiasaan. Tambahkan di atas, misalnya “Membaca Al-Qur'an 10 menit”.
+Tanpa suasana hati
+Belum ada penjelasan yang ditinjau untuk hadis ini.
+Tidak ada tafsir untuk ayat ini.
+Tidak ada
+Belum dicatat
+Amerika Utara (ISNA)
+Nanti saja
+Tidak terbuka. Coba lagi.
+Catatan (opsional)
+Catat apa yang membuat hari ini baik
+Belum ada yang dicatat
+Belum ada yang dicatat.
+Tidak ada yang baru di cadangan ini.
+Notifikasi Nurday mati. Izinkan di pengaturan Android untuk mendapat pengingat.
+Notifikasi berfungsi. Notifikasi salat akan terlihat seperti ini.
+=
+Nurday
+Nurday tidak punya server dan akun. Cadangan harian hanya ke Google Drive Anda sendiri.
+Samudra
+Zaitun
+Tentang amal kecil
+Tepat waktu
+Buka Pengaturan
+Buka jurnal
+Buka jurnal hari ini
+=
+Open-Meteo tidak dapat dijangkau
+Korpus OpenITI
+Opsional
+Alami
+Mendung
+Persik
+Pengingat per kebiasaan diatur di tiap kebiasaan.
+Pilih beberapa kebiasaan
+Pilih warna Anda
+Plum
+Salat
+Notifikasi waktu salat
+Waktu salat
+Salat hari ini
+Salat tercatat
+Pratinjau
+Hari sebelumnya
+Bulan sebelumnya
+Privasi
+Qatar
+Kiblat
+Panah kiblat pada {0} derajat dari utara
+Kutipan
+Kutipan
+Al-Qur'an {0}
+Al-Qur'an
+=
+Hujan
+Membaca Al-Qur'an
+=
+Refleksi
+Pengingat untuk {0}
+Pengingat
+Hapus
+Hilangkan animasi
+Hapus dari Tersimpan
+Ganti
+Pulihkan
+Dipulihkan
+Mawar
+Bulat
+Saheeh International
+=
+Kunci yang sama dengan jurnal Anda.
+Pasir
+Simpan
+Simpan cadangan Nurday
+Simpan perubahan
+Tersimpan
+Disimpan · {0}. Saran tidak muncul sampai besok atau sampai suasana hati berubah.
+Menyimpan kebiasaan, suasana hati, aktivitas, jurnal, dan pengaturan ke file pilihan Anda. File tidak dienkripsi, jadi simpan baik-baik.
+=
+Cari kota
+Kirim notifikasi uji
+Serif
+Atur kota di Pengaturan
+Atur kunci layar di pengaturan Android terlebih dahulu, lalu coba lagi.
+Atur kota Anda di Pengaturan untuk melihat waktu salat.
+Pengaturan
+Sepertujuh malam
+Tampilkan yang lain
+Tampilkan {0} lain
+Tampilkan angka
+Tampilkan kartu iman
+Hujan lokal
+Singapura
+Lewati
+Langit
+Batu tulis
+Salju
+Hujan salju
+Serif lembut
+Sumber & lisensi
+Ranting dengan 1 daun
+Ranting, belum berdaun
+Standar (Syafi'i, Maliki, Hanbali)
+Mulai hariku
+Mulailah dari yang kecil. Anda bisa mengubahnya kapan saja.
+Mulai hari ini
+Mulai {0}
+Langkah {0} dari {1}
+Terbit
+Sistem
+Tafsir
+=
+Jalan santai sebentar
+Ketuk salat yang waktunya sudah masuk untuk mencatatnya. Catatan tetap di ponsel ini.
+Ketuk untuk sumber
+Ketuk untuk tafsir
+Ketuk penanda pada kartu ayat atau hadis untuk menyimpannya di sini.
+Ketuk untuk mencatat
+Ketuk untuk membatalkan
+Teheran
+Notifikasi uji terkirim.
+Terima kasih sudah menyadarinya.
+Kedengarannya berat. Pelan-pelan saja hari ini.
+Cadangan tidak dapat disimpan.
+Kumpulan hadis bawaan tidak dapat dibaca.
+Daftar kutipan bawaan tidak dapat dibaca.
+File tidak dapat dibaca.
+Data hanya keluar jika Anda mengekspor cadangan atau menyalakan cadangan Google Drive di Pengaturan.
+Cadangan ini rusak dan tidak diimpor.
+Cadangan ini dibuat oleh versi Nurday yang lebih baru. Perbarui aplikasi, lalu coba lagi.
+File ini bukan cadangan Nurday.
+Minggu ini
+Badai petir
+Waktunya: {0}
+Waktu dihitung di ponsel ini dan ditampilkan dalam zona waktunya. Periksa dengan masjid setempat, terutama untuk Subuh dan Isya.
+Waktu dihitung di ponsel ini dari lokasi cuaca Anda.
+Judul (opsional)
+Hari ini
+Waktu hari ini dan kiblat
+Terjemahan
+Matikan kunci jurnal
+Sudut senja
+Kalender Umm al-Qura (pustaka hijri)
+Umm al-Qura, Makkah
+Urungkan
+Universitas Ilmu Islam, Karachi
+Tidak diketahui
+Buka kunci
+Buka kunci doa Nurday Anda
+Buka kunci jurnal Nurday Anda
+Gunakan lokasi saya
+Gunakan sidik jari, wajah, atau kunci layar untuk membukanya.
+Memakai lokasi Anda. Ponsel tidak dapat menamai tempatnya.
+Jalan kaki
+Cuaca
+Cuaca {0}: {1}, {2}
+Apa yang Anda syukuri hari ini?
+Apa yang Anda lakukan?
+Apa yang membebani Anda?
+Apa yang berjalan baik?
+Di mana Anda?
+Asal ayat, hadis, tafsir, dan kutipan
+Tulis doa
+Tulis beberapa baris
+Tulis catatan untuk minggu depan
+Tulis satu hal yang Anda syukuri
+Tulis sesuatu untuk menyimpan catatan hari ini.
+Tulis doa-doa yang Anda panjatkan. Hanya Anda yang melihatnya.
+Tulis jurnal hari ini
+Ditulis hari ini · terkunci
+Kemarin
+Anda bisa mengubahnya kapan saja di Pengaturan.
+Data Anda tetap di ponsel ini
+Data Anda tetap di ponsel ini.
+Hari Anda di Nurday
+Jurnal Anda terkunci
+30 hari terakhir Anda
+Doa Anda sendiri, hanya di ponsel ini
+Minggu Anda
+Pustaka adhan (MIT), dihitung di ponsel ini
+=
+hari jurnal berturut-turut
+catatan bulan ini
+=
+centang kebiasaan
+centang kebiasaan
+ada jurnal
+dalam {0} j
+dalam {0} j {1} mnt
+dalam {0} mnt
+catatan jurnal
+catatan jurnal
+salat tercatat
+salat tercatat
+=
+kebanyakan {0}
+tidak ada koneksi
+belum dicatat
+sekarang
+notifikasi salat
+salat tercatat bulan ini
+=
+=
+=
+=
+=
+{0}  {1} · {2} mnt
+{0} pukul {1} · {2}
+{0} pukul {1}, {2}
+Warna {0}
+{0} dicatat
+{0} dari {1} hari
+{0} dari {1} selesai hari ini
+{0} satu menit lebih awal
+{0} satu menit lebih lambat
+{0} dibatalkan
+{0} · dihitung (Umm al-Qura{1}); rukyat setempat bisa berbeda sehari
+{0}: {1} dari 30 hari
+{0}° dari utara sejati
+• jurnal
+▪ salat tercatat
+● suasana hati
+---
+rough = berat
+low = rendah
+okay = biasa
+good = baik
+bright = cerah
+preview = pratinjau

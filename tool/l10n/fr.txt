@@ -1,0 +1,430 @@
+1 jour
+1 jour plus tôt
+1 jour plus tard
+2 jours plus tôt
+2 jours plus tard
+Il y a 30 jours
+Un rythme serein pour chaque jour.
+Activités
+Activité
+Ajouter
+Ajouter 1 habitude
+Ajouter un rappel
+Ajuster les horaires à ceux de votre mosquée
+=
+=
+AlQuran Cloud (texte uthmani, Saheeh International)
+Alarmes et rappels
+Autoriser les alertes à l'heure exacte
+=
+=
+Une journée ordinaire, c'est bien aussi.
+Andalous
+Android peut retarder les alertes de quelques minutes. Autorisez « Alarmes et rappels » pour des alertes à la minute près.
+Exaucée · {0}
+Apparence
+Arabe + français
+Police arabe
+Arabe uniquement
+=
+Archiver
+Archivée
+Tel que calculé
+En attente · {0}
+Demande votre empreinte, votre visage ou le verrouillage de l'écran pour le lire.
+Asr
+Asr {0} · à modifier dans Réglages
+Verset
+Versets et hadiths enregistrés
+Retour
+Retour à Plus
+Retour aux réglages
+Sauvegarder maintenant
+Une sauvegarde par jour dans un dossier Nurday caché de votre propre Google Drive. Nurday ne voit pas vos autres fichiers et n'a ni serveur ni compte.
+Sauvegardé sur Google Drive.
+Sauvegarde une fois par jour.
+Sauvegarde
+Sauvegarde enregistrée.
+Fleur
+=
+Calculé sur ce téléphone · {0} · {1}
+Méthode de calcul
+Méthode de calcul, Asr, notifications
+Calendrier
+Appeler la famille
+Annuler
+Annuler la modification
+=
+Celsius
+Faites le point sur vos habitudes et écrivez quelques lignes.
+Choisir une sauvegarde Nurday
+Agrumes
+La recherche de ville et la météo utilisent Open-Meteo. « Utiliser ma position » demande le nom du lieu au géocodeur du téléphone. Les horaires de prière et la qibla sont calculés sur ce téléphone.
+Ville, position, unité de température
+Classique
+Dégagé
+Fermer
+Thème de couleurs, clair ou sombre
+Connecter Google Drive
+Chiffres de régularité
+Langue du contenu
+Continuer
+Corail
+Impossible de joindre Google Drive. Vérifiez votre connexion.
+Lieu actuel : {0}
+Contenu du jour
+Le contenu du jour n'a pas pu se charger : {0}
+Rappel quotidien
+Heure du rappel quotidien
+Sombre
+Supprimer
+Supprimer cette invocation ?
+Supprimer {0}
+Supprimer « {0} » ?
+Désert
+Dhuhr
+Déconnecter
+Diyanet, Turquie
+Fait
+=
+Bruine
+Invocations
+Les invocations sont verrouillées
+Dubaï
+Durée
+Crépuscule
+Facile à lire
+Modifier
+Modifier l'invocation
+Édition : {0} · récupérée {1} · {2}
+Autorité générale égyptienne
+Élégant
+Émeraude
+Encouragement, pas un texte sacré
+Entrée écrite · journal verrouillé
+Adhkar du soir
+Exporter
+Exporter, importer, Google Drive
+Tournez-vous vers le nord avec votre téléphone, puis vers la flèche. C'est une direction fixe ; la boussole n'est pas utilisée.
+Fahrenheit
+Cartes de foi, traduction, langue
+Fajr
+Fichier
+Recherche de votre position…
+Brouillard
+Police
+Polices
+Pour les horaires de prière et la météo. Reste sur ce téléphone.
+Forêt
+=
+Ravi de l'entendre.
+Bon après-midi
+Bonsoir
+Bonjour
+Google Drive
+Accès à Google Drive refusé. Reconnectez-le dans Réglages.
+Google Drive déconnecté. Votre sauvegarde reste dans Drive.
+Google Drive n'est pas disponible pour le moment.
+La connexion Google n'est pas disponible. Réessayez plus tard.
+Reconnaissant pour
+Gratitude
+Note de gratitude
+Gratitude écrite
+Max {0} · Min {1}
+=
+Habitudes cochées · 30 jours
+Rappels d'habitudes
+Habitudes
+Habitudes accomplies
+Habitudes tenues
+Habitudes, humeurs, journal, invocations et prières restent uniquement sur ce téléphone.
+Hadith
+Hanafite
+Règle des hautes latitudes (extrême nord ou sud)
+Date hégirienne
+Importer
+Importer une sauvegarde
+Importé
+Indigo
+Isha
+Elle sera supprimée de ce téléphone. Action irréversible.
+Son historique sera supprimé aussi. Archiver conserve l'historique.
+Journal
+Verrouillage du journal, où sont vos données
+Journal, humeur, habitudes et activités ne sont jamais envoyés. Aucun compte nécessaire.
+Koweït
+Dernier verset enregistré · {0}
+=
+Lavande
+Clair
+Peu nuageux
+Comme « 4 des 7 derniers jours » sur chaque habitude
+Chargement de la météo
+Lieu et météo
+Position indisponible. Recherchez plutôt une ville.
+Autorisation de localisation refusée. Recherchez plutôt une ville.
+Verrouiller le journal
+Verrouiller votre journal Nurday
+Noter une activité
+Notez une petite chose que vous avez faite
+Notez ce que vous avez fait, jour par jour
+Magnifique. Gardez-le précieusement.
+Maghrib
+Marquer comme exaucée
+Fusionner
+Fusionner ajoute la sauvegarde à ce qui est sur ce téléphone. Remplacer efface d'abord tout ce qui est sur ce téléphone.
+Milieu de la nuit
+Minuit
+Menthe
+Moderne
+Mono
+Humeur
+Humeur notée {0} des 30 derniers jours
+Humeur {0}
+Humeur · 30 derniers jours
+Comité d'observation du croissant
+Plus
+Plus pour {0}
+Adhkar du matin
+Remettre en attente
+Monter
+Ligue islamique mondiale
+Ma position
+Nouvelle habitude
+Jour suivant
+Mois suivant
+Nuit
+Nuit est toujours sombre, pour les écrans OLED.
+Sans compte, sans publicité.
+Aucune habitude active.
+Aucune sauvegarde dans votre Google Drive.
+Aucune entrée pour ce jour.
+Pas encore d'habitude. Ajoutez-en une ci-dessus, comme « Lire le Coran 10 min ».
+Pas d'humeur
+Aucune explication vérifiée n'est encore disponible pour ce hadith.
+Aucun tafsir n'est fourni pour ce verset.
+Aucune
+Rien de noté
+Amérique du Nord (ISNA)
+Pas maintenant
+Non déverrouillé. Réessayez.
+Note (facultatif)
+Notez ce qui a rendu cette journée belle
+Rien de noté pour l'instant
+Rien de noté pour l'instant.
+Rien de nouveau dans cette sauvegarde.
+Les notifications de Nurday sont désactivées. Autorisez-les dans les réglages Android pour recevoir les rappels.
+Les notifications fonctionnent. Les alertes de prière ressembleront à ceci.
+=
+Nurday
+Nurday n'a ni serveur ni compte. La sauvegarde quotidienne va uniquement dans votre propre Google Drive.
+Océan
+Olive
+Sur les petites actions
+À l'heure
+Ouvrir les réglages
+Ouvrir le journal
+Ouvrir le journal du jour
+=
+Open-Meteo est injoignable
+Corpus OpenITI
+Facultatif
+Organique
+Couvert
+Pêche
+Les rappels d'habitude se règlent sur chaque habitude.
+Choisissez quelques habitudes
+Choisissez vos couleurs
+Prune
+Prière
+Notifications des heures de prière
+Horaires de prière
+Prières du jour
+Prières notées
+Aperçu
+Jour précédent
+Mois précédent
+Confidentialité
+Qatar
+Qibla
+Flèche de la qibla à {0} degrés du nord
+Citation
+Citations
+Coran {0}
+Coran
+=
+Pluie
+Lire le Coran
+=
+Bilan
+Rappel pour {0}
+Rappels
+Retirer
+Supprimer les animations
+Retirer des enregistrés
+Remplacer
+Restaurer
+Restauré
+Rose
+Arrondi
+Saheeh International
+=
+Même verrou que votre journal.
+Sable
+Enregistrer
+Enregistrer la sauvegarde Nurday
+Enregistrer les modifications
+Enregistrés
+Enregistré · {0}. La suggestion revient demain ou quand l'humeur change.
+Enregistre habitudes, humeurs, activités, journal et réglages dans un fichier de votre choix. Le fichier n'est pas chiffré : gardez-le en lieu sûr.
+=
+Rechercher une ville
+Envoyer une notification de test
+Sérif
+Choisissez une ville dans Réglages
+Configurez d'abord un verrouillage d'écran dans les réglages Android, puis réessayez.
+Indiquez votre ville dans Réglages pour voir les horaires de prière.
+Réglages
+Septième de la nuit
+Afficher un autre
+Afficher un autre élément : {0}
+Afficher les chiffres
+Afficher les cartes de foi
+Averses
+Singapour
+Passer
+Ciel
+Ardoise
+Neige
+Averses de neige
+Sérif doux
+Sources et licences
+Brin avec 1 feuille
+Brin, pas encore de feuille
+Standard (chaféite, malikite, hanbalite)
+Commencer ma journée
+Commencez petit. Vous pourrez les modifier à tout moment.
+Commencer aujourd'hui
+Commencer {0}
+Étape {0} sur {1}
+Lever du soleil
+Système
+Tafsir
+=
+Faites une marche tranquille
+Touchez une prière dont l'heure a commencé pour la noter. Les notes restent sur ce téléphone.
+Toucher pour la source
+Toucher pour le tafsir
+Touchez le signet d'un verset ou d'un hadith pour le garder ici.
+Toucher pour noter
+Toucher pour annuler
+Téhéran
+Notification de test envoyée.
+Merci de l'avoir remarqué.
+Cela semble lourd. Allez-y doucement aujourd'hui.
+La sauvegarde n'a pas pu être enregistrée.
+Le recueil de hadiths fourni n'a pas pu être lu.
+La liste de citations fournie n'a pas pu être lue.
+Le fichier n'a pas pu être lu.
+Elles n'en sortent que si vous exportez une sauvegarde ou activez la sauvegarde Google Drive dans Réglages.
+Cette sauvegarde est endommagée et n'a pas été importée.
+Cette sauvegarde vient d'une version plus récente de Nurday. Mettez l'application à jour, puis réessayez.
+Ce fichier n'est pas une sauvegarde Nurday.
+Cette semaine
+Orage
+C'est l'heure : {0}
+Les horaires sont calculés sur ce téléphone et affichés dans son fuseau horaire. Vérifiez auprès de votre mosquée, surtout pour Fajr et Isha.
+Les horaires sont calculés sur ce téléphone à partir du lieu de la météo.
+Titre (facultatif)
+Aujourd'hui
+Horaires du jour et qibla
+Traduction
+Désactiver le verrouillage du journal
+Angle du crépuscule
+Calendrier Umm al-Qura (bibliothèque hijri)
+Umm al-Qura, La Mecque
+Annuler
+Université des sciences islamiques, Karachi
+Inconnu
+Déverrouiller
+Déverrouiller vos invocations Nurday
+Déverrouiller votre journal Nurday
+Utiliser ma position
+Utilisez votre empreinte, votre visage ou le verrouillage de l'écran pour l'ouvrir.
+Votre position est utilisée. Le téléphone n'a pas pu nommer le lieu.
+Marche
+Météo
+Météo {0} : {1}, {2}
+De quoi êtes-vous reconnaissant aujourd'hui ?
+Qu'avez-vous fait ?
+Qu'est-ce qui vous a pesé ?
+Qu'est-ce qui s'est bien passé ?
+Où êtes-vous ?
+D'où viennent le verset, le hadith, le tafsir et les citations
+Écrire une invocation
+Écrivez quelques lignes
+Écrire une note pour la semaine prochaine
+Écrivez une chose pour laquelle vous êtes reconnaissant
+Écrivez quelque chose pour enregistrer l'entrée de ce jour.
+Écrivez les invocations que vous faites. Vous seul les voyez.
+Écrire le journal du jour
+Écrit aujourd'hui · verrouillé
+Hier
+Vous pouvez les modifier à tout moment dans Réglages.
+Vos données restent sur ce téléphone
+Vos données restent sur ce téléphone.
+Votre journée dans Nurday
+Votre journal est verrouillé
+Vos 30 derniers jours
+Vos propres invocations, privées sur ce téléphone
+Votre semaine
+Bibliothèque adhan (MIT), calcul sur ce téléphone
+=
+jours de journal d'affilée
+entrées ce mois-ci
+=
+habitude cochée
+habitudes cochées
+a un journal
+dans {0} h
+dans {0} h {1} min
+dans {0} min
+entrées de journal
+entrée de journal
+prière notée
+prières notées
+=
+surtout {0}
+pas de connexion
+non noté
+maintenant
+alertes de prière
+prières notées ce mois-ci
+=
+=
+=
+=
+=
+{0}  {1} · {2} min
+{0} à {1} · {2}
+{0} à {1}, {2}
+Couleurs {0}
+{0} notée
+{0} sur {1} jours
+{0} sur {1} faits aujourd'hui
+{0} une minute plus tôt
+{0} une minute plus tard
+{0} retirée
+{0} · calculée (Umm al-Qura{1}) ; l'observation locale du croissant peut différer d'un jour
+{0} : {1} sur 30 jours
+{0}° du nord géographique
+• journal
+▪ prières notées
+● humeur
+---
+rough = difficile
+low = bas
+okay = correct
+good = bien
+bright = radieux
+preview = aperçu
