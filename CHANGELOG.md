@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.0 (unreleased)
+- Quotes: 42 more Arabic sayings (97 in all) from three more classical works in the OpenITI corpus: Ibn Hazm's al-Akhlaq wa al-Siyar (29), Ibn al-Jawzi's advice to his son Laftat al-Kabid (11) and al-Mawardi's Adab al-Dunya wa al-Din (2). Each is an exact sentence from a punctuated edition, checked by string match against the cited file, with its page; none contains Quran or hadith text. They are marked `cited-pending-review` until a reviewer reads them.
+
 ## 1.1.0 (unreleased)
 - Synced to the v1.1 design export of 26 October (`docs/design/2026-10-26-Nurday-v1.1.html`): Caprasimo is the Classic heading font (Fraunces stays as "Soft serif"); Organic dark and the five bright themes use the design's colour values; the weather chip shows an animated line icon (sun, partly cloudy, cloud, fog, rain, snow, thunder, wind of 40 km/h or more) with today's high and low, still when "Remove animations" is on; the prayer card reads "Prayer today" with sunrise and sunset ticks under the arc, a "now" dot, "Asr · 15:58 · in 1 h 12 min" and a Qibla pill; the Prayer screen lists the times as pill rows with "Calculated on this phone · method · place"; habit cards show "N of the last 7 days" beside the name, seven large day pills and a ⋯ menu (reminder, move up, archive, delete).
 - Five brighter themes: Mint, Sky, Blossom, Citrus and Peach, each light and dark (17 in all), all passing the contrast check. The first theme is now called Organic, as in the design system.

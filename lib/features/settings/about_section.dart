@@ -26,8 +26,10 @@ class AboutSection extends StatelessWidget {
     ('Weather', 'Open-Meteo (CC BY 4.0)'),
     (
       'Quotes',
-      "Arabic texts from the OpenITI corpus (Diwan al-Shafi'i, "
-          "al-Mutanabbi, Ibn al-Jawzi's Sayd al-Khatir)",
+      "Arabic texts from the OpenITI corpus: Diwan al-Shafi'i, "
+          "Diwan al-Mutanabbi, Ibn al-Jawzi's Sayd al-Khatir and Laftat "
+          "al-Kabid, Ibn Hazm's al-Akhlaq wa al-Siyar and al-Mawardi's Adab "
+          "al-Dunya wa al-Din",
     ),
     (
       'Fonts',
