@@ -215,6 +215,14 @@ class PrayerScreen extends ConsumerWidget {
               'Face North with your phone, then turn to the arrow. This is a fixed bearing; it does not use the compass sensor.',
               style: meta(),
             ),
+            Align(
+              child: FilledButton.icon(
+                key: const Key('qibla-live-open'),
+                onPressed: () => context.go('/more/qibla'),
+                icon: const Icon(Icons.explore_outlined, size: 18),
+                label: const Tr('Live compass'),
+              ),
+            ),
           ],
         ),
         Tr(

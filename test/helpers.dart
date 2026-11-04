@@ -11,6 +11,7 @@ import 'package:nurday/core/clock.dart';
 import 'package:nurday/data/db/database.dart';
 import 'package:nurday/data/app_lock.dart';
 import 'package:nurday/data/drive_backup.dart';
+import 'package:nurday/data/home_widget_sync.dart';
 import 'package:nurday/data/reminders.dart';
 
 String fixture(String name) => File('test/fixtures/$name').readAsStringSync();
@@ -60,9 +61,11 @@ List<Override> testOverrides(
   Future<String> Function(String path)? assets,
   http.Client? client,
   bool firstRun = false,
+  HomeWidgetSink? homeWidget,
 }) => [
   firstRunEnabledProvider.overrideWithValue(firstRun),
   googleAuthProvider.overrideWithValue(google ?? FakeAuth(granted: false)),
+  homeWidgetProvider.overrideWithValue(homeWidget ?? FakeHomeWidget()),
   appLockProvider.overrideWithValue(lock ?? FakeLock()),
   databaseProvider.overrideWithValue(db),
   reminderSchedulerProvider.overrideWithValue(scheduler ?? FakeScheduler()),
@@ -133,4 +136,10 @@ class FakeAuth implements GoogleAuth {
 
   @override
   Future<void> signOut() async => signedOut = true;
+}
+
+class FakeHomeWidget implements HomeWidgetSink {
+  final writes = <Map<String, String>>[];
+  @override
+  Future<void> write(Map<String, String> data) async => writes.add(data);
 }

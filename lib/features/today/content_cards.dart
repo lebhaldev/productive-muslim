@@ -8,14 +8,16 @@ import '../../data/content/content_models.dart';
 import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
+import 'share_card.dart';
 
 enum _Kind {
-  ayah('Ayah'),
-  hadith('Hadith'),
-  quote('Quote');
+  ayah('Ayah', 'Ayah of the day'),
+  hadith('Hadith', 'Hadith of the day'),
+  quote('Quote', 'Quote of the day');
 
-  const _Kind(this.label);
+  const _Kind(this.label, this.kicker);
   final String label;
+  final String kicker;
 }
 
 /// The day's ayah, hadith and quote, each in its own card so all three
@@ -64,7 +66,15 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       children: [
         Row(
           children: [
-            Expanded(child: Kicker('${kind.label} of the day')),
+            Expanded(child: Kicker(kind.kicker)),
+            if (_shareContent(kind, c, arabicOnly) case final share?)
+              IconButton(
+                key: Key('content-share-${kind.name}'),
+                tooltip: tr('Share as image'),
+                visualDensity: VisualDensity.compact,
+                icon: Icon(Icons.ios_share, color: AppColors.neutral700),
+                onPressed: () => showShareCard(context, share),
+              ),
             if (_savedRef(kind, c) case final ref?) _SaveButton(kind.name, ref),
             IconButton(
               key: Key('content-next-${kind.name}'),
@@ -103,6 +113,38 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
       ],
     );
   }
+
+  /// What the share image carries: always the full reference.
+  ShareContent? _shareContent(_Kind kind, DailyContent c, bool arabicOnly) =>
+      switch (kind) {
+        _Kind.ayah => switch (c.ayah.value) {
+          final a? => (
+            kicker: kind.kicker,
+            arabic: a.arabic,
+            text: arabicOnly ? null : a.translation,
+            reference: a.source,
+          ),
+          null => null,
+        },
+        _Kind.hadith => switch (c.hadith.value) {
+          final h? when h.arabic != null || !arabicOnly => (
+            kicker: kind.kicker,
+            arabic: h.arabic ?? '',
+            text: arabicOnly ? null : h.text,
+            reference: h.source,
+          ),
+          _ => null,
+        },
+        _Kind.quote => switch (c.quote.value) {
+          final q? => (
+            kicker: kind.kicker,
+            arabic: q.arabic,
+            text: null,
+            reference: '${q.attribution} · ${q.work}',
+          ),
+          null => null,
+        },
+      };
 
   /// What Saved stores for this card: the ayah ref or the hadith id.
   /// Quotes are not saved.
@@ -230,7 +272,7 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
     style: const TextStyle(fontSize: 15, height: 1.5),
   );
 
-  Widget _hint(String text) => Text(text, style: meta(size: 11));
+  Widget _hint(String text) => Text(tr(text), style: meta(size: 11));
 
   Widget _error(String error) =>
       Text(error, style: meta(size: 13, color: AppColors.neutral800));

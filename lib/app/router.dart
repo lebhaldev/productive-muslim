@@ -14,6 +14,7 @@ import '../features/more/reflect_screen.dart';
 import '../features/more/saved_screen.dart';
 import '../features/settings/settings_screen.dart';
 import '../features/prayer/prayer_screen.dart';
+import '../features/qibla/qibla_screen.dart';
 import '../features/quran/quran_reading_screen.dart';
 import '../features/tasbih/tasbih_screen.dart';
 import '../features/today/today_screen.dart';
@@ -86,6 +87,7 @@ GoRouter buildRouter() => GoRouter(
                 ),
                 GoRoute(path: 'duas', builder: (_, _) => const DuasScreen()),
                 GoRoute(path: 'saved', builder: (_, _) => const SavedScreen()),
+                GoRoute(path: 'qibla', builder: (_, _) => const QiblaScreen()),
                 GoRoute(
                   path: 'tasbih',
                   builder: (_, _) => const TasbihScreen(),

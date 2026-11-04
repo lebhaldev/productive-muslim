@@ -1,3 +1,4 @@
++1 juz
 1 day
 1 day earlier
 1 day later
@@ -5,6 +6,7 @@
 2 days later
 30 days ago
 A calm rhythm for every day.
+A tracker only. Read in your own mushaf or Quran app.
 Activities
 Activity
 Add
@@ -35,6 +37,7 @@ Asks for your fingerprint, face or screen lock to read it.
 Asr
 Asr {0} · change in Settings
 Ayah
+Ayah of the day
 Ayat and hadith you bookmarked
 Back
 Back to More
@@ -56,6 +59,7 @@ Cancel
 Cancel edit
 Caprasimo
 Celsius
+Change date
 Check your habits and write a few lines.
 Choose a Nurday backup
 Citrus
@@ -71,6 +75,9 @@ Content language
 Continue
 Coral
 Could not reach Google Drive. Check your connection.
+Count dhikr, one total a day
+Count {0}, {1} today
+Counts stay on this phone, one total per phrase per day.
 Current place: {0}
 Daily content
 Daily content could not load: {0}
@@ -106,11 +113,17 @@ Evening adhkar
 Export
 Export, import, Google Drive
 Face North with your phone, then turn to the arrow. This is a fixed bearing; it does not use the compass sensor.
+Facing the Qibla
 Fahrenheit
 Faith cards, translation, language
 Fajr
+Fasting
+Fasting today
+Fasts and make-up counts
+Fasts to make up
 File
 Finding your location…
+Finish by {0}: about {1} pages a day
 Fog
 Font
 Fonts
@@ -139,9 +152,13 @@ Habits completed
 Habits kept
 Habits, moods, journal, duas and prayer logs are kept only on this phone.
 Hadith
+Hadith of the day
 Hanafi
 High latitude rule (far north or south)
 Hijri date
+Hold the phone flat, away from metal and magnets. If the needle seems off, move the phone in a figure 8 to calibrate. Sensor readings stay on this phone.
+Iftar
+Iftar {0}
 Import
 Import backup
 Imported
@@ -152,13 +169,18 @@ Its history is removed too. Archive keeps the history.
 Journal
 Journal lock, where your data lives
 Journal, mood, habits and activities are never uploaded. No account needed.
+Khatm
+Khatm complete. Start a new one when you are ready.
 Kuwait
+Last 7 days
 Last saved ayah · {0}
 Lateef
 Lavender
 Light
 Light cloud
 Like “4 of the last 7 days” on each habit
+Live Qibla
+Live compass
 Loading weather
 Location & weather
 Location is unavailable. Search for a city instead.
@@ -170,6 +192,8 @@ Log one small thing you did
 Log what you did, grouped by day
 Lovely. Hold on to it.
 Maghrib
+Make-up counts
+Make-up fast
 Mark answered
 Merge
 Merge adds the backup to what is on this phone. Replace deletes everything on this phone first.
@@ -193,6 +217,7 @@ My location
 New habit
 Next day
 Next month
+Next prayer
 Night
 Night is always dark, for OLED screens.
 No account, no ads.
@@ -206,6 +231,7 @@ No tafsir is bundled for this ayah.
 None
 None logged
 North America (ISNA)
+Not fasting
 Not now
 Not unlocked. Try again.
 Note (optional)
@@ -222,6 +248,11 @@ Ocean
 Olive
 On small deeds
 On time
+One less
+One more
+One page less
+One page more
+Open Nurday to set your city
 Open Settings
 Open journal
 Open today's journal
@@ -231,6 +262,7 @@ OpenITI corpus
 Optional
 Organic
 Overcast
+Pages read and your khatm
 Peach
 Per-habit reminders are set on each habit.
 Pick a few habits
@@ -241,28 +273,37 @@ Prayer time notifications
 Prayer times
 Prayer today
 Prayers logged
+Prayers to make up
 Preview
 Previous day
 Previous month
 Privacy
+Private counters you keep yourself. Ask a scholar about what you owe.
+Progress counts from today. Your reading log is kept.
 Qatar
 Qibla
 Qibla arrow at {0} degrees from North
+Qibla {0}° from true North · you face {1}°
 Quote
+Quote of the day
 Quotes
 Qur'an {0}
 Quran
+Quran reading
 Quran.com
 Rain
+Ramadan · day {0}
 Read Qur'an
 Reem Kufi
 Reflect
+Related hadith
 Reminder for {0}
 Reminders
 Remove
 Remove animations
 Remove from Saved
 Replace
+Reset today
 Restore
 Restored
 Rose
@@ -282,10 +323,15 @@ Search for a city
 Send a test notification
 Serif
 Set a city in Settings
+Set a finish date
 Set up a screen lock in Android settings first, then try again.
 Set your city in Settings to see prayer times.
+Set your city in Settings to see suhoor and iftar times.
+Set your city in Settings to see the Qibla.
 Settings
 Seventh of the night
+Share
+Share as image
 Show another
 Show another {0}
 Show counts
@@ -302,11 +348,17 @@ Sources & licenses
 Sprig with 1 leaf
 Sprig, no leaves yet
 Standard (Shafi'i, Maliki, Hanbali)
+Start
+Start a new khatm
+Start a new khatm?
 Start my day
 Start small. You can change these anytime.
 Start today
 Start {0}
+Started {0}
 Step {0} of {1}
+Suhoor ends
+Suhoor ends {0}
 Sunrise
 System
 Tafsir
@@ -318,6 +370,7 @@ Tap for tafsir
 Tap the bookmark on an ayah or hadith card to keep it here.
 Tap to log
 Tap to unmark
+Tasbih
 Tehran
 Test notification sent.
 Thanks for noticing it.
@@ -327,9 +380,11 @@ The bundled hadith dataset could not be read.
 The bundled quote list could not be read.
 The file could not be read.
 They leave it only if you export a backup or turn on Google Drive backup in Settings.
+This Hijri month: {0} · this Hijri year: {1}
 This backup is damaged and was not imported.
 This backup was made by a newer version of Nurday. Update the app, then try again.
 This file is not a Nurday backup.
+This phone has no compass sensor. Use the fixed bearing on the Prayer screen.
 This week
 Thunderstorm
 Time for: {0}
@@ -338,12 +393,15 @@ Times are calculated on this phone from your weather location.
 Title (optional)
 Today
 Today's times and Qibla
+Today: {0}
 Translation
 Turn off the journal lock
+Turn {0}° {1}
 Twilight angle
 Umm al-Qura calendar (hijri library)
 Umm al-Qura, Makkah
 Undo
+Undo one
 University of Islamic Sciences, Karachi
 Unknown
 Unlock
@@ -391,6 +449,7 @@ in {0} h {1} min
 in {0} min
 journal entries
 journal entry
+left
 logged prayer
 logged prayers
 modifiedTime desc
@@ -402,6 +461,7 @@ prayer alerts
 prayers logged this month
 quran-uthmani + en.sahih
 quran-uthmani + quran.com translation 131
+right
 s hidden folder in the user
 s next prayer, ringed; null when it is tomorrow
 s wall-clock time, so DST changes don
@@ -410,13 +470,17 @@ s wall-clock time, so DST changes don
 {0} at {1}, {2}
 {0} colours
 {0} logged
+{0} made up this Hijri year
 {0} of {1} days
 {0} of {1} done today
+{0} of {1} pages · about juz {2}
 {0} one minute earlier
 {0} one minute later
+{0} rounds
 {0} unmarked
 {0} · calculated (Umm al-Qura{1}); local moon sighting can differ by a day
 {0}: {1} of 30 days
+{0}: {1} pages
 {0}° from true North
 • journal
 ▪ prayers logged

@@ -1,10 +1,16 @@
+import 'dart:convert';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nurday/app/app.dart';
+import 'package:nurday/app/providers.dart';
+import 'package:nurday/data/compass.dart';
 import 'package:nurday/data/db/database.dart';
 import 'package:nurday/data/prayer/prayer.dart';
+import 'package:nurday/features/today/share_card.dart';
 
 import '../helpers.dart';
 import 'app_flow_test.dart' show settle, scrollTo;
@@ -16,6 +22,9 @@ void main() {
     WidgetTester tester, {
     AppDatabase? db,
     DateTime? at,
+    ShareImage? share,
+    Compass? compass,
+    FakeHomeWidget? homeWidget,
   }) async {
     final database = db ?? memoryDb();
     tester.view.physicalSize = const Size(1080, 2340);
@@ -23,7 +32,11 @@ void main() {
     addTearDown(tester.view.reset);
     await tester.pumpWidget(
       ProviderScope(
-        overrides: testOverrides(database, at ?? now),
+        overrides: [
+          ...testOverrides(database, at ?? now, homeWidget: homeWidget),
+          if (share != null) shareImageProvider.overrideWithValue(share),
+          if (compass != null) compassProvider.overrideWithValue(compass),
+        ],
         child: const NurdayApp(),
       ),
     );
@@ -141,4 +154,73 @@ void main() {
     expect(find.byKey(const Key('ramadan-card')), findsNothing);
     await close(tester, db);
   });
+
+  testWidgets('sharing an ayah sends an image with its reference', (
+    tester,
+  ) async {
+    final shared = <(int, String)>[];
+    final db = await pump(
+      tester,
+      share: (png, caption) async => shared.add((png.length, caption)),
+    );
+    await tester.tap(find.byKey(const Key('content-share-ayah')));
+    await settle(tester);
+    expect(find.byType(ShareCardView), findsOneWidget);
+    await tester.tap(find.byKey(const Key('share-confirm')));
+    await tester.runAsync(
+      () => Future<void>.delayed(const Duration(milliseconds: 300)),
+    );
+    await settle(tester);
+    expect(shared, hasLength(1));
+    expect(shared.single.$1, greaterThan(1000), reason: 'a real PNG');
+    expect(
+      shared.single.$2,
+      contains('Surah Ash-Sharh 94:5 · Saheeh International'),
+    );
+    expect(find.byType(ShareCardView), findsNothing, reason: 'dialog closed');
+    await close(tester, db);
+  });
+
+  testWidgets('live Qibla says which way to turn and when you face it', (
+    tester,
+  ) async {
+    final compass = FakeCompass();
+    final db = memoryDb();
+    await tester.runAsync(() => db.putSetting('city', 'London'));
+    await pump(tester, db: db, compass: compass);
+    await go(tester, '/more/qibla');
+    final qibla = qiblaBearing(51.51, -0.13);
+    compass.emit(qibla - 30);
+    await settle(tester);
+    expect(find.text('Turn 30° right'), findsOneWidget);
+    compass.emit(qibla + 2);
+    await settle(tester);
+    expect(find.text('Facing the Qibla'), findsWidgets);
+    await close(tester, db);
+  });
+
+  testWidgets('the home-screen widget gets today and tomorrow\'s times', (
+    tester,
+  ) async {
+    final widget = FakeHomeWidget();
+    final db = memoryDb();
+    await tester.runAsync(() => db.putSetting('city', 'London'));
+    await pump(tester, db: db, homeWidget: widget);
+    final last = widget.writes.last;
+    final times = jsonDecode(last['np_times']!) as List;
+    expect(times, hasLength(10), reason: 'five prayers, two days');
+    expect(times.first['n'], 'Fajr');
+    expect(last['np_place'], 'London');
+    expect(last['np_title'], 'Next prayer');
+    await close(tester, db);
+  });
+}
+
+class FakeCompass implements Compass {
+  final _c = StreamController<double>.broadcast();
+  void emit(double h) => _c.add(h);
+  @override
+  Stream<double> headings() => _c.stream;
+  @override
+  Future<double> declination(double lat, double lon) async => 0;
 }

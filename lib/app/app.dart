@@ -46,6 +46,11 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
     ref.listenManual(settingsProvider, (prev, next) {
       if (prev?.hasValue != true && next.hasValue) _backUpIfDue();
     }, fireImmediately: true);
+    // Keep the next-prayer home-screen widget's times current.
+    ref.listenManual<Map<String, String>>(homeWidgetDataProvider, (prev, next) {
+      if (mapEquals(prev, next)) return;
+      ref.read(homeWidgetProvider).write(next).catchError((Object _) {});
+    }, fireImmediately: true);
     // Keep scheduled notifications in step with settings and habits.
     ref.listenManual<List<Reminder>?>(reminderPlanProvider, (_, plan) {
       if (plan == null || listEquals(plan, _scheduled)) return;

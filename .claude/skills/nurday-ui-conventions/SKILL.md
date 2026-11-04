@@ -22,7 +22,7 @@ Every duration goes through `motion(context, Motion.quick|medium|slow)`, which r
 ## Interface text and languages
 - Every user-visible English string goes through `tr('…')` or the const widget `Tr('…')` (`lib/l10n/strings.dart`); numbers and names are placeholders: `tr('{0} of {1} days', [n, of])`. Shared widgets (`Note`, `Kicker`, `CardTitle`, `NavRow`, `ActionTile`, `ScreenTitle`, settings controls) translate their own text, so pass them plain English.
 - Never put `tr()` in a top-level or `static final` initializer: it would freeze the first language. Translate where it is shown.
-- After adding strings: `python3 tool/l10n_keys.py --write` (lists keys), add a line per new key to each `tool/l10n/<code>.txt` in the same order (`=` keeps English), then `python3 tool/l10n_build.py`. `tool/l10n_wrap.py FILE` wraps literal `Text('…')` calls; `flutter analyze | python3 tool/l10n_fix_const.py` removes `const` it invalidates.
+- After adding strings: `python3 tool/l10n_keys.py --write` (lists keys and what each language is missing), add `English<TAB>translation` lines to each `tool/l10n/<code>.tsv`, then `python3 tool/l10n_build.py` (checks placeholders and unknown keys, writes `assets/l10n/<code>.json`). `tool/l10n_wrap.py FILE` wraps literal `Text('…')` calls; `flutter analyze | python3 tool/l10n_fix_const.py` removes `const` it invalidates.
 - Ayah, hadith, tafsir and quotes are never translated. A language joins `reviewedLanguages` only after a native speaker reviews it.
 
 ## Adding a setting

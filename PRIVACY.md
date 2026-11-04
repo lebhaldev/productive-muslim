@@ -11,6 +11,11 @@ Your journal entries, mood, habits, habit check-offs, activities and settings ar
 - **Export to a file**: Settings → Backup → Export saves a JSON file wherever you choose. The file is not encrypted.
 - **Google Drive**: if you tap "Connect Google Drive", Nurday asks Google for access to its own hidden app folder in *your* Drive (scope `drive.appdata`) and saves one backup file there, about once a day. Nurday cannot see any other file in your Drive, and the backup is not sent anywhere else. "Disconnect" stops backups and removes Nurday's access; the backup file stays in your Drive until you delete it (Google Drive → Settings → Manage apps → Nurday → Delete hidden app data).
 
+## Sensors, widget and sharing
+- **Live Qibla** reads the phone's motion and magnetic sensors while that screen is open, only to turn the compass. Readings are not stored or sent anywhere. Android's built-in geomagnetic model corrects it to true north, on the phone.
+- **Home-screen widget** shows the next prayer from times the app has already calculated and saved on the phone.
+- **Share as image** creates a picture of an ayah, hadith or quote and hands it to the share sheet only when you tap Share; where it goes is your choice.
+
 ## Journal lock
 If you turn on Settings → Privacy → Lock journal, Nurday asks Android to check your fingerprint, face or screen lock. Nurday never sees or stores the fingerprint, face or PIN.
 
