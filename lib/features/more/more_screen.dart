@@ -16,6 +16,12 @@ class MoreScreen extends StatelessWidget {
       Icons.touch_app_outlined,
     ),
     (
+      'listen',
+      'Listen to the Quran',
+      'Choose a reciter and a surah',
+      Icons.headphones_outlined,
+    ),
+    (
       'quran',
       'Quran reading',
       'Pages read and your khatm',

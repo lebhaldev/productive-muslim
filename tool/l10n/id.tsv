@@ -446,3 +446,20 @@ right	kanan
 {0}: {1} pages	{0}: {1} halaman
 page	halaman
 pages	halaman
+Ayah {0}	Ayat {0}
+Ayah {0} of {1}	Ayat {0} dari {1}
+Choose a reciter and a surah	Pilih qari dan surah
+Listen	Dengarkan
+Listen to the Quran	Dengarkan Al-Qur'an
+Next ayah	Ayat berikutnya
+Pause	Jeda
+Play	Putar
+Previous ayah	Ayat sebelumnya
+Recitation streams from AlQuran Cloud (cdn.islamic.network) while you listen. Only the surah number and the reciter are sent. Playback stops when Nurday is closed.	Tilawah diputar langsung dari AlQuran Cloud (cdn.islamic.network) saat Anda mendengarkan. Hanya nomor surah dan qari yang dikirim. Pemutaran berhenti saat Nurday ditutup.
+Reciter	Qari
+Stop	Berhenti
+Surah {0} · ayah {1} of {2}	Surah {0} · ayat {1} dari {2}
+The list of reciters needs a connection once. Mishary Alafasy is used until then.	Daftar qari perlu koneksi sekali. Sampai saat itu digunakan Mishary Alafasy.
+The list of surahs could not load.	Daftar surah gagal dimuat.
+The recitation could not be played.	Tilawah tidak dapat diputar.
+{0} could not be reached	{0} tidak dapat dijangkau

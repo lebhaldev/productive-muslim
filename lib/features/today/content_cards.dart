@@ -8,6 +8,8 @@ import '../../data/content/content_models.dart';
 import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
+import '../../data/content/recitation.dart';
+import '../listen/listen_screen.dart';
 import 'share_card.dart';
 
 enum _Kind {
@@ -67,6 +69,8 @@ class _ContentCardsState extends ConsumerState<ContentCards> {
         Row(
           children: [
             Expanded(child: Kicker(kind.kicker)),
+            if (kind == _Kind.ayah && c.ayah.value != null)
+              _PlayAyahButton(ayahRef: c.ayah.value!.ref),
             if (_shareContent(kind, c, arabicOnly) case final share?)
               IconButton(
                 key: Key('content-share-${kind.name}'),
@@ -300,6 +304,46 @@ class _SaveButton extends ConsumerWidget {
       onPressed: () => ref
           .read(databaseProvider)
           .toggleBookmark(kind, ref_, ref.read(clockProvider).now()),
+    );
+  }
+}
+
+/// Plays the ayah in the chosen reciter's voice, or pauses it.
+class _PlayAyahButton extends ConsumerWidget {
+  const _PlayAyahButton({required this.ayahRef});
+  final String ayahRef;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final p = ref.watch(playbackProvider).value ?? idlePlayback;
+    final queue = 'ayah:$ayahRef';
+    final mine = p.queueId == queue;
+    final player = ref.read(recitationPlayerProvider);
+    return IconButton(
+      key: const Key('content-play-ayah'),
+      tooltip: mine && p.playing ? tr('Pause') : tr('Listen'),
+      visualDensity: VisualDensity.compact,
+      icon: Icon(
+        mine && p.playing
+            ? Icons.pause_circle_outline
+            : Icons.play_circle_outline,
+        color: AppColors.neutral700,
+      ),
+      onPressed: () {
+        if (mine && p.playing) {
+          player.pause();
+        } else if (mine) {
+          player.resume();
+        } else {
+          final reciter = settingsOf(ref).reciter;
+          playRecitation(
+            context,
+            ref,
+            queue,
+            (c) async => [await c.ayahAudio(ayahRef, reciter)],
+          );
+        }
+      },
     );
   }
 }

@@ -1,0 +1,4 @@
+{"code":200,"status":"OK","data":[
+ {"number":1,"name":"[ fixture surah one ]","englishName":"Fixture One","numberOfAyahs":3},
+ {"number":2,"name":"[ fixture surah two ]","englishName":"Fixture Two","numberOfAyahs":2}
+]}

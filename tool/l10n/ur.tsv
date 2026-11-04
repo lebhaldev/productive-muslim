@@ -465,3 +465,21 @@ right	دائیں
 {0}: {1} pages	{0}: {1} صفحات
 page	صفحہ
 pages	صفحات
+Ayah {0}	آیت {0}
+Ayah {0} of {1}	{1} میں سے آیت {0}
+Choose a reciter and a surah	قاری اور سورت منتخب کریں
+Listen	سنیں
+Listen to the Quran	قرآن سنیں
+Next ayah	اگلی آیت
+Pause	روکیں
+Play	چلائیں
+Previous ayah	پچھلی آیت
+Recitation streams from AlQuran Cloud (cdn.islamic.network) while you listen. Only the surah number and the reciter are sent. Playback stops when Nurday is closed.	تلاوت سنتے وقت AlQuran Cloud (cdn.islamic.network) سے نشر ہوتی ہے۔ صرف سورت نمبر اور قاری بھیجا جاتا ہے۔ نورڈے بند ہونے پر تلاوت رک جاتی ہے۔
+Reciter	قاری
+Stop	بند کریں
+Surah	سورت
+Surah {0} · ayah {1} of {2}	سورت {0} · {2} میں سے آیت {1}
+The list of reciters needs a connection once. Mishary Alafasy is used until then.	قاریوں کی فہرست کے لیے ایک بار کنکشن چاہیے۔ تب تک مشاری العفاسی استعمال ہوں گے۔
+The list of surahs could not load.	سورتوں کی فہرست لوڈ نہیں ہو سکی۔
+The recitation could not be played.	تلاوت نہیں چل سکی۔
+{0} could not be reached	{0} تک رسائی نہیں ہو سکی

@@ -438,3 +438,20 @@ right	droite
 {0} of {1} pages · about juz {2}	{0} sur {1} pages · environ juz {2}
 {0} rounds	{0} tours
 {0}: {1} pages	{0} : {1} pages
+Ayah {0}	Verset {0}
+Ayah {0} of {1}	Verset {0} sur {1}
+Choose a reciter and a surah	Choisissez un récitateur et une sourate
+Listen	Écouter
+Listen to the Quran	Écouter le Coran
+Next ayah	Verset suivant
+Play	Lecture
+Previous ayah	Verset précédent
+Recitation streams from AlQuran Cloud (cdn.islamic.network) while you listen. Only the surah number and the reciter are sent. Playback stops when Nurday is closed.	La récitation est diffusée depuis AlQuran Cloud (cdn.islamic.network) pendant l'écoute. Seuls le numéro de sourate et le récitateur sont envoyés. La lecture s'arrête quand Nurday est fermé.
+Reciter	Récitateur
+Stop	Arrêter
+Surah	Sourate
+Surah {0} · ayah {1} of {2}	Sourate {0} · verset {1} sur {2}
+The list of reciters needs a connection once. Mishary Alafasy is used until then.	La liste des récitateurs nécessite une connexion une fois. Mishary Alafasy est utilisé en attendant.
+The list of surahs could not load.	La liste des sourates n'a pas pu se charger.
+The recitation could not be played.	La récitation n'a pas pu être lue.
+{0} could not be reached	{0} est injoignable

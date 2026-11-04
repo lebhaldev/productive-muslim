@@ -16,6 +16,7 @@ Each day
 • One hadith from Sahih al-Bukhari or Sahih Muslim, in Arabic and English, with its reference
 • One Arabic quote from classical scholars and poets
 • Tap ↻ to see another one
+• Listen to any surah or the ayah of the day, recited by the reciter you choose
 
 Your rhythm
 • Habits with streaks and gentle check-off animations

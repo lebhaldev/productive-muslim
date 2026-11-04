@@ -1,0 +1,5 @@
+{"code":200,"status":"OK","data":{"number":1,"ayahs":[
+ {"number":1,"numberInSurah":1,"audio":"https://cdn.example/fixture/1.mp3"},
+ {"number":2,"numberInSurah":2,"audio":"https://cdn.example/fixture/2.mp3"},
+ {"number":3,"numberInSurah":3,"audio":"https://cdn.example/fixture/3.mp3"}
+]}}

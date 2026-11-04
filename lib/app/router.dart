@@ -8,6 +8,7 @@ import '../features/duas/duas_screen.dart';
 import '../features/fasting/fasting_screen.dart';
 import '../features/habits/habits_screen.dart';
 import '../features/journal/journal_screen.dart';
+import '../features/listen/listen_screen.dart';
 import '../features/more/activities_screen.dart';
 import '../features/more/more_screen.dart';
 import '../features/more/reflect_screen.dart';
@@ -89,6 +90,10 @@ GoRouter buildRouter() => GoRouter(
                 GoRoute(path: 'saved', builder: (_, _) => const SavedScreen()),
                 GoRoute(path: 'qibla', builder: (_, _) => const QiblaScreen()),
                 GoRoute(
+                  path: 'listen',
+                  builder: (_, _) => const ListenScreen(),
+                ),
+                GoRoute(
                   path: 'tasbih',
                   builder: (_, _) => const TasbihScreen(),
                 ),
@@ -168,9 +173,17 @@ class AppShell extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     _maybeFirstRun(context, ref);
     return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: FadeOnChange(trigger: shell.currentIndex, child: shell),
+      body: Column(
+        children: [
+          Expanded(
+            child: SafeArea(
+              bottom: false,
+              child: FadeOnChange(trigger: shell.currentIndex, child: shell),
+            ),
+          ),
+          // Recitation keeps playing between tabs; this bar controls it.
+          const NowPlayingBar(),
+        ],
       ),
       // Nav labels scale up to 1.4x; larger sizes would push five tabs off
       // screen, and each tab still has its spoken label.

@@ -25,6 +25,7 @@ void main() {
     ShareImage? share,
     Compass? compass,
     FakeHomeWidget? homeWidget,
+    FakePlayer? player,
   }) async {
     final database = db ?? memoryDb();
     tester.view.physicalSize = const Size(1080, 2340);
@@ -33,7 +34,12 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          ...testOverrides(database, at ?? now, homeWidget: homeWidget),
+          ...testOverrides(
+            database,
+            at ?? now,
+            homeWidget: homeWidget,
+            player: player,
+          ),
           if (share != null) shareImageProvider.overrideWithValue(share),
           if (compass != null) compassProvider.overrideWithValue(compass),
         ],
@@ -212,6 +218,38 @@ void main() {
     expect(times.first['n'], 'Fajr');
     expect(last['np_place'], 'London');
     expect(last['np_title'], 'Next prayer');
+    await close(tester, db);
+  });
+
+  testWidgets('the ayah card plays the ayah and the bar can stop it', (
+    tester,
+  ) async {
+    final player = FakePlayer();
+    final db = await pump(tester, player: player);
+    await tester.tap(find.byKey(const Key('content-play-ayah')));
+    await settle(tester);
+    expect(player.urls, ['https://cdn.example/fixture/6126.mp3']);
+    expect(find.byKey(const Key('now-playing')), findsOneWidget);
+    expect(find.text('Ayah 94:5'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('now-playing-stop')));
+    await settle(tester);
+    expect(find.byKey(const Key('now-playing')), findsNothing);
+    await close(tester, db);
+  });
+
+  testWidgets('Listen plays a whole surah ayah by ayah', (tester) async {
+    final player = FakePlayer();
+    final db = await pump(tester, player: player);
+    await go(tester, '/more/listen');
+    expect(find.text('Fixture Reciter One'), findsOneWidget);
+    await tester.tap(find.byKey(const Key('listen-play')));
+    await settle(tester);
+    expect(player.urls, hasLength(3));
+    expect(find.text('Ayah 1 of 3'), findsOneWidget);
+    await tester.tap(find.byTooltip('Next ayah'));
+    await settle(tester);
+    expect(find.text('Ayah 2 of 3'), findsOneWidget);
+    expect(find.text('Surah 1 · ayah 2 of 3'), findsOneWidget);
     await close(tester, db);
   });
 }

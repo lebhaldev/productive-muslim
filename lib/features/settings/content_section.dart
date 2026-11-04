@@ -5,6 +5,7 @@ import '../../app/providers.dart';
 import '../../data/content/quran_client.dart';
 import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
+import '../listen/listen_screen.dart';
 import 'settings_widgets.dart';
 
 class ContentSection extends ConsumerWidget {
@@ -37,6 +38,7 @@ class ContentSection extends ConsumerWidget {
           onChanged: (v) =>
               ref.putSetting('contentLanguage', v ? 'ar' : 'ar_en'),
         ),
+        const ReciterPicker(),
       ],
     );
   }

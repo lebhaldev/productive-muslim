@@ -1,0 +1,5 @@
+{"code":200,"status":"OK","data":[
+ {"identifier":"ar.alafasy","language":"ar","name":"[ fixture reciter one ]","englishName":"Fixture Reciter One","format":"audio","type":"versebyverse"},
+ {"identifier":"ar.fixturetwo","language":"ar","name":"[ fixture reciter two ]","englishName":"Fixture Reciter Two","format":"audio","type":"versebyverse"},
+ {"identifier":"en.walk","language":"en","name":"English audio","englishName":"English Audio","format":"audio","type":"versebyverse"}
+]}
