@@ -128,8 +128,11 @@ class _ListenScreenState extends ConsumerState<ListenScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                // The row runs right to left in Arabic and Urdu, so the
+                // glyphs flip too: "previous" sits on the right, pointing right.
                 RoundIconButton(
-                  icon: Icons.skip_previous,
+                  key: const Key('listen-previous'),
+                  icon: _rtl(context) ? Icons.skip_next : Icons.skip_previous,
                   label: 'Previous ayah',
                   onPressed: thisPlaying ? player.previous : null,
                 ),
@@ -165,7 +168,8 @@ class _ListenScreenState extends ConsumerState<ListenScreen> {
                 ),
                 const SizedBox(width: 16),
                 RoundIconButton(
-                  icon: Icons.skip_next,
+                  key: const Key('listen-next'),
+                  icon: _rtl(context) ? Icons.skip_previous : Icons.skip_next,
                   label: 'Next ayah',
                   onPressed: thisPlaying ? player.next : null,
                 ),
@@ -234,3 +238,6 @@ class NowPlayingBar extends ConsumerWidget {
     );
   }
 }
+
+bool _rtl(BuildContext context) =>
+    Directionality.of(context) == TextDirection.rtl;

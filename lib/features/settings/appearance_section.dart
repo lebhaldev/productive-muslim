@@ -8,6 +8,7 @@ import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
 import 'settings_widgets.dart';
+import 'theme_gallery.dart';
 
 class AppearanceSection extends ConsumerWidget {
   const AppearanceSection({super.key});
@@ -49,42 +50,88 @@ class AppearanceSection extends ConsumerWidget {
           onChanged: (f) => ref.putSetting('arabicFont', f.name),
         ),
         _FontPreview(font: s.appFont, arabic: s.arabicFont),
+        SettingPicker<MotionPref>(
+          key: const Key('motion-pref'),
+          label: tr('Animations'),
+          value: MotionPref.parse(s.raw['motion']),
+          options: {for (final m in MotionPref.values) m: tr(m.label)},
+          onChanged: (m) => ref.putSetting('motion', m.name),
+        ),
       ],
     );
   }
 }
 
-/// Colour swatches plus System / Light / Dark; used in Settings and on
-/// first run. Picking one recolours the whole app at once.
-class ThemePicker extends ConsumerWidget {
+/// Featured theme cards, the other themes behind "More themes", and
+/// System / Light / Dark; used in Settings and on first run. Picking one
+/// recolours the whole app at once.
+class ThemePicker extends ConsumerStatefulWidget {
   const ThemePicker({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ThemePicker> createState() => _ThemePickerState();
+}
+
+class _ThemePickerState extends ConsumerState<ThemePicker> {
+  // Open when the current theme is one of the others, so it stays in view
+  // after the app recolours.
+  late var _more = !settingsOf(ref).colorTheme.isFeatured;
+
+  @override
+  Widget build(BuildContext context) {
     final s = settingsOf(ref);
+    void pick(ColorTheme t) => ref.putSetting('colorTheme', t.name);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: [
-            for (final t in ColorTheme.values)
-              ThemeSwatch(
-                theme: t,
-                selected: s.colorTheme == t,
-                onTap: () => ref.putSetting('colorTheme', t.name),
-              ),
-          ],
+        Text(tr('Featured'), style: heading(17)),
+        const SizedBox(height: 8),
+        FeaturedThemes(selected: s.colorTheme, onPick: pick),
+        const SizedBox(height: 4),
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: TextButton.icon(
+            key: const Key('more-themes'),
+            onPressed: () => setState(() => _more = !_more),
+            icon: AnimatedRotation(
+              duration: motion(context, Motion.medium),
+              turns: _more ? 0.5 : 0,
+              child: const Icon(Icons.expand_more),
+            ),
+            label: Text(tr('More themes')),
+          ),
         ),
-        const SizedBox(height: 12),
+        AnimatedSize(
+          duration: motion(context, Motion.medium),
+          curve: Curves.easeOutCubic,
+          alignment: Alignment.topCenter,
+          child: !_more
+              ? const SizedBox(width: double.infinity)
+              : Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Wrap(
+                    spacing: 12,
+                    runSpacing: 12,
+                    children: [
+                      for (final t in ColorTheme.values)
+                        if (!t.isFeatured)
+                          ThemeSwatch(
+                            theme: t,
+                            selected: s.colorTheme == t,
+                            onTap: () => pick(t),
+                          ),
+                    ],
+                  ),
+                ),
+        ),
+        const SizedBox(height: 8),
         SettingChoice<ThemeMode>(
           key: const Key('theme-mode'),
           value: s.themeMode,
-          options: const {
-            ThemeMode.system: 'System',
-            ThemeMode.light: 'Light',
-            ThemeMode.dark: 'Dark',
+          options: {
+            ThemeMode.system: tr('System'),
+            ThemeMode.light: tr('Light'),
+            ThemeMode.dark: tr('Dark'),
           },
           onChanged: s.colorTheme.alwaysDark
               ? null
@@ -92,7 +139,7 @@ class ThemePicker extends ConsumerWidget {
         ),
         if (s.colorTheme.alwaysDark) ...[
           const SizedBox(height: 8),
-          const Note('Night is always dark, for OLED screens.'),
+          Note(tr('Night is always dark, for OLED screens.')),
         ],
       ],
     );

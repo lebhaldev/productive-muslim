@@ -11,8 +11,32 @@ class Motion {
   static const slow = Duration(milliseconds: 400);
 }
 
+/// Settings → Appearance → Animations. [follow] honours the phone's
+/// "Remove animations"; [always] plays them anyway; [off] stops them.
+enum MotionPref {
+  follow('Follow phone'),
+  always('Always on'),
+  off('Off');
+
+  const MotionPref(this.label);
+  final String label;
+
+  static MotionPref parse(String? s) =>
+      values.firstWhere((m) => m.name == s, orElse: () => follow);
+
+  /// Set at the app root from settings, like AppColors.current.
+  static MotionPref current = follow;
+}
+
+/// True when animations should be skipped.
+bool reduceMotion(BuildContext context) => switch (MotionPref.current) {
+  MotionPref.always => false,
+  MotionPref.off => true,
+  MotionPref.follow => MediaQuery.maybeDisableAnimationsOf(context) ?? false,
+};
+
 Duration motion(BuildContext context, Duration d) =>
-    MediaQuery.maybeDisableAnimationsOf(context) ?? false ? Duration.zero : d;
+    reduceMotion(context) ? Duration.zero : d;
 
 /// Fades and slightly scales between children; for small state changes such
 /// as a habit being checked or a count changing.
@@ -57,9 +81,9 @@ class _FadeOnChangeState extends State<FadeOnChange>
   void didUpdateWidget(FadeOnChange old) {
     super.didUpdateWidget(old);
     if (old.trigger != widget.trigger) {
-      _c.duration = motion(context, Motion.medium);
+      _c.duration = motion(context, Motion.slow);
       if (_c.duration == Duration.zero) return;
-      _c.forward(from: 0.3);
+      _c.forward(from: 0);
     }
   }
 
@@ -70,10 +94,22 @@ class _FadeOnChangeState extends State<FadeOnChange>
   }
 
   @override
-  Widget build(BuildContext context) => FadeTransition(
-    opacity: CurvedAnimation(parent: _c, curve: Curves.easeOut),
-    child: widget.child,
-  );
+  Widget build(BuildContext context) {
+    final a = CurvedAnimation(parent: _c, curve: Curves.easeOutCubic);
+    return FadeTransition(
+      opacity: a,
+      child: SlideTransition(
+        position: Tween(
+          begin: const Offset(0, 0.035),
+          end: Offset.zero,
+        ).animate(a),
+        child: ScaleTransition(
+          scale: Tween(begin: 0.97, end: 1.0).animate(a),
+          child: widget.child,
+        ),
+      ),
+    );
+  }
 }
 
 /// Fades and lifts [child] in once when it first appears, after [delay].
@@ -124,7 +160,7 @@ class _EntranceState extends State<Entrance>
     opacity: _curve,
     child: SlideTransition(
       position: Tween(
-        begin: const Offset(0, 0.06),
+        begin: const Offset(0, 0.12),
         end: Offset.zero,
       ).animate(_curve),
       child: widget.child,
@@ -152,15 +188,35 @@ class TickBurst extends StatefulWidget {
 class _TickBurstState extends State<TickBurst>
     with SingleTickerProviderStateMixin {
   late final _c = AnimationController(vsync: this);
+  var _seed = 0;
+
+  // 0.85 → 1.15 → 1: the check-off pop.
+  late final _pop = TweenSequence([
+    TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.85), weight: 15),
+    TweenSequenceItem(
+      tween: Tween(
+        begin: 0.85,
+        end: 1.18,
+      ).chain(CurveTween(curve: Curves.easeOut)),
+      weight: 35,
+    ),
+    TweenSequenceItem(
+      tween: Tween(
+        begin: 1.18,
+        end: 1.0,
+      ).chain(CurveTween(curve: Curves.elasticOut)),
+      weight: 50,
+    ),
+  ]).animate(_c);
 
   @override
   void didUpdateWidget(TickBurst old) {
     super.didUpdateWidget(old);
     if (!old.on && widget.on) {
       HapticFeedback.lightImpact();
-      final d = motion(context, Motion.slow);
-      if (d == Duration.zero) return;
-      _c.duration = d;
+      if (reduceMotion(context)) return;
+      _seed++;
+      _c.duration = const Duration(milliseconds: 650);
       _c.forward(from: 0);
     }
   }
@@ -172,32 +228,49 @@ class _TickBurstState extends State<TickBurst>
   }
 
   @override
-  Widget build(BuildContext context) =>
-      CustomPaint(painter: _RingPainter(_c, widget.color), child: widget.child);
+  Widget build(BuildContext context) => CustomPaint(
+    painter: _RingPainter(_c, widget.color, _seed),
+    child: ScaleTransition(scale: _pop, child: widget.child),
+  );
 }
 
 class _RingPainter extends CustomPainter {
-  _RingPainter(this.a, this.color) : super(repaint: a);
+  _RingPainter(this.a, this.color, this.seed) : super(repaint: a);
   final Animation<double> a;
   final Color color;
+  final int seed;
 
   @override
   void paint(Canvas canvas, Size size) {
     final t = a.value;
     if (t == 0 || t == 1) return;
-    final r = size.shortestSide / 2 * (1 + 0.9 * Curves.easeOut.transform(t));
+    final c = size.center(Offset.zero);
+    final base = size.shortestSide / 2;
+    final e = Curves.easeOut.transform(t);
     canvas.drawCircle(
-      size.center(Offset.zero),
-      r,
+      c,
+      base * (1 + 1.3 * e),
       Paint()
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 3 * (1 - t)
+        ..strokeWidth = 4 * (1 - t)
         ..color = color.withValues(alpha: 1 - t),
     );
+    // Eight sparks flying out.
+    final rnd = math.Random(seed);
+    for (var i = 0; i < 8; i++) {
+      final angle = i * math.pi / 4 + rnd.nextDouble() * 0.4;
+      final d = base * (0.9 + 1.6 * e);
+      final p = c + Offset(math.cos(angle), math.sin(angle)) * d;
+      canvas.drawCircle(
+        p,
+        2.6 * (1 - t) + 0.6,
+        Paint()..color = color.withValues(alpha: (1 - t) * 0.9),
+      );
+    }
   }
 
   @override
-  bool shouldRepaint(_RingPainter old) => false;
+  bool shouldRepaint(_RingPainter old) => old.seed != seed;
 }
 
 /// A short, gentle burst of coloured dots when [play] turns true (all of
@@ -227,9 +300,9 @@ class _CelebrationState extends State<Celebration>
     super.didUpdateWidget(old);
     if (!old.play && widget.play) {
       HapticFeedback.mediumImpact();
-      if (motion(context, Motion.slow) == Duration.zero) return;
+      if (reduceMotion(context)) return;
       _seed++;
-      _c.duration = const Duration(milliseconds: 1400);
+      _c.duration = const Duration(milliseconds: 1800);
       _c.forward(from: 0);
     }
   }
@@ -258,23 +331,99 @@ class _BurstPainter extends CustomPainter {
     final t = a.value;
     if (t == 0 || t == 1) return;
     final rnd = math.Random(seed);
-    final origin = Offset(size.width - 48, 12);
-    for (var i = 0; i < 22; i++) {
-      final angle = math.pi + rnd.nextDouble() * math.pi; // upwards fan
-      final speed = 60 + rnd.nextDouble() * 90;
-      final e = Curves.easeOutCubic.transform(t);
+    final e = Curves.easeOutCubic.transform(t);
+    final fade = t < 0.7 ? 1.0 : 1 - (t - 0.7) / 0.3;
+    // Confetti from two points along the top, falling with a little spin.
+    for (var i = 0; i < 44; i++) {
+      final origin = Offset(size.width * (i.isEven ? 0.25 : 0.75), 20);
+      final angle = math.pi * (1.1 + rnd.nextDouble() * 0.8);
+      final speed = 80 + rnd.nextDouble() * 160;
       final p =
           origin +
           Offset(math.cos(angle), math.sin(angle)) * speed * e +
-          Offset(0, 70 * t * t); // a little gravity
-      canvas.drawCircle(
-        p,
-        2.5 + rnd.nextDouble() * 2.5,
-        Paint()..color = colors[i % colors.length].withValues(alpha: 1 - t),
-      );
+          Offset(0, 220 * t * t);
+      final paint = Paint()
+        ..color = colors[i % colors.length].withValues(alpha: fade);
+      canvas.save();
+      canvas.translate(p.dx, p.dy);
+      canvas.rotate(t * 8 * (rnd.nextDouble() - 0.5));
+      if (i % 3 == 0) {
+        canvas.drawCircle(Offset.zero, 3.5, paint);
+      } else {
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            Rect.fromCenter(center: Offset.zero, width: 9, height: 5),
+            const Radius.circular(1.5),
+          ),
+          paint,
+        );
+      }
+      canvas.restore();
     }
   }
 
   @override
   bool shouldRepaint(_BurstPainter old) => old.seed != seed;
+}
+
+/// A two-colour wash whose light drifts slowly corner to corner (one sway
+/// every 8 s); still when animations are off.
+class DriftingWash extends StatefulWidget {
+  const DriftingWash({
+    super.key,
+    required this.colors,
+    required this.child,
+    this.radius = 0,
+  });
+  final List<Color> colors;
+  final Widget child;
+  final double radius;
+
+  @override
+  State<DriftingWash> createState() => _DriftingWashState();
+}
+
+class _DriftingWashState extends State<DriftingWash>
+    with SingleTickerProviderStateMixin {
+  late final _c = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 8),
+  );
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (reduceMotion(context)) {
+      _c.stop();
+    } else if (!_c.isAnimating) {
+      _c.repeat(reverse: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => AnimatedBuilder(
+    animation: _c,
+    child: widget.child,
+    builder: (context, child) {
+      final t = Curves.easeInOut.transform(_c.value);
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(widget.radius),
+          gradient: LinearGradient(
+            begin: Alignment(-1 + t * 0.8, -1),
+            end: Alignment(1 - t * 0.6, 1),
+            colors: widget.colors,
+            stops: [0.15 + 0.2 * t, 1],
+          ),
+        ),
+        child: child,
+      );
+    },
+  );
 }

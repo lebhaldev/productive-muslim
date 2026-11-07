@@ -29,7 +29,7 @@ class _WeatherIconState extends State<WeatherIcon>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final still = motion(context, Motion.slow) == Duration.zero;
+    final still = reduceMotion(context);
     if (still) {
       _c.stop();
       _c.value = 0.1;

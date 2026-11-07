@@ -8,6 +8,7 @@ import '../../l10n/strings.dart';
 import '../../widgets/common.dart';
 import '../../widgets/motion.dart';
 import '../settings/appearance_section.dart';
+import '../settings/theme_gallery.dart';
 import '../settings/location_section.dart';
 
 /// Starter habits offered on first run, in this order.
@@ -64,7 +65,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
 
   Future<void> _finish() async {
     final db = ref.read(databaseProvider);
-    await db.putSetting('themePicked', 'true');
+    await db.putSetting('themePicked2', 'true');
     await db.putSetting('onboarded', 'true');
     if (mounted) context.go('/today');
   }
@@ -82,7 +83,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
       ),
       _Step.colours => (
         'Pick your colours',
-        'You can change them any time in Settings.',
+        'Nine new palettes, light or dark. Tap one and watch Nurday change.',
       ),
       _Step.privacy => (
         'Your data stays on this phone.',
@@ -164,8 +165,8 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                   ),
                   Text(sub, style: meta(size: 14)),
                   if (_step == _Step.colours) ...[
+                    const LiveThemePreview(),
                     const ThemePicker(),
-                    const ThemePreview(),
                   ],
                   if (_step == _Step.location) const LocationSection(),
                   if (_step == _Step.habits)
@@ -218,60 +219,6 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-/// A small sample of Today in the picked colours.
-class ThemePreview extends StatelessWidget {
-  const ThemePreview({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return NCard(
-      key: const Key('theme-preview'),
-      gap: 10,
-      children: [
-        const Kicker('Preview'),
-        Tr('Good morning', style: heading(22)),
-        Row(
-          children: [
-            Container(
-              width: 26,
-              height: 26,
-              decoration: BoxDecoration(
-                color: AppColors.sage600,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(Icons.check, size: 16, color: AppColors.bg),
-            ),
-            const SizedBox(width: 10),
-            const Expanded(child: Tr('Morning adhkar')),
-          ],
-        ),
-        Row(
-          children: [
-            for (final c in AppColors.current.moods)
-              Expanded(
-                child: Container(
-                  height: 10,
-                  margin: const EdgeInsets.symmetric(horizontal: 2),
-                  decoration: BoxDecoration(
-                    color: c,
-                    borderRadius: BorderRadius.circular(AppRadii.pill),
-                  ),
-                ),
-              ),
-          ],
-        ),
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: FilledButton(
-            onPressed: () {},
-            child: const Tr("Write today's journal"),
-          ),
-        ),
-      ],
     );
   }
 }

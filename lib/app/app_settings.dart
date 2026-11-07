@@ -31,7 +31,9 @@ class AppSettings {
   AppLanguage get language => AppLanguage.parse(raw['language']);
 
   /// The colour theme was chosen on first run (or skipped there).
-  bool get themePicked => raw['themePicked'] == 'true';
+  // Version 2: the colour step came back with the nine featured themes
+  // (7 Nov 2026), so phones that picked before see it once more.
+  bool get themePicked => raw['themePicked2'] == 'true';
   bool get journalLock => raw['journalLock'] == 'true';
   bool get driveBackup => raw['driveBackup'] == 'true';
   DateTime? get driveLastBackup =>
@@ -52,7 +54,7 @@ class AppSettings {
 
   ColorTheme get colorTheme => ColorTheme.values.firstWhere(
     (t) => t.name == raw['colorTheme'],
-    orElse: () => ColorTheme.sage,
+    orElse: () => ColorTheme.fallback,
   );
 
   /// Days added to the calculated Hijri date (−2…+2).

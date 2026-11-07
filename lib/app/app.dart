@@ -8,6 +8,7 @@ import 'package:intl/intl.dart' show Intl;
 import '../data/reminders.dart';
 import '../l10n/app_localizations.dart';
 import '../l10n/strings.dart';
+import '../widgets/motion.dart';
 import 'providers.dart';
 import 'router.dart';
 import 'theme.dart';
@@ -77,13 +78,18 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
       settingsProvider.select((s) => s.value?.themeMode ?? ThemeMode.system),
     );
     final colors = ref.watch(
-      settingsProvider.select((s) => s.value?.colorTheme ?? ColorTheme.sage),
+      settingsProvider.select(
+        (s) => s.value?.colorTheme ?? ColorTheme.fallback,
+      ),
     );
     final font = ref.watch(
       settingsProvider.select((s) => s.value?.appFont ?? AppFont.classic),
     );
     final arabic = ref.watch(
       settingsProvider.select((s) => s.value?.arabicFont ?? ArabicFont.amiri),
+    );
+    final motionPref = ref.watch(
+      settingsProvider.select((s) => MotionPref.parse(s.value?.raw['motion'])),
     );
     final language = ref.watch(
       settingsProvider.select((s) => s.value?.language ?? AppLanguage.system),
@@ -117,6 +123,7 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
         AppColors.current = palette;
         AppFonts.current = font;
         AppFonts.arabic = arabic;
+        MotionPref.current = motionPref;
         final lang = Localizations.localeOf(context).languageCode;
         if (AppStrings.code != lang) {
           AppStrings.use(lang);
@@ -125,7 +132,7 @@ class _NurdayAppState extends ConsumerState<NurdayApp> {
         // Widgets read AppColors and AppFonts directly, so rebuild them all
         // on a switch.
         return KeyedSubtree(
-          key: ValueKey((palette, font, arabic, lang)),
+          key: ValueKey((palette, font, arabic, lang, motionPref)),
           child: child!,
         );
       },

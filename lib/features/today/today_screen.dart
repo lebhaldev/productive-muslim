@@ -76,15 +76,9 @@ class _Header extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // A soft wash of the theme's two colours, so the day opens brighter.
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(AppRadii.lg),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [AppColors.sage200, AppColors.accent200],
-        ),
-      ),
+    return DriftingWash(
+      colors: [AppColors.sage200, AppColors.accent200],
+      radius: AppRadii.lg,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(16, 14, 4, 14),
         child: Row(
@@ -241,9 +235,13 @@ class _HabitsSection extends ConsumerWidget {
     final segments = todaySegments(ref, today);
     final doneCount = segments.where((d) => d).length;
     final all = segments.isNotEmpty && doneCount == segments.length;
+    // Every habit checked is enough to celebrate; prayers need not be in.
+    final habitsDone =
+        habits.isNotEmpty &&
+        habits.every((h) => done[h.id]?.contains(today) ?? false);
 
     return Celebration(
-      play: all && !isExcused,
+      play: (all || habitsDone) && !isExcused,
       colors: [
         AppColors.sage600,
         AppColors.accent400,
@@ -615,20 +613,29 @@ class MoodDot extends StatelessWidget {
               SizedBox(
                 height: 48,
                 child: Center(
-                  child: AnimatedContainer(
-                    duration: motion(context, Motion.medium),
-                    curve: Curves.easeOutBack,
-                    width: size,
-                    height: size,
-                    decoration: BoxDecoration(
-                      color: AppColors.moods[value],
-                      shape: BoxShape.circle,
-                      border: selected
-                          ? Border.all(color: AppColors.bg, width: 3)
-                          : null,
-                      boxShadow: selected
-                          ? [BoxShadow(color: AppColors.text, spreadRadius: 2)]
-                          : null,
+                  child: TickBurst(
+                    on: selected,
+                    color: AppColors.moods[value],
+                    child: AnimatedContainer(
+                      duration: motion(context, Motion.medium),
+                      curve: Curves.easeOutBack,
+                      width: size,
+                      height: size,
+                      decoration: BoxDecoration(
+                        color: AppColors.moods[value],
+                        shape: BoxShape.circle,
+                        border: selected
+                            ? Border.all(color: AppColors.bg, width: 3)
+                            : null,
+                        boxShadow: selected
+                            ? [
+                                BoxShadow(
+                                  color: AppColors.text,
+                                  spreadRadius: 2,
+                                ),
+                              ]
+                            : null,
+                      ),
                     ),
                   ),
                 ),

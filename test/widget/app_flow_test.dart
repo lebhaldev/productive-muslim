@@ -366,7 +366,7 @@ void main() {
       Theme.of(tester.element(find.text('Dark'))).brightness,
       Brightness.dark,
     );
-    expect(AppColors.current, Palette.dark);
+    expect(AppColors.current, Palette.emberDark);
     await closeApp(tester, db);
     AppColors.current = Palette.light;
   });
@@ -444,6 +444,9 @@ void main() {
   testWidgets('colour themes can be picked in Settings', (tester) async {
     final db = await pumpApp(tester);
     await openSettings(tester, 'appearance');
+    await scrollTo(tester, find.byKey(const Key('more-themes')));
+    await tester.tap(find.byKey(const Key('more-themes')));
+    await settle(tester);
     await scrollTo(tester, find.byKey(const Key('color-theme-ocean')));
     await tester.tap(find.byKey(const Key('color-theme-ocean')));
     await settle(tester);
@@ -559,12 +562,36 @@ void main() {
     final db = await pumpApp(tester);
     await openSettings(tester, 'appearance');
     for (final t in [
+      ColorTheme.amethyst,
+      ColorTheme.neon,
       ColorTheme.mint,
       ColorTheme.peach,
       ColorTheme.mono,
       ColorTheme.andalus,
       ColorTheme.plum,
     ]) {
+      if (t.isFeatured) {
+        await scrollTo(tester, find.byKey(const Key('featured-themes')));
+        final strip = find.byKey(const Key('featured-themes'));
+        for (var i = 0; i < 12; i++) {
+          if (find.byKey(Key('color-theme-${t.name}')).evaluate().isNotEmpty) {
+            break;
+          }
+          await tester.drag(strip, const Offset(-150, 0));
+          await tester.pump(const Duration(milliseconds: 100));
+        }
+        for (var i = 0; i < 12; i++) {
+          if (find.byKey(Key('color-theme-${t.name}')).evaluate().isNotEmpty) {
+            break;
+          }
+          await tester.drag(strip, const Offset(150, 0));
+          await tester.pump(const Duration(milliseconds: 100));
+        }
+      } else if (find.byKey(Key('color-theme-${t.name}')).evaluate().isEmpty) {
+        await scrollTo(tester, find.byKey(const Key('more-themes')));
+        await tester.tap(find.byKey(const Key('more-themes')));
+        await settle(tester);
+      }
       await scrollTo(tester, find.byKey(Key('color-theme-${t.name}')));
       await tester.tap(find.byKey(Key('color-theme-${t.name}')));
       await settle(tester);
@@ -934,13 +961,13 @@ void main() {
     await tester.tap(find.byKey(const Key('welcome-next')));
     await settle(tester);
     expect(find.text('Pick your colours'), findsOneWidget);
-    await tester.tap(find.byKey(const Key('color-theme-mint')));
+    await tester.tap(find.byKey(const Key('color-theme-berry')));
     await settle(tester);
     expect(
       (await tester.runAsync(() => db.watchSettings().first))!['colorTheme'],
-      'mint',
+      'berry',
     );
-    expect(AppColors.current, Palette.mintLight, reason: 'live preview');
+    expect(AppColors.current, Palette.berryLight, reason: 'live preview');
     await tester.tap(find.byKey(const Key('welcome-next')));
     await settle(tester);
     expect(find.text('Your data stays on this phone.'), findsOneWidget);
@@ -951,7 +978,7 @@ void main() {
     expect(habits!.map((h) => h.name), ["Read Qur'an", 'Walk']);
     final settings = await tester.runAsync(() => db.watchSettings().first);
     expect(settings!['onboarded'], 'true');
-    expect(settings['themePicked'], 'true');
+    expect(settings['themePicked2'], 'true');
     expect(find.text('Where are you?'), findsNothing);
     AppColors.current = Palette.light;
     await scrollTo(tester, find.text('Walk'));
